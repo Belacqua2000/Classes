@@ -13,9 +13,11 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+        for i in 0..<10 {
+            let newClass = Lesson(context: viewContext)
+            newClass.date = Date()
+            newClass.title = "Class \(i)"
+            newClass.teacher = "Teacher \(i)"
         }
         do {
             try viewContext.save()
@@ -31,7 +33,7 @@ struct PersistenceController {
     let container: NSPersistentCloudKitContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "Classes")
+        container = NSPersistentCloudKitContainer(name: "Shared")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }

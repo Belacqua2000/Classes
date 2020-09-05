@@ -19,6 +19,8 @@
 		1712122A2503708000EE7423 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171211FB2503707E00EE7423 /* Persistence.swift */; };
 		1712122B2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
 		1712122C2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
+		17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */; };
+		17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,7 @@
 		1712121C2503708000EE7423 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		171212202503708000EE7423 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,7 @@
 			children = (
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
 				171211FA2503707E00EE7423 /* ContentView.swift */,
+				17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */,
 				171211FB2503707E00EE7423 /* Persistence.swift */,
 				171211FC2503708000EE7423 /* Assets.xcassets */,
 				171211F72503707E00EE7423 /* Shared.xcdatamodeld */,
@@ -317,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
+				17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
 				171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				171212272503708000EE7423 /* ContentView.swift in Sources */,
@@ -328,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				171212262503708000EE7423 /* ClassesApp.swift in Sources */,
+				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				1712122A2503708000EE7423 /* Persistence.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
