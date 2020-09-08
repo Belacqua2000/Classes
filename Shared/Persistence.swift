@@ -18,6 +18,7 @@ struct PersistenceController {
             newClass.date = Date()
             newClass.title = "Class \(i)"
             newClass.teacher = "Teacher \(i)"
+            newClass.location = "Location \(i)"
         }
         do {
             try viewContext.save()

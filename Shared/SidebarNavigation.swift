@@ -8,84 +8,46 @@
 import SwiftUI
 
 struct SidebarNavigation: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
-        animation: .default)
-    private var lessons: FetchedResults<Lesson>
     
+    enum SidebarItem {
+        case all
+        case lessonType
+        case ilo
+    }
+    
+    @State var selection: Set<SidebarItem> = [.all]
     var body: some View {
         NavigationView {
-            List {
-                Label("All Classes", systemImage: "books.vertical")
+            List(selection: $selection) {
+                NavigationLink(
+                    destination: LessonsView(predicate: "All Classes"),
+                    label: {
+                        Label("All Classes", systemImage: "books.vertical")
+                    })
+                .tag(SidebarItem.all)
                 Section(header: Text("Class Type")) {
-                    Label("Lectures", systemImage: "studentdesk")
-                    Label("Clinical Skills", systemImage: "stethoscope")
-                    Label("Tutorials", systemImage: "person.3")
+                    ForEach(Lesson.LessonType.allCases) { lesson in
+                        NavigationLink(
+                            destination: LessonsView(predicate: lesson.rawValue),
+                            label: {
+                                Label(lesson.rawValue, systemImage: Lesson.lessonIcon(type: lesson.rawValue))
+                            })
+                    }
                 }
+                Label("ILOs", systemImage: "doc")
             }
+            .navigationTitle("Classes")
+            .frame(minWidth: 100, idealWidth: 150, maxHeight: .infinity)
             .listStyle(SidebarListStyle())
-            List {
-                ForEach(lessons) { lesson in
-                    Label("Item at \(lesson.date!, formatter: itemFormatter)", systemImage: "books.vertical")
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .listStyle(InsetListStyle())
-            .toolbar {
-                #if os(iOS)
-                EditButton()
-                #endif
-                
-                Button(action: addItem) {
-                    Label("Add Item", systemImage: "plus")
-                }
-            }
-            Text("Detail")
-                .listStyle(PlainListStyle())
+            //LessonsView(predicate: "All Classes")
+            Text("All")
+            Text("Choose a Lesson")
         }
     }
-    
-    private func addItem() {
-        withAnimation {
-            let newItem = Lesson(context: viewContext)
-            newItem.date = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { lessons[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 }
 
 struct SidebarNavigation_Previews: PreviewProvider {
+    //@State static var selection: Set<SidebarNavigation.SidebarItem>
     static var previews: some View {
         SidebarNavigation()
     }
