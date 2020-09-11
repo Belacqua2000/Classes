@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddLessonView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    @State var lesson: Lesson? = nil
     @Binding var isPresented: Bool
     @State var type: Lesson.LessonType = .lecture
     @State var title: String = ""
@@ -18,7 +19,7 @@ struct AddLessonView: View {
     @State var isCompleted: Bool = false
     var body: some View {
         #if os(macOS)
-        AddLessonForm(isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+        AddLessonForm(lesson: lesson, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
             .padding()
         #else
         NavigationView {
@@ -41,13 +42,18 @@ struct AddLessonView: View {
         #endif
     }
     func createLesson() {
-        Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted)
+        if lesson == nil {
+        Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true)
+        } else {
+            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted)
+        }
         isPresented = false
     }
 }
 
 struct AddLessonForm: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    var lesson: Lesson?
     @Binding var isPresented: Bool
     @Binding var type: Lesson.LessonType
     @Binding var title: String
@@ -97,7 +103,11 @@ struct AddLessonForm: View {
         }
     }
     func createLesson() {
-        Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted)
+        if lesson == nil {
+            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true)
+        } else {
+            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted)
+        }
         isPresented = false
     }
 }

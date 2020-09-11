@@ -44,7 +44,16 @@ extension Lesson {
         }
     }
     
-    static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool) {
+    func delete(context managedObjectContext: NSManagedObjectContext) {
+        managedObjectContext.delete(self)
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool) {
         let lesson = Lesson(context: managedObjectContext)
         lesson.id = UUID()
         lesson.title = title
@@ -53,6 +62,35 @@ extension Lesson {
         lesson.location = location
         lesson.watched = watched
         lesson.type = type.rawValue
+        if save {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("Unable to save due to Error: \(error)")
+            }
+        }
+    }
+    
+    func update(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool) {
+        self.title = title
+        self.date = date
+        self.teacher = teacher
+        self.location = location
+        self.watched = watched
+        self.type = type.rawValue
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    func updateILOIndices(in managedObjectContext: NSManagedObjectContext) {
+        var currentIndex: Int16 = 0
+        for ilo in ilo?.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [ILO] ?? [] {
+            ilo.index = currentIndex
+            currentIndex += 1
+        }
         do {
             try managedObjectContext.save()
         } catch {

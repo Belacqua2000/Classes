@@ -26,9 +26,14 @@ struct LessonCell: View {
                     Text(lesson.title ?? "Untitled")
                         .font(.headline)
                     Text(itemFormatter.string(from: lesson.date ?? Date()))
+                        .font(.subheadline)
                     Text(lesson.teacher ?? "No Teacher")
+                        .font(.footnote)
                 } },
-                icon: { Image(systemName: Lesson.lessonIcon(type: lesson.type)) }
+                icon: {
+                    Image(systemName: Lesson.lessonIcon(type: lesson.type))
+                        .font(.headline)
+                }
     )
             Spacer()
             Text(lesson.location ?? "No Location")

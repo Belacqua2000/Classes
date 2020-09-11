@@ -3,21 +3,32 @@
     <entity name="ILO" representedClassName="ILO" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="noteLocation" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="written" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="lesson" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lesson" inverseName="ilo" inverseEntity="Lesson"/>
     </entity>
     <entity name="Lesson" representedClassName="Lesson" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="iloCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="ilo.@count" usesScalarValueType="YES"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="teacher" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="watched" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="ilo" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ILO" inverseName="lesson" inverseEntity="ILO"/>
+        <relationship name="tag" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="lesson" inverseEntity="Tag"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="colour" optional="YES" attributeType="Transformable"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="lesson" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Lesson" inverseName="tag" inverseEntity="Lesson"/>
     </entity>
     <elements>
-        <element name="Lesson" positionX="-63" positionY="-18" width="128" height="149"/>
-        <element name="ILO" positionX="-63" positionY="36" width="128" height="89"/>
+        <element name="ILO" positionX="-367.17041015625" positionY="86.70559692382812" width="128" height="118"/>
+        <element name="Lesson" positionX="-355.4363403320312" positionY="-120.7960815429688" width="128" height="193"/>
+        <element name="Tag" positionX="-86.432373046875" positionY="-76.94482421875" width="128" height="89"/>
     </elements>
 </model>

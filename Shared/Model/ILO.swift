@@ -23,4 +23,35 @@ extension ILO {
             print("Unable to save due to Error: \(error)")
         }
     }
+    
+    func update(in managedObjectContext: NSManagedObjectContext, text: String, index: Int16, lesson: Lesson) {
+        self.title = text
+        self.index = index
+        self.lesson = lesson
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    func toggleWritten(context managedObjectContext: NSManagedObjectContext) {
+        written.toggle()
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    func delete(context managedObjectContext: NSManagedObjectContext, save: Bool) {
+        managedObjectContext.delete(self)
+        if save {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("Unable to save due to Error: \(error)")
+            }
+        }
+    }
 }

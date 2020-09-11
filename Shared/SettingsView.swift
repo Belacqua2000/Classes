@@ -12,6 +12,7 @@ struct SettingsView: View {
         Toggle(isOn: /*@START_MENU_TOKEN@*/.constant(true)/*@END_MENU_TOKEN@*/, label: {
             Text("This is a label for a toggle")
         })
+        .padding()
     }
 }
 
