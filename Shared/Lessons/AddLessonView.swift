@@ -10,15 +10,15 @@ import SwiftUI
 struct AddLessonView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    @FetchRequest(
+    /*@FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
         animation: .default)
-    private var tags: FetchedResults<Tag>
+    private var tags: FetchedResults<Tag>*/
     
     @State var lesson: Lesson? = nil
     @Binding var isPresented: Bool
     @State var type: Lesson.LessonType = .lecture
-    @State var tag: Tag?
+    @State var tags = [Tag]()
     
     @State var title: String = ""
     @State var location: String = ""
@@ -27,11 +27,11 @@ struct AddLessonView: View {
     @State var isCompleted: Bool = false
     var body: some View {
         #if os(macOS)
-        AddLessonForm(lesson: lesson, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+        AddLessonForm(lesson: lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
             .padding()
         #else
         NavigationView {
-        AddLessonForm(isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+            AddLessonForm(tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
             .navigationTitle("Add Class")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -51,9 +51,9 @@ struct AddLessonView: View {
     }
     func createLesson() {
         if lesson == nil {
-        Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true)
+            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true, tags: tags)
         } else {
-            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted)
+            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags)
         }
         isPresented = false
     }
@@ -62,6 +62,7 @@ struct AddLessonView: View {
 struct AddLessonForm: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     var lesson: Lesson?
+    @Binding var tags: [Tag]
     @Binding var isPresented: Bool
     @Binding var type: Lesson.LessonType
     @Binding var title: String
@@ -107,14 +108,20 @@ struct AddLessonForm: View {
                 })
                 .keyboardShortcut(.defaultAction)
             }
+            #else
+            NavigationLink(destination: AllocateTagView(selectedTags: $tags),
+                label: {
+                    Label("Choose Tags", systemImage: "tag")
+                })
+                .navigationTitle("Choose Tags")
             #endif
         }
     }
     func createLesson() {
         if lesson == nil {
-            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true)
+            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true, tags: tags)
         } else {
-            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted)
+            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags)
         }
         isPresented = false
     }

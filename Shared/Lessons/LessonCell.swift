@@ -9,37 +9,32 @@ import SwiftUI
 
 struct LessonCell: View {
     @ObservedObject var lesson: Lesson
+    var tags: [Tag] {
+        return lesson.tag?.allObjects as? [Tag] ?? []
+    }
     var body: some View {
-        HStack {/*
-            Image(systemName: Lesson.lessonIcon(type: lesson.type))
-                .alignmentGuide(.leading) { dimension in
-                    20
+        VStack(alignment: .leading) {
+            HStack {
+                Label(
+                    title: { VStack(alignment: .leading) {
+                        Text(lesson.title ?? "Untitled")
+                            .font(.headline)
+                        Text(itemFormatter.string(from: lesson.date ?? Date()))
+                            .font(.subheadline)
+                        Text(lesson.teacher ?? "No Teacher")
+                            .font(.footnote)
+                    } },
+                    icon: {
+                        Image(systemName: Lesson.lessonIcon(type: lesson.type))
+                            .font(.headline)
+                    }
+                )
+                Spacer()
+                Text(lesson.location ?? "No Location")
+                if lesson.watched {
+                    Image(systemName: "checkmark.circle.fill")
+                        .renderingMode(.original)
                 }
-            VStack(alignment: .leading) {
-                Text(lesson.title ?? "Untitled")
-                    .font(.headline)
-                Text(itemFormatter.string(from: lesson.date ?? Date()))
-                Text(lesson.teacher ?? "No Teacher")
-            }*/
-            Label(
-                title: { VStack(alignment: .leading) {
-                    Text(lesson.title ?? "Untitled")
-                        .font(.headline)
-                    Text(itemFormatter.string(from: lesson.date ?? Date()))
-                        .font(.subheadline)
-                    Text(lesson.teacher ?? "No Teacher")
-                        .font(.footnote)
-                } },
-                icon: {
-                    Image(systemName: Lesson.lessonIcon(type: lesson.type))
-                        .font(.headline)
-                }
-    )
-            Spacer()
-            Text(lesson.location ?? "No Location")
-            if lesson.watched {
-                Image(systemName: "checkmark.circle.fill")
-                    .renderingMode(.original)
             }
         }
     }
@@ -52,10 +47,10 @@ struct LessonCell: View {
     }()
 }
 /*
-struct LessonCell_Previews: PreviewProvider {
-    static var previews: some View {
-        LessonCell(lesson: Lesson(context: <#T##NSManagedObjectContext#>))
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-            .frame(width: 200)
-    }
-}*/
+ struct LessonCell_Previews: PreviewProvider {
+ static var previews: some View {
+ LessonCell(lesson: Lesson(context: <#T##NSManagedObjectContext#>))
+ .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+ .frame(width: 200)
+ }
+ }*/

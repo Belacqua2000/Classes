@@ -62,7 +62,7 @@ extension Lesson {
         }
     }
     
-    static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool) {
+    static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool, tags: [Tag]) {
         let lesson = Lesson(context: managedObjectContext)
         lesson.id = UUID()
         lesson.title = title
@@ -71,6 +71,9 @@ extension Lesson {
         lesson.location = location
         lesson.watched = watched
         lesson.type = type.rawValue
+        for newTag in tags {
+            lesson.addToTag(newTag)
+        }
         if save {
             do {
                 try managedObjectContext.save()
@@ -80,13 +83,21 @@ extension Lesson {
         }
     }
     
-    func update(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool) {
+    func update(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, tags: [Tag]) {
         self.title = title
         self.date = date
         self.teacher = teacher
         self.location = location
         self.watched = watched
         self.type = type.rawValue
+        // Removes all current tags
+        if let tag = tag {
+            removeFromTag(tag)
+        }
+        // Adds tags passed in through method
+        for newTag in tags {
+            self.addToTag(newTag)
+        }
         do {
             try managedObjectContext.save()
         } catch {

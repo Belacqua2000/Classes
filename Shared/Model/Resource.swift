@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 extension Resource {
-    static func create(in managedObjectContext: NSManagedObjectContext, title: String, lesson: Lesson, url: URL) {
+    static func create(in managedObjectContext: NSManagedObjectContext, title: String, lesson: Lesson, url: URL?) {
         let resource = Resource(context: managedObjectContext)
         resource.lesson = lesson
         resource.id = UUID()
@@ -22,7 +22,7 @@ extension Resource {
         }
     }
     
-    func update(in managedObjectContext: NSManagedObjectContext, name: String, lesson: Lesson, url: URL) {
+    func update(in managedObjectContext: NSManagedObjectContext, name: String, lesson: Lesson, url: URL?) {
         self.name = name
         self.lesson = lesson
         self.name = name

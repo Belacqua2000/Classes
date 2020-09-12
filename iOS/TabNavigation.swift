@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabNavigation: View {
     @State private var selection: Tab = .all
+    @State private var addTagShowing = false
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
@@ -33,7 +34,7 @@ struct TabNavigation: View {
                         ForEach(tags) { tag in
                             NavigationLink(
                                 destination:
-                                    LessonsView(filter: LessonsView.Filter(filterType: .lessonType, lessonType: nil, tag: tag)),
+                                    LessonsView(filter: LessonsView.Filter(filterType: .tag, lessonType: nil, tag: tag)),
                                 label: {
                                     Label(title: { Text(tag.name ?? "Untitled") },
                                         icon: {
@@ -48,6 +49,12 @@ struct TabNavigation: View {
                                     })
                                 }/*@END_MENU_TOKEN@*/)
                         }
+                        Button(action: {addTagShowing = true}, label: {
+                            Label("Add Tag", systemImage: "plus.circle")
+                        })
+                        .sheet(isPresented: $addTagShowing, content: {
+                            AddTagView(isPresented: $addTagShowing)
+                        })
                     }
                 }
                 .listStyle(InsetGroupedListStyle())

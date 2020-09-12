@@ -12,11 +12,11 @@ struct AddResource: View {
     @State var resourceText: String = ""
     @State var resourceURL: String = ""
     @Binding var isPresented: Bool
-    var resource: Resource?
+    @State var resource: Resource?
     var lesson: Lesson?
     
     var saveButton: some View {
-        Button(action: add, label: {
+        Button(action: save, label: {
             Text("Save")
         })
         .keyboardShortcut(.defaultAction)
@@ -32,10 +32,9 @@ struct AddResource: View {
     var body: some View {
         Form {
             #if os(macOS)
-            Section(header: Text("Add ILO")) {
-                TextField("ILO Text", text: $resourceText)
+            Section(header: Text("Add Resource").font(.headline)) {
+                TextField("Resource Name", text: $resourceText)
                 TextField("Resource URL", text: $resourceURL)
-                    .textContentType(.URL)
             }
             HStack {
                 Spacer()
@@ -46,11 +45,11 @@ struct AddResource: View {
             TextField("Resource Name", text: $resourceText)
                 .navigationTitle("Add ILO")
             TextField("Resource URL", text: $resourceURL)
-                .textContentType(.URL)
                 .keyboardType(.URL)
+                .textContentType(.URL)
             #endif
         }
-        .frame(idealWidth: 300, idealHeight: 50)
+        .frame(idealWidth: 300, idealHeight: 100)
         .padding()
         .toolbar {
             #if !os(macOS)
@@ -63,8 +62,8 @@ struct AddResource: View {
             #endif
         }
     }
-    func add() {
-        let url = URL(string: resourceURL)!
+    func save() {
+        let url = URL(string: resourceURL)
         if let resource = resource {
             resource.update(in: viewContext, name: resourceText, lesson: lesson!, url: url)
         } else {
@@ -88,9 +87,13 @@ struct EditView_Previews: PreviewProvider {
 
 struct AddResource_Previews: PreviewProvider {
     static var previews: some View {
+        #if !os(macOS)
         NavigationView {
             AddResource(isPresented: .constant(true), lesson: nil)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        #else
+        AddResource(isPresented: .constant(true), lesson: nil)
+        #endif
     }
 }

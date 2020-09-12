@@ -19,6 +19,7 @@ extension Tag {
         let tag = Tag(context: managedObjectContext)
         tag.name = name
         tag.color = UIColor(color)
+        tag.id = UUID()
         do {
             try managedObjectContext.save()
         } catch  {

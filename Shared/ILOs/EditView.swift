@@ -31,7 +31,7 @@ struct EditView: View {
     var body: some View {
         Form {
             #if os(macOS)
-            Section(header: Text("Add ILO")) {
+            Section(header: Text("Add ILO").font(.headline)) {
                 TextField("ILO Text", text: $iloText)
             }
             HStack {

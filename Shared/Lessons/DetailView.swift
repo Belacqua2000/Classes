@@ -24,6 +24,13 @@ struct DetailView: View {
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = false
     
     @ObservedObject var lesson: Lesson
+    private var tags: [Tag]? {
+        let tags = lesson.tag?.allObjects as? [Tag]
+        return tags?.sorted(by: {
+            $0.name! < $1.name!
+        })
+    }
+    
     @State var newILOText: String = ""
     @State var newILOSaveButtonShown: Bool = false
     
@@ -36,6 +43,7 @@ struct DetailView: View {
     var filteredILOs: [ILO] {
         return ilos.filter { $0.lesson == lesson }
     }
+    @State private var selectedILO: ILO? = nil
     
     var completedILOs: Double {
         var completedILOs: Double = 0
@@ -58,109 +66,114 @@ struct DetailView: View {
     var filteredResources: [Resource] {
         return resources.filter { $0.lesson == lesson }
     }
+    @State private var selectedResource: Resource? = nil
     
     var iloSection: some View {
-        DisclosureGroup("ILOs", isExpanded: $iloSectionExpanded) {
-            VStack(alignment: .leading) {
-                #if !os(macOS)
-                EditButton()
-                #endif
-                List {
-                    ForEach(filteredILOs) { ilo in
-                        HStack {
-                            Text("\(ilo.index + 1). \(ilo.title ?? "")")
-                            Spacer()
-                            Button(action: { toggleILOWritten(ilo: ilo) }, label: {
-                                ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
+        VStack(alignment: .leading) {
+            #if !os(macOS)
+            EditButton()
+            #endif
+            List {
+                ForEach(filteredILOs) { ilo in
+                    HStack {
+                        Text("\(ilo.index + 1). \(ilo.title ?? "")")
+                        Spacer()
+                        Button(action: { toggleILOWritten(ilo: ilo) }, label: {
+                            ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
+                        })
+                        .contextMenu(ContextMenu(menuItems: {
+                            Button(action: {
+                                selectedILO = ilo
+                                isEditingILO = true
+                            }, label: {
+                                Label("Edit", systemImage: "square.and.pencil")
                             })
-                            .contextMenu(ContextMenu(menuItems: {
-                                Button(action: {isEditingILO = true}, label: {
-                                    Label("Edit", systemImage: "square.and.pencil")
-                                })
-                            }))
-                        }
+                        }))
                     }
-                    .onDelete(perform: deleteItems)
-                    .onMove(perform: move)
                 }
-                .cornerRadius(10)
-                .frame(height: 200)
-                .sheet(isPresented: $isEditingILO, content: {
-                    #if !os(macOS)
-                    NavigationView {
-                        EditView(iloText: iloListSelection.first?.title ?? "", isPresented: $isEditingILO, ilo: iloListSelection.first, lesson: lesson)
-                            .navigationTitle("Edit ILO")
-                    }
-                    #else
-                    EditView(iloText: listSelection.first?.title ?? "No Title", isPresented: $isEditing, ilo: listSelection.first, lesson: lesson)
-                    #endif
-                })
-                Button(action: {isAddingILO = true}, label: {
-                    Text("Add ILO")
-                })
-                .padding(.vertical)
-                .sheet(isPresented: $isAddingILO, content: {
-                    #if !os(macOS)
-                    NavigationView {
-                        EditView(isPresented: $isAddingILO, lesson: lesson)
-                            .navigationTitle("Add ILO")
-                    }
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    #else
-                    EditView(isPresented: $isAdding, lesson: lesson)
-                    #endif
-                })
+                .onDelete(perform: deleteItems)
+                .onMove(perform: move)
             }
+            .cornerRadius(10)
+            .frame(height: 200)
+            .sheet(isPresented: $isEditingILO, onDismiss: {
+                selectedILO = nil
+            }, content: {
+                #if !os(macOS)
+                NavigationView {
+                    EditView(iloText: selectedILO?.title ?? "", isPresented: $isEditingILO, ilo: selectedILO, lesson: lesson)
+                        .navigationTitle("Edit ILO")
+                }
+                #else
+                EditView(iloText: selectedILO?.title ?? "", isPresented: $isEditingILO, ilo: selectedILO, lesson: lesson)
+                #endif
+            })
+            Button(action: {isAddingILO = true}, label: {
+                Text("Add ILO")
+            })
+            .padding(.vertical)
+            .sheet(isPresented: $isAddingILO, content: {
+                #if !os(macOS)
+                NavigationView {
+                    EditView(isPresented: $isAddingILO, lesson: lesson)
+                        .navigationTitle("Add ILO")
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+                #else
+                EditView(isPresented: $isAddingILO, lesson: lesson)
+                #endif
+            })
         }
     }
     
     var resourceSection: some View {
-        DisclosureGroup("Resources", isExpanded: $resourceSectionExpanded) {
-            VStack(alignment: .leading) {
-                #if !os(macOS)
-                EditButton()
-                #endif
-                List {
-                    ForEach(filteredResources) { resource in
-                        let re = resource as Resource
-                        HStack {
-                            Text("\(re.name ?? "No Name"):")
-                            Spacer()
-                            Button(action: {
-                                if let url = re.url {
-                                    openURL(url)
-                                } else {
-                                    isInValidURLAlertShown = true
-                                }
-                            }, label: {
-                                Text(re.url?.absoluteString ?? "")
-                                    .foregroundColor(Color(.link))
-                            })
+        VStack(alignment: .leading) {
+            #if !os(macOS)
+            EditButton()
+            #endif
+            List {
+                ForEach(filteredResources) { resource in
+                    let re = resource as Resource
+                    HStack {
+                        Text("\(re.name ?? "No Name"):")
+                        Spacer()
+                        if let url = re.url {
+                        Link(url.host ?? "Open Link", destination: url)
+                            .help(re.url?.absoluteString ?? "Link")
                         }
                     }
-                    .onDelete(perform: deleteResources)
-                    .alert(isPresented: $isInValidURLAlertShown) {
-                        Alert(title: Text("Invalid URL"), message: Text("Unable to open the URL.  Please check it is correct."), dismissButton: .cancel(Text("Dismiss")))
-                    }
+                    .contextMenu(ContextMenu(menuItems: {
+                        Button(action: {
+                            selectedResource = re
+                            isAddingResource = true
+                        }, label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        })
+                    }))
                 }
-                .cornerRadius(10)
-                .frame(height: 200)
-                Button(action: {isAddingResource = true}, label: {
-                    Text("Add Resource")
-                })
-                .padding(.vertical)
-                .sheet(isPresented: $isAddingResource, content: {
-                    #if !os(macOS)
-                    NavigationView {
-                        AddResource(isPresented: $isAddingResource, lesson: lesson)
-                            .navigationTitle("Add Resource")
-                    }
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    #else
-                    AddResource(isPresented: $isAddingResource, lesson: lesson)
-                    #endif
-                })
+                .onDelete(perform: deleteResources)
+                .alert(isPresented: $isInValidURLAlertShown) {
+                    Alert(title: Text("Invalid URL"), message: Text("Unable to open the URL.  Please check it is correct."), dismissButton: .cancel(Text("Dismiss")))
+                }
             }
+            .cornerRadius(10)
+            .frame(height: 200)
+            Button(action: {isAddingResource = true}, label: {
+                Text("Add Resource")
+            })
+            .padding(.vertical)
+            .sheet(isPresented: $isAddingResource, content: {
+                #if !os(macOS)
+                NavigationView {
+                    AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $isAddingResource, resource: selectedResource, lesson: lesson)
+                        .navigationTitle("Add Resource")
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+                #else
+                AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $isAddingResource, resource: selectedResource, lesson: lesson)
+                    .navigationTitle("Add Resource")
+                #endif
+            })
         }
     }
     
@@ -168,9 +181,19 @@ struct DetailView: View {
         Group {
             //if lesson.id != nil {
             ScrollView(.vertical) {
-                HStack {
+                HStack(alignment: .top) {
                     VStack(alignment: .leading) {
                         LessonDetails(lesson: lesson)
+                        if !(tags?.isEmpty ?? true) {
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(tags ?? []) { tag in
+                                    TagIcon(tag: tag)
+                                }
+                            }
+                        }
+                        .padding()
+                        }
                         if filteredILOs.count != 0 {
                             HStack {
                                 Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of ILOs written")
@@ -178,8 +201,27 @@ struct DetailView: View {
                                     .progressViewStyle(LinearProgressViewStyle())
                             }
                         }
+                        #if os(macOS)
                         iloSection
+                        #else
+                        DisclosureGroup(isExpanded: $iloSectionExpanded, content: {
+                            iloSection
+                        }, label: {
+                            Label("ILOs", systemImage: "list.bullet")
+                                .font(.headline)
+                        })
+                        #endif
+                        
+                        #if os(macOS)
                         resourceSection
+                        #else
+                        DisclosureGroup(isExpanded: $resourceSectionExpanded, content: {
+                            resourceSection
+                        }, label: {
+                            Label("Resources", systemImage: "globe")
+                                .font(.headline)
+                        })
+                        #endif
                     }
                     .padding(.horizontal)
                 }
@@ -357,7 +399,6 @@ struct LessonDetails: View {
         Text(lesson.location ?? "No Location")
             .font(.title3)
             .italic()
-            .padding(.bottom)
     }
     
     private let itemFormatter: DateFormatter = {

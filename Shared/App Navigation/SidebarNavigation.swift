@@ -65,7 +65,7 @@ struct SidebarNavigation: View {
                     ForEach(tags) { tag in
                         NavigationLink(
                             destination:
-                                LessonsView(filter: LessonsView.Filter(filterType: .lessonType, lessonType: nil, tag: tag)),
+                                LessonsView(filter: LessonsView.Filter(filterType: .tag, lessonType: nil, tag: tag)),
                             label: {
                                 Label(title: { Text(tag.name ?? "Untitled") },
                                     icon: {
@@ -75,6 +75,9 @@ struct SidebarNavigation: View {
                                 )
                             })
                             .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
+                                Button(action: {addTagShowing = true}, label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
+                                })
                                 Button(action: {tag.delete(context: viewContext)}, label: {
                                     Label("Delete", systemImage: "trash")
                                 })
