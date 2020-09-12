@@ -30,15 +30,18 @@ struct EditView: View {
     
     var body: some View {
         Form {
+            #if os(macOS)
             Section(header: Text("Add ILO")) {
                 TextField("ILO Text", text: $iloText)
             }
-            #if os(macOS)
             HStack {
                 Spacer()
                 cancelButton
                 saveButton
             }
+            #else
+            TextField("ILO Text", text: $iloText)
+                .navigationTitle("Add ILO")
             #endif
         }
         .frame(idealWidth: 300, idealHeight: 50)

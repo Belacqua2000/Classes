@@ -10,11 +10,15 @@ import CoreData
 
 struct DetailView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.openURL) var openURL
     
     //View States
-    @State var isEditing: Bool = false
-    @State var isAdding: Bool = false
+    @State var isEditingILO: Bool = false
+    @State var isAddingILO: Bool = false
     @State var isDeleteAlertShown: Bool = false
+    @State var isInValidURLAlertShown: Bool = false
+    
+    @State var isAddingResource: Bool = false
     
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = false
@@ -55,6 +59,111 @@ struct DetailView: View {
         return resources.filter { $0.lesson == lesson }
     }
     
+    var iloSection: some View {
+        DisclosureGroup("ILOs", isExpanded: $iloSectionExpanded) {
+            VStack(alignment: .leading) {
+                #if !os(macOS)
+                EditButton()
+                #endif
+                List {
+                    ForEach(filteredILOs) { ilo in
+                        HStack {
+                            Text("\(ilo.index + 1). \(ilo.title ?? "")")
+                            Spacer()
+                            Button(action: { toggleILOWritten(ilo: ilo) }, label: {
+                                ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
+                            })
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button(action: {isEditingILO = true}, label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
+                                })
+                            }))
+                        }
+                    }
+                    .onDelete(perform: deleteItems)
+                    .onMove(perform: move)
+                }
+                .cornerRadius(10)
+                .frame(height: 200)
+                .sheet(isPresented: $isEditingILO, content: {
+                    #if !os(macOS)
+                    NavigationView {
+                        EditView(iloText: iloListSelection.first?.title ?? "", isPresented: $isEditingILO, ilo: iloListSelection.first, lesson: lesson)
+                            .navigationTitle("Edit ILO")
+                    }
+                    #else
+                    EditView(iloText: listSelection.first?.title ?? "No Title", isPresented: $isEditing, ilo: listSelection.first, lesson: lesson)
+                    #endif
+                })
+                Button(action: {isAddingILO = true}, label: {
+                    Text("Add ILO")
+                })
+                .padding(.vertical)
+                .sheet(isPresented: $isAddingILO, content: {
+                    #if !os(macOS)
+                    NavigationView {
+                        EditView(isPresented: $isAddingILO, lesson: lesson)
+                            .navigationTitle("Add ILO")
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    #else
+                    EditView(isPresented: $isAdding, lesson: lesson)
+                    #endif
+                })
+            }
+        }
+    }
+    
+    var resourceSection: some View {
+        DisclosureGroup("Resources", isExpanded: $resourceSectionExpanded) {
+            VStack(alignment: .leading) {
+                #if !os(macOS)
+                EditButton()
+                #endif
+                List {
+                    ForEach(filteredResources) { resource in
+                        let re = resource as Resource
+                        HStack {
+                            Text("\(re.name ?? "No Name"):")
+                            Spacer()
+                            Button(action: {
+                                if let url = re.url {
+                                    openURL(url)
+                                } else {
+                                    isInValidURLAlertShown = true
+                                }
+                            }, label: {
+                                Text(re.url?.absoluteString ?? "")
+                                    .foregroundColor(Color(.link))
+                            })
+                        }
+                    }
+                    .onDelete(perform: deleteResources)
+                    .alert(isPresented: $isInValidURLAlertShown) {
+                        Alert(title: Text("Invalid URL"), message: Text("Unable to open the URL.  Please check it is correct."), dismissButton: .cancel(Text("Dismiss")))
+                    }
+                }
+                .cornerRadius(10)
+                .frame(height: 200)
+                Button(action: {isAddingResource = true}, label: {
+                    Text("Add Resource")
+                })
+                .padding(.vertical)
+                .sheet(isPresented: $isAddingResource, content: {
+                    #if !os(macOS)
+                    NavigationView {
+                        AddResource(isPresented: $isAddingResource, lesson: lesson)
+                            .navigationTitle("Add Resource")
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
+                    #else
+                    AddResource(isPresented: $isAddingResource, lesson: lesson)
+                    #endif
+                })
+            }
+        }
+    }
+    
     var body: some View {
         Group {
             //if lesson.id != nil {
@@ -69,68 +178,8 @@ struct DetailView: View {
                                     .progressViewStyle(LinearProgressViewStyle())
                             }
                         }
-                        DisclosureGroup("ILOs", isExpanded: $iloSectionExpanded) {
-                        VStack(alignment: .leading) {
-                            #if !os(macOS)
-                            EditButton()
-                            #endif
-                            List {
-                                ForEach(filteredILOs) { ilo in
-                                    HStack {
-                                        Text("\(ilo.index + 1). \(ilo.title ?? "")")
-                                        Spacer()
-                                        Button(action: { toggleILOWritten(ilo: ilo) }, label: {
-                                            ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
-                                        })
-                                        .contextMenu(ContextMenu(menuItems: {
-                                            Button(action: {isEditing = true}, label: {
-                                                Label("Edit", systemImage: "square.and.pencil")
-                                            })
-                                        }))
-                                    }
-                                }
-                                .onDelete(perform: deleteItems)
-                                .onMove(perform: move)
-                            }
-                            .cornerRadius(10)
-                            .frame(height: 200)
-                            .sheet(isPresented: $isEditing, content: {
-                                #if !os(macOS)
-                                NavigationView {
-                                    EditView(iloText: iloListSelection.first?.title ?? "", isPresented: $isEditing, ilo: iloListSelection.first, lesson: lesson)
-                                }
-                                #else
-                                EditView(iloText: listSelection.first?.title ?? "No Title", isPresented: $isEditing, ilo: listSelection.first, lesson: lesson)
-                                #endif
-                            })
-                            Button(action: {isAdding = true}, label: {
-                                Text("Add ILO")
-                            })
-                            .padding(.vertical)
-                            .sheet(isPresented: $isAdding, content: {
-                                #if !os(macOS)
-                                NavigationView {
-                                    EditView(isPresented: $isAdding, lesson: lesson)
-                                }
-                                .navigationViewStyle(StackNavigationViewStyle())
-                                #else
-                                EditView(isPresented: $isAdding, lesson: lesson)
-                                #endif
-                            })
-                        }
-                        }
-                        DisclosureGroup("Resources", isExpanded: $resourceSectionExpanded) {
-                            List {
-                                ForEach(filteredResources) { resource in
-                                        HStack {
-                                            Text(resource.name!)
-                                            Text(resource.url)
-                                        }
-                                }
-                            }
-                            .cornerRadius(10)
-                            .frame(height: 200)
-                        }
+                        iloSection
+                        resourceSection
                     }
                     .padding(.horizontal)
                 }
@@ -244,6 +293,17 @@ struct DetailView: View {
         }
         //lesson.updateILOIndices(in: managedObjectContext)
     }
+    
+    private func deleteResources(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { filteredResources[$0] }.forEach { resource in
+                let resource = resource as Resource
+                resource.delete(context: managedObjectContext, save: false)
+            }
+        }
+        //lesson.updateILOIndices(in: managedObjectContext)
+    }
+    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { filteredILOs[$0] }.forEach { ilo in

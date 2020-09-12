@@ -24,6 +24,8 @@
 		176CC61F250CB42E00FB28B6 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC61D250CB40F00FB28B6 /* AddTagView.swift */; };
 		176CC621250CB92E00FB28B6 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC620250CB92E00FB28B6 /* Tag.swift */; };
 		176CC622250CBD4000FB28B6 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC620250CB92E00FB28B6 /* Tag.swift */; };
+		176CC625250CFCDB00FB28B6 /* AddResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC624250CFCDB00FB28B6 /* AddResource.swift */; };
+		176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC626250CFD3C00FB28B6 /* Resource.swift */; };
 		177909C2250A6D9300C14F5E /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177909C1250A6D9200C14F5E /* EditView.swift */; };
 		177909C3250A6D9300C14F5E /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177909C1250A6D9200C14F5E /* EditView.swift */; };
 		179BF2522506834300574A35 /* AllLessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179BF2512506834300574A35 /* AllLessonsView.swift */; };
@@ -91,6 +93,8 @@
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		176CC61D250CB40F00FB28B6 /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		176CC620250CB92E00FB28B6 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		176CC624250CFCDB00FB28B6 /* AddResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResource.swift; sourceTree = "<group>"; };
+		176CC626250CFD3C00FB28B6 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		177909C1250A6D9200C14F5E /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		179BF2512506834300574A35 /* AllLessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLessonsView.swift; sourceTree = "<group>"; };
 		179BF255250697F500574A35 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
@@ -164,7 +168,7 @@
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
 				17E50BCB250518A100BA8618 /* SettingsView.swift */,
 				17ABF35525084965000D4048 /* EditILOView.swift */,
-				177909C1250A6D9200C14F5E /* EditView.swift */,
+				176CC623250CFCCD00FB28B6 /* Resources */,
 				17ABF35425084927000D4048 /* ILOs */,
 				17ABF352250848E4000D4048 /* App Navigation */,
 				17ABF353250848EE000D4048 /* Lessons */,
@@ -229,6 +233,14 @@
 			path = Tags;
 			sourceTree = "<group>";
 		};
+		176CC623250CFCCD00FB28B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				176CC624250CFCDB00FB28B6 /* AddResource.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		179BF254250697F500574A35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +275,7 @@
 		17ABF35425084927000D4048 /* ILOs */ = {
 			isa = PBXGroup;
 			children = (
+				177909C1250A6D9200C14F5E /* EditView.swift */,
 				17ABF34F2507E789000D4048 /* ILOsView.swift */,
 			);
 			path = ILOs;
@@ -276,6 +289,7 @@
 				176CC620250CB92E00FB28B6 /* Tag.swift */,
 				17E50BCF25065CB300BA8618 /* Lesson.swift */,
 				179BF25A2506A86200574A35 /* ILO.swift */,
+				176CC626250CFD3C00FB28B6 /* Resource.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -440,7 +454,9 @@
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditView.swift in Sources */,
 				17ABF35625084965000D4048 /* EditILOView.swift in Sources */,
+				176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */,
 				17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
+				176CC625250CFCDB00FB28B6 /* AddResource.swift in Sources */,
 				17E50BC92504E22200BA8618 /* DetailView.swift in Sources */,
 				17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				171212292503708000EE7423 /* Persistence.swift in Sources */,

@@ -22,6 +22,7 @@
         <relationship name="tag" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="lesson" inverseEntity="Tag"/>
     </entity>
     <entity name="Resource" representedClassName="Resource" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="URI"/>
         <relationship name="lesson" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lesson" inverseName="resource" inverseEntity="Lesson"/>
@@ -35,7 +36,7 @@
     <elements>
         <element name="ILO" positionX="-542.72314453125" positionY="-77.09341430664062" width="128" height="119"/>
         <element name="Lesson" positionX="-355.4363403320312" positionY="-120.7960815429688" width="128" height="194"/>
-        <element name="Resource" positionX="-107.2741088867188" positionY="97.76498413085938" width="128" height="74"/>
+        <element name="Resource" positionX="-107.2741088867188" positionY="97.76498413085938" width="128" height="103"/>
         <element name="Tag" positionX="-140.5807495117188" positionY="-82.03150939941406" width="128" height="89"/>
     </elements>
 </model>
