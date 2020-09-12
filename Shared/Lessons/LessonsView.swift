@@ -15,10 +15,25 @@ struct LessonsView: View {
         }
         var filterType: FilterTypes
         var lessonType: Lesson.LessonType?
+        var tag: Tag?
     }
     
     @State var selection = Set<UUID>()
     @State var sheetIsPresented: Bool = false
+    
+    var titleString: String {
+        switch filter.filterType {
+        case .all:
+            return("All Lessons")
+        case .tag:
+            return("Tag: \(filter.tag?.name ?? "")")
+        case .lessonType:
+            return("\(filter.lessonType?.rawValue ?? "Lesson")s")
+        case .watched:
+            return("Watched Lessons")
+        }
+    }
+    
     @State var filter: Filter
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
@@ -64,6 +79,10 @@ struct LessonsView: View {
                             label: {
                                 LessonCell(lesson: lesson)
                             })
+                            .onDrag({
+                                let itemProvider = NSItemProvider(object: lesson.id!.uuidString as NSString)
+                                return(itemProvider)
+                            })
                             .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
                                 Button(action: {lesson.toggleWatched(context: viewContext)}, label: {
                                     !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
@@ -98,13 +117,12 @@ struct LessonsView: View {
             Button(action: addLesson, label: {
                 Label("Add Lesson", systemImage: "plus")
             })
-            .keyboardShortcut(KeyboardShortcut("n", modifiers: [.command, .shift]))
     }
-        .navigationTitle("Lessons")
+        .navigationTitle(titleString)
         //.navigationSubtitle("\(lessons.count) Lessons")
     }
     
-    private func addLesson() {
+    func addLesson() {
         sheetIsPresented = true
     }
     

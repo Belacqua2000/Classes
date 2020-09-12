@@ -35,6 +35,15 @@ extension Lesson {
         }
     }
     
+    func changeType(context managedObjectContext: NSManagedObjectContext, newType: LessonType) {
+        type = newType.rawValue
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
     func toggleWatched(context managedObjectContext: NSManagedObjectContext) {
         watched.toggle()
         do {

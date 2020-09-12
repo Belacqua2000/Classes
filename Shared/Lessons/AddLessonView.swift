@@ -9,9 +9,17 @@ import SwiftUI
 
 struct AddLessonView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
+        animation: .default)
+    private var tags: FetchedResults<Tag>
+    
     @State var lesson: Lesson? = nil
     @Binding var isPresented: Bool
     @State var type: Lesson.LessonType = .lecture
+    @State var tag: Tag?
+    
     @State var title: String = ""
     @State var location: String = ""
     @State var teacher: String = ""

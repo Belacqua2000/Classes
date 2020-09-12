@@ -16,11 +16,15 @@ struct DetailView: View {
     @State var isAdding: Bool = false
     @State var isDeleteAlertShown: Bool = false
     
+    @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
+    @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = false
+    
     @ObservedObject var lesson: Lesson
     @State var newILOText: String = ""
     @State var newILOSaveButtonShown: Bool = false
     
-    @State var listSelection: Set<ILO> = []
+    //ILOs
+    @State var iloListSelection: Set<ILO> = []
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
         animation: .default)
@@ -28,7 +32,6 @@ struct DetailView: View {
     var filteredILOs: [ILO] {
         return ilos.filter { $0.lesson == lesson }
     }
-    /*var ilo: [ILO] { return lesson.ilo?.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [ILO] ?? [] }*/
     
     var completedILOs: Double {
         var completedILOs: Double = 0
@@ -41,58 +44,36 @@ struct DetailView: View {
         let value = completedILOs / iloCount
         return iloCount == 0 ? 1 : value
     }
-    /*
-     init(lesson: Lesson) {
-     self.lesson = lesson
-     var predicate: NSPredicate?
-     predicate = NSPredicate(format: "lesson = %@", lesson)
-     self._ilos = FetchRequest(
-     entity: ILO.entity(),
-     sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
-     predicate: predicate
-     )
-     }*/
+    
+    //Resources
+    @State var resourceListSelection = Set<Resource>()
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Resource.name, ascending: true)],
+        animation: .default)
+    private var resources: FetchedResults<Resource>
+    var filteredResources: [Resource] {
+        return resources.filter { $0.lesson == lesson }
+    }
     
     var body: some View {
         Group {
             //if lesson.id != nil {
-            GeometryReader { gr in
-                ScrollView(.vertical) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(lesson.title ?? "No Title")
-                                .font(.title)
-                                .bold()
-                                .fixedSize(horizontal: false, vertical: true)
-                            #if !os(macOS)
-                            Text(itemFormatter.string(from: lesson.date ?? Date(timeIntervalSince1970: 0)))
-                                .font(.title2)
-                                .bold()
-                                .navigationTitle("\(lesson.type ?? "Class") Details")
-                                .navigationBarTitleDisplayMode(.inline)
-                            #else
-                            Text(itemFormatter.string(from: lesson.date ?? Date(timeIntervalSince1970: 0)))
-                                .font(.title2)
-                                .bold()
-                            #endif
-                            Text(lesson.location ?? "No Location")
-                                .font(.title3)
-                                .italic()
-                                .padding(.bottom)
+            ScrollView(.vertical) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        LessonDetails(lesson: lesson)
+                        if filteredILOs.count != 0 {
                             HStack {
-                                Text("\(lesson.iloCount) ILOs:")
-                                    .font(.headline)
-                                #if !os(macOS)
-                                EditButton()
-                                #endif
+                                Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of ILOs written")
+                                ProgressView(value: completedILOs)
+                                    .progressViewStyle(LinearProgressViewStyle())
                             }
-                            if filteredILOs.count != 0 {
-                                HStack {
-                                    Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of ILOs written")
-                                    ProgressView(value: completedILOs)
-                                        .progressViewStyle(LinearProgressViewStyle())
-                                }
-                            }
+                        }
+                        DisclosureGroup("ILOs", isExpanded: $iloSectionExpanded) {
+                        VStack(alignment: .leading) {
+                            #if !os(macOS)
+                            EditButton()
+                            #endif
                             List {
                                 ForEach(filteredILOs) { ilo in
                                     HStack {
@@ -111,11 +92,12 @@ struct DetailView: View {
                                 .onDelete(perform: deleteItems)
                                 .onMove(perform: move)
                             }
+                            .cornerRadius(10)
                             .frame(height: 200)
                             .sheet(isPresented: $isEditing, content: {
                                 #if !os(macOS)
                                 NavigationView {
-                                    EditView(iloText: listSelection.first?.title ?? "", isPresented: $isEditing, ilo: listSelection.first, lesson: lesson)
+                                    EditView(iloText: iloListSelection.first?.title ?? "", isPresented: $isEditing, ilo: iloListSelection.first, lesson: lesson)
                                 }
                                 #else
                                 EditView(iloText: listSelection.first?.title ?? "No Title", isPresented: $isEditing, ilo: listSelection.first, lesson: lesson)
@@ -136,27 +118,39 @@ struct DetailView: View {
                                 #endif
                             })
                         }
-                        .padding(.horizontal)
-                        .toolbar {
-                            ToolbarItemGroup(placement: .automatic) {
-                                #if os(macOS)
-                                Spacer()
-                                #endif
-                                Button(action: {lesson.toggleWatched(context: managedObjectContext)}, label: {
-                                    !(lesson.watched) ?
-                                        Label("Mark as Watched", systemImage: "checkmark.circle") : Label("Mark as Unwatched", systemImage: "checkmark.circle.fill")
-                                })
-                                Button(action: {
-                                    isDeleteAlertShown = true
-                                }, label: {
-                                    Label("Delete Lesson", systemImage: "trash")
-                                })
-                                .alert(isPresented: $isDeleteAlertShown) {
-                                    Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {isDeleteAlertShown = false}))
+                        }
+                        DisclosureGroup("Resources", isExpanded: $resourceSectionExpanded) {
+                            List {
+                                ForEach(filteredResources) { resource in
+                                        HStack {
+                                            Text(resource.name!)
+                                            Text(resource.url)
+                                        }
                                 }
                             }
+                            .cornerRadius(10)
+                            .frame(height: 200)
                         }
-                        Spacer()
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .automatic) {
+                    #if os(macOS)
+                    Spacer()
+                    #endif
+                    Button(action: {lesson.toggleWatched(context: managedObjectContext)}, label: {
+                        !(lesson.watched) ?
+                            Label("Mark as Watched", systemImage: "checkmark.circle") : Label("Mark as Unwatched", systemImage: "checkmark.circle.fill")
+                    })
+                    Button(action: {
+                        isDeleteAlertShown = true
+                    }, label: {
+                        Label("Delete Lesson", systemImage: "trash")
+                    })
+                    .alert(isPresented: $isDeleteAlertShown) {
+                        Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {isDeleteAlertShown = false}))
                     }
                 }
             }
@@ -166,12 +160,6 @@ struct DetailView: View {
         }
         .background(Color("SecondaryColor"))
     }
-    private let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
-    }()
     
     private let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -286,4 +274,36 @@ struct DetailView_Previews: PreviewProvider {
         }
         #endif
     }
+}
+
+struct LessonDetails: View {
+    var lesson: Lesson
+    var body: some View {
+        Text(lesson.title ?? "No Title")
+            .font(.title)
+            .bold()
+            .fixedSize(horizontal: false, vertical: true)
+        #if !os(macOS)
+        Text(itemFormatter.string(from: lesson.date ?? Date(timeIntervalSince1970: 0)))
+            .font(.title2)
+            .bold()
+            .navigationTitle("\(lesson.type ?? "Class") Details")
+            .navigationBarTitleDisplayMode(.inline)
+        #else
+        Text(itemFormatter.string(from: lesson.date ?? Date(timeIntervalSince1970: 0)))
+            .font(.title2)
+            .bold()
+        #endif
+        Text(lesson.location ?? "No Location")
+            .font(.title3)
+            .italic()
+            .padding(.bottom)
+    }
+    
+    private let itemFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
 }
