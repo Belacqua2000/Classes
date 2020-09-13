@@ -11,6 +11,7 @@ struct SidebarNavigation: View {
     
     struct SidebarItem: Hashable {
         enum SidebarTypes {
+            case summary
             case all
             case ilo
             case lessonType
@@ -34,6 +35,13 @@ struct SidebarNavigation: View {
     var body: some View {
         NavigationView {
             List(selection: $selection) {
+                NavigationLink(
+                    destination:
+                        SummaryView(),
+                    label: {
+                        Label("Summary", systemImage: "chart.pie")
+                    })
+                    .tag(SidebarItem(sidebarType: .summary, lessonTypes: nil))
                 NavigationLink(
                     destination:
                         LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil)),
@@ -97,10 +105,10 @@ struct SidebarNavigation: View {
             .navigationTitle("Classes")
             .frame(minWidth: 100, idealWidth: 150, maxHeight: .infinity)
             .listStyle(SidebarListStyle())
-            LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
+            /*LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
             if selection != [SidebarItem(sidebarType: .ilo, lessonTypes: nil)] {
                 Text("Select a Class")
-            }
+            }*/
         }
         .onAppear(perform: {
             selection = [SidebarItem(sidebarType: .all, lessonTypes: nil)]

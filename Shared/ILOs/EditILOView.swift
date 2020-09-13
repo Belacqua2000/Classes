@@ -1,5 +1,5 @@
 //
-//  EditView.swift
+//  EditILOView.swift
 //  Classes
 //
 //  Created by Nick Baughan on 10/09/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditView: View {
+struct EditILOView: View {
     @Environment(\.managedObjectContext) var viewContext
     @State var iloText: String = ""
     @Binding var isPresented: Bool
@@ -74,6 +74,6 @@ struct EditView: View {
 /*
 struct EditView_Previews: PreviewProvider {
     static var previews: some View {
-        EditView()
+        EditILOView()
     }
 }*/

@@ -59,10 +59,13 @@ struct DetailView: View {
     
     //Resources
     @State var resourceListSelection = Set<Resource>()
-    @FetchRequest(
+   /* @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Resource.name, ascending: true)],
         animation: .default)
-    private var resources: FetchedResults<Resource>
+    private var resources: FetchedResults<Resource>*/
+    private var resources: [Resource] {
+        return lesson.resource?.allObjects as? [Resource] ?? []
+    }
     var filteredResources: [Resource] {
         return resources.filter { $0.lesson == lesson }
     }
@@ -101,11 +104,11 @@ struct DetailView: View {
             }, content: {
                 #if !os(macOS)
                 NavigationView {
-                    EditView(iloText: selectedILO?.title ?? "", isPresented: $isEditingILO, ilo: selectedILO, lesson: lesson)
+                    EditILOView(iloText: selectedILO?.title ?? "", isPresented: $isEditingILO, ilo: selectedILO, lesson: lesson)
                         .navigationTitle("Edit ILO")
                 }
                 #else
-                EditView(iloText: selectedILO?.title ?? "", isPresented: $isEditingILO, ilo: selectedILO, lesson: lesson)
+                EditILOView(iloText: selectedILO?.title ?? "", isPresented: $isEditingILO, ilo: selectedILO, lesson: lesson)
                 #endif
             })
             Button(action: {isAddingILO = true}, label: {
@@ -115,12 +118,12 @@ struct DetailView: View {
             .sheet(isPresented: $isAddingILO, content: {
                 #if !os(macOS)
                 NavigationView {
-                    EditView(isPresented: $isAddingILO, lesson: lesson)
+                    EditILOView(isPresented: $isAddingILO, lesson: lesson)
                         .navigationTitle("Add ILO")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else
-                EditView(isPresented: $isAddingILO, lesson: lesson)
+                EditILOView(isPresented: $isAddingILO, lesson: lesson)
                 #endif
             })
         }
@@ -202,17 +205,21 @@ struct DetailView: View {
                             }
                         }
                         #if os(macOS)
+                        Label("ILOs", systemImage: "list.number")
+                            .font(.headline)
                         iloSection
                         #else
                         DisclosureGroup(isExpanded: $iloSectionExpanded, content: {
                             iloSection
                         }, label: {
-                            Label("ILOs", systemImage: "list.bullet")
+                            Label("ILOs", systemImage: "list.number")
                                 .font(.headline)
                         })
                         #endif
                         
                         #if os(macOS)
+                        Label("Resources", systemImage: "globe")
+                            .font(.headline)
                         resourceSection
                         #else
                         DisclosureGroup(isExpanded: $resourceSectionExpanded, content: {
@@ -249,7 +256,7 @@ struct DetailView: View {
              Text("Select a lesson")
              }*/
         }
-        .background(Color("SecondaryColor"))
+        .background(Color("SecondaryColor").edgesIgnoringSafeArea(.bottom))
     }
     
     private let numberFormatter: NumberFormatter = {
@@ -269,15 +276,6 @@ struct DetailView: View {
     
     func toggleILOWritten(ilo: ILO) {
         ilo.toggleWritten(context: managedObjectContext)
-    }
-    
-    func generateEditILOs() -> [EditILOView.editILO] {
-        var editILOs: [EditILOView.editILO] = []
-        for ilo in ilos {
-            let editILO: EditILOView.editILO = EditILOView.editILO(id: ilo.id!, text: ilo.title!, index: Int(ilo.index))
-            editILOs.append(editILO)
-        }
-        return editILOs
     }
     
     private func move(from source: IndexSet, to destination: Int) {

@@ -8,7 +8,7 @@
         <attribute name="written" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="lesson" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lesson" inverseName="ilo" inverseEntity="Lesson"/>
     </entity>
-    <entity name="Lesson" representedClassName="Lesson" syncable="YES">
+    <entity name="Lesson" representedClassName="Lesson" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="iloCount" optional="YES" attributeType="Integer 16" derived="YES" derivationExpression="ilo.@count" usesScalarValueType="YES"/>
