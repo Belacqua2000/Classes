@@ -15,23 +15,23 @@ struct AddLessonView: View {
         animation: .default)
     private var tags: FetchedResults<Tag>*/
     
-    @State var lesson: Lesson? = nil
+    @Binding var lesson: Lesson?
     @Binding var isPresented: Bool
     @State var type: Lesson.LessonType = .lecture
     @State var tags = [Tag]()
     
-    @State var title: String
-    @State var location: String
-    @State var teacher: String
-    @State var date: Date
-    @State var isCompleted: Bool
+    @State var title: String = ""
+    @State var location: String = ""
+    @State var teacher: String = ""
+    @State var date: Date = Date()
+    @State var isCompleted: Bool = false
     var body: some View {
         #if os(macOS)
-        AddLessonForm(lesson: lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+        AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
             .padding()
         #else
         NavigationView {
-            AddLessonForm(tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+            AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
             .navigationTitle("Add Class")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -61,7 +61,8 @@ struct AddLessonView: View {
 
 struct AddLessonForm: View {
     @Environment(\.managedObjectContext) var managedObjectContext
-    var lesson: Lesson?
+    @State private var hasUpdatedFields = false
+    @Binding var lesson: Lesson?
     @Binding var tags: [Tag]
     @Binding var isPresented: Bool
     @Binding var type: Lesson.LessonType
@@ -121,6 +122,19 @@ struct AddLessonForm: View {
                 .navigationTitle("Choose Tags")
             #endif
         }
+        .onAppear(perform: {
+            guard !hasUpdatedFields else { return }
+            if let lesson = self.lesson {
+                hasUpdatedFields = true
+                date = lesson.date ?? Date()
+                title = lesson.title ?? ""
+                isCompleted = lesson.watched
+                location = lesson.location ?? ""
+                teacher = lesson.teacher ?? ""
+                type = Lesson.LessonType(rawValue: lesson.type ?? "") ?? .lecture
+                tags = lesson.tag?.allObjects as! [Tag]
+            }
+        })
     }
     func createLesson() {
         if lesson == nil {
@@ -134,6 +148,6 @@ struct AddLessonForm: View {
 
 struct AddLessonView_Previews: PreviewProvider {
     static var previews: some View {
-        AddLessonView(isPresented: .constant(true), type: Lesson.LessonType.lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
+        AddLessonView(lesson: .constant(nil), isPresented: .constant(true), type: Lesson.LessonType.lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
     }
 }

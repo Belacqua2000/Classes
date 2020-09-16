@@ -27,6 +27,7 @@ struct LessonsListContent: View {
     @State var selection = Set<Lesson>()
     @State var selectedLesson: Lesson?
     @State var sheetIsPresented: Bool = false
+    @State private var deleteAlertShown = false
     
     @Binding var filter: LessonsView.Filter
     @Environment(\.managedObjectContext) private var viewContext
@@ -102,13 +103,17 @@ struct LessonsListContent: View {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
-                        Button(action: {lesson.delete(context: viewContext)}, label: {
+                        Button(action: {deleteLessonAlert(lesson: lesson)}, label: {
                             Label("Delete", systemImage: "trash")
                         })
+                        .foregroundColor(.red)
                     }/*@END_MENU_TOKEN@*/)
                 //#endif
             }
             .onDelete(perform: deleteItems)
+            .alert(isPresented: $deleteAlertShown) {
+                Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedLesson = nil}))
+            }
         }
         .onAppear(perform: {lessonCount = filteredLessons.count})
         .animation(.default)
@@ -140,16 +145,10 @@ struct LessonsListContent: View {
             }
         }
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
-            //selectedLesson = nil
+            selectedLesson = nil
         }, content: {
-            if selectedLesson != nil {
-                let tags = selectedLesson!.tag?.allObjects as? [Tag]
-                AddLessonView(lesson: selectedLesson!, isPresented: $sheetIsPresented, type: Lesson.LessonType(rawValue: selectedLesson!.type!)!, tags: tags ?? [], title: selectedLesson!.title!, location: selectedLesson!.location!, teacher: selectedLesson!.teacher!, date: selectedLesson!.date!, isCompleted: selectedLesson!.watched)
+                AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented)
                     .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
-            } else {
-                AddLessonView(isPresented: $sheetIsPresented, type: .lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
-                    .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
-            }
         })
         .toolbar {
             #if os(iOS)
@@ -198,12 +197,22 @@ struct LessonsListContent: View {
         sheetIsPresented = true
     }
     
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteLessonAlert(lesson: Lesson) {
+        selectedLesson = lesson
+        deleteAlertShown = true
+    }
+    
+    private func deleteLesson() {
         withAnimation {
-            offsets.map { filteredLessons[$0] }.forEach { lesson in
-                lesson.delete(context: viewContext)
-            }
+            selectedLesson?.delete(context: viewContext)
         }
+        selectedLesson = nil
+    }
+    
+    private func deleteItems(offsets: IndexSet) {
+            offsets.map { filteredLessons[$0] }.forEach { lesson in
+                deleteLessonAlert(lesson: lesson)
+            }
     }
     
     private let itemFormatter: DateFormatter = {

@@ -122,11 +122,9 @@ struct SidebarNavigation: View {
     }
     
     func delete(offsets: IndexSet) {
-        withAnimation {
             offsets.map { tags[$0] }.forEach { tag in
-                tag.delete(context: viewContext)
+                deleteTagAlert(tag: tag)
             }
-        }
     }
     
     private func editTag(tag: Tag) {
@@ -140,7 +138,9 @@ struct SidebarNavigation: View {
     }
     
     private func deleteTag() {
-        selectedTag?.delete(context: viewContext)
+        withAnimation {
+            selectedTag?.delete(context: viewContext)
+        }
         selectedTag = nil
     }
     

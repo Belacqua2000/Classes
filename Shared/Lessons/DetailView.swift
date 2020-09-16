@@ -23,6 +23,7 @@ struct DetailView: View {
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = false
     
     @ObservedObject var lesson: Lesson
+    @State var lessonToEdit: Lesson?
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
         animation: .default)
@@ -92,6 +93,7 @@ struct DetailView: View {
     
     var editInfoButton: some View {
         Button(action: {
+            lessonToEdit = lesson
             isEditingLesson = true
         }, label: {
             Label("Edit Info", systemImage: "rectangle.and.pencil.and.ellipsis")
@@ -151,9 +153,12 @@ struct DetailView: View {
                         .navigationBarBackButtonHidden(false)
                         #endif
                         EmptyView()
-                            .sheet(isPresented: $isEditingLesson) {
-                                AddLessonView(lesson: lesson, isPresented: $isEditingLesson, tags: lesson.tag?.allObjects as? [Tag] ?? [], title: lesson.title ?? "", location: lesson.location ?? "", teacher: lesson.teacher ?? "", date: lesson.date ?? Date(), isCompleted: lesson.watched)
-                            }
+                            .sheet(isPresented: $isEditingLesson, onDismiss: {
+                                lessonToEdit = nil
+                            }, content: {
+                                AddLessonView(lesson: $lessonToEdit, isPresented: $isEditingLesson)
+                                    .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
+                            })
                     }
                     .padding(.horizontal)
                 }
@@ -218,7 +223,7 @@ struct DetailView_Previews: PreviewProvider {
 }
 
 struct LessonDetails: View {
-    var lesson: Lesson
+    @ObservedObject var lesson: Lesson
     var body: some View {
         Text(lesson.title ?? "No Title")
             .font(.title)
@@ -286,6 +291,14 @@ struct ILOSection: View {
     @State var isAddingILO: Bool = false
     @State private var selectedILO: ILO? = nil
     
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
+        animation: .default)
+    private var ilos: FetchedResults<ILO>
+    var filteredILOs: [ILO] {
+        return ilos.filter { $0.lesson == lesson }
+    }
+    
     var listHeight: CGFloat {
         #if os(macOS)
         return 100
@@ -294,13 +307,13 @@ struct ILOSection: View {
         #endif
     }
     
-    var filteredILOs: [ILO] {
+    /*var filteredILOs: [ILO] {
         //return resources.filter { $0.lesson == lesson }
         let ilos = lesson.ilo?.allObjects as? [ILO] ?? []
         return ilos.sorted(by: {
             $0.index < $1.index
         })
-    }
+    }*/
     
     var body: some View {
         VStack(alignment: .leading) {

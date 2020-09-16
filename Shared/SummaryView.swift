@@ -113,7 +113,8 @@ struct SummaryView: View {
                 }
             }
             .sheet(isPresented: $addLessonViewShown) {
-                AddLessonView(isPresented: $addLessonViewShown, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
+                AddLessonView(lesson: .constant(nil), isPresented: $addLessonViewShown)
+                    .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
