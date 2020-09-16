@@ -14,17 +14,17 @@ struct ILOsView: View {
         animation: .default)
     private var ilos: FetchedResults<ILO>
     var body: some View {
-        List(ilos) { ilo in
-            Text(ilo.title!)
-        }
-        .toolbar {
-            Button(action: {}) {
-                Label("Delete", systemImage: "trash")
+        if ilos.count > 0 {
+            List(ilos) { ilo in
+                Text(ilo.title!)
+                    .navigationTitle("All ILOs")
             }
+            .listStyle(InsetListStyle())
+        } else {
+            Text("No ILOs")
+                .navigationTitle("All ILOs")
         }
-        .navigationTitle("All ILOs")
         //.navigationSubtitle("\(ilos.count) ILOs")
-        .listStyle(InsetListStyle())
     }
 }
 
