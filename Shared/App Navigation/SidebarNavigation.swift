@@ -25,6 +25,8 @@ struct SidebarNavigation: View {
     @Environment(\.managedObjectContext) var viewContext
     
     @State var addTagShowing: Bool = false
+    @State var selectedTag: Tag?
+    @State private var deleteAlertShown = false
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
@@ -46,7 +48,7 @@ struct SidebarNavigation: View {
                     destination:
                         LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil)),
                     label: {
-                        Label("All Classes", systemImage: "books.vertical")
+                        Label("All Lessons", systemImage: "books.vertical")
                     })
                     .tag(SidebarItem(sidebarType: .all, lessonTypes: nil))
                 
@@ -83,22 +85,26 @@ struct SidebarNavigation: View {
                                 )
                             })
                             .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
-                                Button(action: {addTagShowing = true}, label: {
+                                Button(action: {editTag(tag: tag)}, label: {
                                     Label("Edit", systemImage: "square.and.pencil")
                                 })
-                                Button(action: {tag.delete(context: viewContext)}, label: {
+                                Button(action: {deleteTagAlert(tag: tag)}, label: {
                                     Label("Delete", systemImage: "trash")
                                 })
                             }/*@END_MENU_TOKEN@*/)
                             .tag(SidebarItem(sidebarType: .tag, lessonTypes: nil, tag: tag))
                     }
                     .onDelete(perform: delete)
+                    .alert(isPresented: $deleteAlertShown) {
+                        Alert(title: Text("Delete Tag"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteTag), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedTag = nil}))
+                    }
                     Button(action: {addTagShowing = true}, label: {
                         Label("Add Tag", systemImage: "plus.circle")
                     })
-                    .tag(SidebarItem(sidebarType: .tag, lessonTypes: nil, tag: nil))
-                    .sheet(isPresented: $addTagShowing, content: {
-                        AddTagView(isPresented: $addTagShowing)
+                    .sheet(isPresented: $addTagShowing, onDismiss: {
+                        selectedTag = nil
+                    }, content: {
+                        AddTagView(isPresented: $addTagShowing, tag: $selectedTag)
                     })
                 }
             }
@@ -112,7 +118,6 @@ struct SidebarNavigation: View {
         }
         .onAppear(perform: {
             selection = [SidebarItem(sidebarType: .all, lessonTypes: nil)]
-            print(tags)
         })
     }
     
@@ -122,6 +127,21 @@ struct SidebarNavigation: View {
                 tag.delete(context: viewContext)
             }
         }
+    }
+    
+    private func editTag(tag: Tag) {
+        selectedTag = tag
+        addTagShowing = true
+    }
+    
+    private func deleteTagAlert(tag: Tag) {
+        selectedTag = tag
+        deleteAlertShown = true
+    }
+    
+    private func deleteTag() {
+        selectedTag?.delete(context: viewContext)
+        selectedTag = nil
     }
     
 }

@@ -30,6 +30,20 @@ struct AllocateTagView: View {
         return t
     }
     
+    
+    
+    var selectedTagsView: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(selectedTags) { tag in
+                        Button(action: { selectedTag(tag) }, label: {
+                            TagIcon(tag: tag)
+                        })
+                }
+            }
+        }
+    }
+    
     var body: some View {
         List {
             ForEach(tags) { tag in
@@ -43,6 +57,7 @@ struct AllocateTagView: View {
                 }
             }
         }
+        .navigationTitle("Allocate Tags")
         //.navigationBarTitleDisplayMode(.inline)
     }
     

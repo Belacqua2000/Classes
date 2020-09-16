@@ -17,6 +17,8 @@ struct LessonsView: View {
         var tag: Tag?
     }
     
+    @State var lessonCount: Int = 0
+    
     var titleString: String {
         switch filter.filterType {
         case .all:
@@ -34,11 +36,12 @@ struct LessonsView: View {
     var body: some View {
         #if os(macOS)
         NavigationView {
-            LessonsListContent(filter: $filter)
-                .navigationTitle(titleString)
+            LessonsListContent(lessonCount: $lessonCount, filter: $filter)
         }
+        .navigationTitle(titleString)
+        .navigationSubtitle("\(lessonCount) Lessons")
         #else
-        LessonsListContent(filter: $filter)
+        LessonsListContent(lessonCount: $lessonCount, filter: $filter)
                 .navigationTitle(titleString)
         #endif
     }

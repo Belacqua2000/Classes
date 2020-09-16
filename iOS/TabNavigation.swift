@@ -10,18 +10,30 @@ import SwiftUI
 struct TabNavigation: View {
     @State private var selection: Tab = .all
     @State private var addTagShowing = false
+    @State private var deleteAlertShown = false
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
         animation: .default)
     private var tags: FetchedResults<Tag>
+    
+    @State private var selectedTag: Tag?
     var body: some View {
         TabView(selection: $selection) {
             NavigationView {
-                LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
+                SummaryView()
             }
             .tabItem {
-                Label("All Lessons", systemImage: "books.vertical")
+                Label("Summary", systemImage: "chart.pie.fill")
+            }
+            .tag(Tab.summary)
+            
+            NavigationView {
+                LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
+            }
+            .navigationViewStyle(StackNavigationViewStyle())
+            .tabItem {
+                Label("All Lessons", systemImage: "books.vertical.fill")
             }
             .tag(Tab.all)
             
@@ -44,22 +56,31 @@ struct TabNavigation: View {
                                     )
                                 })
                                 .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
-                                    Button(action: {tag.delete(context: viewContext)}, label: {
+                                    Button(action: { editTag(tag: tag) }, label: {
+                                        Label("Edit", systemImage: "square.and.pencil")
+                                    })
+                                    Button(action: {deleteTagAlert(tag: tag)}, label: {
                                         Label("Delete", systemImage: "trash")
                                     })
                                 }/*@END_MENU_TOKEN@*/)
                         }
-                        Button(action: {addTagShowing = true}, label: {
+                        Button(action: {selectedTag = nil; addTagShowing = true}, label: {
                             Label("Add Tag", systemImage: "plus.circle")
                         })
-                        .sheet(isPresented: $addTagShowing, content: {
-                            AddTagView(isPresented: $addTagShowing)
+                        .sheet(isPresented: $addTagShowing, onDismiss: {
+                            selectedTag = nil
+                        },content: {
+                            AddTagView(isPresented: $addTagShowing, tag: $selectedTag)
                         })
+                        .alert(isPresented: $deleteAlertShown) {
+                            Alert(title: Text("Delete Tag"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteTag), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedTag = nil}))
+                        }
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
                 .navigationTitle("Lesson Types")
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .tabItem {
                 Label("Browse", systemImage: "list.bullet")
             }
@@ -69,10 +90,25 @@ struct TabNavigation: View {
                 ILOsView()
             }
             .tabItem {
-                Label("ILOs", systemImage: "doc")
+                Label("ILOs", systemImage: "doc.fill")
             }
             .tag(Tab.ilo)
         }
+    }
+    
+    private func deleteTagAlert(tag: Tag) {
+        selectedTag = tag
+        deleteAlertShown = true
+    }
+    
+    private func deleteTag() {
+        selectedTag?.delete(context: viewContext)
+        selectedTag = nil
+    }
+    
+    private func editTag(tag: Tag) {
+        selectedTag = tag
+        addTagShowing = true
     }
 }
 
@@ -80,6 +116,7 @@ struct TabNavigation: View {
 
 extension TabNavigation {
     enum Tab {
+        case summary
         case all
         case lessonTypes
         case ilo

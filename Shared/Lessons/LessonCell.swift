@@ -19,7 +19,7 @@ struct LessonCell: View {
                     title: { VStack(alignment: .leading) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
-                        Text(itemFormatter.string(from: lesson.date ?? Date()))
+                        Text("\(lesson.date ?? Date(), style: .date) \(lesson.date ?? Date(), style: .time)")
                             .font(.subheadline)
                         Text(lesson.teacher ?? "No Teacher")
                             .font(.footnote)

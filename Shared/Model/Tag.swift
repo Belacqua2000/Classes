@@ -26,6 +26,16 @@ extension Tag {
             fatalError("Failed to save due to \(error)")
         }
     }
+    func update(in managedObjectContext: NSManagedObjectContext, name: String, color: Color) {
+        self.name = name
+        self.color = UIColor(color)
+        self.id = UUID()
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
 }
 #endif
 
@@ -45,6 +55,17 @@ extension Tag {
             try managedObjectContext.save()
         } catch  {
             fatalError("Failed to save due to \(error)")
+        }
+    }
+    
+    func update(in managedObjectContext: NSManagedObjectContext, name: String, color: Color) {
+        self.name = name
+        self.color = NSColor(color)
+        self.id = UUID()
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
         }
     }
 }

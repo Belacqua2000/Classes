@@ -10,6 +10,7 @@ import SwiftUI
 struct AddTagView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Binding var isPresented: Bool
+    @Binding var tag: Tag?
     @State var tagName: String = ""
     @State var tagColor: Color = Color.red
     
@@ -32,11 +33,16 @@ struct AddTagView: View {
             }
             #else
             ColorPicker(selection: $tagColor, label: {
-                Label("Tag Color", systemImage: "tag.circle")
+                Label("Tag Color", systemImage: "paintpalette")
             })
             #endif
         }
-        .padding()
+        .onAppear(perform: {
+            if let tag = tag {
+                tagName = tag.name ?? ""
+                tagColor = tag.swiftUIColor ?? Color.red
+            }
+        })
     }
     
     var body: some View {
@@ -53,14 +59,18 @@ struct AddTagView: View {
                 }
                 .navigationTitle("Add Tag")
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        //.navigationViewStyle(StackNavigationViewStyle())
         #else
         form
         #endif
     }
     
     func save() {
-        Tag.create(in: viewContext, name: tagName, color: tagColor)
+        if tag != nil {
+            tag?.update(in: viewContext, name: tagName, color: tagColor)
+        } else {
+            Tag.create(in: viewContext, name: tagName, color: tagColor)
+        }
         isPresented = false
     }
     
@@ -73,7 +83,7 @@ struct AddTagView_Previews: PreviewProvider {
     static var previews: some View {
         #if !os(macOS)
         NavigationView {
-            AddTagView(isPresented: .constant(true))
+            AddTagView(isPresented: .constant(true), tag: .constant(nil))
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else

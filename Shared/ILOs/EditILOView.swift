@@ -11,7 +11,7 @@ struct EditILOView: View {
     @Environment(\.managedObjectContext) var viewContext
     @State var iloText: String = ""
     @Binding var isPresented: Bool
-    var ilo: ILO?
+    @Binding var ilo: ILO?
     var lesson: Lesson
     
     var saveButton: some View {
@@ -44,8 +44,12 @@ struct EditILOView: View {
                 .navigationTitle("Add ILO")
             #endif
         }
+        .onAppear(perform: {
+            if let ilo = ilo {
+                iloText = ilo.title ?? ""
+            }
+        })
         .frame(idealWidth: 300, idealHeight: 50)
-        .padding()
         .toolbar {
             #if !os(macOS)
             ToolbarItem(placement: .confirmationAction) {

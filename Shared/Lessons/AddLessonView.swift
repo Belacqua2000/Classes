@@ -20,11 +20,11 @@ struct AddLessonView: View {
     @State var type: Lesson.LessonType = .lecture
     @State var tags = [Tag]()
     
-    @State var title: String = ""
-    @State var location: String = ""
-    @State var teacher: String = ""
-    @State var date: Date = Date()
-    @State var isCompleted: Bool = false
+    @State var title: String
+    @State var location: String
+    @State var teacher: String
+    @State var date: Date
+    @State var isCompleted: Bool
     var body: some View {
         #if os(macOS)
         AddLessonForm(lesson: lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
@@ -82,7 +82,12 @@ struct AddLessonForm: View {
             }
             HStack {
                 Image(systemName: "graduationcap")
+                #if os(macOS)
                 TextField("Teacher", text: $teacher)
+                #else
+                TextField("Teacher", text: $teacher)
+                    .textContentType(.name)
+                #endif
             }
             DatePicker(selection: $date) {
                 Label("Date", systemImage: "calendar")
@@ -129,6 +134,6 @@ struct AddLessonForm: View {
 
 struct AddLessonView_Previews: PreviewProvider {
     static var previews: some View {
-        AddLessonView(isPresented: .constant(true), type: Lesson.LessonType.lecture)
+        AddLessonView(isPresented: .constant(true), type: Lesson.LessonType.lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
     }
 }

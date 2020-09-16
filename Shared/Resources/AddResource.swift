@@ -12,7 +12,7 @@ struct AddResource: View {
     @State var resourceText: String = ""
     @State var resourceURL: String = ""
     @Binding var isPresented: Bool
-    @State var resource: Resource?
+    @Binding var resource: Resource?
     var lesson: Lesson?
     
     var saveButton: some View {
@@ -45,12 +45,18 @@ struct AddResource: View {
             TextField("Resource Name", text: $resourceText)
                 .navigationTitle("Add ILO")
             TextField("Resource URL", text: $resourceURL)
-                .keyboardType(.URL)
                 .textContentType(.URL)
+                .keyboardType(.URL)
+                .textCase(.lowercase)
             #endif
         }
+        .onAppear(perform: {
+            if let resource = resource {
+                resourceText = resource.name ?? ""
+                resourceURL = resource.url?.absoluteString ?? ""
+            }
+        })
         .frame(idealWidth: 300, idealHeight: 100)
-        .padding()
         .toolbar {
             #if !os(macOS)
             ToolbarItem(placement: .confirmationAction) {
@@ -89,7 +95,7 @@ struct AddResource_Previews: PreviewProvider {
     static var previews: some View {
         #if !os(macOS)
         NavigationView {
-            AddResource(isPresented: .constant(true), lesson: nil)
+            AddResource(isPresented: .constant(true), resource: .constant(nil), lesson: nil)
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else

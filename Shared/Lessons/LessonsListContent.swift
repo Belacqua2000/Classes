@@ -9,18 +9,23 @@ import SwiftUI
 
 struct LessonsListContent: View {
     
+    // This sets the navigationSubtitle of the PARENT NavigationView
+    @Binding var lessonCount: Int
+    
     private enum Sort: String, CaseIterable, Identifiable {
         var id: String { return rawValue }
         case dateAscending = "Oldest"
         case dateDescending = "Newest"
         case name = "Name"
     }
+    #if !os(macOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
     
-  
     @AppStorage("currentLessonSort") private var sort: Sort = .dateDescending
     
     @State var selection = Set<Lesson>()
-    @State var selectedLesson: Lesson? = nil
+    @State var selectedLesson: Lesson?
     @State var sheetIsPresented: Bool = false
     
     @Binding var filter: LessonsView.Filter
@@ -70,39 +75,43 @@ struct LessonsListContent: View {
     }
     
     var lessonList: some View {
-            List(selection: $selection) {
-                ForEach(filteredLessons, id: \.self) { lesson in
-                    NavigationLink(
-                        destination:
-                            DetailView(lesson: lesson)
-                        ,
-                        label: {
-                            LessonCell(lesson: lesson)
+        List(selection: $selection) {
+            ForEach(filteredLessons, id: \.self) { lesson in
+                NavigationLink(
+                    destination:
+                        DetailView(lesson: lesson)
+                    ,
+                    label: {
+                        LessonCell(lesson: lesson)
+                    })
+                    .onDrag({
+                        let itemProvider = NSItemProvider(object: lesson.id!.uuidString as NSString)
+                        return(itemProvider)
+                    })
+                    .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
+                        Button(action: {
+                            let lesson = lesson as Lesson
+                            selectedLesson = lesson
+                            print("lesson: \(lesson)")
+                            print("selectedlesson \(selectedLesson)")
+                            sheetIsPresented = true
+                        }, label: {
+                            Label("Edit", systemImage: "square.and.pencil")
                         })
-                        .onDrag({
-                            let itemProvider = NSItemProvider(object: lesson.id!.uuidString as NSString)
-                            return(itemProvider)
-                        })
-                        .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
-                            Button(action: {
-                                selectedLesson = lesson
-                                sheetIsPresented = true
-                            }, label: {
-                                Label("Edit", systemImage: "square.and.pencil")
-                            })
-                            Button(action: {lesson.toggleWatched(context: viewContext)}, label: {
-                                !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
+                        Button(action: {lesson.toggleWatched(context: viewContext)}, label: {
+                            !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
-                            })
-                            Button(action: {lesson.delete(context: viewContext)}, label: {
-                                Label("Delete", systemImage: "trash")
-                            })
-                        }/*@END_MENU_TOKEN@*/)
-                    //#endif
-                }
-                .onDelete(perform: deleteItems)
+                        })
+                        Button(action: {lesson.delete(context: viewContext)}, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                    }/*@END_MENU_TOKEN@*/)
+                //#endif
             }
-            .listStyle(InsetListStyle())
+            .onDelete(perform: deleteItems)
+        }
+        .onAppear(perform: {lessonCount = filteredLessons.count})
+        .animation(.default)
     }
     
     var body: some View {
@@ -110,7 +119,7 @@ struct LessonsListContent: View {
             if filteredLessons.count != 0 {
                 #if os(macOS)
                 lessonList
-                    .navigationSubtitle("\(filteredLessons.count) Lessons")
+                    .listStyle(InsetListStyle())
                 #else
                 Picker("Sort", selection: $sort, content: {
                     ForEach(Sort.allCases) { sort in
@@ -119,22 +128,26 @@ struct LessonsListContent: View {
                 })
                 .padding(.horizontal)
                 .pickerStyle(SegmentedPickerStyle())
-                lessonList
+                if horizontalSizeClass == .compact {
+                    lessonList
+                } else {
+                    lessonList
+                }
                 #endif
             } else {
-                Text("No Classes.  Click the + button in the toolbar to create one.")
+                Text("No Lessons.  Click the + button in the toolbar to create one.")
                     .padding()
             }
         }
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
-            selectedLesson = nil
+            //selectedLesson = nil
         }, content: {
-            if let lesson = selectedLesson {
-                let tags = lesson.tag?.allObjects as? [Tag]
-                AddLessonView(lesson: lesson, isPresented: $sheetIsPresented, type: Lesson.LessonType(rawValue: lesson.type!)!, tags: tags ?? [], title: lesson.title!, location: lesson.location!, teacher: lesson.teacher!, date: lesson.date!, isCompleted: lesson.watched)
+            if selectedLesson != nil {
+                let tags = selectedLesson!.tag?.allObjects as? [Tag]
+                AddLessonView(lesson: selectedLesson!, isPresented: $sheetIsPresented, type: Lesson.LessonType(rawValue: selectedLesson!.type!)!, tags: tags ?? [], title: selectedLesson!.title!, location: selectedLesson!.location!, teacher: selectedLesson!.teacher!, date: selectedLesson!.date!, isCompleted: selectedLesson!.watched)
                     .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
             } else {
-                AddLessonView(isPresented: $sheetIsPresented, type: .lecture)
+                AddLessonView(isPresented: $sheetIsPresented, type: .lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
                     .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
             }
         })
@@ -145,29 +158,29 @@ struct LessonsListContent: View {
             ToolbarItemGroup(placement: .automatic) {
                 #if os(macOS)
                 Menu(content: {
-                        Section(header: Text("Sort")) {
-                    Button(action: {
-                        sort = .dateAscending
-                    }, label: {
-                        Label("Oldest", systemImage: "calendar")
-                    })
-                    .disabled(sort == .dateAscending)
-                    .help("Sort the list of lessons in an ascending date order.")
-                    Button(action: {
-                        sort = .dateDescending
-                    }, label: {
-                        Label("Newest", systemImage: "calendar")
-                    })
-                    .disabled(sort == .dateDescending)
-                    .help("Sort the list of lessons in a descending date order.")
-                    Button(action: {
-                        sort = .name
-                    }, label: {
-                        Label("Name", systemImage: "calendar")
-                    })
-                    .disabled(sort == .name)
-                    .help("Sort the list of lessons by name.")
-                        }
+                    Section(header: Text("Sort")) {
+                        Button(action: {
+                            sort = .dateAscending
+                        }, label: {
+                            Label("Oldest", systemImage: "calendar")
+                        })
+                        .disabled(sort == .dateAscending)
+                        .help("Sort the list of lessons in an ascending date order.")
+                        Button(action: {
+                            sort = .dateDescending
+                        }, label: {
+                            Label("Newest", systemImage: "calendar")
+                        })
+                        .disabled(sort == .dateDescending)
+                        .help("Sort the list of lessons in a descending date order.")
+                        Button(action: {
+                            sort = .name
+                        }, label: {
+                            Label("Name", systemImage: "calendar")
+                        })
+                        .disabled(sort == .name)
+                        .help("Sort the list of lessons by name.")
+                    }
                 }, label: {
                     Label("Sort and Filter", systemImage: "line.horizontal.3.decrease.circle")
                 })
@@ -178,7 +191,7 @@ struct LessonsListContent: View {
                 })
                 .help("Add a New Lesson")
             }
-    }
+        }
     }
     
     func addLesson() {
