@@ -23,7 +23,7 @@ struct LessonDetails: View {
             Image(systemName: "calendar")
         })
         .font(.title2)
-        .navigationTitle("\(lesson.type ?? "Class") Details")
+        .navigationTitle("\(lesson.type ?? "Lesson") Details")
         .navigationBarTitleDisplayMode(.inline)
         #else
         Label(title: {

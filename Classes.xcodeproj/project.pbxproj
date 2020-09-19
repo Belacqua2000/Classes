@@ -22,6 +22,8 @@
 		1712122C2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
 		173C7695251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */; };
 		173C7696251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */; };
+		173C769C25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
+		173C769D25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
 		1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
 		1768DED02514CB5B008CDCAC /* ILOSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DECF2514CB5B008CDCAC /* ILOSection.swift */; };
@@ -110,6 +112,7 @@
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
 		173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentHelpers.swift; sourceTree = "<group>"; };
+		173C769B25162148003FFA6A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1768DEC42514CB41008CDCAC /* LessonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetails.swift; sourceTree = "<group>"; };
 		1768DECF2514CB5B008CDCAC /* ILOSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOSection.swift; sourceTree = "<group>"; };
 		1768DED62514CB68008CDCAC /* ResourceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSection.swift; sourceTree = "<group>"; };
@@ -192,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
+				173C769B25162148003FFA6A /* OnboardingView.swift */,
 				173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */,
 				17C9737D250E2A62000ACF16 /* SummaryView.swift */,
 				17E50BCB250518A100BA8618 /* SettingsView.swift */,
@@ -498,6 +502,7 @@
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C7695251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */,
+				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */,
@@ -531,6 +536,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				173C769D25162148003FFA6A /* OnboardingView.swift in Sources */,
 				171212262503708000EE7423 /* ClassesApp.swift in Sources */,
 				17ABF3512507E789000D4048 /* ILOsView.swift in Sources */,
 				176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,

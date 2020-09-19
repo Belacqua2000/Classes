@@ -33,7 +33,7 @@ struct AddLessonView: View {
         #else
         NavigationView {
             AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
-            .navigationTitle("Add Class")
+                .navigationTitle(lesson == nil ? "Add Lesson" : "Edit Lesson")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(action: createLesson, label: {

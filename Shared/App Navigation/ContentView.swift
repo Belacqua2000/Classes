@@ -10,6 +10,8 @@ import CoreData
 
 struct ContentView: View {
     let environmentHelpers = EnvironmentHelpers()
+    @AppStorage("firstLaunch") var firstLaunch = true
+    @State var sheetPresented = false
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -18,11 +20,17 @@ struct ContentView: View {
 
     var body: some View {
         #if os(iOS)
+        Group {
         if horizontalSizeClass == .compact {
             TabNavigation().environmentObject(environmentHelpers)
         } else {
             SidebarNavigation().environmentObject(environmentHelpers)
         }
+        }
+        .sheet(isPresented: $firstLaunch) {
+            OnboardingView(isPresented: $firstLaunch)
+        }
+        .onAppear()
         #else
         SidebarNavigation()
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
