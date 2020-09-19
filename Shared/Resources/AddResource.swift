@@ -19,6 +19,7 @@ struct AddResource: View {
         Button(action: save, label: {
             Text("Save")
         })
+        .disabled(resourceText == "")
         .keyboardShortcut(.defaultAction)
     }
     
@@ -75,7 +76,6 @@ struct AddResource: View {
         } else {
             Resource.create(in: viewContext, title: resourceText, lesson: lesson!, url: url)
         }
-        lesson!.updateILOIndices(in: viewContext)
         isPresented = false
     }
     
@@ -99,7 +99,7 @@ struct AddResource_Previews: PreviewProvider {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else
-        AddResource(isPresented: .constant(true), lesson: nil)
+        AddResource(isPresented: .constant(true), resource: .constant(nil), lesson: nil)
         #endif
     }
 }

@@ -14,6 +14,7 @@ struct AllocateTagView: View {
         animation: .default)
     private var tags: FetchedResults<Tag>
     @Binding var selectedTags: [Tag]
+    @State private var sheetIsPresented: Bool = false
     
     private struct SelectableTag: Identifiable {
         var id = UUID()
@@ -56,6 +57,18 @@ struct AllocateTagView: View {
                     })
                 }
             }
+        }
+        .toolbar {
+            #if !os(macOS)
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: {
+                    sheetIsPresented = true
+                }, label: {Label("Add Tag", systemImage: "plus")})
+                .sheet(isPresented: $sheetIsPresented) {
+                    AddTagView(isPresented: $sheetIsPresented, tag: .constant(nil))
+                }
+            }
+            #endif
         }
         .navigationTitle("Allocate Tags")
         //.navigationBarTitleDisplayMode(.inline)

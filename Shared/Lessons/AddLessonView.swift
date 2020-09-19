@@ -25,19 +25,21 @@ struct AddLessonView: View {
     @State var teacher: String = ""
     @State var date: Date = Date()
     @State var isCompleted: Bool = false
+    @State var notes: String = ""
     var body: some View {
         #if os(macOS)
         AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
             .padding()
         #else
         NavigationView {
-            AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+            AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
             .navigationTitle("Add Class")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(action: createLesson, label: {
                         Text("Save")
                     })
+                    .disabled(title == "")
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {isPresented = false}, label: {
@@ -51,9 +53,9 @@ struct AddLessonView: View {
     }
     func createLesson() {
         if lesson == nil {
-            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true, tags: tags)
+            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true, tags: tags, notes: notes)
         } else {
-            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags)
+            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags, notes: notes)
         }
         isPresented = false
     }
@@ -71,37 +73,44 @@ struct AddLessonForm: View {
     @Binding var teacher: String
     @Binding var date: Date
     @Binding var isCompleted: Bool
+    @Binding var notes: String
     var body: some View {
         Form {
-            HStack {
-                Image(systemName: "textformat")
-                TextField("Title", text: $title)
-            }
-            HStack {
-                Image(systemName: "mappin")
-                TextField("Location", text: $location)
-            }
-            HStack {
-                Image(systemName: "graduationcap")
-                #if os(macOS)
-                TextField("Teacher", text: $teacher)
-                #else
-                TextField("Teacher", text: $teacher)
-                    .textContentType(.name)
-                #endif
-            }
-            DatePicker(selection: $date) {
-                Label("Date", systemImage: "calendar")
-            }
-            Picker(selection: $type, label: Label("Lesson Type", systemImage: "book"), content: /*@START_MENU_TOKEN@*/{
-                ForEach(Lesson.LessonType.allCases) { type in
-                    Text(type.rawValue).tag(type)
+            Section {
+                HStack {
+                    Image(systemName: "textformat")
+                    TextField("Title", text: $title)
                 }
-            }/*@END_MENU_TOKEN@*/)
-            .pickerStyle(DefaultPickerStyle())
-            Toggle(isOn: $isCompleted, label: {
-                Text("Watched")
-            })
+                HStack {
+                    Image(systemName: "mappin")
+                    TextField("Location", text: $location)
+                }
+                HStack {
+                    Image(systemName: "graduationcap")
+                    #if os(macOS)
+                    TextField("Teacher", text: $teacher)
+                    #else
+                    TextField("Teacher", text: $teacher)
+                        .textContentType(.name)
+                    #endif
+                }
+                DatePicker(selection: $date) {
+                    Label("Date", systemImage: "calendar")
+                }
+                Picker(selection: $type, label: Label("Lesson Type", systemImage: "book"), content: /*@START_MENU_TOKEN@*/{
+                    ForEach(Lesson.LessonType.allCases) { type in
+                        Text(type.rawValue).tag(type)
+                    }
+                }/*@END_MENU_TOKEN@*/)
+                .pickerStyle(DefaultPickerStyle())
+                Toggle(isOn: $isCompleted, label: {
+                    Text("Watched")
+                })
+            }
+            Section(header: Text("Notes")) {
+                TextEditor(text: $notes)
+                    .frame(height: 200)
+            }
             #if os(macOS)
             HStack {
                 Spacer()
@@ -112,14 +121,16 @@ struct AddLessonForm: View {
                 Button(action: createLesson, label: {
                     Text("Save")
                 })
+                .disabled(title == "")
                 .keyboardShortcut(.defaultAction)
             }
             #else
-            NavigationLink(destination: AllocateTagView(selectedTags: $tags),
-                label: {
-                    Label("Choose Tags", systemImage: "tag")
-                })
-                .navigationTitle("Choose Tags")
+            Section {
+                NavigationLink(destination: AllocateTagView(selectedTags: $tags).environment(\.managedObjectContext, managedObjectContext),
+                               label: {
+                                Label("Choose Tags", systemImage: "tag")
+                               })
+            }
             #endif
         }
         .onAppear(perform: {
@@ -133,14 +144,15 @@ struct AddLessonForm: View {
                 teacher = lesson.teacher ?? ""
                 type = Lesson.LessonType(rawValue: lesson.type ?? "") ?? .lecture
                 tags = lesson.tag?.allObjects as! [Tag]
+                notes = lesson.notes ?? ""
             }
         })
     }
     func createLesson() {
         if lesson == nil {
-            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true, tags: tags)
+            Lesson.create(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, save: true, tags: tags, notes: notes)
         } else {
-            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags)
+            lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags, notes: notes)
         }
         isPresented = false
     }

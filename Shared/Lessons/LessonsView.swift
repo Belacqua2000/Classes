@@ -26,7 +26,7 @@ struct LessonsView: View {
         case .tag:
             return("Tag: \(filter.tag?.name ?? "")")
         case .lessonType:
-            return("\(filter.lessonType?.rawValue ?? "Lesson")s")
+            return Lesson.lessonTypePlural(type: filter.lessonType?.rawValue)
         case .watched:
             return("Watched Lessons")
         }

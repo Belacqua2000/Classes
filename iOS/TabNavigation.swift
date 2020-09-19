@@ -11,6 +11,7 @@ struct TabNavigation: View {
     @State private var selection: Tab = .all
     @State private var addTagShowing = false
     @State private var deleteAlertShown = false
+    @State private var settingsShown = false
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
@@ -70,7 +71,7 @@ struct TabNavigation: View {
                         .sheet(isPresented: $addTagShowing, onDismiss: {
                             selectedTag = nil
                         },content: {
-                            AddTagView(isPresented: $addTagShowing, tag: $selectedTag)
+                            AddTagView(isPresented: $addTagShowing, tag: $selectedTag).environment(\.managedObjectContext, viewContext)
                         })
                         .alert(isPresented: $deleteAlertShown) {
                             Alert(title: Text("Delete Tag"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteTag), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedTag = nil}))
@@ -79,6 +80,20 @@ struct TabNavigation: View {
                 }
                 .listStyle(InsetGroupedListStyle())
                 .navigationTitle("Lesson Types")
+                .toolbar {
+                    #if !os(macOS)
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(action: {settingsShown = true}, label: {
+                            Label("Settings", systemImage: "gear")
+                        })
+                        .sheet(isPresented: $settingsShown) {
+                            NavigationView {
+                                SettingsView(viewIsShown: $settingsShown)
+                            }
+                        }
+                    }
+                    #endif
+                }
             }
             .navigationViewStyle(StackNavigationViewStyle())
             .tabItem {
@@ -90,7 +105,7 @@ struct TabNavigation: View {
                 ILOsView()
             }
             .tabItem {
-                Label("ILOs", systemImage: "doc.fill")
+                Label("Learning Outcomes", systemImage: "doc.fill")
             }
             .tag(Tab.ilo)
         }

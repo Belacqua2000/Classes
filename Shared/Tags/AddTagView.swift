@@ -87,7 +87,7 @@ struct AddTagView_Previews: PreviewProvider {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else
-        AddTagView(isPresented: .constant(true))
+        AddTagView(isPresented: .constant(true), tag: .constant(nil))
         #endif
     }
 }

@@ -20,6 +20,14 @@
 		1712122A2503708000EE7423 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171211FB2503707E00EE7423 /* Persistence.swift */; };
 		1712122B2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
 		1712122C2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
+		173C7695251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */; };
+		173C7696251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */; };
+		1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
+		1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
+		1768DED02514CB5B008CDCAC /* ILOSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DECF2514CB5B008CDCAC /* ILOSection.swift */; };
+		1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DECF2514CB5B008CDCAC /* ILOSection.swift */; };
+		1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DED62514CB68008CDCAC /* ResourceSection.swift */; };
+		1768DED82514CB68008CDCAC /* ResourceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DED62514CB68008CDCAC /* ResourceSection.swift */; };
 		176CC61E250CB40F00FB28B6 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC61D250CB40F00FB28B6 /* AddTagView.swift */; };
 		176CC61F250CB42E00FB28B6 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC61D250CB40F00FB28B6 /* AddTagView.swift */; };
 		176CC621250CB92E00FB28B6 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC620250CB92E00FB28B6 /* Tag.swift */; };
@@ -44,6 +52,9 @@
 		17ABF3512507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
 		17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
+		17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
+		17D551D62514DDF900A502EA /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
+		17D77D9A2512230C00212EA1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D77D992512230C00212EA1 /* Launch Screen.storyboard */; };
 		17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
 		17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
 		17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */; };
@@ -97,6 +108,11 @@
 		1712121C2503708000EE7423 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		171212202503708000EE7423 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
+		173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentHelpers.swift; sourceTree = "<group>"; };
+		1768DEC42514CB41008CDCAC /* LessonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetails.swift; sourceTree = "<group>"; };
+		1768DECF2514CB5B008CDCAC /* ILOSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOSection.swift; sourceTree = "<group>"; };
+		1768DED62514CB68008CDCAC /* ResourceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSection.swift; sourceTree = "<group>"; };
 		176CC61D250CB40F00FB28B6 /* AddTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTagView.swift; sourceTree = "<group>"; };
 		176CC620250CB92E00FB28B6 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		176CC624250CFCDB00FB28B6 /* AddResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResource.swift; sourceTree = "<group>"; };
@@ -111,6 +127,9 @@
 		17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagIcon.swift; sourceTree = "<group>"; };
 		17ABF34F2507E789000D4048 /* ILOsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOsView.swift; sourceTree = "<group>"; };
 		17C9737D250E2A62000ACF16 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		17D551D42514DDF900A502EA /* ILOGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOGeneratorView.swift; sourceTree = "<group>"; };
+		17D77D992512230C00212EA1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		17DDC16D2515627300C8AC59 /* Shared 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 3.xcdatamodel"; sourceTree = "<group>"; };
 		17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeNavigationList.swift; sourceTree = "<group>"; };
 		17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigation.swift; sourceTree = "<group>"; };
 		17E50BBF2504D81200BA8618 /* LessonsListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListContent.swift; sourceTree = "<group>"; };
@@ -173,10 +192,12 @@
 			isa = PBXGroup;
 			children = (
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
+				173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */,
 				17C9737D250E2A62000ACF16 /* SummaryView.swift */,
 				17E50BCB250518A100BA8618 /* SettingsView.swift */,
 				17ABF352250848E4000D4048 /* App Navigation */,
 				17ABF353250848EE000D4048 /* Lessons */,
+				1768DEC32514CB2A008CDCAC /* Details */,
 				17ABF35425084927000D4048 /* ILOs */,
 				176CC61C250CB3F900FB28B6 /* Tags */,
 				176CC623250CFCCD00FB28B6 /* Resources */,
@@ -201,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				170B23E225077F1B00F790FE /* TabNavigation.swift */,
+				17D77D992512230C00212EA1 /* Launch Screen.storyboard */,
 				171212042503708000EE7423 /* Info.plist */,
 			);
 			path = iOS;
@@ -231,6 +253,17 @@
 				171212222503708000EE7423 /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		1768DEC32514CB2A008CDCAC /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				17E50BC82504E22200BA8618 /* DetailView.swift */,
+				1768DECF2514CB5B008CDCAC /* ILOSection.swift */,
+				1768DED62514CB68008CDCAC /* ResourceSection.swift */,
+				1768DEC42514CB41008CDCAC /* LessonDetails.swift */,
+			);
+			path = Details;
 			sourceTree = "<group>";
 		};
 		176CC61C250CB3F900FB28B6 /* Tags */ = {
@@ -277,7 +310,6 @@
 				17E50BBF2504D81200BA8618 /* LessonsListContent.swift */,
 				17E50BC52504D8F800BA8618 /* LessonCell.swift */,
 				17E50BC22504D81E00BA8618 /* AddLessonView.swift */,
-				17E50BC82504E22200BA8618 /* DetailView.swift */,
 			);
 			path = Lessons;
 			sourceTree = "<group>";
@@ -287,6 +319,7 @@
 			children = (
 				177909C1250A6D9200C14F5E /* EditILOView.swift */,
 				17ABF34F2507E789000D4048 /* ILOsView.swift */,
+				17D551D42514DDF900A502EA /* ILOGeneratorView.swift */,
 			);
 			path = ILOs;
 			sourceTree = "<group>";
@@ -428,6 +461,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D77D9A2512230C00212EA1 /* Launch Screen.storyboard in Resources */,
 				1712122B2503708000EE7423 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -463,17 +497,21 @@
 			files = (
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
+				173C7695251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
+				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */,
 				17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				176CC625250CFCDB00FB28B6 /* AddResource.swift in Sources */,
 				17E50BC92504E22200BA8618 /* DetailView.swift in Sources */,
+				1768DED02514CB5B008CDCAC /* ILOSection.swift in Sources */,
 				17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
 				179BF25B2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */,
 				17E50BCC250518A100BA8618 /* SettingsView.swift in Sources */,
+				1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				176CC621250CB92E00FB28B6 /* Tag.swift in Sources */,
@@ -482,6 +520,7 @@
 				17E50BC62504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				179BF2522506834300574A35 /* LessonsView.swift in Sources */,
+				1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */,
 				17ABF3502507E789000D4048 /* ILOsView.swift in Sources */,
@@ -500,13 +539,16 @@
 				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
 				17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
+				1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */,
 				17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				176CC629250D13CC00FB28B6 /* Resource.swift in Sources */,
 				1712122A2503708000EE7423 /* Persistence.swift in Sources */,
 				17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				179BF25C2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC42504D81E00BA8618 /* AddLessonView.swift in Sources */,
+				173C7696251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */,
 				17E50BCD250518A100BA8618 /* SettingsView.swift in Sources */,
+				17D551D62514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				176CC622250CBD4000FB28B6 /* Tag.swift in Sources */,
 				17E50BC12504D81200BA8618 /* LessonsListContent.swift in Sources */,
@@ -514,6 +556,8 @@
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
 				179BF2532506834300574A35 /* LessonsView.swift in Sources */,
+				1768DED82514CB68008CDCAC /* ResourceSection.swift in Sources */,
+				1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */,
 				17E50BD125065CB300BA8618 /* Lesson.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -668,6 +712,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Classes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -691,6 +736,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Classes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -716,6 +762,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -740,6 +787,7 @@
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -899,9 +947,11 @@
 		171211F72503707E00EE7423 /* Shared.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				17DDC16D2515627300C8AC59 /* Shared 3.xcdatamodel */,
+				17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */,
 				171211F82503707E00EE7423 /* Shared.xcdatamodel */,
 			);
-			currentVersion = 171211F82503707E00EE7423 /* Shared.xcdatamodel */;
+			currentVersion = 17DDC16D2515627300C8AC59 /* Shared 3.xcdatamodel */;
 			path = Shared.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

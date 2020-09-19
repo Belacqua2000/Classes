@@ -13,7 +13,7 @@ struct LessonTypeNavigationList: View {
             NavigationLink(
                 destination: LessonsView(filter: LessonsView.Filter(filterType: .lessonType, lessonType: lesson)),
                 label: {
-                    Label("\(lesson.rawValue)s", systemImage: Lesson.lessonIcon(type: lesson.rawValue))
+                    Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                 })
         }
     }

@@ -16,6 +16,32 @@ extension Lesson {
         case pbl = "PBL"
         case cbl = "CBL"
         case lab = "Lab"
+        case clinical = "Clinical Skills"
+        case selfStudy = "Self Study"
+        case other = "Other"
+    }
+    
+    static func lessonTypePlural(type: String?) -> String {
+        switch LessonType(rawValue: type ?? "none") {
+        case .some(.lecture):
+            return "Lectures"
+        case .some(.tutorial):
+            return "Tutorials"
+        case .some(.pbl):
+            return "PBL"
+        case .some(.cbl):
+            return "CBL"
+        case .some(.lab):
+            return "Labs"
+        case .some(.clinical):
+            return "Clinical Skills"
+        case .some(.other):
+            return "Other"
+        case .some(.selfStudy):
+            return "Self Study"
+        case .none:
+            return "book"
+        }
     }
     
     static func lessonIcon(type: String?) -> String {
@@ -30,6 +56,12 @@ extension Lesson {
             return "doc.richtext"
         case .some(.lab):
             return "eyedropper"
+        case .some(.clinical):
+            return "stethoscope"
+        case .some(.other):
+            return "ellipsis.circle"
+        case .some(.selfStudy):
+            return "text.book.closed.fill"
         case .none:
             return "book"
         }
@@ -62,7 +94,7 @@ extension Lesson {
         }
     }
     
-    static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool, tags: [Tag]) {
+    static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool, tags: [Tag], notes: String) {
         let lesson = Lesson(context: managedObjectContext)
         lesson.id = UUID()
         lesson.title = title
@@ -71,6 +103,7 @@ extension Lesson {
         lesson.location = location
         lesson.watched = watched
         lesson.type = type.rawValue
+        lesson.notes = notes
         for newTag in tags {
             lesson.addToTag(newTag)
         }
@@ -83,13 +116,14 @@ extension Lesson {
         }
     }
     
-    func update(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, tags: [Tag]) {
+    func update(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, tags: [Tag], notes: String) {
         self.title = title
         self.date = date
         self.teacher = teacher
         self.location = location
         self.watched = watched
         self.type = type.rawValue
+        self.notes = notes
         // Removes all current tags
         if let tag = tag {
             removeFromTag(tag)
@@ -105,16 +139,18 @@ extension Lesson {
         }
     }
     
-    func updateILOIndices(in managedObjectContext: NSManagedObjectContext) {
+    func updateILOIndices(in managedObjectContext: NSManagedObjectContext, save: Bool) {
         var currentIndex: Int16 = 0
         for ilo in ilo?.sortedArray(using: [NSSortDescriptor(key: "index", ascending: true)]) as? [ILO] ?? [] {
             ilo.index = currentIndex
             currentIndex += 1
         }
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("Unable to save due to Error: \(error)")
+        if save {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("Unable to save due to Error: \(error)")
+            }
         }
     }
 }

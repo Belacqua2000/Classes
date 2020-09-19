@@ -28,6 +28,7 @@ struct LessonsListContent: View {
     @State var selectedLesson: Lesson?
     @State var sheetIsPresented: Bool = false
     @State private var deleteAlertShown = false
+    @State private var detailShowing = false
     
     @Binding var filter: LessonsView.Filter
     @Environment(\.managedObjectContext) private var viewContext
@@ -56,6 +57,12 @@ struct LessonsListContent: View {
                 filterHelper = lessons.filter({ $0.type == Lesson.LessonType.cbl.rawValue })
             case .lab:
                 filterHelper = lessons.filter({ $0.type == Lesson.LessonType.lab.rawValue })
+            case .clinical:
+                filterHelper = lessons.filter({ $0.type == Lesson.LessonType.clinical.rawValue })
+            case .selfStudy:
+                filterHelper = lessons.filter({ $0.type == Lesson.LessonType.selfStudy.rawValue })
+            case .other:
+                filterHelper = lessons.filter({ $0.type == Lesson.LessonType.other.rawValue })
             case .none:
                 filterHelper = lessons.filter({ !$0.isDeleted })
             }
@@ -80,8 +87,7 @@ struct LessonsListContent: View {
             ForEach(filteredLessons, id: \.self) { lesson in
                 NavigationLink(
                     destination:
-                        DetailView(lesson: lesson)
-                    ,
+                        DetailView(lesson: lesson),
                     label: {
                         LessonCell(lesson: lesson)
                     })
@@ -93,8 +99,6 @@ struct LessonsListContent: View {
                         Button(action: {
                             let lesson = lesson as Lesson
                             selectedLesson = lesson
-                            print("lesson: \(lesson)")
-                            print("selectedlesson \(selectedLesson)")
                             sheetIsPresented = true
                         }, label: {
                             Label("Edit", systemImage: "square.and.pencil")
@@ -116,7 +120,6 @@ struct LessonsListContent: View {
             }
         }
         .onAppear(perform: {lessonCount = filteredLessons.count})
-        .animation(.default)
     }
     
     var body: some View {
@@ -126,7 +129,7 @@ struct LessonsListContent: View {
                 lessonList
                     .listStyle(InsetListStyle())
                 #else
-                Picker("Sort", selection: $sort, content: {
+                Picker("Sort", selection: $sort.animation(.default), content: {
                     ForEach(Sort.allCases) { sort in
                         Text(sort.rawValue).tag(sort)
                     }
@@ -147,7 +150,7 @@ struct LessonsListContent: View {
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
             selectedLesson = nil
         }, content: {
-                AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented)
+            AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented).environment(\.managedObjectContext, viewContext)
                     .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
         })
         .toolbar {

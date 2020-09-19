@@ -15,6 +15,7 @@ struct SummaryView: View {
     private var lessons: FetchedResults<Lesson>
     
     @State var addLessonViewShown = false
+    @State private var detailShown = false
     
     var todaysLessons: [Lesson] {
         let calendar = Calendar.current
@@ -57,7 +58,7 @@ struct SummaryView: View {
     var body: some View {
             ScrollView {
                 LazyVGrid(columns: gridItem, alignment: .leading, spacing: 20) {
-                    TodaysLessonsView(todaysLessons: todaysLessons)
+                    TodaysLessonsView(detailShown: $detailShown, todaysLessons: todaysLessons)
                     GroupBox {
                         HStack {
                             VStack(alignment: .leading) {
@@ -82,10 +83,12 @@ struct SummaryView: View {
                             VStack(alignment: .leading) {
                                 Label("Notes to Write", systemImage: "doc.append")
                                     .font(.headline)
-                            Text("You have written \(writtenILOs) ILOs out of \(previousILOs):")
-                                .font(.subheadline)
-                                ProgressView(value: ilos.count > 0 ? Double(writtenILOs)/Double(previousILOs) : 0)
-                                Text("You have \(overdueILOs.count) ILOs to write up:")
+                                Text("You have written \(writtenILOs) learning outcomes out of \(previousILOs):")
+                                    .font(.subheadline)
+                                if ilos.count > 0 && previousILOs > 0 {
+                                    ProgressView(value: Double(writtenILOs)/Double(previousILOs))
+                                }
+                                Text("You have \(overdueILOs.count) learning outcomes to write up:")
                                     .font(.subheadline)
                                 ForEach(overdueILOs) { ilo in
                                     let ilo = ilo as ILO
@@ -105,7 +108,7 @@ struct SummaryView: View {
                                 Label("Statistics", systemImage: "chart.pie")
                                     .font(.headline)
                                 Text("Number of lessons: \(lessons.count)")
-                                Text("Number of ILOs: \(ilos.count)")
+                                Text("Number of learning outcomes: \(ilos.count)")
                             }
                             Spacer()
                         }
@@ -151,6 +154,7 @@ struct SummaryView_Previews: PreviewProvider {
 }
 
 struct TodaysLessonsView: View {
+    @Binding var detailShown: Bool
     var todaysLessons: [Lesson]
     var body: some View {
         GroupBox {

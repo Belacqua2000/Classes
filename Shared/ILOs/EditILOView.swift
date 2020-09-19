@@ -18,6 +18,7 @@ struct EditILOView: View {
         Button(action: add, label: {
             Text("Save")
         })
+        .disabled(iloText == "")
         .keyboardShortcut(.defaultAction)
     }
     
@@ -31,8 +32,8 @@ struct EditILOView: View {
     var body: some View {
         Form {
             #if os(macOS)
-            Section(header: Text("Add ILO").font(.headline)) {
-                TextField("ILO Text", text: $iloText)
+            Section(header: Text("Add Learning Outcome").font(.headline)) {
+                TextField("Outcome Text", text: $iloText)
             }
             HStack {
                 Spacer()
@@ -40,8 +41,8 @@ struct EditILOView: View {
                 saveButton
             }
             #else
-            TextField("ILO Text", text: $iloText)
-                .navigationTitle("Add ILO")
+            TextField("Outcome Text", text: $iloText)
+                .navigationTitle("Add Outcome")
             #endif
         }
         .onAppear(perform: {
@@ -67,7 +68,7 @@ struct EditILOView: View {
         } else {
             ILO.create(in: viewContext, title: iloText, index: lesson.ilo?.count ?? 0, lesson: lesson)
         }
-        lesson.updateILOIndices(in: viewContext)
+        lesson.updateILOIndices(in: viewContext, save: true)
         isPresented = false
     }
     

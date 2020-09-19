@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    let environmentHelpers = EnvironmentHelpers()
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
@@ -17,9 +19,9 @@ struct ContentView: View {
     var body: some View {
         #if os(iOS)
         if horizontalSizeClass == .compact {
-            TabNavigation()
+            TabNavigation().environmentObject(environmentHelpers)
         } else {
-            SidebarNavigation()
+            SidebarNavigation().environmentObject(environmentHelpers)
         }
         #else
         SidebarNavigation()

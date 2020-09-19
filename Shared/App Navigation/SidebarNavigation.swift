@@ -27,6 +27,7 @@ struct SidebarNavigation: View {
     @State var addTagShowing: Bool = false
     @State var selectedTag: Tag?
     @State private var deleteAlertShown = false
+    @State private var settingsShown = false
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
@@ -55,7 +56,7 @@ struct SidebarNavigation: View {
                 NavigationLink(
                     destination: ILOsView(),
                     label: {
-                        Label("ILOs", systemImage: "doc")
+                        Label("Learning Outcomes", systemImage: "doc")
                     })
                     .tag(SidebarItem(sidebarType: .ilo, lessonTypes: nil))
                 
@@ -65,7 +66,7 @@ struct SidebarNavigation: View {
                             destination:
                                 LessonsView(filter: LessonsView.Filter(filterType: .lessonType, lessonType: lesson)),
                             label: {
-                                Label("\(lesson.rawValue)s", systemImage: Lesson.lessonIcon(type: lesson.rawValue))
+                                Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                             })
                             .tag(SidebarItem(sidebarType: .lessonType, lessonTypes: lesson))
                     }
@@ -104,13 +105,28 @@ struct SidebarNavigation: View {
                     .sheet(isPresented: $addTagShowing, onDismiss: {
                         selectedTag = nil
                     }, content: {
-                        AddTagView(isPresented: $addTagShowing, tag: $selectedTag)
+                        AddTagView(isPresented: $addTagShowing, tag: $selectedTag).environment(\.managedObjectContext, viewContext)
                     })
                 }
             }
             .navigationTitle("Classes")
             .frame(minWidth: 100, idealWidth: 150, maxHeight: .infinity)
             .listStyle(SidebarListStyle())
+            .toolbar {
+                #if !os(macOS)
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {settingsShown = true}, label: {
+                        Label("Settings", systemImage: "gear")
+                    })
+                    .sheet(isPresented: $settingsShown) {
+                        NavigationView {
+                            SettingsView(viewIsShown: $settingsShown)
+                        }
+                    }
+                }
+                
+                #endif
+            }
             /*LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
             if selection != [SidebarItem(sidebarType: .ilo, lessonTypes: nil)] {
                 Text("Select a Class")
