@@ -12,6 +12,15 @@ struct LessonCell: View {
     var tags: [Tag] {
         return lesson.tag?.allObjects as? [Tag] ?? []
     }
+    
+    var relativeText: Text? {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) {
+            return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
+        }
+        return nil
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -19,7 +28,7 @@ struct LessonCell: View {
                     title: { VStack(alignment: .leading) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
-                        Text("\(lesson.date ?? Date(), style: .date) \(lesson.date ?? Date(), style: .time)")
+                        Text("\(itemFormatter.string(from: lesson.date ?? Date())) \(relativeText ?? Text(""))")
                             .font(.subheadline)
                         Text(lesson.teacher ?? "No Teacher")
                             .font(.footnote)
@@ -33,7 +42,8 @@ struct LessonCell: View {
                 Text(lesson.location ?? "No Location")
                 if lesson.watched {
                     Image(systemName: "checkmark.circle.fill")
-                        .renderingMode(.original)
+                        .foregroundColor(.accentColor)
+                        //.renderingMode(.original)
                 }
             }
         }
@@ -42,7 +52,7 @@ struct LessonCell: View {
     private let itemFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
-        formatter.timeStyle = .none
+        formatter.timeStyle = .short
         return formatter
     }()
 }

@@ -49,7 +49,7 @@ struct ILOGeneratorView: View {
                     .font(.title3)
                 }
             } else {
-                Text("No ILOs to Randomise")
+                Text("No outcomes to Randomise")
                     .font(.title)
             }
         }

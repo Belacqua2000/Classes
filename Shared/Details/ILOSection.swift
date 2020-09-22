@@ -13,6 +13,7 @@ struct ILOSection: View {
     
     @State var isAddingILO: Bool = false
     @State private var selectedILO: ILO? = nil
+    @State var editILOViewState: EditILOView.AddOutcomeViewState = .single
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
@@ -32,40 +33,66 @@ struct ILOSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            #if !os(macOS)
-            EditButton()
-            #endif
-            List {
-                ForEach(filteredILOs) { ilo in
-                    HStack {
-                        Text("\(ilo.index + 1). \(ilo.title ?? "")")
-                        Spacer()
-                        Button(action: { toggleILOWritten(ilo: ilo) }, label: {
-                            ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
-                        })
-                        .contextMenu(ContextMenu(menuItems: {
-                            Button(action: {
-                                selectedILO = ilo
-                                isAddingILO = true
-                            }, label: {
-                                Label("Edit", systemImage: "square.and.pencil")
+            if filteredILOs.count > 0 {
+                #if !os(macOS)
+                EditButton()
+                #endif
+                List {
+                    ForEach(filteredILOs) { ilo in
+                        HStack {
+                            Text("\(ilo.index + 1). \(ilo.title ?? "")")
+                            Spacer()
+                            Button(action: { toggleILOWritten(ilo: ilo) }, label: {
+                                ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
                             })
-                        }))
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button(action: {
+                                    selectedILO = ilo
+                                    isAddingILO = true
+                                }, label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
+                                })
+                                Button(action: {
+                                    copyILO(ilo)
+                                }, label: {
+                                    Label("Copy Learning Outcome", systemImage: "doc")
+                                })
+                            }))
+                        }
                     }
+                    .onDelete(perform: deleteILOs)
+                    .onMove(perform: moveILOs)
                 }
-                .onDelete(perform: deleteILOs)
-                .onMove(perform: moveILOs)
+                .cornerRadius(10)
+                .frame(height: listHeight)
             }
-            .cornerRadius(10)
-            .frame(height: listHeight)
-            Button(action: {isAddingILO = true}, label: {
-                Text("Add Learning Outcome")
-            }).sheet(isPresented: $isAddingILO, onDismiss: {
+            
+            HStack {
+                Menu("Add Learning Outcome") {
+                    Button(action: {
+                        editILOViewState = .single
+                        isAddingILO = true
+                    }, label: {
+                        Text("Add Single Outcome")
+                    })
+                    
+                    Button(action: {
+                        editILOViewState = .multiple
+                        isAddingILO = true
+                    }, label: {
+                        Text("Batch Add Outcomes")
+                    })
+                }
+                Spacer()
+            }
+            .sheet(isPresented: $isAddingILO, onDismiss: {
                 selectedILO = nil
+                editILOViewState = .single
             }, content: {
                 #if !os(macOS)
                 NavigationView {
-                    EditILOView(isPresented: $isAddingILO, ilo: $selectedILO, lesson: lesson).environment(\.managedObjectContext, viewContext)
+                    EditILOView(currentViewState: $editILOViewState, isPresented: $isAddingILO, ilo: $selectedILO, lesson: lesson)
+                        .environment(\.managedObjectContext, viewContext)
                         .navigationTitle("Add Outcome")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
@@ -101,10 +128,25 @@ struct ILOSection: View {
     private func deleteILOs(offsets: IndexSet) {
         withAnimation {
             offsets.map { filteredILOs[$0] }.forEach { ilo in
-                viewContext.delete(ilo)
+                ilo.delete(context: viewContext, save: false)
             }
-            lesson.updateILOIndices(in: viewContext, save: false)
+            saveOnDelay()
         }
+    }
+    
+    private func saveOnDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            do {
+                try viewContext.save()
+            } catch {
+                print(error)
+            }
+            lesson.updateILOIndices(in: viewContext, save: true)
+        }
+    }
+    
+    private func copyILO(_ ilo: ILO) {
+        UIPasteboard.general.string = ilo.title
     }
     
     

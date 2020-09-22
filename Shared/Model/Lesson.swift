@@ -18,6 +18,7 @@ extension Lesson {
         case lab = "Lab"
         case clinical = "Clinical Skills"
         case selfStudy = "Self Study"
+        case video = "Video"
         case other = "Other"
     }
     
@@ -39,6 +40,8 @@ extension Lesson {
             return "Other"
         case .some(.selfStudy):
             return "Self Study"
+        case .some(.video):
+            return "Videos"
         case .none:
             return "book"
         }
@@ -62,6 +65,8 @@ extension Lesson {
             return "ellipsis.circle"
         case .some(.selfStudy):
             return "text.book.closed.fill"
+        case .some(.video):
+            return "film"
         case .none:
             return "book"
         }

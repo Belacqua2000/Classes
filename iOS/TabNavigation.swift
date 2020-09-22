@@ -52,7 +52,7 @@ struct TabNavigation: View {
                                     Label(title: { Text(tag.name ?? "Untitled") },
                                         icon: {
                                             Image(systemName: "tag")
-                                                .foregroundColor(tag.swiftUIColor)
+                                                //.foregroundColor(tag.swiftUIColor)
                                         }
                                     )
                                 })
@@ -65,6 +65,7 @@ struct TabNavigation: View {
                                     })
                                 }/*@END_MENU_TOKEN@*/)
                         }
+                        .onDelete(perform: deleteTags)
                         Button(action: {selectedTag = nil; addTagShowing = true}, label: {
                             Label("Add Tag", systemImage: "plus.circle")
                         })
@@ -117,8 +118,18 @@ struct TabNavigation: View {
     }
     
     private func deleteTag() {
-        selectedTag?.delete(context: viewContext)
-        selectedTag = nil
+        withAnimation {
+            selectedTag?.delete(context: viewContext)
+            selectedTag = nil
+        }
+    }
+    
+    func deleteTags(at offsets: IndexSet) {
+        withAnimation {
+            offsets.map { tags[$0] }.forEach { tag in
+                deleteTagAlert(tag: tag)
+            }
+        }
     }
     
     private func editTag(tag: Tag) {

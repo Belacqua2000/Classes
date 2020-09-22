@@ -74,7 +74,11 @@ struct DetailView: View {
     @State private var selectedResource: Resource? = nil
     
     var toggleWatchedButton: some View {
-        Button(action: {lesson.toggleWatched(context: managedObjectContext)}, label: {
+        Button(action: {
+               withAnimation {
+                    lesson.toggleWatched(context: managedObjectContext)
+                }
+        }, label: {
             !(lesson.watched) ?
                 Label("Mark as Watched", systemImage: "checkmark.circle") : Label("Mark as Unwatched", systemImage: "checkmark.circle.fill")
         })

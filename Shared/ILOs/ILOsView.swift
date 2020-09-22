@@ -66,7 +66,7 @@ struct ILOsView: View {
                             }
                         }
                 } else {
-                    Text("No ILOs")
+                    Text("No Learning Outcomes.  Add outcomes from the lesson info page.")
                 }
             /*} else {
                 Spacer()

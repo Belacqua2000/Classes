@@ -20,12 +20,15 @@ struct LessonsListContent: View {
     }
     #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.editMode) var editMode
     #endif
     
     @AppStorage("currentLessonSort") private var sort: Sort = .dateDescending
     
-    @State var selection = Set<Lesson>()
-    @State var selectedLesson: Lesson?
+    @State var selection = Set<Lesson>() // for list selection
+    @State var selectedLessons: [Lesson]? // for delete actions
+    @State var selectedLesson: Lesson? // for editing lesson
+    
     @State var sheetIsPresented: Bool = false
     @State private var deleteAlertShown = false
     @State private var detailShowing = false
@@ -61,6 +64,8 @@ struct LessonsListContent: View {
                 filterHelper = lessons.filter({ $0.type == Lesson.LessonType.clinical.rawValue })
             case .selfStudy:
                 filterHelper = lessons.filter({ $0.type == Lesson.LessonType.selfStudy.rawValue })
+            case .video:
+                filterHelper = lessons.filter({ $0.type == Lesson.LessonType.video.rawValue })
             case .other:
                 filterHelper = lessons.filter({ $0.type == Lesson.LessonType.other.rawValue })
             case .none:
@@ -83,7 +88,14 @@ struct LessonsListContent: View {
     }
     
     var lessonList: some View {
-        List(selection: $selection) {
+        List {
+            Picker("Sort", selection: $sort.animation(.default), content: {
+                ForEach(Sort.allCases) { sort in
+                    Text(sort.rawValue).tag(sort)
+                }
+            })
+            .padding(.horizontal)
+            .pickerStyle(SegmentedPickerStyle())
             ForEach(filteredLessons, id: \.self) { lesson in
                 NavigationLink(
                     destination:
@@ -103,11 +115,11 @@ struct LessonsListContent: View {
                         }, label: {
                             Label("Edit", systemImage: "square.and.pencil")
                         })
-                        Button(action: {lesson.toggleWatched(context: viewContext)}, label: {
+                        Button(action: {toggleWatched(lessons: [lesson])}, label: {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
-                        Button(action: {deleteLessonAlert(lesson: lesson)}, label: {
+                        Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
                             Label("Delete", systemImage: "trash")
                         })
                         .foregroundColor(.red)
@@ -116,7 +128,7 @@ struct LessonsListContent: View {
             }
             .onDelete(perform: deleteItems)
             .alert(isPresented: $deleteAlertShown) {
-                Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedLesson = nil}))
+                Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedLessons = nil}))
             }
         }
         .onAppear(perform: {lessonCount = filteredLessons.count})
@@ -129,16 +141,10 @@ struct LessonsListContent: View {
                 lessonList
                     .listStyle(InsetListStyle())
                 #else
-                Picker("Sort", selection: $sort.animation(.default), content: {
-                    ForEach(Sort.allCases) { sort in
-                        Text(sort.rawValue).tag(sort)
-                    }
-                })
-                .padding(.horizontal)
-                .pickerStyle(SegmentedPickerStyle())
-                if horizontalSizeClass == .compact {
-                    lessonList
-                } else {
+                ScrollViewReader { proxy in
+                    /*if filteredLessons.count > 0 {
+                        Button("Scroll to Now", action: {proxy.scrollTo(scrollToNow())})
+                    }*/
                     lessonList
                 }
                 #endif
@@ -148,14 +154,28 @@ struct LessonsListContent: View {
             }
         }
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
-            selectedLesson = nil
+            selectedLessons = nil
         }, content: {
             AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented).environment(\.managedObjectContext, viewContext)
                     .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
         })
         .toolbar {
-            #if os(iOS)
-            //EditButton()
+            #if !os(macOS)
+            /*ToolbarItem(placement: .navigationBarLeading) {
+                EditButton()
+            }
+            
+            ToolbarItemGroup(placement: .bottomBar) {
+                if editMode?.wrappedValue.isEditing == true {
+                    Button(action: {deleteLessonAlert(lessons: Array(selection))}, label: {
+                        Label("Delete", systemImage: "trash")
+                    })
+                    Spacer()
+                    Button(action: {toggleWatched(lessons: Array(selection))}, label: {
+                        Label("Toggle Watched", systemImage: "checkmark.circle.fill")
+                    })
+                }
+            }*/
             #endif
             ToolbarItemGroup(placement: .automatic) {
                 #if os(macOS)
@@ -200,22 +220,40 @@ struct LessonsListContent: View {
         sheetIsPresented = true
     }
     
-    private func deleteLessonAlert(lesson: Lesson) {
-        selectedLesson = lesson
+    private func deleteLessonAlert(lessons: [Lesson]) {
+        selectedLessons = lessons
         deleteAlertShown = true
     }
     
     private func deleteLesson() {
+        guard let lessons = selectedLessons else { return }
         withAnimation {
-            selectedLesson?.delete(context: viewContext)
+            for lesson in lessons {
+                lesson.delete(context: viewContext)
+            }
         }
-        selectedLesson = nil
+        selectedLessons = nil
     }
     
     private func deleteItems(offsets: IndexSet) {
             offsets.map { filteredLessons[$0] }.forEach { lesson in
-                deleteLessonAlert(lesson: lesson)
+                deleteLessonAlert(lessons: [lesson])
             }
+    }
+    
+    private func toggleWatched(lessons: [Lesson]) {
+        for lesson in lessons {
+            lesson.toggleWatched(context: viewContext)
+        }
+    }
+    
+    private func scrollToNow() -> UUID {
+        let sortedLessons = filteredLessons.sorted(by: {$0.date! < $1.date!})
+        
+        let nextLesson = sortedLessons.first(where: {$0.date ?? Date(timeIntervalSince1970: 0) > Date()})!
+        
+        print(nextLesson.id!)
+        return nextLesson.id!
     }
     
     private let itemFormatter: DateFormatter = {

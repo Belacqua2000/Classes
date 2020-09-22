@@ -30,6 +30,13 @@ struct SettingsView: View {
                     Label("Rate and Review", systemImage: "app.badge")
                 }
                 
+                Menu(content: {
+                    Link("Twitter", destination: URL(string: "https://twitter.com/NickBaughanApps")!)
+                    Link("Instagram", destination: URL(string: "https://instagram.com/nickbaughanapps?igshid=oxs426ln605n")!)
+                }, label: {
+                    Label("Social Media", systemImage: "text.bubble")
+                })
+                
             }
             
             Section(header: Text("App Information")) {

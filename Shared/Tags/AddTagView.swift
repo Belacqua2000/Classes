@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddTagView: View {
     @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.presentationMode) var presentationMode
     @Binding var isPresented: Bool
     @Binding var tag: Tag?
     @State var tagName: String = ""
@@ -66,16 +67,18 @@ struct AddTagView: View {
     }
     
     func save() {
+        self.hideKeyboard()
+        isPresented = false
         if tag != nil {
             tag?.update(in: viewContext, name: tagName, color: tagColor)
         } else {
             Tag.create(in: viewContext, name: tagName, color: tagColor)
         }
-        isPresented = false
     }
     
     func cancel() {
-        isPresented = false
+        self.hideKeyboard()
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
