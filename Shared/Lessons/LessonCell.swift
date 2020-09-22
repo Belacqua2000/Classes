@@ -15,7 +15,7 @@ struct LessonCell: View {
     
     var relativeText: Text? {
         let calendar = Calendar.current
-        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) {
+        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) && lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
             return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
         }
         return nil
