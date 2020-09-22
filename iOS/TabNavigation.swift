@@ -69,11 +69,6 @@ struct TabNavigation: View {
                         Button(action: {selectedTag = nil; addTagShowing = true}, label: {
                             Label("Add Tag", systemImage: "plus.circle")
                         })
-                        .sheet(isPresented: $addTagShowing, onDismiss: {
-                            selectedTag = nil
-                        },content: {
-                            AddTagView(isPresented: $addTagShowing, tag: $selectedTag).environment(\.managedObjectContext, viewContext)
-                        })
                         .alert(isPresented: $deleteAlertShown) {
                             Alert(title: Text("Delete Tag"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteTag), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedTag = nil}))
                         }
@@ -95,6 +90,11 @@ struct TabNavigation: View {
                     }
                     #endif
                 }
+                .sheet(isPresented: $addTagShowing, onDismiss: {
+                    selectedTag = nil
+                },content: {
+                    AddTagView(isPresented: $addTagShowing, tag: $selectedTag).environment(\.managedObjectContext, viewContext)
+                })
             }
             .navigationViewStyle(StackNavigationViewStyle())
             .tabItem {

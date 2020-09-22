@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170B23E225077F1B00F790FE /* TabNavigation.swift */; };
+		170EE3BE251AA861000D8363 /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */; };
+		170EE3BF251AA861000D8363 /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */; };
 		171212162503708000EE7423 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171212152503708000EE7423 /* Tests_iOS.swift */; };
 		171212212503708000EE7423 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171212202503708000EE7423 /* Tests_macOS.swift */; };
 		171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 171211F72503707E00EE7423 /* Shared.xcdatamodeld */; };
@@ -20,8 +22,6 @@
 		1712122A2503708000EE7423 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171211FB2503707E00EE7423 /* Persistence.swift */; };
 		1712122B2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
 		1712122C2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
-		173C7695251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */; };
-		173C7696251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */; };
 		173C769C25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		173C769D25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
@@ -95,6 +95,7 @@
 
 /* Begin PBXFileReference section */
 		170B23E225077F1B00F790FE /* TabNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabNavigation.swift; path = iOS/TabNavigation.swift; sourceTree = SOURCE_ROOT; };
+		170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnvironmentHelpers.swift; path = "Shared/New Group/EnvironmentHelpers.swift"; sourceTree = SOURCE_ROOT; };
 		171211F82503707E00EE7423 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		171211F92503707E00EE7423 /* ClassesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassesApp.swift; sourceTree = "<group>"; };
 		171211FA2503707E00EE7423 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,7 +113,6 @@
 		171212202503708000EE7423 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
-		173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentHelpers.swift; sourceTree = "<group>"; };
 		173C769B25162148003FFA6A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1768DEC42514CB41008CDCAC /* LessonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetails.swift; sourceTree = "<group>"; };
 		1768DECF2514CB5B008CDCAC /* ILOSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOSection.swift; sourceTree = "<group>"; };
@@ -198,9 +198,9 @@
 			children = (
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
 				173C769B25162148003FFA6A /* OnboardingView.swift */,
-				173C7694251616AA003FFA6A /* EnvironmentHelpers.swift */,
-				17C9737D250E2A62000ACF16 /* SummaryView.swift */,
 				17E50BCB250518A100BA8618 /* SettingsView.swift */,
+				17DAC798251AA7F10013790A /* Summary */,
+				17DAC797251AA7D20013790A /* Helpers */,
 				17ABF352250848E4000D4048 /* App Navigation */,
 				17ABF353250848EE000D4048 /* Lessons */,
 				1768DEC32514CB2A008CDCAC /* Details */,
@@ -329,6 +329,22 @@
 				17D551D42514DDF900A502EA /* ILOGeneratorView.swift */,
 			);
 			path = ILOs;
+			sourceTree = "<group>";
+		};
+		17DAC797251AA7D20013790A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		17DAC798251AA7F10013790A /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				17C9737D250E2A62000ACF16 /* SummaryView.swift */,
+			);
+			name = Summary;
 			sourceTree = "<group>";
 		};
 		17E50BCE25065C7600BA8618 /* Model */ = {
@@ -504,7 +520,6 @@
 			files = (
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
-				173C7695251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
@@ -529,6 +544,7 @@
 				17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				179BF2522506834300574A35 /* LessonsView.swift in Sources */,
 				17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */,
+				170EE3BE251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
 				1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */,
@@ -541,6 +557,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				173C769D25162148003FFA6A /* OnboardingView.swift in Sources */,
+				170EE3BF251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
 				171212262503708000EE7423 /* ClassesApp.swift in Sources */,
 				17ABF3512507E789000D4048 /* ILOsView.swift in Sources */,
 				176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
@@ -556,7 +573,6 @@
 				17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				179BF25C2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC42504D81E00BA8618 /* AddLessonView.swift in Sources */,
-				173C7696251616AA003FFA6A /* EnvironmentHelpers.swift in Sources */,
 				17E50BCD250518A100BA8618 /* SettingsView.swift in Sources */,
 				17D551D62514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,

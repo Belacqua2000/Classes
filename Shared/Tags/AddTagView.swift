@@ -67,7 +67,7 @@ struct AddTagView: View {
     }
     
     func save() {
-        self.hideKeyboard()
+        //self.hideKeyboard()
         isPresented = false
         if tag != nil {
             tag?.update(in: viewContext, name: tagName, color: tagColor)
@@ -77,7 +77,7 @@ struct AddTagView: View {
     }
     
     func cancel() {
-        self.hideKeyboard()
+        //self.hideKeyboard()
         presentationMode.wrappedValue.dismiss()
     }
 }
