@@ -97,7 +97,7 @@ struct ILOSection: View {
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else
-                EditILOView(isPresented: $isAddingILO, ilo: $selectedILO, lesson: lesson)
+                EditILOView(currentViewState: $editILOViewState, isPresented: $isAddingILO, ilo: $selectedILO, lesson: lesson)
                 #endif
             })
             .padding(.vertical)
@@ -146,7 +146,9 @@ struct ILOSection: View {
     }
     
     private func copyILO(_ ilo: ILO) {
+        #if !os(macOS)
         UIPasteboard.general.string = ilo.title
+        #endif
     }
     
     

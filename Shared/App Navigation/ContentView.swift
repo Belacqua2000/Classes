@@ -9,11 +9,13 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
+    
     let environmentHelpers = EnvironmentHelpers()
     @AppStorage("firstLaunch") var firstLaunch = true
     @State var sheetPresented = false
+    
+    #if !os(macOS)
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
     @Environment(\.managedObjectContext) private var viewContext

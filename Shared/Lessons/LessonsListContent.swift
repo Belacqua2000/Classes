@@ -29,6 +29,8 @@ struct LessonsListContent: View {
     @State var selectedLessons: [Lesson]? // for delete actions
     @State var selectedLesson: Lesson? // for editing lesson
     
+    @State private var myLesson: Lesson?
+    
     @State var sheetIsPresented: Bool = false
     @State private var deleteAlertShown = false
     @State private var detailShowing = false
@@ -88,7 +90,8 @@ struct LessonsListContent: View {
     }
     
     var lessonList: some View {
-        List {
+        List(selection: $myLesson) {
+            #if os(iOS)
             Picker("Sort", selection: $sort.animation(.default), content: {
                 ForEach(Sort.allCases) { sort in
                     Text(sort.rawValue).tag(sort)
@@ -96,13 +99,15 @@ struct LessonsListContent: View {
             })
             .padding(.horizontal)
             .pickerStyle(SegmentedPickerStyle())
-            ForEach(filteredLessons, id: \.self) { lesson in
+            #endif
+            ForEach(filteredLessons) { lesson in
                 NavigationLink(
                     destination:
                         DetailView(lesson: lesson),
-                    label: {
-                        LessonCell(lesson: lesson)
-                    })
+                    tag: lesson,
+                    selection: $myLesson) {
+                        Text("LessonCell(lesson: lesson)")
+                    }
                     .onDrag({
                         let itemProvider = NSItemProvider(object: lesson.id!.uuidString as NSString)
                         return(itemProvider)
@@ -135,11 +140,11 @@ struct LessonsListContent: View {
     }
     
     var body: some View {
-        VStack {
-            if filteredLessons.count != 0 {
+        Group {
+            if filteredLessons.count > 0 {
                 #if os(macOS)
                 lessonList
-                    .listStyle(InsetListStyle())
+                    //.listStyle(InsetListStyle())
                 #else
                 ScrollViewReader { proxy in
                     /*if filteredLessons.count > 0 {

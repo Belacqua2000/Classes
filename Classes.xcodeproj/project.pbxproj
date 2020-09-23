@@ -57,7 +57,6 @@
 		17D48C1D2519526E00CBF0A0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D77D992512230C00212EA1 /* Launch Screen.storyboard */; };
 		17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D48C22251963F800CBF0A0 /* Helpers.swift */; };
 		17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
-		17D551D62514DDF900A502EA /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
 		17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
 		17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
 		17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */; };
@@ -574,7 +573,6 @@
 				179BF25C2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC42504D81E00BA8618 /* AddLessonView.swift in Sources */,
 				17E50BCD250518A100BA8618 /* SettingsView.swift in Sources */,
-				17D551D62514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				176CC622250CBD4000FB28B6 /* Tag.swift in Sources */,
 				17E50BC12504D81200BA8618 /* LessonsListContent.swift in Sources */,

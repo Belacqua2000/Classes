@@ -93,8 +93,9 @@ struct ResourceSection: View {
     
     private func copyResourceURL(_ url: URL?) {
         guard let url = url else { return }
-        print("Copied")
+        #if !os(macOS)
         UIPasteboard.general.url = url
+        #endif
     }
     
     private func deleteResources(offsets: IndexSet) {

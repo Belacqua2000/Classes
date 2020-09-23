@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
     @Binding var isPresented: Bool
     var body: some View {
         GeometryReader { gr in

@@ -18,14 +18,11 @@ struct ClassesApp: App {
         }
         .commands {
             SidebarCommands()
-            CommandGroup(after: .newItem, addition: {
-                Button("New Lesson", action: {})
-                .keyboardShortcut(KeyboardShortcut("n", modifiers: [.command, .shift]))
-            })
         }
+        
         #if os(macOS)
         Settings {
-            SettingsView()
+            SettingsView(viewIsShown: .constant(true))
         }
         #endif
     }

@@ -28,7 +28,7 @@ struct AddLessonView: View {
     @State var notes: String = ""
     var body: some View {
         #if os(macOS)
-        AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+        AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
             .padding()
         #else
         NavigationView {
