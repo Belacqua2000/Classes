@@ -25,7 +25,7 @@ struct ClassesApp: App {
         }
         #if os(macOS)
         Settings {
-            SettingsView()
+            SettingsView(viewIsShown: .constant(false))
         }
         #endif
     }

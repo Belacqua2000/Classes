@@ -53,6 +53,7 @@ struct ILOsView: View {
                     }
                     .listStyle(PlainListStyle())
                     Spacer()
+                    #if !os(macOS)
                     Button(action: {randomiserShown.iloRandomiserShown = true}, label: {Text("Randomise All Outcomes")})
                         .foregroundColor(.white)
                         .padding()
@@ -65,6 +66,7 @@ struct ILOsView: View {
                                 ILOGeneratorView(isPresented: $generatorShown, ilos: ilos.shuffled())
                             }
                         }
+                    #endif
                 } else {
                     Text("No Learning Outcomes.  Add outcomes from the lesson info page.")
                 }

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ILOGeneratorView: View {
     @Environment(\.presentationMode) var presentationMode
+    #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
     
     @EnvironmentObject var environmentHelpers: EnvironmentHelpers
     

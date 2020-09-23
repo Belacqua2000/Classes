@@ -12,8 +12,8 @@ struct ContentView: View {
     let environmentHelpers = EnvironmentHelpers()
     @AppStorage("firstLaunch") var firstLaunch = true
     @State var sheetPresented = false
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     #if os(iOS)
+    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
     @Environment(\.managedObjectContext) private var viewContext
