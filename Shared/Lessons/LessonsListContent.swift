@@ -32,6 +32,7 @@ struct LessonsListContent: View {
     @State var sheetIsPresented: Bool = false
     @State private var deleteAlertShown = false
     @State private var detailShowing = false
+    @State private var shareSheetPresented = false
     
     @Binding var filter: LessonsView.Filter
     @Environment(\.managedObjectContext) private var viewContext
@@ -119,6 +120,10 @@ struct LessonsListContent: View {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
+                        Button("Export File") {
+                            selectedLesson = lesson
+                            shareSheetPresented = true
+                        }
                         Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
                             Label("Delete", systemImage: "trash")
                         })
@@ -152,6 +157,9 @@ struct LessonsListContent: View {
                 Text("No Lessons.  Click the + button in the toolbar to create one.")
                     .padding()
             }
+        }
+        .popover(isPresented: $shareSheetPresented) {
+            ShareSheet(isPresented: $shareSheetPresented, activityItems: [selectedLesson?.export()])
         }
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
             selectedLessons = nil

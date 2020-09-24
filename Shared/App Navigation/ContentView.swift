@@ -12,6 +12,8 @@ struct ContentView: View {
     let environmentHelpers = EnvironmentHelpers()
     @AppStorage("firstLaunch") var firstLaunch = true
     @State var sheetPresented = false
+    @State var importPresented = false
+    @State var url: URL?
     #if os(iOS)
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -30,7 +32,13 @@ struct ContentView: View {
         .sheet(isPresented: $firstLaunch) {
             OnboardingView(isPresented: $firstLaunch)
         }
-        .onAppear()
+        .sheet(isPresented: $importPresented) {
+            ImportView(isPresented: $importPresented, url: $url)
+        }
+        .onOpenURL { url in
+            self.url = url
+            importPresented = true
+        }
         #else
         SidebarNavigation()
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)

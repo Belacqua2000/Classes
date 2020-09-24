@@ -52,6 +52,10 @@
 		17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */; };
 		17ABF3502507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
 		17ABF3512507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
+		17B7596E251C9C5800AE5BEA /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B7596D251C9C5700AE5BEA /* ImportView.swift */; };
+		17B7596F251C9C5800AE5BEA /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B7596D251C9C5700AE5BEA /* ImportView.swift */; };
+		17BD0E72251BE2F000BCC40D /* ModelJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E71251BE2F000BCC40D /* ModelJSON.swift */; };
+		17BD0E73251BE2F000BCC40D /* ModelJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E71251BE2F000BCC40D /* ModelJSON.swift */; };
 		17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17D48C1D2519526E00CBF0A0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D77D992512230C00212EA1 /* Launch Screen.storyboard */; };
@@ -129,6 +133,8 @@
 		179BF25A2506A86200574A35 /* ILO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILO.swift; sourceTree = "<group>"; };
 		17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagIcon.swift; sourceTree = "<group>"; };
 		17ABF34F2507E789000D4048 /* ILOsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOsView.swift; sourceTree = "<group>"; };
+		17B7596D251C9C5700AE5BEA /* ImportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
+		17BD0E71251BE2F000BCC40D /* ModelJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelJSON.swift; sourceTree = "<group>"; };
 		17C9737D250E2A62000ACF16 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		17D48C22251963F800CBF0A0 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		17D551D42514DDF900A502EA /* ILOGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOGeneratorView.swift; sourceTree = "<group>"; };
@@ -350,9 +356,11 @@
 			isa = PBXGroup;
 			children = (
 				171211FB2503707E00EE7423 /* Persistence.swift */,
+				17B7596D251C9C5700AE5BEA /* ImportView.swift */,
 				171211F72503707E00EE7423 /* Shared.xcdatamodeld */,
 				176CC620250CB92E00FB28B6 /* Tag.swift */,
 				17E50BCF25065CB300BA8618 /* Lesson.swift */,
+				17BD0E71251BE2F000BCC40D /* ModelJSON.swift */,
 				179BF25A2506A86200574A35 /* ILO.swift */,
 				176CC626250CFD3C00FB28B6 /* Resource.swift */,
 			);
@@ -518,6 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
+				17B7596E251C9C5800AE5BEA /* ImportView.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
@@ -538,6 +547,7 @@
 				17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				176CC621250CB92E00FB28B6 /* Tag.swift in Sources */,
 				176CC61E250CB40F00FB28B6 /* AddTagView.swift in Sources */,
+				17BD0E72251BE2F000BCC40D /* ModelJSON.swift in Sources */,
 				171212272503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC62504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
@@ -580,9 +590,11 @@
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
 				179BF2532506834300574A35 /* LessonsView.swift in Sources */,
+				17B7596F251C9C5800AE5BEA /* ImportView.swift in Sources */,
 				1768DED82514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */,
 				17E50BD125065CB300BA8618 /* Lesson.swift in Sources */,
+				17BD0E73251BE2F000BCC40D /* ModelJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -159,3 +159,47 @@ extension Lesson {
         }
     }
 }
+
+extension Lesson {
+    static func parseJSON(url: URL, context: NSManagedObjectContext) {
+        if let data = try? Data(contentsOf: url) {
+            
+            let decoder = JSONDecoder()
+            if let jsonLessons = try? decoder.decode(LessonJSON.self, from: data) {
+                guard jsonLessons.version == 1 else { return }
+                let lessons = jsonLessons.lessonData
+                for lesson in lessons {
+                    create(in: context, title: lesson.title ?? "", type: LessonType(rawValue: lesson.type ?? "lecture") ?? .lecture, teacher: lesson.teacher ?? "", date: lesson.date ?? Date(), location: lesson.location ?? "", watched: lesson.watched, save: true, tags: [], notes: lesson.notes ?? "")
+                }
+                
+            }
+        }
+    }
+    
+    func export() -> URL? {
+        let lessonjson = LessonJSON(lessons: [self])
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        var jsonData: Data?
+        do {
+            jsonData = try encoder.encode(lessonjson)
+        } catch {
+            print(error.localizedDescription)
+        }
+        guard let data = jsonData else { return nil }
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        
+        let url = URL(
+          fileURLWithPath: title ?? "My Lesson",
+          relativeTo: documentsDirectory)
+          .appendingPathExtension("classesdoc")
+        do {
+            try data.write(to: url)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return url
+    }
+}
