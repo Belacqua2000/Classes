@@ -30,7 +30,6 @@ struct ContentView: View {
         .sheet(isPresented: $firstLaunch) {
             OnboardingView(isPresented: $firstLaunch)
         }
-        .onAppear()
         #else
         SidebarNavigation()
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)

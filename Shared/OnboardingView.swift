@@ -12,8 +12,8 @@ struct OnboardingView: View {
     @Binding var isPresented: Bool
     var body: some View {
         GeometryReader { gr in
-                VStack {
-                    ScrollView {
+            VStack(alignment: .center) {
+                ScrollView {
                     Text("Welcome to Classes")
                         .font(.largeTitle)
                         .bold()
@@ -41,7 +41,7 @@ struct OnboardingView: View {
                     .background(Color.accentColor)
                     .foregroundColor(.white)
                     .cornerRadius(8)
-                }
+            }
             .padding()
         }
     }

@@ -11,11 +11,20 @@ struct SettingsView: View {
     let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     let versionNumber: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     @Binding var viewIsShown: Bool
+    @State var welcomeScreenIsShown: Bool = false
     #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
     var body: some View {
         Form {
+            Section {
+                Button(action: {welcomeScreenIsShown = true}, label: {
+                    Label("Welcome Page", systemImage: "face.smiling")
+                })
+                    .sheet(isPresented: $welcomeScreenIsShown) {
+                        OnboardingView(isPresented: $welcomeScreenIsShown)
+                    }
+            }
             
             Section(header: Text("Contact")) {
                 Link(destination: URL(string: "https://nickbaughanapps.wordpress.com")!) {
