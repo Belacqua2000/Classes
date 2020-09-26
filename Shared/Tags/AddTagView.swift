@@ -14,6 +14,9 @@ struct AddTagView: View {
     @Binding var tag: Tag?
     @State var tagName: String = ""
     @State var tagColor: Color = Color.red
+    var isEditing: Bool {
+        return tag != nil
+    }
     
     var form: some View {
         Form {
@@ -52,13 +55,13 @@ struct AddTagView: View {
             form
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Add", action: save)
+                        Button(isEditing ? "Save" : "Add", action: save)
                     }
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancel", action: cancel)
                     }
                 }
-                .navigationTitle("Add Tag")
+                .navigationTitle(isEditing ? "Edit Tag" : "Add Tag")
         }
         //.navigationViewStyle(StackNavigationViewStyle())
         #else

@@ -99,16 +99,16 @@ struct SidebarNavigation: View {
                     .alert(isPresented: $deleteAlertShown) {
                         Alert(title: Text("Delete Tag"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteTag), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedTag = nil}))
                     }
-                    Button(action: {addTagShowing = true}, label: {
+                    Button(action: addTag, label: {
                         Label("Add Tag", systemImage: "plus.circle")
-                    })
-                    .sheet(isPresented: $addTagShowing, onDismiss: {
-                        selectedTag = nil
-                    }, content: {
-                        AddTagView(isPresented: $addTagShowing, tag: $selectedTag).environment(\.managedObjectContext, viewContext)
                     })
                 }
             }
+            .sheet(isPresented: $addTagShowing, onDismiss: {
+                selectedTag = nil
+            }, content: {
+                AddTagView(isPresented: $addTagShowing, tag: $selectedTag).environment(\.managedObjectContext, viewContext)
+            })
             .navigationTitle("Classes")
             .frame(minWidth: 100, idealWidth: 150, maxHeight: .infinity)
             .listStyle(SidebarListStyle())
@@ -141,6 +141,11 @@ struct SidebarNavigation: View {
             offsets.map { tags[$0] }.forEach { tag in
                 deleteTagAlert(tag: tag)
             }
+    }
+    
+    private func addTag() {
+        selectedTag = nil
+        addTagShowing = true
     }
     
     private func editTag(tag: Tag) {

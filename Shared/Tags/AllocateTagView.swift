@@ -58,15 +58,15 @@ struct AllocateTagView: View {
                 }
             }
         }
+        .sheet(isPresented: $sheetIsPresented) {
+            AddTagView(isPresented: $sheetIsPresented, tag: .constant(nil))
+        }
         .toolbar {
             #if !os(macOS)
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     sheetIsPresented = true
                 }, label: {Label("Add Tag", systemImage: "plus")})
-                .sheet(isPresented: $sheetIsPresented) {
-                    AddTagView(isPresented: $sheetIsPresented, tag: .constant(nil))
-                }
             }
             #endif
         }
