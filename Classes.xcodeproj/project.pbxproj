@@ -52,6 +52,13 @@
 		17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */; };
 		17ABF3502507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
 		17ABF3512507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
+		17B75981251D29CA00AE5BEA /* LessonsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B75980251D29C900AE5BEA /* LessonsList.swift */; };
+		17B75982251D29CA00AE5BEA /* LessonsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B75980251D29C900AE5BEA /* LessonsList.swift */; };
+		17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */; };
+		17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */; };
+		17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */; };
+		17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E8F251D425000BCC40D /* LessonsRow.swift */; };
+		17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E8F251D425000BCC40D /* LessonsRow.swift */; };
 		17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17D48C1D2519526E00CBF0A0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17D77D992512230C00212EA1 /* Launch Screen.storyboard */; };
@@ -129,6 +136,10 @@
 		179BF25A2506A86200574A35 /* ILO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILO.swift; sourceTree = "<group>"; };
 		17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagIcon.swift; sourceTree = "<group>"; };
 		17ABF34F2507E789000D4048 /* ILOsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOsView.swift; sourceTree = "<group>"; };
+		17B75980251D29C900AE5BEA /* LessonsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsList.swift; sourceTree = "<group>"; };
+		17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsNavMac.swift; sourceTree = "<group>"; };
+		17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsFilter.swift; sourceTree = "<group>"; };
+		17BD0E8F251D425000BCC40D /* LessonsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsRow.swift; sourceTree = "<group>"; };
 		17C9737D250E2A62000ACF16 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		17D48C22251963F800CBF0A0 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		17D551D42514DDF900A502EA /* ILOGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOGeneratorView.swift; sourceTree = "<group>"; };
@@ -313,7 +324,11 @@
 			isa = PBXGroup;
 			children = (
 				179BF2512506834300574A35 /* LessonsView.swift */,
+				17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */,
+				17B75980251D29C900AE5BEA /* LessonsList.swift */,
+				17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */,
 				17E50BBF2504D81200BA8618 /* LessonsListContent.swift */,
+				17BD0E8F251D425000BCC40D /* LessonsRow.swift */,
 				17E50BC52504D8F800BA8618 /* LessonCell.swift */,
 				17E50BC22504D81E00BA8618 /* AddLessonView.swift */,
 			);
@@ -520,6 +535,7 @@
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
+				17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */,
@@ -532,6 +548,7 @@
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
 				179BF25B2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */,
+				17B75981251D29CA00AE5BEA /* LessonsList.swift in Sources */,
 				17E50BCC250518A100BA8618 /* SettingsView.swift in Sources */,
 				1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */,
@@ -545,6 +562,7 @@
 				17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */,
 				170EE3BE251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
 				1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */,
+				17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */,
 				17ABF3502507E789000D4048 /* ILOsView.swift in Sources */,
@@ -562,12 +580,15 @@
 				176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				17E50BCA2504E22200BA8618 /* DetailView.swift in Sources */,
 				176CC61F250CB42E00FB28B6 /* AddTagView.swift in Sources */,
+				17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
 				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
+				17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */,
 				17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */,
 				17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				176CC629250D13CC00FB28B6 /* Resource.swift in Sources */,
+				17B75982251D29CA00AE5BEA /* LessonsList.swift in Sources */,
 				1712122A2503708000EE7423 /* Persistence.swift in Sources */,
 				17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				179BF25C2506A86200574A35 /* ILO.swift in Sources */,
@@ -575,6 +596,7 @@
 				17E50BCD250518A100BA8618 /* SettingsView.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				176CC622250CBD4000FB28B6 /* Tag.swift in Sources */,
+				17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */,
 				17E50BC12504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				177909C3250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				171212282503708000EE7423 /* ContentView.swift in Sources */,

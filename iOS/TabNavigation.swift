@@ -21,22 +21,9 @@ struct TabNavigation: View {
     @State private var selectedTag: Tag?
     var body: some View {
         TabView(selection: $selection) {
-            NavigationView {
-                SummaryView()
-            }
-            .tabItem {
-                Label("Summary", systemImage: "chart.pie.fill")
-            }
-            .tag(Tab.summary)
+            SummaryTabView()
             
-            NavigationView {
-                LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
-            }
-            .navigationViewStyle(StackNavigationViewStyle())
-            .tabItem {
-                Label("All Lessons", systemImage: "books.vertical.fill")
-            }
-            .tag(Tab.all)
+            AllTabView()
             
             NavigationView {
                 List {
@@ -47,7 +34,7 @@ struct TabNavigation: View {
                         ForEach(tags) { tag in
                             NavigationLink(
                                 destination:
-                                    LessonsView(filter: LessonsView.Filter(filterType: .tag, lessonType: nil, tag: tag)),
+                                    LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag)),
                                 label: {
                                     Label(title: { Text(tag.name ?? "Untitled") },
                                         icon: {
@@ -152,5 +139,30 @@ extension TabNavigation {
 struct TabNavigation_Previews: PreviewProvider {
     static var previews: some View {
         TabNavigation()
+    }
+}
+
+struct AllTabView: View {
+    var body: some View {
+        NavigationView {
+            LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .tabItem {
+            Label("All Lessons", systemImage: "books.vertical.fill")
+        }
+        .tag(TabNavigation.Tab.all)
+    }
+}
+
+struct SummaryTabView: View {
+    var body: some View {
+        NavigationView {
+            SummaryView()
+        }
+        .tabItem {
+            Label("Summary", systemImage: "chart.pie.fill")
+        }
+        .tag(TabNavigation.Tab.summary)
     }
 }

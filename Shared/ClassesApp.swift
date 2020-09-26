@@ -20,6 +20,11 @@ struct ClassesApp: App {
             SidebarCommands()
         }
         
+        WindowGroup {
+            SummaryView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        }
+        
         #if os(macOS)
         Settings {
             SettingsView(viewIsShown: .constant(true))

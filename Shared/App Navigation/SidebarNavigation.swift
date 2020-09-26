@@ -38,7 +38,7 @@ struct SidebarNavigation: View {
         animation: .default)*/
     private var tags = [Tag]()//FetchedResults<Tag>
     
-    @State var selection = Set<SidebarItem>()
+    @State var selection: SidebarItem? = SidebarItem(sidebarType: .all, lessonTypes: nil, tag: nil)
     
     var sidebar: some View {
         List(selection: $selection) {
@@ -47,7 +47,7 @@ struct SidebarNavigation: View {
                 }
                 .tag(SidebarItem(sidebarType: .summary, lessonTypes: nil))
             
-            NavigationLink(destination: LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))) {
+            NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))) {
                     Label("All Lessons", systemImage: "books.vertical")
                 }
                 .tag(SidebarItem(sidebarType: .all, lessonTypes: nil))
@@ -59,7 +59,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
-                    NavigationLink(destination: LessonsView(filter: LessonsView.Filter(filterType: .lessonType, lessonType: lesson))) {
+                    NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson))) {
                             Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                         }
                         .tag(SidebarItem(sidebarType: .lessonType, lessonTypes: lesson))
@@ -68,7 +68,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Tags")) {
                 ForEach(tags) { tag in
-                    NavigationLink(destination:  LessonsView(filter: LessonsView.Filter(filterType: .tag, lessonType: nil, tag: tag))) {
+                    NavigationLink(destination:  LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag))) {
                             Label(
                                 title: { Text(tag.name ?? "Untitled") },
                                 icon: {
@@ -122,18 +122,18 @@ struct SidebarNavigation: View {
                 }
                 #endif
             }
-            LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
+            LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
             
-            if selection != [SidebarItem(sidebarType: .ilo, lessonTypes: nil)] {
+            /*if selection?.sidebarType == .all {
                 Text("Select a Class")
                     .toolbar {
                         Spacer()
                     }
-            }
+            }*/
         }
-        .onAppear(perform: {
+        /*.onAppear(perform: {
             selection = [SidebarItem(sidebarType: .all, lessonTypes: nil)]
-        })
+        })*/
     }
     
     func delete(offsets: IndexSet) {
