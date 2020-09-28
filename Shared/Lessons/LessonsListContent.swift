@@ -146,14 +146,24 @@ struct LessonsListContent: View {
         Group {
             if filteredLessons.count > 0 {
                 #if os(macOS)
+                ScrollViewReader { proxy in
                 lessonList
+                    .onDeleteCommand(perform: {deleteLessonAlert(lessons: Array(selection))})
                     .navigationTitle(titleString)
                     .navigationSubtitle("\(filteredLessons.count) Lessons")
                     .listStyle(InsetListStyle())
+                    .toolbar {
+                        Button(action: {scrollToNow(proxy: proxy)}, label: {
+                            Label("Scroll to Next", systemImage: "calendar.badge.clock")
+                        }).help("Scroll to the next lesson after now.")
+                    }
+                }
                 #else
                 ScrollViewReader { proxy in
                     if filteredLessons.count > 0 {
-                        Button("Scroll to Now", action: {proxy.scrollTo(scrollToNow())})
+                        Button(action: {scrollToNow(proxy: proxy)}, label: {
+                            Label("Scroll to Next", systemImage: "calendar.badge.clock")
+                        }).help("Scroll to the next lesson after now.")
                     }
                     lessonList
                         .navigationTitle(titleString)
@@ -176,7 +186,7 @@ struct LessonsListContent: View {
             selectedLessons = nil
         }, content: {
             AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented).environment(\.managedObjectContext, viewContext)
-                .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
+                //.frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
         })
         .toolbar {
             #if !os(macOS)
@@ -231,9 +241,6 @@ struct LessonsListContent: View {
                     Label("Add Lesson", systemImage: "plus")
                 })
                 .help("Add a New Lesson")
-                #if os(macOS)
-                Spacer()
-                #endif
             }
         }
     }
@@ -269,13 +276,19 @@ struct LessonsListContent: View {
         }
     }
     
-    private func scrollToNow() -> Lesson? {
+    private func scrollToNow(proxy: ScrollViewProxy) {
+        guard filteredLessons.count > 0 else { return }
         let sortedLessons = filteredLessons.sorted(by: {$0.date! < $1.date!})
         
-        guard let nextLesson = sortedLessons.first(where: {$0.date ?? Date(timeIntervalSince1970: 0) > Date()}) else { return nil }
-        
-        print(nextLesson.id!)
-        return nextLesson.self
+        if let nextLesson = sortedLessons.first(where: {$0.date ?? Date(timeIntervalSince1970: 0) > Date()}) {
+            withAnimation {
+                proxy.scrollTo(nextLesson)
+            }
+        } else {
+            withAnimation {
+                proxy.scrollTo(sortedLessons.last!)
+            }
+        }
     }
     
     private let itemFormatter: DateFormatter = {

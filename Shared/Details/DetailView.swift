@@ -9,21 +9,27 @@ import SwiftUI
 import CoreData
 
 struct DetailView: View {
+    
+    //MARK: - Environment Variables
     @Environment(\.managedObjectContext) var managedObjectContext
     @Environment(\.presentationMode) var presentationMode
     #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
     
-    //View States
-    @State var isDeleteAlertShown: Bool = false
-    @State var isInValidURLAlertShown: Bool = false
-    @State var isEditingLesson: Bool = false
-    //@Binding var detailShown: Bool
+    //MARK: - View States
+    @State private var isDeleteAlertShown: Bool = false
+    @State private var isInValidURLAlertShown: Bool = false
+    @State private var isEditingLesson: Bool = false
+    @State private var isAddingResource: Bool = false
+    @State private var isAddingILO: Bool = false
+    @State private var editILOViewState: EditILOView.AddOutcomeViewState = .single
     
+    //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = false
     
+    //MARK: - Model
     @ObservedObject var lesson: Lesson
     @State var lessonToEdit: Lesson?
     @FetchRequest(
@@ -37,10 +43,8 @@ struct DetailView: View {
         })
     }
     
-    @State var newILOText: String = ""
-    @State var newILOSaveButtonShown: Bool = false
     
-    //ILOs
+    //MARK: - ILOs
     @State var iloListSelection: Set<ILO> = []
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
@@ -49,6 +53,9 @@ struct DetailView: View {
     var filteredILOs: [ILO] {
         return ilos.filter { $0.lesson == lesson }
     }
+    
+    @State var newILOText: String = ""
+    @State var newILOSaveButtonShown: Bool = false
     
     var completedILOs: Double {
         var completedILOs: Double = 0
@@ -62,7 +69,7 @@ struct DetailView: View {
         return iloCount == 0 ? 1 : value
     }
     
-    //Resources
+    //MARK: - Resources
     @State var resourceListSelection = Set<Resource>()
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Resource.name, ascending: true)],
@@ -73,6 +80,8 @@ struct DetailView: View {
      }*/
     @State private var selectedResource: Resource? = nil
     
+    
+    //MARK: - Views
     var toggleWatchedButton: some View {
         Button(action: {
                withAnimation {
@@ -138,14 +147,14 @@ struct DetailView: View {
                         }
                         
                         DisclosureGroup(isExpanded: $iloSectionExpanded, content: {
-                            ILOSection(lesson: lesson)
+                            ILOSection(lesson: lesson, isAddingILO: $isAddingILO, editILOViewState: $editILOViewState)
                         }, label: {
                             Label("Learning Outcomes", systemImage: "list.number")
                                 .font(.headline)
                         })
                         
                         DisclosureGroup(isExpanded: $resourceSectionExpanded, content: {
-                            ResourceSection(lesson: lesson, resources: resources)
+                            ResourceSection(isAddingResource: $isAddingResource, lesson: lesson, resources: resources)
                         }, label: {
                             Label("Resources", systemImage: "globe")
                                 .font(.headline)
@@ -165,7 +174,24 @@ struct DetailView: View {
             .toolbar {
                 #if os(macOS)
                 ToolbarItemGroup(placement: .automatic) {
-                    Spacer()
+                    ForEach(0..<10) { _ in
+                        Spacer()
+                    }
+                    Menu(content: {
+                        AddILOMenu(editILOViewState: $editILOViewState, isAddingILO: $isAddingILO)
+                        AddResourceButton(isAddingResource: $isAddingResource)
+                    }, label: {
+                        Label("Add Items", systemImage: "text.badge.plus")
+                    })
+                    .labelStyle(DefaultLabelStyle())
+                    .help("Add learning outcomes and resources")
+                    
+                    Button(action: {
+                        
+                    }, label: {
+                        Label("Edit Tags", systemImage: "tag")
+                    })
+                    .help("Edit the tags for this lesson")
                     deleteButton
                     toggleWatchedButton
                 }
@@ -209,16 +235,15 @@ struct DetailView: View {
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
-        let lesson = Lesson(context: context)
         #if !os(macOS)
         NavigationView{
-            DetailView(lesson: lesson)
+            DetailView(lesson: Lesson.sampleData(context: context).first!)
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else
         NavigationView{
             Text("Lessons View")
-            DetailView(lesson: lesson)
+            DetailView(lesson: Lesson.sampleData(context: context).first!)
         }
         #endif
     }

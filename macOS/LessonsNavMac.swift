@@ -14,7 +14,6 @@ struct LessonsNavMac: View {
     var body: some View {
         GeometryReader { gr in
             HSplitView {
-                //LessonsList(selectedLesson: $selectedLesson)
                 LessonsListContent(selection: $selectedLesson, filter: $filter)
                     .frame(idealWidth: gr.size.width / 2, maxWidth: .infinity, maxHeight: .infinity)
                 if !selectedLesson.isEmpty {

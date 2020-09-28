@@ -11,9 +11,9 @@ struct ILOSection: View {
     @Environment(\.managedObjectContext) var viewContext
     @ObservedObject var lesson: Lesson
     
-    @State var isAddingILO: Bool = false
+    @Binding var isAddingILO: Bool
     @State private var selectedILO: ILO? = nil
-    @State var editILOViewState: EditILOView.AddOutcomeViewState = .single
+    @Binding var editILOViewState: EditILOView.AddOutcomeViewState
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
@@ -65,25 +65,18 @@ struct ILOSection: View {
                 }
                 .cornerRadius(10)
                 .frame(height: listHeight)
+            } else {
+                HStack {
+                    Text("No learning outcomes.")
+                    Spacer()
+                }
             }
             
             HStack {
-                Menu("Add Learning Outcome") {
-                    Button(action: {
-                        editILOViewState = .single
-                        isAddingILO = true
-                    }, label: {
-                        Text("Add Single Outcome")
-                    })
-                    
-                    Button(action: {
-                        editILOViewState = .multiple
-                        isAddingILO = true
-                    }, label: {
-                        Text("Batch Add Outcomes")
-                    })
-                }
+                #if os(iOS)
+                AddILOMenu(editILOViewState: $editILOViewState, isAddingILO: $isAddingILO)
                 Spacer()
+                #endif
             }
             .sheet(isPresented: $isAddingILO, onDismiss: {
                 selectedILO = nil

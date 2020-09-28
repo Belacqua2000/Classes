@@ -51,11 +51,15 @@ struct LessonDetails: View {
             })
             .font(.title3)
             
+            #if os(iOS)
             Button(action: {lesson.toggleWatched(context: viewContext)}, label: {
                 lesson.watched ? Label("Watched", systemImage: "checkmark.circle.fill") : Label("Unwatched", systemImage: "checkmark.circle")
             })
             .font(.title3)
             .padding(.bottom)
+            #else
+            lesson.watched ? Label("Watched", systemImage: "checkmark.circle.fill") : Label("Unwatched", systemImage: "checkmark.circle")
+            #endif
         }
     }
 }

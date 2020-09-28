@@ -11,6 +11,8 @@ struct ILOGeneratorView: View {
     @Environment(\.presentationMode) var presentationMode
     #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #else
+    @State var horizontalSizeClass = false
     #endif
     @EnvironmentObject var environmentHelpers: EnvironmentHelpers
     
@@ -26,28 +28,43 @@ struct ILOGeneratorView: View {
         return currentILOIndex >= ilos.count - 1
     }
     
+    var previousButton: some View {
+        Button(action: previousILO, label: {
+            Label("Previous", systemImage: "chevron.left")
+        })
+        .disabled(isFirstILO)
+    }
+    
+    var nextButton: some View {
+        Button(action: nextILO, label: {
+            Label("Next", systemImage: "chevron.right")
+        })
+        .disabled(isLastILO)
+    }
+    
     var body: some View {
-        /*GeometryReader { gr in
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(ilos) { ilo in
-                        let ilo = ilo as ILO
-                        Text(ilo.title ?? "No Title")
-                            .frame(width: gr.size.width)
-                    }
-                }
-            }
-        }*/
         Group {
             if ilos.count != 0 {
-                VStack(spacing: 20) {
-                    Text(ilos[currentILOIndex].title ?? "No Title")
-                        .font(.title)
-                    Label(
-                        title: { Text(ilos[currentILOIndex].lesson!.title ?? "Untitled").italic() },
-                        icon: { Image(systemName: Lesson.lessonIcon(type: ilos[currentILOIndex].lesson?.type)) }
-                    )
-                    .font(.title3)
+                HStack {
+                    #if os(macOS)
+                    previousButton
+                        .padding()
+                    #endif
+                    Spacer()
+                    VStack(spacing: 20) {
+                        Text(ilos[currentILOIndex].title ?? "No Title")
+                            .font(.title)
+                        Label(
+                            title: { Text(ilos[currentILOIndex].lesson!.title ?? "Untitled").italic() },
+                            icon: { Image(systemName: Lesson.lessonIcon(type: ilos[currentILOIndex].lesson?.type)) }
+                        )
+                        .font(.title3)
+                    }
+                    Spacer()
+                    #if os(macOS)
+                    nextButton
+                        .padding()
+                    #endif
                 }
             } else {
                 Text("No outcomes to Randomise")
@@ -61,10 +78,7 @@ struct ILOGeneratorView: View {
         .toolbar {
             #if !os(macOS)
             ToolbarItemGroup(placement: .bottomBar) {
-                Button(action: previousILO, label: {
-                    Label("Previous", systemImage: "chevron.left")
-                })
-                .disabled(isFirstILO)
+                previousButton
                 
                 Spacer()
                 
@@ -73,12 +87,8 @@ struct ILOGeneratorView: View {
                 
                 Spacer()
                 
-                Button(action: nextILO, label: {
-                    Label("Next", systemImage: "chevron.right")
-                })
-                .disabled(isLastILO)
+                nextButton
             }
-            #endif
             ToolbarItem(placement: .cancellationAction) {
                 Button(action: {
                     environmentHelpers.iloRandomiserShown = false
@@ -86,6 +96,7 @@ struct ILOGeneratorView: View {
                     Text("Close")
                 })
             }
+            #endif
         }
     }
     

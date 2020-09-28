@@ -60,6 +60,22 @@ struct EditILOView: View {
     @Binding var ilo: ILO?
     var lesson: Lesson
     
+    var singleHeaderText: Text {
+        #if os(macOS)
+        return Text("Add Single Learning Outcome").font(.headline)
+        #else
+        return Text("Add Single Learning Outcome")
+        #endif
+    }
+    
+    var multipleHeaderText: Text {
+        #if os(macOS)
+        return Text("Add Multiple Learning Outcome").font(.headline)
+        #else
+        return Text("Add Multiple Learning Outcome")
+        #endif
+    }
+    
     var saveButton: some View {
         Button(action: add, label: {
             Text("Save")
@@ -76,59 +92,86 @@ struct EditILOView: View {
     }
     
     var singleSelection: some View {
-        Section(header: Text("Add Single Learning Outcome")) {
-            TextField("Outcome Text", text: $iloText)
-                .navigationTitle("Add Outcome")
-        }
-    }
-    
-    var body: some View {
         Form {
-            if currentViewState == .single {
-                #if os(macOS)
-                Section(header: Text("Add Learning Outcome").font(.headline)) {
-                    TextField("Outcome Text", text: $iloText)
-                }
-                HStack {
-                    Spacer()
-                    cancelButton
-                    saveButton
-                }
-                #else
-                singleSelection
-                #endif
-            } else {
-                Section(header: Text("Add Multiple Learning Outcome"),
-                        footer:
-                            VStack(alignment: .leading) {
-                                Text("Separate learning outcomes are separated using:")
-                                Picker("Separate Items Using...", selection: $currentSplitType, content: {
-                                    ForEach(SplitType.allCases) { type in
-                                        switch type {
-                                        case .comma: Text(",").tag(type)
-                                        case .newLine: Image(systemName: "return").tag(type)
-                                        case .semicolon: Text(";").tag(type)
-                                        }
-                                    }
-                                })
-                                .pickerStyle(SegmentedPickerStyle())
-                                Text("Preview")
-                                ForEach(splitILOs) { item in
-                                    Text("\(item.index). \(item.string)")
-                                }
-                            },
-                        content: {
-                            TextEditor(text: $batchILOText)
-                                .frame(height: 100)
-                        })
+            Section(header: singleHeaderText) {
+                TextField("Outcome Text", text: $iloText)
+                    .navigationTitle("Add Outcome")
             }
+            #if os(macOS)
+            HStack {
+                Spacer()
+                cancelButton
+                saveButton
+            }
+            #endif
         }
         .onAppear(perform: {
             if let ilo = ilo {
                 iloText = ilo.title ?? ""
             }
         })
-        .frame(idealWidth: 300, idealHeight: 50)
+    }
+    
+    var multipleSelection: some View {
+        Form {
+            Section(header: multipleHeaderText,
+                    footer:
+                        VStack(alignment: .leading) {
+                            Text("Learning outcomes are separated using:")
+                            Picker("Separate Items Using...", selection: $currentSplitType, content: {
+                                ForEach(SplitType.allCases) { type in
+                                    switch type {
+                                    case .comma: Text(",").tag(type)
+                                    case .newLine: Image(systemName: "return").tag(type)
+                                    case .semicolon: Text(";").tag(type)
+                                    }
+                                }
+                            })
+                            .labelsHidden()
+                            .pickerStyle(SegmentedPickerStyle())
+                            Text("Preview").font(.headline)
+                            ForEach(splitILOs) { item in
+                                Text("\(item.index). \(item.string)")
+                            }
+                        },
+                    content: {
+                        #if os(macOS)
+                        TextEditor(text: $batchILOText)
+                            .border(Color(.labelColor), width: 1)
+                            .frame(height: 100)
+                        #else
+                        TextEditor(text: $batchILOText)
+                            .frame(height: 100)
+                        #endif
+                    })
+            #if os(macOS)
+            HStack {
+                Spacer()
+                cancelButton
+                saveButton
+            }
+            #endif
+        }
+    }
+    
+    var body: some View {
+        Group {
+            if currentViewState == .single {
+                #if os(macOS)
+                singleSelection
+                    .padding()
+                #else
+                singleSelection
+                #endif
+            } else {
+                #if os(macOS)
+                multipleSelection
+                    .padding()
+                #else
+                multipleSelection
+                #endif
+            }
+        }
         .toolbar {
             #if !os(macOS)
             ToolbarItem(placement: .confirmationAction) {
