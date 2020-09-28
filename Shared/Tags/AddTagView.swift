@@ -18,8 +18,29 @@ struct AddTagView: View {
         return tag != nil
     }
     
+    var navTitle: String {
+        if tag == nil {
+            return "Add Tag"
+        } else {
+            return "Edit Tag"
+        }
+    }
+    
+    var cancelButton: some View {
+        Button("Cancel", action: cancel)
+    }
+    
+    var saveButton: some View {
+        Button("Save", action: save)
+            .disabled(tagName.isEmpty)
+    }
+    
     var form: some View {
         Form {
+            #if os(macOS)
+            Text(navTitle)
+                .font(.headline)
+            #endif
             TextField("Tag Name", text: $tagName)
             #if os(macOS)
             HStack {
@@ -32,8 +53,8 @@ struct AddTagView: View {
             }
             HStack {
                 Spacer()
-                Button("Add", action: save).keyboardShortcut(.defaultAction)
-                Button("Cancel", action: cancel).keyboardShortcut(.cancelAction)
+                saveButton.keyboardShortcut(.defaultAction)
+                cancelButton.keyboardShortcut(.cancelAction)
             }
             #else
             ColorPicker(selection: $tagColor, label: {
@@ -55,17 +76,18 @@ struct AddTagView: View {
             form
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(isEditing ? "Save" : "Add", action: save)
+                        saveButton
                     }
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel", action: cancel)
+                        cancelButton
                     }
                 }
-                .navigationTitle(isEditing ? "Edit Tag" : "Add Tag")
+                .navigationTitle(navTitle)
         }
         //.navigationViewStyle(StackNavigationViewStyle())
         #else
         form
+            .padding()
         #endif
     }
     
