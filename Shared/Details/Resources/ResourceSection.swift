@@ -10,7 +10,7 @@ import SwiftUI
 struct ResourceSection: View {
     @Environment(\.managedObjectContext) var viewContext
     @State var isInValidURLAlertShown: Bool = false
-    @State var isAddingResource: Bool = false
+    @Binding var isAddingResource: Bool
     @State private var selectedResource: Resource?
     @ObservedObject var lesson: Lesson
     var resources: FetchedResults<Resource>
@@ -69,10 +69,17 @@ struct ResourceSection: View {
                 }
                 .cornerRadius(10)
                 .frame(height: listHeight)
+            } else {
+                HStack {
+                    Text("No Resources.")
+                    Spacer()
+                }
             }
             HStack {
-                Button("Add Resource", action: {isAddingResource = true})
+                #if os(iOS)
+                AddResourceButton(isAddingResource: $isAddingResource)
                 Spacer()
+                #endif
             }
             .padding(.vertical)
             .sheet(isPresented: $isAddingResource, onDismiss: {
@@ -93,8 +100,9 @@ struct ResourceSection: View {
     
     private func copyResourceURL(_ url: URL?) {
         guard let url = url else { return }
-        print("Copied")
+        #if !os(macOS)
         UIPasteboard.general.url = url
+        #endif
     }
     
     private func deleteResources(offsets: IndexSet) {

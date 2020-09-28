@@ -11,7 +11,7 @@ struct LessonTypeNavigationList: View {
     var body: some View {
         ForEach(Lesson.LessonType.allCases) { lesson in
             NavigationLink(
-                destination: LessonsView(filter: LessonsView.Filter(filterType: .lessonType, lessonType: lesson)),
+                destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson)),
                 label: {
                     Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                 })

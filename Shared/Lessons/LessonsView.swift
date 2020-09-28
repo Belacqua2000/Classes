@@ -8,47 +8,19 @@
 import SwiftUI
 
 struct LessonsView: View {
-    struct Filter: Hashable {
-        enum FilterTypes {
-            case all, tag, lessonType, watched
-        }
-        var filterType: FilterTypes
-        var lessonType: Lesson.LessonType?
-        var tag: Tag?
-    }
     
-    @State var lessonCount: Int = 0
-    
-    var titleString: String {
-        switch filter.filterType {
-        case .all:
-            return("All Lessons")
-        case .tag:
-            return("Tag: \(filter.tag?.name ?? "")")
-        case .lessonType:
-            return Lesson.lessonTypePlural(type: filter.lessonType?.rawValue)
-        case .watched:
-            return("Watched Lessons")
-        }
-    }
-    
-    @State var filter: Filter
+    @State var filter: LessonsFilter
     var body: some View {
         #if os(macOS)
-        NavigationView {
-            LessonsListContent(lessonCount: $lessonCount, filter: $filter)
-        }
-        .navigationTitle(titleString)
-        .navigationSubtitle("\(lessonCount) Lessons")
+        LessonsNavMac(filter: $filter)
         #else
-        LessonsListContent(lessonCount: $lessonCount, filter: $filter)
-                .navigationTitle(titleString)
+        LessonsListContent(filter: $filter)
         #endif
     }
 }
 
 struct AllLessonsView_Previews: PreviewProvider {
     static var previews: some View {
-        LessonsView(filter: LessonsView.Filter(filterType: .all, lessonType: nil))
+        LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
     }
 }

@@ -28,8 +28,9 @@ struct AddLessonView: View {
     @State var notes: String = ""
     var body: some View {
         #if os(macOS)
-        AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted)
+        AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
             .padding()
+            .frame(idealWidth: 400)
         #else
         NavigationView {
             AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
@@ -74,6 +75,15 @@ struct AddLessonForm: View {
     @Binding var date: Date
     @Binding var isCompleted: Bool
     @Binding var notes: String
+    
+    var editorHeight: CGFloat {
+        #if os(macOS)
+        return 100
+        #else
+        return 200
+        #endif
+    }
+    
     var body: some View {
         Form {
             Section {
@@ -108,8 +118,14 @@ struct AddLessonForm: View {
                 })
             }
             Section(header: Text("Notes")) {
+                #if os(macOS)
                 TextEditor(text: $notes)
-                    .frame(height: 200)
+                    .border(Color(.labelColor), width: 1)
+                    .frame(height: editorHeight)
+                #else
+                TextEditor(text: $notes)
+                    .frame(height: editorHeight)
+                #endif
             }
             #if os(macOS)
             HStack {

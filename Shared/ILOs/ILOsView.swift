@@ -11,8 +11,8 @@ struct ILOsView: View {
     
     private enum ViewStates: String, CaseIterable, Identifiable {
         var id: String { return rawValue }
-        case list = "List"
-        case iloRandomiser = "ILO Randomiser"
+        case list = "Browse"
+        case iloRandomiser = "Outcome Randomiser"
     }
     
     @SceneStorage("currentILOView") private var currentILOView: ViewStates = .list
@@ -23,7 +23,7 @@ struct ILOsView: View {
     
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ILO.lesson?.date, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \ILO.lesson?.date, ascending: true), NSSortDescriptor(keyPath: \ILO.index, ascending: true)],
         animation: .default)
     private var ilos: FetchedResults<ILO>
     @FetchRequest(
@@ -32,54 +32,45 @@ struct ILOsView: View {
     private var lessons: FetchedResults<Lesson>
     var body: some View {
         VStack {
-            /*Picker("Current View", selection: $currentILOView) {
-                ForEach(ViewStates.allCases) { state in
-                    Text(state.rawValue).tag(state)
-                }
-            }
-            .padding()
-            .pickerStyle(SegmentedPickerStyle())*/
-            //if currentILOView == .list {
-                if ilos.count > 0 {
-                    List(ilos) { ilo in
-                        VStack(alignment: .leading) {
-                            Text(ilo.title!)
-                            Label(
-                                title: { Text(ilo.lesson!.title ?? "Untitled")
-                                    .italic()
-                                }, icon: { Image(systemName: Lesson.lessonIcon(type: ilo.lesson!.type)) })
-                                .font(.footnote)
-                        }
-                    }
-                    .listStyle(PlainListStyle())
-                    Spacer()
-                    Button(action: {randomiserShown.iloRandomiserShown = true}, label: {Text("Randomise All Outcomes")})
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(width: 300, height: 50)
-                        .background(Color.accentColor)
-                        .cornerRadius(8)
-                        .padding(.bottom)
-                        .fullScreenCover(isPresented: $randomiserShown.iloRandomiserShown) {
-                            NavigationView {
-                                ILOGeneratorView(isPresented: $generatorShown, ilos: ilos.shuffled())
-                            }
-                        }
-                } else {
-                    Text("No Learning Outcomes.  Add outcomes from the lesson info page.")
-                }
-            /*} else {
-                Spacer()
+            if ilos.count > 0 {
                 #if !os(macOS)
-                Button(action: {generatorShown = true}, label: {Text("Randomise All ILOs")})
-                    .fullScreenCover(isPresented: $generatorShown) {
+                AllILOsList(lessons: Array(lessons), ilos: Array(ilos))
+                Spacer()
+                Button(action: {randomiserShown.iloRandomiserShown = true}, label: {Text("Randomise All Outcomes")})
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(width: 300, height: 50)
+                    .background(Color.accentColor)
+                    .cornerRadius(8)
+                    .padding(.bottom)
+                    .fullScreenCover(isPresented: $randomiserShown.iloRandomiserShown) {
                         NavigationView {
                             ILOGeneratorView(isPresented: $generatorShown, ilos: ilos.shuffled())
                         }
                     }
+                #else
+                if currentILOView == .list {
+                    AllILOsList(lessons: Array(lessons), ilos: Array(ilos))
+                } else {
+                    ILOGeneratorView(isPresented: .constant(true), ilos: ilos.shuffled())
+                }
                 #endif
-            }*/
-            //Spacer()
+            } else {
+                Text("No Learning Outcomes.  Add outcomes from the lesson info page.")
+            }
+        }
+        .toolbar {
+            #if os(macOS)
+            ToolbarItem(placement: .principal) {
+                Picker("Current View", selection: $currentILOView) {
+                    ForEach(ViewStates.allCases) { state in
+                        Text(state.rawValue).tag(state)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(SegmentedPickerStyle())
+            }
+            #endif
         }
         .navigationTitle("Learning Outcomes")
     }
