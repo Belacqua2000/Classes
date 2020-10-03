@@ -159,3 +159,83 @@ extension Lesson {
         }
     }
 }
+
+
+extension Lesson {
+    static func parseJSON(url: URL, context: NSManagedObjectContext) {
+        if let data = try? Data(contentsOf: url) {
+            
+            let decoder = JSONDecoder()
+            if let jsonLessons = try? decoder.decode(LessonJSON.self, from: data) {
+                if jsonLessons.version == 2 {
+                    
+                    let lessons = jsonLessons.lessonData
+                    
+                    for lesson in lessons {
+                        let createdLesson = Lesson(context: context)
+                        createdLesson.id = UUID()
+                        createdLesson.title = lesson.title
+                        createdLesson.type = lesson.type
+                        createdLesson.teacher = lesson.teacher
+                        createdLesson.date = lesson.date
+                        createdLesson.location = lesson.location
+                        createdLesson.watched = lesson.watched
+                        createdLesson.notes = lesson.notes
+                        
+                        for ilo in lesson.ilo {
+                            let createdILO = ILO(context: context)
+                            createdILO.id = UUID()
+                            createdILO.index = ilo.index
+                            createdILO.title = ilo.title
+                            createdILO.written = ilo.written
+                            createdLesson.addToIlo(createdILO)
+                        }
+                        
+                        for resource in lesson.resource {
+                            let createdResource = Resource(context: context)
+                            createdResource.id = UUID()
+                            createdResource.name = resource.name
+                            createdResource.url = resource.url
+                            createdLesson.addToResource(createdResource)
+                        }
+                        
+                        do {
+                            try context.save()
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                        
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    func export() -> URL? {
+        let lessonjson = LessonJSON(lessons: [self])
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        var jsonData: Data?
+        do {
+            jsonData = try encoder.encode(lessonjson)
+        } catch {
+            print(error.localizedDescription)
+        }
+        guard let data = jsonData else { return nil }
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        
+        let url = URL(
+          fileURLWithPath: title ?? "My Lesson",
+          relativeTo: documentsDirectory)
+          .appendingPathExtension("classesdoc")
+        do {
+            try data.write(to: url)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return url
+    }
+}
