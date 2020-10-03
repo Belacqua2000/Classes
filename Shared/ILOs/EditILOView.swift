@@ -43,7 +43,7 @@ struct EditILOView: View {
         case .comma:
             separatedStrings = batchILOText.components(separatedBy: ",")
         case .newLine:
-            separatedStrings = batchILOText.components(separatedBy: .newlines)
+            separatedStrings = batchILOText.components(separatedBy: .newlines).filter({!$0.isEmpty})
         case .semicolon:
             separatedStrings = batchILOText.components(separatedBy: ";")
         }

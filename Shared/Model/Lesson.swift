@@ -54,9 +54,9 @@ extension Lesson {
         case .some(.tutorial):
             return "person.3"
         case .some(.pbl):
-            return "doc.plaintext"
-        case .some(.cbl):
             return "doc.richtext"
+        case .some(.cbl):
+            return "waveform.path.ecg.rectangle"
         case .some(.lab):
             return "eyedropper"
         case .some(.clinical):

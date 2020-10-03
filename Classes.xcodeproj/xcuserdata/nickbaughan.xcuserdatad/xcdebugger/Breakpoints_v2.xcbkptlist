@@ -60,10 +60,10 @@
             filePath = "Shared/Tags/AddTagView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "form"
-            landmarkType = "24">
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -76,42 +76,10 @@
             filePath = "Shared/Lessons/AddLessonView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "body"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "BA199797-D0D4-4BD0-8233-207036B0B6B4 - 4200e6ccdfbbbe3a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Image, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Image, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Image, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.textContentType(Swift.Optional&lt;__C.UITextContentType&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.DatePicker&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.pickerStyle&lt;A where A1: SwiftUI.PickerStyle&gt;(A1) -&gt; some&gt;&gt;.0, SwiftUI.Toggle&lt;SwiftUI.Text&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.environment&lt;A&gt;(Swift.WritableKeyPath&lt;SwiftUI.EnvironmentValues, A1&gt;, A1) -&gt; some&gt;&gt;.0&gt;, SwiftUI.EmptyView&gt;)&gt; in Classes.AddLessonForm.body.getter : some"
-                  moduleName = "Classes"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/AddLessonView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "139"
-                  endingLineNumber = "139"
-                  offsetFromSymbolStart = "1560">
-               </Location>
-               <Location
-                  uuid = "BA199797-D0D4-4BD0-8233-207036B0B6B4 - 5a5a4846734fd14c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #4 () -&gt; SwiftUI.NavigationLink&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.environment&lt;A&gt;(Swift.WritableKeyPath&lt;SwiftUI.EnvironmentValues, A1&gt;, A1) -&gt; some&gt;&gt;.0&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.TupleView&lt;(SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Image, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Image, SwiftUI.TextField&lt;SwiftUI.Text&gt;)&gt;&gt;, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Image, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.textContentType(Swift.Optional&lt;__C.UITextContentType&gt;) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.DatePicker&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.pickerStyle&lt;A where A1: SwiftUI.PickerStyle&gt;(A1) -&gt; some&gt;&gt;.0, SwiftUI.Toggle&lt;SwiftUI.Text&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.EmptyView, SwiftUI.NavigationLink&lt;SwiftUI.Label&lt;SwiftUI.Text, SwiftUI.Image&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.environment&lt;A&gt;(Swift.WritableKeyPath&lt;SwiftUI.EnvironmentValues, A1&gt;, A1) -&gt; some&gt;&gt;.0&gt;, SwiftUI.EmptyView&gt;)&gt; in Classes.AddLessonForm.body.getter : some"
-                  moduleName = "Classes"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/AddLessonView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "556">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -124,10 +92,10 @@
             filePath = "Shared/Tags/AddTagView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "form"
-            landmarkType = "24">
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -243,22 +211,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E754A35F-AC95-4D64-A262-3C54CCA8A0DD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/App Navigation/ContentView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "55E825AB-D648-4902-B9E3-871A71300EB5"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -296,8 +248,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "scrollToNow(proxy:)"
             landmarkType = "7">
             <Locations>
@@ -337,54 +289,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "49384D1F-2EA9-4A6D-A6D4-DC2630898484"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Shared/Lessons/LessonsListContent.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "49384D1F-2EA9-4A6D-A6D4-DC2630898484 - c6b3adc67fa8c795"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (SwiftUI.ScrollViewProxy) -&gt; SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Button&lt;SwiftUI.Text&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationTitle&lt;A where A1: Swift.StringProtocol&gt;(A1) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI._ConditionalContent&lt;SwiftUI.ScrollViewReader&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Button&lt;SwiftUI.Text&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationTitle&lt;A where A1: Swift.StringProtocol&gt;(A1) -&gt; some&gt;&gt;.0)&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt; in Classes.LessonsListContent.body.getter : some"
-                  moduleName = "Classes"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "157"
-                  endingLineNumber = "157"
-                  offsetFromSymbolStart = "1548">
-               </Location>
-               <Location
-                  uuid = "49384D1F-2EA9-4A6D-A6D4-DC2630898484 - 2bee70e5d760da3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (SwiftUI.ScrollViewProxy) -&gt; SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Button&lt;SwiftUI.Text&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationTitle&lt;A where A1: Swift.StringProtocol&gt;(A1) -&gt; some&gt;&gt;.0)&gt; in closure #1 () -&gt; SwiftUI._ConditionalContent&lt;SwiftUI.ScrollViewReader&lt;SwiftUI.TupleView&lt;(Swift.Optional&lt;SwiftUI.Button&lt;SwiftUI.Text&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.navigationTitle&lt;A where A1: Swift.StringProtocol&gt;(A1) -&gt; some&gt;&gt;.0)&gt;&gt;, &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0&gt; in Classes.LessonsListContent.body.getter : some"
-                  moduleName = "Classes"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "157"
-                  endingLineNumber = "157"
-                  offsetFromSymbolStart = "32">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "57E21096-D9A6-4462-895E-DAD754BCC7A5"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -392,8 +296,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
             landmarkName = "scrollToNow(proxy:)"
             landmarkType = "7">
             <Locations>

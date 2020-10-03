@@ -9,7 +9,9 @@ import SwiftUI
 
 struct LessonsListContent: View {
     
-    private enum Sort: String, CaseIterable, Identifiable {
+    let nc = NotificationCenter.default
+    
+    enum Sort: String, CaseIterable, Identifiable {
         var id: String { return rawValue }
         case dateAscending = "Oldest"
         case dateDescending = "Newest"
@@ -53,7 +55,7 @@ struct LessonsListContent: View {
     @Binding var filter: LessonsFilter
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
-        animation: .default)
+                  animation: .default)
     private var lessons: FetchedResults<Lesson>
     
     private var filteredLessons: [Lesson] {
@@ -105,35 +107,26 @@ struct LessonsListContent: View {
     
     var lessonList: some View {
         List(selection: $selection) {
-            #if os(iOS)
-            Picker("Sort", selection: $sort.animation(.default), content: {
-                ForEach(Sort.allCases) { sort in
-                    Text(sort.rawValue).tag(sort)
-                }
-            })
-            .padding(.horizontal)
-            .pickerStyle(SegmentedPickerStyle())
-            #endif
             ForEach(filteredLessons, id: \.self) { lesson in
                 LessonsRow(lesson: lesson)
                     .tag(lesson)
-                .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
-                    Button(action: {
-                        let lesson = lesson as Lesson
-                        selectedLesson = lesson
-                        sheetIsPresented = true
-                    }, label: {
-                        Label("Edit", systemImage: "square.and.pencil")
-                    })
-                    Button(action: {toggleWatched(lessons: [lesson])}, label: {
-                        !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
-                            : Label("Mark Unwatched", systemImage: "checkmark.circle")
-                    })
-                    Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
-                        Label("Delete", systemImage: "trash")
-                    })
-                    .foregroundColor(.red)
-                }/*@END_MENU_TOKEN@*/)
+                    .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
+                        Button(action: {
+                            let lesson = lesson as Lesson
+                            selectedLesson = lesson
+                            sheetIsPresented = true
+                        }, label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        })
+                        Button(action: {toggleWatched(lessons: [lesson])}, label: {
+                            !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
+                                : Label("Mark Unwatched", systemImage: "checkmark.circle")
+                        })
+                        Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
+                            Label("Delete", systemImage: "trash")
+                        })
+                        .foregroundColor(.red)
+                    }/*@END_MENU_TOKEN@*/)
             }
             .onDelete(perform: deleteItems)
             .alert(isPresented: $deleteAlertShown) {
@@ -147,26 +140,27 @@ struct LessonsListContent: View {
             if filteredLessons.count > 0 {
                 #if os(macOS)
                 ScrollViewReader { proxy in
-                lessonList
-                    .onDeleteCommand(perform: {deleteLessonAlert(lessons: Array(selection))})
-                    .navigationTitle(titleString)
-                    .navigationSubtitle("\(filteredLessons.count) Lessons")
-                    .listStyle(InsetListStyle())
-                    .toolbar {
-                        Button(action: {scrollToNow(proxy: proxy)}, label: {
-                            Label("Scroll to Next", systemImage: "calendar.badge.clock")
-                        }).help("Scroll to the next lesson after now.")
-                    }
+                    lessonList
+                        .onDeleteCommand(perform: {deleteLessonAlert(lessons: Array(selection))})
+                        .navigationTitle(titleString)
+                        .navigationSubtitle("\(filteredLessons.count) Lessons")
+                        .listStyle(InsetListStyle())
+                        .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
+                            scrollToNow(proxy: proxy)
+                        })
+                    /*.toolbar {
+                     Button(action: {scrollToNow(proxy: proxy)}, label: {
+                     Label("Scroll to Next", systemImage: "calendar.badge.clock")
+                     }).help("Scroll to the next lesson after now.")
+                     }*/
                 }
                 #else
                 ScrollViewReader { proxy in
-                    if filteredLessons.count > 0 {
-                        Button(action: {scrollToNow(proxy: proxy)}, label: {
-                            Label("Scroll to Next", systemImage: "calendar.badge.clock")
-                        }).help("Scroll to the next lesson after now.")
-                    }
                     lessonList
                         .navigationTitle(titleString)
+                        .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
+                            scrollToNow(proxy: proxy)
+                        })
                 }
                 #endif
             } else {
@@ -183,59 +177,47 @@ struct LessonsListContent: View {
             }
         }
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
-            selectedLessons = nil
+            selectedLesson = nil
         }, content: {
             AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented).environment(\.managedObjectContext, viewContext)
-                //.frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
+            //.frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
         })
         .toolbar {
             #if !os(macOS)
-            /*ToolbarItem(placement: .navigationBarLeading) {
-             EditButton()
-             }
-             
-             ToolbarItemGroup(placement: .bottomBar) {
-             if editMode?.wrappedValue.isEditing == true {
-             Button(action: {deleteLessonAlert(lessons: Array(selection))}, label: {
-             Label("Delete", systemImage: "trash")
-             })
-             Spacer()
-             Button(action: {toggleWatched(lessons: Array(selection))}, label: {
-             Label("Toggle Watched", systemImage: "checkmark.circle.fill")
-             })
-             }
-             }*/
+            ToolbarItemGroup(placement: .bottomBar) {
+                BottomToolbar(selection: $selection, lessonCount: filteredLessons.count)
+            }
             #endif
-            ToolbarItemGroup(placement: .primaryAction) {
+            ToolbarItem(id: "AddLesson", placement: .automatic) {
                 #if os(macOS)
-                Menu(content: {
-                    Section(header: Text("Sort")) {
-                        Button(action: {
-                            sort = .dateAscending
-                        }, label: {
-                            Label("Oldest", systemImage: "calendar")
-                        })
-                        .disabled(sort == .dateAscending)
-                        .help("Sort the list of lessons in an ascending date order.")
-                        Button(action: {
-                            sort = .dateDescending
-                        }, label: {
-                            Label("Newest", systemImage: "calendar")
-                        })
-                        .disabled(sort == .dateDescending)
-                        .help("Sort the list of lessons in a descending date order.")
-                        Button(action: {
-                            sort = .name
-                        }, label: {
-                            Label("Name", systemImage: "calendar")
-                        })
-                        .disabled(sort == .name)
-                        .help("Sort the list of lessons by name.")
-                    }
-                }, label: {
-                    Label("Sort and Filter", systemImage: "line.horizontal.3.decrease.circle")
-                })
-                .help("Sort and Filter the List")
+                /*Menu(content: {
+                 Section(header: Text("Sort")) {
+                 Button(action: {
+                 sort = .dateAscending
+                 }, label: {
+                 Label("Oldest", systemImage: "calendar")
+                 })
+                 .disabled(sort == .dateAscending)
+                 .help("Sort the list of lessons in an ascending date order.")
+                 Button(action: {
+                 sort = .dateDescending
+                 }, label: {
+                 Label("Newest", systemImage: "calendar")
+                 })
+                 .disabled(sort == .dateDescending)
+                 .help("Sort the list of lessons in a descending date order.")
+                 Button(action: {
+                 sort = .name
+                 }, label: {
+                 Label("Name", systemImage: "calendar")
+                 })
+                 .disabled(sort == .name)
+                 .help("Sort the list of lessons by name.")
+                 }
+                 }, label: {
+                 Label("Sort and Filter", systemImage: "line.horizontal.3.decrease.circle")
+                 })
+                 .help("Sort and Filter the List")*/
                 #endif
                 Button(action: addLesson, label: {
                     Label("Add Lesson", systemImage: "plus")

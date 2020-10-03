@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1702DDD82526562100B6863C /* BottomToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1702DDD72526562100B6863C /* BottomToolbar.swift */; };
 		170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170B23E225077F1B00F790FE /* TabNavigation.swift */; };
 		170EE3BE251AA861000D8363 /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */; };
 		170EE3BF251AA861000D8363 /* EnvironmentHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */; };
@@ -42,6 +43,17 @@
 		176CC629250D13CC00FB28B6 /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC626250CFD3C00FB28B6 /* Resource.swift */; };
 		176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC62A250D18CC00FB28B6 /* AllocateTagView.swift */; };
 		176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC62A250D18CC00FB28B6 /* AllocateTagView.swift */; };
+		176E09B62528772100E1AA26 /* SettingsViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09B52528772100E1AA26 /* SettingsViewMac.swift */; };
+		176E09BD2528781600E1AA26 /* ContactSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09BC2528781600E1AA26 /* ContactSettingsView.swift */; };
+		176E09BE2528781600E1AA26 /* ContactSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09BC2528781600E1AA26 /* ContactSettingsView.swift */; };
+		176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
+		176E09C62528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
+		1775EC9925272DA600957AE3 /* CommandSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775EC9825272DA600957AE3 /* CommandSelectors.swift */; };
+		1775EC9A25272DA600957AE3 /* CommandSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775EC9825272DA600957AE3 /* CommandSelectors.swift */; };
+		1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
+		1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
+		1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECB22527DEF600957AE3 /* Notifications.swift */; };
+		1775ECB42527DEF600957AE3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECB22527DEF600957AE3 /* Notifications.swift */; };
 		177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177909C1250A6D9200C14F5E /* EditILOView.swift */; };
 		177909C3250A6D9300C14F5E /* EditILOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177909C1250A6D9200C14F5E /* EditILOView.swift */; };
 		1781EF16251F6C3000BA91BB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF15251F6C3000BA91BB /* SampleData.swift */; };
@@ -51,6 +63,8 @@
 		1781EF24251F7F3A00BA91BB /* AllILOsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF23251F7F3A00BA91BB /* AllILOsList.swift */; };
 		1781EF25251F7F3A00BA91BB /* AllILOsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF23251F7F3A00BA91BB /* AllILOsList.swift */; };
 		1781EF2A251F804E00BA91BB /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
+		1787C8F625267FF1005486AC /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1787C8F525267FF1005486AC /* AppCommands.swift */; };
+		1787C8F725267FF1005486AC /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1787C8F525267FF1005486AC /* AppCommands.swift */; };
 		179BF2522506834300574A35 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179BF2512506834300574A35 /* LessonsView.swift */; };
 		179BF2532506834300574A35 /* LessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179BF2512506834300574A35 /* LessonsView.swift */; };
 		179BF256250697F500574A35 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179BF255250697F500574A35 /* CloudKit.framework */; };
@@ -82,10 +96,19 @@
 		17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BC52504D8F800BA8618 /* LessonCell.swift */; };
 		17E50BC92504E22200BA8618 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BC82504E22200BA8618 /* DetailView.swift */; };
 		17E50BCA2504E22200BA8618 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BC82504E22200BA8618 /* DetailView.swift */; };
-		17E50BCC250518A100BA8618 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCB250518A100BA8618 /* SettingsView.swift */; };
-		17E50BCD250518A100BA8618 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCB250518A100BA8618 /* SettingsView.swift */; };
+		17E50BCC250518A100BA8618 /* SettingsViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCB250518A100BA8618 /* SettingsViewiOS.swift */; };
 		17E50BD025065CB300BA8618 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCF25065CB300BA8618 /* Lesson.swift */; };
 		17E50BD125065CB300BA8618 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCF25065CB300BA8618 /* Lesson.swift */; };
+		17F62B03252311BB00DCA5C1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F62B02252311BB00DCA5C1 /* WidgetKit.framework */; };
+		17F62B05252311BB00DCA5C1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F62B04252311BB00DCA5C1 /* SwiftUI.framework */; };
+		17F62B0A252311BD00DCA5C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17F62B09252311BD00DCA5C1 /* Assets.xcassets */; };
+		17F62B0E252311BD00DCA5C1 /* ClassesWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 17F62B01252311BB00DCA5C1 /* ClassesWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		17F62B1A252311EB00DCA5C1 /* ClassesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F62B18252311EB00DCA5C1 /* ClassesWidget.swift */; };
+		17F62B272523123C00DCA5C1 /* UpcomingWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F62B252523123C00DCA5C1 /* UpcomingWidgetView.swift */; };
+		17F62B2D252312CE00DCA5C1 /* Shared.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 171211F72503707E00EE7423 /* Shared.xcdatamodeld */; };
+		17F62B392523142900DCA5C1 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171211FB2503707E00EE7423 /* Persistence.swift */; };
+		17F62B3F2523143400DCA5C1 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCF25065CB300BA8618 /* Lesson.swift */; };
+		17F62B452523144400DCA5C1 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF15251F6C3000BA91BB /* SampleData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,9 +126,31 @@
 			remoteGlobalIDString = 171212082503708000EE7423;
 			remoteInfo = "Classes (macOS)";
 		};
+		17F62B0C252311BD00DCA5C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 171211F22503707D00EE7423 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17F62B00252311BB00DCA5C1;
+			remoteInfo = ClassesWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		17F62B0F252311BD00DCA5C1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				17F62B0E252311BD00DCA5C1 /* ClassesWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1702DDD72526562100B6863C /* BottomToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToolbar.swift; sourceTree = "<group>"; };
 		170B23E225077F1B00F790FE /* TabNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabNavigation.swift; path = iOS/TabNavigation.swift; sourceTree = SOURCE_ROOT; };
 		170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnvironmentHelpers.swift; path = "Shared/New Group/EnvironmentHelpers.swift"; sourceTree = SOURCE_ROOT; };
 		171211F82503707E00EE7423 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
@@ -135,10 +180,17 @@
 		176CC624250CFCDB00FB28B6 /* AddResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResource.swift; sourceTree = "<group>"; };
 		176CC626250CFD3C00FB28B6 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		176CC62A250D18CC00FB28B6 /* AllocateTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllocateTagView.swift; sourceTree = "<group>"; };
+		176E09B52528772100E1AA26 /* SettingsViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewMac.swift; sourceTree = "<group>"; };
+		176E09BC2528781600E1AA26 /* ContactSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSettingsView.swift; sourceTree = "<group>"; };
+		176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		1775EC9825272DA600957AE3 /* CommandSelectors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSelectors.swift; sourceTree = "<group>"; };
+		1775ECA52527D94200957AE3 /* ContentViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewMac.swift; sourceTree = "<group>"; };
+		1775ECB22527DEF600957AE3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		177909C1250A6D9200C14F5E /* EditILOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditILOView.swift; sourceTree = "<group>"; };
 		1781EF15251F6C3000BA91BB /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		1781EF1C251F76D200BA91BB /* AddResourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResourceButton.swift; sourceTree = "<group>"; };
 		1781EF23251F7F3A00BA91BB /* AllILOsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllILOsList.swift; sourceTree = "<group>"; };
+		1787C8F525267FF1005486AC /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		179BF2512506834300574A35 /* LessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsView.swift; sourceTree = "<group>"; };
 		179BF255250697F500574A35 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		179BF2572506981900574A35 /* Classes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Classes.entitlements; sourceTree = "<group>"; };
@@ -159,8 +211,15 @@
 		17E50BC22504D81E00BA8618 /* AddLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLessonView.swift; sourceTree = "<group>"; };
 		17E50BC52504D8F800BA8618 /* LessonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCell.swift; sourceTree = "<group>"; };
 		17E50BC82504E22200BA8618 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		17E50BCB250518A100BA8618 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		17E50BCB250518A100BA8618 /* SettingsViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewiOS.swift; sourceTree = "<group>"; };
 		17E50BCF25065CB300BA8618 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
+		17F62B01252311BB00DCA5C1 /* ClassesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ClassesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		17F62B02252311BB00DCA5C1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		17F62B04252311BB00DCA5C1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		17F62B09252311BD00DCA5C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17F62B0B252311BD00DCA5C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17F62B18252311EB00DCA5C1 /* ClassesWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassesWidget.swift; sourceTree = "<group>"; };
+		17F62B252523123C00DCA5C1 /* UpcomingWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingWidgetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +253,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17F62AFE252311BB00DCA5C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F62B05252311BB00DCA5C1 /* SwiftUI.framework in Frameworks */,
+				17F62B03252311BB00DCA5C1 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -206,6 +274,7 @@
 				1712120A2503708000EE7423 /* macOS */,
 				171212142503708000EE7423 /* Tests iOS */,
 				1712121F2503708000EE7423 /* Tests macOS */,
+				17F62B06252311BB00DCA5C1 /* ClassesWidget */,
 				171212022503708000EE7423 /* Products */,
 				179BF254250697F500574A35 /* Frameworks */,
 			);
@@ -215,8 +284,8 @@
 			isa = PBXGroup;
 			children = (
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
-				173C769B25162148003FFA6A /* OnboardingView.swift */,
-				17E50BCB250518A100BA8618 /* SettingsView.swift */,
+				171211FA2503707E00EE7423 /* ContentView.swift */,
+				17EEFDCB25260DEA0069E89E /* Settings */,
 				17DAC798251AA7F10013790A /* Summary */,
 				17DAC797251AA7D20013790A /* Helpers */,
 				17ABF352250848E4000D4048 /* App Navigation */,
@@ -237,6 +306,7 @@
 				171212092503708000EE7423 /* Classes.app */,
 				171212112503708000EE7423 /* Tests iOS.xctest */,
 				1712121C2503708000EE7423 /* Tests macOS.xctest */,
+				17F62B01252311BB00DCA5C1 /* ClassesWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				170B23E225077F1B00F790FE /* TabNavigation.swift */,
+				17E50BCB250518A100BA8618 /* SettingsViewiOS.swift */,
 				17D48C22251963F800CBF0A0 /* Helpers.swift */,
 				171212042503708000EE7423 /* Info.plist */,
 			);
@@ -254,6 +325,8 @@
 		1712120A2503708000EE7423 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				1775ECA52527D94200957AE3 /* ContentViewMac.swift */,
+				176E09B52528772100E1AA26 /* SettingsViewMac.swift */,
 				17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */,
 				1712120B2503708000EE7423 /* Info.plist */,
 				1712120C2503708000EE7423 /* macOS.entitlements */,
@@ -304,8 +377,8 @@
 		176CC623250CFCCD00FB28B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				176CC624250CFCDB00FB28B6 /* AddResource.swift */,
 				1768DED62514CB68008CDCAC /* ResourceSection.swift */,
+				176CC624250CFCDB00FB28B6 /* AddResource.swift */,
 				1781EF1C251F76D200BA91BB /* AddResourceButton.swift */,
 			);
 			path = Resources;
@@ -316,6 +389,8 @@
 			children = (
 				179BF2582506981E00574A35 /* CloudKit.framework */,
 				179BF255250697F500574A35 /* CloudKit.framework */,
+				17F62B02252311BB00DCA5C1 /* WidgetKit.framework */,
+				17F62B04252311BB00DCA5C1 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -323,7 +398,6 @@
 		17ABF352250848E4000D4048 /* App Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				171211FA2503707E00EE7423 /* ContentView.swift */,
 				17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */,
 				17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */,
 			);
@@ -335,6 +409,7 @@
 			children = (
 				179BF2512506834300574A35 /* LessonsView.swift */,
 				17E50BBF2504D81200BA8618 /* LessonsListContent.swift */,
+				1702DDD72526562100B6863C /* BottomToolbar.swift */,
 				17BD0E8F251D425000BCC40D /* LessonsRow.swift */,
 				17E50BC52504D8F800BA8618 /* LessonCell.swift */,
 				17E50BC22504D81E00BA8618 /* AddLessonView.swift */,
@@ -357,6 +432,9 @@
 			isa = PBXGroup;
 			children = (
 				170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */,
+				1787C8F525267FF1005486AC /* AppCommands.swift */,
+				1775ECB22527DEF600957AE3 /* Notifications.swift */,
+				1775EC9825272DA600957AE3 /* CommandSelectors.swift */,
 				17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */,
 			);
 			path = Helpers;
@@ -384,6 +462,27 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		17EEFDCB25260DEA0069E89E /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				176E09BC2528781600E1AA26 /* ContactSettingsView.swift */,
+				176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */,
+				173C769B25162148003FFA6A /* OnboardingView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		17F62B06252311BB00DCA5C1 /* ClassesWidget */ = {
+			isa = PBXGroup;
+			children = (
+				17F62B18252311EB00DCA5C1 /* ClassesWidget.swift */,
+				17F62B252523123C00DCA5C1 /* UpcomingWidgetView.swift */,
+				17F62B09252311BD00DCA5C1 /* Assets.xcassets */,
+				17F62B0B252311BD00DCA5C1 /* Info.plist */,
+			);
+			path = ClassesWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -394,10 +493,12 @@
 				171211FD2503708000EE7423 /* Sources */,
 				171211FE2503708000EE7423 /* Frameworks */,
 				171211FF2503708000EE7423 /* Resources */,
+				17F62B0F252311BD00DCA5C1 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				17F62B0D252311BD00DCA5C1 /* PBXTargetDependency */,
 			);
 			name = "Classes (iOS)";
 			productName = "Classes (iOS)";
@@ -457,13 +558,30 @@
 			productReference = 1712121C2503708000EE7423 /* Tests macOS.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		17F62B00252311BB00DCA5C1 /* ClassesWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17F62B12252311BD00DCA5C1 /* Build configuration list for PBXNativeTarget "ClassesWidgetExtension" */;
+			buildPhases = (
+				17F62AFD252311BB00DCA5C1 /* Sources */,
+				17F62AFE252311BB00DCA5C1 /* Frameworks */,
+				17F62AFF252311BB00DCA5C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ClassesWidgetExtension;
+			productName = ClassesWidgetExtension;
+			productReference = 17F62B01252311BB00DCA5C1 /* ClassesWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		171211F22503707D00EE7423 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					171212002503708000EE7423 = {
@@ -479,6 +597,9 @@
 					1712121B2503708000EE7423 = {
 						CreatedOnToolsVersion = 12.0;
 						TestTargetID = 171212082503708000EE7423;
+					};
+					17F62B00252311BB00DCA5C1 = {
+						CreatedOnToolsVersion = 12.2;
 					};
 				};
 			};
@@ -499,6 +620,7 @@
 				171212082503708000EE7423 /* Classes (macOS) */,
 				171212102503708000EE7423 /* Tests iOS */,
 				1712121B2503708000EE7423 /* Tests macOS */,
+				17F62B00252311BB00DCA5C1 /* ClassesWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -534,6 +656,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17F62AFF252311BB00DCA5C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F62B0A252311BD00DCA5C1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -542,6 +672,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
+				176E09BD2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
@@ -551,6 +682,8 @@
 				17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				1781EF16251F6C3000BA91BB /* SampleData.swift in Sources */,
 				1781EF24251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
+				1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */,
+				1787C8F625267FF1005486AC /* AppCommands.swift in Sources */,
 				17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				176CC625250CFCDB00FB28B6 /* AddResource.swift in Sources */,
 				17E50BC92504E22200BA8618 /* DetailView.swift in Sources */,
@@ -559,7 +692,8 @@
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
 				179BF25B2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */,
-				17E50BCC250518A100BA8618 /* SettingsView.swift in Sources */,
+				17E50BCC250518A100BA8618 /* SettingsViewiOS.swift in Sources */,
+				1775EC9925272DA600957AE3 /* CommandSelectors.swift in Sources */,
 				1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */,
@@ -571,9 +705,12 @@
 				17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				179BF2522506834300574A35 /* LessonsView.swift in Sources */,
 				17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */,
+				1702DDD82526562100B6863C /* BottomToolbar.swift in Sources */,
 				170EE3BE251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
 				1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */,
+				1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */,
 				17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */,
+				176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */,
 				17ABF3502507E789000D4048 /* ILOsView.swift in Sources */,
@@ -585,6 +722,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1775ECB42527DEF600957AE3 /* Notifications.swift in Sources */,
 				173C769D25162148003FFA6A /* OnboardingView.swift in Sources */,
 				1781EF25251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
 				170EE3BF251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
@@ -593,11 +731,15 @@
 				17ABF3512507E789000D4048 /* ILOsView.swift in Sources */,
 				176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				1781EF2A251F804E00BA91BB /* ILOGeneratorView.swift in Sources */,
+				176E09B62528772100E1AA26 /* SettingsViewMac.swift in Sources */,
 				17E50BCA2504E22200BA8618 /* DetailView.swift in Sources */,
+				1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */,
 				17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */,
 				176CC61F250CB42E00FB28B6 /* AddTagView.swift in Sources */,
+				1787C8F725267FF1005486AC /* AppCommands.swift in Sources */,
 				17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
 				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
+				1775EC9A25272DA600957AE3 /* CommandSelectors.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
 				17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */,
 				17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
@@ -605,13 +747,14 @@
 				17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				176CC629250D13CC00FB28B6 /* Resource.swift in Sources */,
 				1712122A2503708000EE7423 /* Persistence.swift in Sources */,
+				176E09BE2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
 				17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				179BF25C2506A86200574A35 /* ILO.swift in Sources */,
 				1781EF17251F6C3000BA91BB /* SampleData.swift in Sources */,
 				17E50BC42504D81E00BA8618 /* AddLessonView.swift in Sources */,
-				17E50BCD250518A100BA8618 /* SettingsView.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				176CC622250CBD4000FB28B6 /* Tag.swift in Sources */,
+				176E09C62528783E00E1AA26 /* GeneralSettingsView.swift in Sources */,
 				17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */,
 				17E50BC12504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				177909C3250A6D9300C14F5E /* EditILOView.swift in Sources */,
@@ -640,6 +783,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17F62AFD252311BB00DCA5C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F62B3F2523143400DCA5C1 /* Lesson.swift in Sources */,
+				17F62B452523144400DCA5C1 /* SampleData.swift in Sources */,
+				17F62B2D252312CE00DCA5C1 /* Shared.xcdatamodeld in Sources */,
+				17F62B392523142900DCA5C1 /* Persistence.swift in Sources */,
+				17F62B272523123C00DCA5C1 /* UpcomingWidgetView.swift in Sources */,
+				17F62B1A252311EB00DCA5C1 /* ClassesWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -652,6 +808,11 @@
 			isa = PBXTargetDependency;
 			target = 171212082503708000EE7423 /* Classes (macOS) */;
 			targetProxy = 1712121D2503708000EE7423 /* PBXContainerItemProxy */;
+		};
+		17F62B0D252311BD00DCA5C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17F62B00252311BB00DCA5C1 /* ClassesWidgetExtension */;
+			targetProxy = 17F62B0C252311BD00DCA5C1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -770,6 +931,7 @@
 		171212302503708000EE7423 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Classes.entitlements;
@@ -795,6 +957,7 @@
 		171212312503708000EE7423 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Classes.entitlements;
@@ -957,6 +1120,53 @@
 			};
 			name = Release;
 		};
+		17F62B10252311BD00DCA5C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 394ER38X9C;
+				INFOPLIST_FILE = ClassesWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.baughan.Classes.ClassesWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17F62B11252311BD00DCA5C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 394ER38X9C;
+				INFOPLIST_FILE = ClassesWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.baughan.Classes.ClassesWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1001,6 +1211,15 @@
 			buildConfigurations = (
 				171212392503708000EE7423 /* Debug */,
 				1712123A2503708000EE7423 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17F62B12252311BD00DCA5C1 /* Build configuration list for PBXNativeTarget "ClassesWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17F62B10252311BD00DCA5C1 /* Debug */,
+				17F62B11252311BD00DCA5C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

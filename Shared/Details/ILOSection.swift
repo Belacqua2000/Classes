@@ -141,6 +141,9 @@ struct ILOSection: View {
     private func copyILO(_ ilo: ILO) {
         #if !os(macOS)
         UIPasteboard.general.string = ilo.title
+        #else
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(ilo.title ?? "", forType: .string)
         #endif
     }
     

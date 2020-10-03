@@ -24,6 +24,7 @@ struct DetailView: View {
     @State private var isAddingResource: Bool = false
     @State private var isAddingILO: Bool = false
     @State private var editILOViewState: EditILOView.AddOutcomeViewState = .single
+    @State private var tagPopoverPresented: Bool = false
     
     //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
@@ -114,7 +115,6 @@ struct DetailView: View {
     }
     
     var body: some View {
-        Group {
             ScrollView(.vertical) {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 5) {
@@ -173,10 +173,7 @@ struct DetailView: View {
             }
             .toolbar {
                 #if os(macOS)
-                ToolbarItemGroup(placement: .automatic) {
-                    ForEach(0..<10) { _ in
-                        Spacer()
-                    }
+                ToolbarItemGroup(placement: .primaryAction) {
                     Menu(content: {
                         AddILOMenu(editILOViewState: $editILOViewState, isAddingILO: $isAddingILO)
                         AddResourceButton(isAddingResource: $isAddingResource)
@@ -187,11 +184,14 @@ struct DetailView: View {
                     .help("Add learning outcomes and resources")
                     
                     Button(action: {
-                        
+                        tagPopoverPresented = true
                     }, label: {
                         Label("Edit Tags", systemImage: "tag")
                     })
                     .help("Edit the tags for this lesson")
+                    .popover(isPresented: $tagPopoverPresented) {
+                        /*AllocateTagView(selectedTags: $lesson.tag.allObjects as? [Tag])*/
+                    }
                     deleteButton
                     toggleWatchedButton
                 }
@@ -213,8 +213,7 @@ struct DetailView: View {
             .alert(isPresented: $isDeleteAlertShown) {
                 Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {isDeleteAlertShown = false}))
             }
-        }
-        .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
+            .background(Color("SecondaryColor-1").edgesIgnoringSafeArea([.bottom, .horizontal]))
     }
     
     func createILO(index: Int) {

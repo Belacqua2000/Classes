@@ -36,24 +36,24 @@ struct SidebarNavigation: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)], animation: .default)
     private var tags: FetchedResults<Tag>
     
-    @State var selection: SidebarItem? = SidebarItem(sidebarType: .all, lessonTypes: nil, tag: nil)
+    @State var selection: SidebarItem? = SidebarItem(sidebarType: .summary)
     
     var sidebar: some View {
         List(selection: $selection) {
             NavigationLink(destination: SummaryView()) {
                 Label("Summary", systemImage: "chart.pie")
             }
-            .tag(SidebarItem(sidebarType: .summary, lessonTypes: nil))
+            .tag(SidebarItem(sidebarType: .summary))
             
             NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))) {
                 Label("All Lessons", systemImage: "books.vertical")
             }
-            .tag(SidebarItem(sidebarType: .all, lessonTypes: nil))
+            .tag(SidebarItem(sidebarType: .all))
             
             NavigationLink(destination: ILOsView()) {
                 Label("Learning Outcomes", systemImage: "doc")
             }
-            .tag(SidebarItem(sidebarType: .ilo, lessonTypes: nil))
+            .tag(SidebarItem(sidebarType: .ilo))
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
@@ -105,22 +105,31 @@ struct SidebarNavigation: View {
     var body: some View {
         NavigationView {
             sidebar
+                .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
+                    selection = SidebarItem(sidebarType: .summary)
+                })
+                .onReceive(NotificationCenter.default.publisher(for: .showAll), perform: { _ in
+                    selection = SidebarItem(sidebarType: .all)
+                })
+                .onReceive(NotificationCenter.default.publisher(for: .showILOs), perform: { _ in
+                    selection = SidebarItem(sidebarType: .ilo)
+                })
                 .navigationTitle("Classes")
                 .toolbar {
                     #if !os(macOS)
-                    ToolbarItem(placement: .primaryAction) {
+                    ToolbarItem(id: "ShowSettingsButton", placement: .primaryAction) {
                         Button(action: {settingsShown = true}, label: {
                             Label("Settings", systemImage: "gear")
                         })
+                        .keyboardShortcut(",", modifiers: .command)
                         .sheet(isPresented: $settingsShown) {
                             NavigationView {
-                                SettingsView(viewIsShown: $settingsShown)
+                                SettingsViewiOS(viewIsShown: $settingsShown)
                             }
                         }
                     }
                     #endif
                 }
-            LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
         }
     }
     

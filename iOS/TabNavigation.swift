@@ -8,22 +8,33 @@
 import SwiftUI
 
 struct TabNavigation: View {
+    
+    @Environment(\.editMode) var editMode
+    
+    // MARK: - Selections
     @State private var selection: Tab = .all
+    @State private var selectedTag: Tag?
+    
+    // MARK: - View States
     @State private var addTagShowing = false
     @State private var deleteAlertShown = false
     @State private var settingsShown = false
+    
+    // MARK: - Core Data
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
         animation: .default)
     private var tags: FetchedResults<Tag>
     
-    @State private var selectedTag: Tag?
+    // MARK: - Body
     var body: some View {
         TabView(selection: $selection) {
             SummaryTabView()
+                .tag(TabNavigation.Tab.summary)
             
             AllTabView()
+                .tag(TabNavigation.Tab.all)
             
             NavigationView {
                 List {
@@ -39,7 +50,7 @@ struct TabNavigation: View {
                                     Label(title: { Text(tag.name ?? "Untitled") },
                                         icon: {
                                             Image(systemName: "tag")
-                                                //.foregroundColor(tag.swiftUIColor)
+                                                s.foregroundColor(tag.swiftUIColor)
                                         }
                                     )
                                 })
@@ -71,12 +82,21 @@ struct TabNavigation: View {
                         })
                         .sheet(isPresented: $settingsShown) {
                             NavigationView {
-                                SettingsView(viewIsShown: $settingsShown)
+                                SettingsViewiOS(viewIsShown: $settingsShown)
                             }
                         }
                     }
                     #endif
                 }
+                .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
+                    selection = .summary
+                })
+                .onReceive(NotificationCenter.default.publisher(for: .showAll), perform: { _ in
+                    selection = .all
+                })
+                .onReceive(NotificationCenter.default.publisher(for: .showILOs), perform: { _ in
+                    selection = .ilo
+                })
                 .sheet(isPresented: $addTagShowing, onDismiss: {
                     selectedTag = nil
                 },content: {
@@ -89,13 +109,8 @@ struct TabNavigation: View {
             }
             .tag(Tab.lessonTypes)
             
-            NavigationView {
-                ILOsView()
-            }
-            .tabItem {
-                Label("Learning Outcomes", systemImage: "doc.fill")
-            }
-            .tag(Tab.ilo)
+            ILOsTabView()
+                .tag(Tab.ilo)
         }
     }
     
@@ -147,11 +162,15 @@ struct AllTabView: View {
         NavigationView {
             LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
         }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                EditButton()
+            }
+        }
         .navigationViewStyle(StackNavigationViewStyle())
         .tabItem {
             Label("All Lessons", systemImage: "books.vertical.fill")
         }
-        .tag(TabNavigation.Tab.all)
     }
 }
 
@@ -163,6 +182,16 @@ struct SummaryTabView: View {
         .tabItem {
             Label("Summary", systemImage: "chart.pie.fill")
         }
-        .tag(TabNavigation.Tab.summary)
+    }
+}
+
+struct ILOsTabView: View {
+    var body: some View {
+        NavigationView {
+            ILOsView()
+        }
+        .tabItem {
+            Label("Learning Outcomes", systemImage: "doc.fill")
+        }
     }
 }

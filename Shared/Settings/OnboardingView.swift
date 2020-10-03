@@ -38,11 +38,15 @@ struct OnboardingView: View {
                         Text("• Sync all of your lessons over iCloud.")
                     }
                 }
+                #if os(macOS)
+                Button("Get Started", action: {isPresented = false})
+                #else
                 Button("Get Started", action: {isPresented = false})
                     .frame(width: 300, height: 50)
                     .background(Color.accentColor)
                     .foregroundColor(.white)
                     .cornerRadius(8)
+                #endif
             }
             .padding()
         }

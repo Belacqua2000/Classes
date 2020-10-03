@@ -51,16 +51,19 @@ struct AddTagView: View {
                 .labelsHidden()
                 .frame(width: 80, height: 20)
             }
-            HStack {
-                Spacer()
-                saveButton.keyboardShortcut(.defaultAction)
-                cancelButton.keyboardShortcut(.cancelAction)
-            }
             #else
             ColorPicker(selection: $tagColor, label: {
                 Label("Tag Color", systemImage: "paintpalette")
             })
             #endif
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                saveButton
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                cancelButton
+            }
         }
         .onAppear(perform: {
             if let tag = tag {
@@ -74,17 +77,8 @@ struct AddTagView: View {
         #if !os(macOS)
         NavigationView {
             form
-                .toolbar {
-                    ToolbarItem(placement: .confirmationAction) {
-                        saveButton
-                    }
-                    ToolbarItem(placement: .cancellationAction) {
-                        cancelButton
-                    }
-                }
                 .navigationTitle(navTitle)
         }
-        //.navigationViewStyle(StackNavigationViewStyle())
         #else
         form
             .padding()

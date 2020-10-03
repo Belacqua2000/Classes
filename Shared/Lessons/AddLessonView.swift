@@ -10,11 +10,6 @@ import SwiftUI
 struct AddLessonView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
-    /*@FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
-        animation: .default)
-    private var tags: FetchedResults<Tag>*/
-    
     @Binding var lesson: Lesson?
     @Binding var isPresented: Bool
     @State var type: Lesson.LessonType = .lecture
@@ -35,19 +30,6 @@ struct AddLessonView: View {
         NavigationView {
             AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
                 .navigationTitle(lesson == nil ? "Add Lesson" : "Edit Lesson")
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(action: createLesson, label: {
-                        Text("Save")
-                    })
-                    .disabled(title == "")
-                }
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {isPresented = false}, label: {
-                        Text("Cancel")
-                    })
-                }
-            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #endif
@@ -68,6 +50,9 @@ struct AddLessonForm: View {
     @Binding var lesson: Lesson?
     @Binding var tags: [Tag]
     @Binding var isPresented: Bool
+    #if os(macOS)
+    @State private var tagPopoverPresented: Bool = false
+    #endif
     @Binding var type: Lesson.LessonType
     @Binding var title: String
     @Binding var location: String
@@ -128,7 +113,11 @@ struct AddLessonForm: View {
                 #endif
             }
             #if os(macOS)
-            HStack {
+            Button("Allocate Tags", action: {tagPopoverPresented = true})
+                .popover(isPresented: $tagPopoverPresented) {
+                    AllocateTagView(selectedTags: $tags)
+                }
+            /*HStack {
                 Spacer()
                 Button(action: {isPresented = false}, label: {
                     Text("Cancel")
@@ -139,7 +128,7 @@ struct AddLessonForm: View {
                 })
                 .disabled(title == "")
                 .keyboardShortcut(.defaultAction)
-            }
+            }*/
             #else
             Section {
                 NavigationLink(destination: AllocateTagView(selectedTags: $tags).environment(\.managedObjectContext, managedObjectContext),
@@ -148,6 +137,19 @@ struct AddLessonForm: View {
                                })
             }
             #endif
+        }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button(action: createLesson, label: {
+                    Text("Save")
+                })
+                .disabled(title == "")
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {isPresented = false}, label: {
+                    Text("Cancel")
+                })
+            }
         }
         .onAppear(perform: {
             guard !hasUpdatedFields else { return }

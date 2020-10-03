@@ -13,10 +13,10 @@ extension Lesson {
     
     static func sampleData(context: NSManagedObjectContext) -> [Lesson] {
         var lessons = [Lesson]()
-        for i in 1 ..< 2 {
+        for i in 1 ..< 6 {
             let lesson = Lesson(context: context)
             lesson.id = UUID()
-            lesson.title = "Title \(i)"
+            lesson.title = "This is a very long title which I need to handle"
             lesson.location = "Location \(i)"
             lesson.teacher = "Teacher \(i)"
             lesson.date = Date(timeIntervalSinceNow: -Double(i*10))

@@ -17,17 +17,17 @@ struct ClassesApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .commands {
+            AppCommands()
             SidebarCommands()
-        }
-        
-        WindowGroup {
-            SummaryView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ToolbarCommands()
         }
         
         #if os(macOS)
         Settings {
-            SettingsView(viewIsShown: .constant(true))
+            SettingsViewMac()
+            /*SettingsView(viewIsShown: .constant(true))
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)*/
         }
         #endif
     }

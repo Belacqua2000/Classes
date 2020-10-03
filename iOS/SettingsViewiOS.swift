@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  SettingsViewiOS.swift
 //  Classes
 //
 //  Created by Nick Baughan on 06/09/2020.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct SettingsViewiOS: View {
     let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     let versionNumber: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     @Binding var viewIsShown: Bool
@@ -17,35 +17,31 @@ struct SettingsView: View {
     #endif
     var body: some View {
         Form {
+            
+            Section(header: Text("General")) {
+                GeneralSettingsView()
+            }
+            
             Section {
                 Button(action: {welcomeScreenIsShown = true}, label: {
                     Label("Welcome Page", systemImage: "face.smiling")
                 })
-                    .sheet(isPresented: $welcomeScreenIsShown) {
-                        OnboardingView(isPresented: $welcomeScreenIsShown)
-                    }
+                .sheet(isPresented: $welcomeScreenIsShown) {
+                    OnboardingView(isPresented: $welcomeScreenIsShown)
+                }
             }
             
-            Section(header: Text("Contact")) {
-                Link(destination: URL(string: "https://nickbaughanapps.wordpress.com")!) {
-                    Label("Website", systemImage: "globe")
-                }
-                
-                Link(destination: URL(string: "mailto:nickbaughanapps@gmail.com")!) {
-                    Label("Email", systemImage: "envelope")
-                }
-                
-                Link(destination: URL(string: "https://apps.apple.com/us/app/id1532027293")!) {
-                    Label("Rate and Review", systemImage: "app.badge")
-                }
-                
-                Menu(content: {
-                    Link("Twitter", destination: URL(string: "https://twitter.com/NickBaughanApps")!)
-                    Link("Instagram", destination: URL(string: "https://instagram.com/nickbaughanapps?igshid=oxs426ln605n")!)
-                }, label: {
-                    Label("Social Media", systemImage: "text.bubble")
+            Section {
+                NavigationLink(
+                    destination:
+                        Form {
+                            Section(footer: Text("Whether you love or hate this app, feedback would be greatly appreciated.  Please feel free to write a review or get in touch.")) {
+                            ContactSettingsView()
+                                .navigationTitle("Contact")
+                            }
+                        }, label: {
+                    Label("Contact", systemImage: "person.crop.square")
                 })
-                
             }
             
             Section(header: Text("App Information")) {
@@ -56,9 +52,11 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
         .toolbar {
+            #if os(iOS)
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done", action: {viewIsShown = false})
             }
+            #endif
         }
     }
 }
@@ -66,7 +64,7 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SettingsView(viewIsShown: .constant(true))
+            SettingsViewiOS(viewIsShown: .constant(true))
         }
     }
 }

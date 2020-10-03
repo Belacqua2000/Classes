@@ -46,6 +46,8 @@ struct AllocateTagView: View {
     }
     
     var body: some View {
+        VStack {
+            if !tags.isEmpty {
         List {
             ForEach(tags) { tag in
                 HStack {
@@ -57,6 +59,15 @@ struct AllocateTagView: View {
                     })
                 }
             }
+        }
+        } else {
+            #if os(macOS)
+            Text("No tags have been created.  Add a tag from the sidebar or menu bar.")
+                .padding(20)
+            #else
+            Text("No tags have been created.  Add a tag by pressing the '+' button in the toolbar.")
+            #endif
+        }
         }
         .sheet(isPresented: $sheetIsPresented) {
             AddTagView(isPresented: $sheetIsPresented, tag: .constant(nil))

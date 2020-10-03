@@ -55,6 +55,8 @@ struct SummaryView: View {
     
     var gridItem: [GridItem] = [GridItem(.adaptive(minimum: 300), spacing: 20, alignment: .top)]
     
+    
+    
     var body: some View {
             ScrollView {
                 LazyVGrid(columns: gridItem, alignment: .leading, spacing: 20) {
@@ -115,16 +117,15 @@ struct SummaryView: View {
                     }
                 }
             }
-            .sheet(isPresented: $addLessonViewShown) {
-                AddLessonView(lesson: .constant(nil), isPresented: $addLessonViewShown)
-                    .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
-            }
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
+            .toolbar(id: "SummaryViewToolbar") {
+                ToolbarItem(id: "SummaryAddLesson", placement: .automatic) {
                     Button(action: {addLessonViewShown = true}, label: {
                         Label("Add Lesson", systemImage: "plus")
                     })
                 }
+            }
+            .sheet(isPresented: $addLessonViewShown) {
+                AddLessonView(lesson: .constant(nil), isPresented: $addLessonViewShown)
             }
             .padding(.horizontal)
             .navigationTitle("Summary")

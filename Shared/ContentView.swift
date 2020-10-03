@@ -18,16 +18,17 @@ struct ContentView: View {
     private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     #endif
+    
     @Environment(\.managedObjectContext) private var viewContext
 
     var body: some View {
         #if os(iOS)
         Group {
-        if horizontalSizeClass == .compact {
-            TabNavigation().environmentObject(environmentHelpers)
-        } else {
-            SidebarNavigation().environmentObject(environmentHelpers)
-        }
+            if horizontalSizeClass == .compact {
+                TabNavigation().environmentObject(environmentHelpers)
+            } else {
+                SidebarNavigation().environmentObject(environmentHelpers)
+            }
         }
         .sheet(isPresented: $firstLaunch) {
             OnboardingView(isPresented: $firstLaunch)
@@ -35,6 +36,10 @@ struct ContentView: View {
         #else
         SidebarNavigation()
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
+            .sheet(isPresented: $firstLaunch) {
+                OnboardingView(isPresented: $firstLaunch)
+                    .frame(idealWidth: 600, idealHeight: 500)
+            }
         #endif
     }
 }
