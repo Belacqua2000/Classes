@@ -122,6 +122,9 @@ struct LessonsListContent: View {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
+                        Button(action: {}, label: {
+                            Label("Export", systemImage: "square.and.arrow.up")
+                        })
                         Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
                             Label("Delete", systemImage: "trash")
                         })
