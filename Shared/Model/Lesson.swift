@@ -166,12 +166,47 @@ extension Lesson {
             
             let decoder = JSONDecoder()
             if let jsonLessons = try? decoder.decode(LessonJSON.self, from: data) {
-                guard jsonLessons.version == 1 else { return }
-                let lessons = jsonLessons.lessonData
-                for lesson in lessons {
-                    create(in: context, title: lesson.title ?? "", type: LessonType(rawValue: lesson.type ?? "lecture") ?? .lecture, teacher: lesson.teacher ?? "", date: lesson.date ?? Date(), location: lesson.location ?? "", watched: lesson.watched, save: true, tags: [], notes: lesson.notes ?? "")
+                if jsonLessons.version == 2 {
+                    
+                    let lessons = jsonLessons.lessonData
+                    
+                    for lesson in lessons {
+                        let createdLesson = Lesson(context: context)
+                        createdLesson.id = UUID()
+                        createdLesson.title = lesson.title
+                        createdLesson.type = lesson.type
+                        createdLesson.teacher = lesson.teacher
+                        createdLesson.date = lesson.date
+                        createdLesson.location = lesson.location
+                        createdLesson.watched = lesson.watched
+                        createdLesson.notes = lesson.notes
+                        
+                        for ilo in lesson.ilo {
+                            let createdILO = ILO(context: context)
+                            createdILO.id = UUID()
+                            createdILO.index = ilo.index
+                            createdILO.title = ilo.title
+                            createdILO.written = ilo.written
+                            createdLesson.addToIlo(createdILO)
+                        }
+                        
+                        for resource in lesson.resource {
+                            let createdResource = Resource(context: context)
+                            createdResource.id = UUID()
+                            createdResource.name = resource.name
+                            createdResource.url = resource.url
+                            createdLesson.addToResource(createdResource)
+                        }
+                        
+                        do {
+                            try context.save()
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                        
+                    }
+                    
                 }
-                
             }
         }
     }

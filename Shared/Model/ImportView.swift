@@ -12,26 +12,46 @@ struct ImportView: View {
     @Binding var isPresented: Bool
     @Binding var url: URL?
     
+    @State var imported = false
+    
     var body: some View {
-        if url != nil {
-            Text("There are URLs to import")
-            Button("Import", action: addLessons)
-                .navigationTitle("Import Lessons")
-        } else {
-            Text("Could not find lessons in URL")
-            Button("Close", action: {isPresented = false})
-                .navigationTitle("Import Lessons")
+        NavigationView {
+            VStack(spacing: 20) {
+                if url != nil {
+                    Text("Lessons found in the file.  Press to import into the app.")
+                } else {
+                    Text("Could not find lessons in file")
+                }
+                Button("Import", action: addLessons)
+                    .padding(20)
+                    .frame(width: 200)
+                    .cornerRadius(5)
+                    .foregroundColor(.white)
+                    .background(Color.accentColor)
+                    .disabled(url == nil || imported == true)
+                if imported {
+                    Text("Lessons have been imported")
+                }
+            }
+            .navigationTitle("Import Lessons")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done", action: {isPresented = false})
+                }
+            }
         }
     }
     
     func addLessons() {
         Lesson.parseJSON(url: url!, context: viewContext)
-        isPresented = false
+        imported = true
     }
 }
 
 struct ImportView_Previews: PreviewProvider {
     static var previews: some View {
-        ImportView(isPresented: .constant(true), url: .constant(nil))
+        Group {
+            ImportView(isPresented: .constant(true), url: .constant(nil))
+        }
     }
 }
