@@ -78,6 +78,7 @@
 		17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */; };
 		17ABF3502507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
 		17ABF3512507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
+		17B3D7DD2528A7FC00B3D8F3 /* ModelJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D152528A51C00412C55 /* ModelJSON.swift */; };
 		17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */; };
 		17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */; };
 		17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */; };
@@ -797,6 +798,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17B3D7DD2528A7FC00B3D8F3 /* ModelJSON.swift in Sources */,
 				17F62B3F2523143400DCA5C1 /* Lesson.swift in Sources */,
 				17F62B452523144400DCA5C1 /* SampleData.swift in Sources */,
 				17F62B2D252312CE00DCA5C1 /* Shared.xcdatamodeld in Sources */,
