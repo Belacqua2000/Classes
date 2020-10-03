@@ -44,6 +44,9 @@
 		176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC62A250D18CC00FB28B6 /* AllocateTagView.swift */; };
 		177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177909C1250A6D9200C14F5E /* EditILOView.swift */; };
 		177909C3250A6D9300C14F5E /* EditILOView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177909C1250A6D9200C14F5E /* EditILOView.swift */; };
+		177B2D102528A4F200412C55 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D0F2528A4F200412C55 /* ImportView.swift */; };
+		177B2D162528A51C00412C55 /* ModelJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D152528A51C00412C55 /* ModelJSON.swift */; };
+		177B2D172528A51C00412C55 /* ModelJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D152528A51C00412C55 /* ModelJSON.swift */; };
 		1781EF16251F6C3000BA91BB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF15251F6C3000BA91BB /* SampleData.swift */; };
 		1781EF17251F6C3000BA91BB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF15251F6C3000BA91BB /* SampleData.swift */; };
 		1781EF1D251F76D200BA91BB /* AddResourceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF1C251F76D200BA91BB /* AddResourceButton.swift */; };
@@ -136,6 +139,8 @@
 		176CC626250CFD3C00FB28B6 /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		176CC62A250D18CC00FB28B6 /* AllocateTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllocateTagView.swift; sourceTree = "<group>"; };
 		177909C1250A6D9200C14F5E /* EditILOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditILOView.swift; sourceTree = "<group>"; };
+		177B2D0F2528A4F200412C55 /* ImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportView.swift; sourceTree = "<group>"; };
+		177B2D152528A51C00412C55 /* ModelJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelJSON.swift; sourceTree = "<group>"; };
 		1781EF15251F6C3000BA91BB /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		1781EF1C251F76D200BA91BB /* AddResourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResourceButton.swift; sourceTree = "<group>"; };
 		1781EF23251F7F3A00BA91BB /* AllILOsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllILOsList.swift; sourceTree = "<group>"; };
@@ -245,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				170B23E225077F1B00F790FE /* TabNavigation.swift */,
+				177B2D0F2528A4F200412C55 /* ImportView.swift */,
 				17D48C22251963F800CBF0A0 /* Helpers.swift */,
 				171212042503708000EE7423 /* Info.plist */,
 			);
@@ -379,6 +385,7 @@
 				17E50BCF25065CB300BA8618 /* Lesson.swift */,
 				1781EF15251F6C3000BA91BB /* SampleData.swift */,
 				179BF25A2506A86200574A35 /* ILO.swift */,
+				177B2D152528A51C00412C55 /* ModelJSON.swift */,
 				176CC626250CFD3C00FB28B6 /* Resource.swift */,
 			);
 			path = Model;
@@ -546,6 +553,7 @@
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
+				177B2D162528A51C00412C55 /* ModelJSON.swift in Sources */,
 				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
 				176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */,
 				17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
@@ -576,6 +584,7 @@
 				17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */,
+				177B2D102528A4F200412C55 /* ImportView.swift in Sources */,
 				17ABF3502507E789000D4048 /* ILOsView.swift in Sources */,
 				17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */,
 			);
@@ -615,6 +624,7 @@
 				17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */,
 				17E50BC12504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				177909C3250A6D9300C14F5E /* EditILOView.swift in Sources */,
+				177B2D172528A51C00412C55 /* ModelJSON.swift in Sources */,
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
 				179BF2532506834300574A35 /* LessonsView.swift in Sources */,

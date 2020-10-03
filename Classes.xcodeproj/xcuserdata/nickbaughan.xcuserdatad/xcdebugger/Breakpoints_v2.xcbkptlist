@@ -237,7 +237,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"
-            endingLineNumber = "191">
+            endingLineNumber = "191"
+            landmarkName = "parseJSON(url:context:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -250,9 +252,9 @@
             filePath = "Shared/App Navigation/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "body"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "previews"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -283,7 +285,9 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
-            endingLineNumber = "165">
+            endingLineNumber = "165"
+            landmarkName = "parseJSON(url:context:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
