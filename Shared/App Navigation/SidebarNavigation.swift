@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SidebarNavigation: View {
     
@@ -32,9 +33,17 @@ struct SidebarNavigation: View {
     @State private var deleteAlertShown = false
     @State private var settingsShown = false
     
+    @State private var tagDropTargetted = false
+    let dropDelegate = LessonDrop()
+    
     // Tag Fetch Request
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)], animation: .default)
     private var tags: FetchedResults<Tag>
+    
+    // Lessons Fetch Request
+    @FetchRequest(sortDescriptors: [])
+    private var fetchedLessons: FetchedResults<Lesson>
+   
     
     @State var selection: SidebarItem? = SidebarItem(sidebarType: .summary)
     
@@ -60,6 +69,9 @@ struct SidebarNavigation: View {
                     NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson))) {
                         Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                     }
+                    /*.onDrop(of: ["public.text"], isTargeted: $tagDropTargetted, perform: { providers in
+                        dropTag(providers: providers, tag: Tag(context: viewContext))
+                    })*/
                     .tag(SidebarItem(sidebarType: .lessonType, lessonTypes: lesson))
                 }
             }
@@ -84,6 +96,10 @@ struct SidebarNavigation: View {
                         })
                     }/*@END_MENU_TOKEN@*/)
                     .tag(SidebarItem(sidebarType: .tag, lessonTypes: nil, tag: tag))
+                    
+                    /*.onDrop(of: [UTType.text], isTargeted: $tagDropTargetted, perform: { providers in
+                        dropTag(providers: providers, tag: tag)
+                    })*/
                 }
                 .onDelete(perform: delete)
                 .alert(isPresented: $deleteAlertShown) {
@@ -168,9 +184,56 @@ struct SidebarNavigation: View {
         }
     }
     
+    func dropTag(providers: [NSItemProvider], tag: Tag) -> Bool {
+        
+        for item in providers {
+            
+            if item.canLoadObject(ofClass: NSString.self) {
+                
+                item.loadObject(ofClass: NSString.self, completionHandler: { (data, error) in
+             
+                    if let lesson = fetchedLessons.first(where: {($0 as Lesson).id!.uuidString as NSString == data as! NSString}) {
+                        
+                        lesson.addToTag(tag)
+                        
+                    }
+                    
+                })
+                
+            } else {
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     struct LessonDrop: DropDelegate {
+        // Lessons Fetch Request
+        @FetchRequest(sortDescriptors: [])
+        private var fetchedLessons: FetchedResults<Lesson>
+        
         func performDrop(info: DropInfo) -> Bool {
-            return true
+            let items = info.itemProviders(for: ["String"])
+            
+            let lessons: [Lesson] = Array(fetchedLessons)
+            
+            for item in items {
+                if item.canLoadObject(ofClass: NSString.self) {
+                item.loadObject(ofClass: NSString.self, completionHandler: { (data, error) in
+                    
+                    if let lesson = lessons.first(where: {($0 as Lesson).id!.uuidString as NSString == data as! NSString}) {
+                        
+                        
+                        
+                    }
+                    
+                })
+            }
+                return true
+            }
+            
+            return false
         }
         
         

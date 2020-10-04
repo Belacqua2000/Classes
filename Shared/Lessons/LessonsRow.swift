@@ -14,8 +14,14 @@ struct LessonsRow: View {
         NavigationLink(destination: DetailView(lesson: lesson), label: {
             LessonCell(lesson: lesson)
         })
+        /*.onDrag({
+            return NSItemProvider(object: lesson.id!.uuidString as NSString)
+        })*/
         #elseif os(macOS)
         LessonCell(lesson: lesson)
+            .onDrag({
+                return NSItemProvider(object: lesson.id!.uuidString as NSString)
+            })
         #endif
     }
 }

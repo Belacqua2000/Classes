@@ -86,6 +86,8 @@
 		17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E8F251D425000BCC40D /* LessonsRow.swift */; };
 		17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
+		17CACE362529B43200D906E4 /* LessonsActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CACE352529B43200D906E4 /* LessonsActionButtons.swift */; };
+		17CACE4C2529CC9A00D906E4 /* LessonsPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */; };
 		17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D48C22251963F800CBF0A0 /* Helpers.swift */; };
 		17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
 		17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
@@ -175,6 +177,7 @@
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17207ED425208B3E003889C2 /* AddILOMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddILOMenu.swift; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
+		173368E42528DA42005D0932 /* ClassesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassesWidgetExtension.entitlements; sourceTree = "<group>"; };
 		173C769B25162148003FFA6A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1768DEC42514CB41008CDCAC /* LessonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetails.swift; sourceTree = "<group>"; };
 		1768DECF2514CB5B008CDCAC /* ILOSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOSection.swift; sourceTree = "<group>"; };
@@ -208,6 +211,8 @@
 		17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsFilter.swift; sourceTree = "<group>"; };
 		17BD0E8F251D425000BCC40D /* LessonsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsRow.swift; sourceTree = "<group>"; };
 		17C9737D250E2A62000ACF16 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		17CACE352529B43200D906E4 /* LessonsActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LessonsActionButtons.swift; path = iOS/LessonsActionButtons.swift; sourceTree = SOURCE_ROOT; };
+		17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsPrimaryActionButton.swift; sourceTree = "<group>"; };
 		17D48C22251963F800CBF0A0 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		17D551D42514DDF900A502EA /* ILOGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOGeneratorView.swift; sourceTree = "<group>"; };
 		17DDC16D2515627300C8AC59 /* Shared 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -274,6 +279,7 @@
 		171211F12503707D00EE7423 = {
 			isa = PBXGroup;
 			children = (
+				173368E42528DA42005D0932 /* ClassesWidgetExtension.entitlements */,
 				179BF2572506981900574A35 /* Classes.entitlements */,
 				171211F62503707E00EE7423 /* Shared */,
 				171212032503708000EE7423 /* iOS */,
@@ -320,6 +326,8 @@
 		171212032503708000EE7423 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				17CACE352529B43200D906E4 /* LessonsActionButtons.swift */,
+				17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */,
 				170B23E225077F1B00F790FE /* TabNavigation.swift */,
 				17E50BCB250518A100BA8618 /* SettingsViewiOS.swift */,
 				177B2D0F2528A4F200412C55 /* ImportView.swift */,
@@ -684,6 +692,7 @@
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
+				17CACE362529B43200D906E4 /* LessonsActionButtons.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				177B2D162528A51C00412C55 /* ModelJSON.swift in Sources */,
 				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
@@ -710,6 +719,7 @@
 				1781EF1D251F76D200BA91BB /* AddResourceButton.swift in Sources */,
 				176CC61E250CB40F00FB28B6 /* AddTagView.swift in Sources */,
 				171212272503708000EE7423 /* ContentView.swift in Sources */,
+				17CACE4C2529CC9A00D906E4 /* LessonsPrimaryActionButton.swift in Sources */,
 				17E50BC62504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				179BF2522506834300574A35 /* LessonsView.swift in Sources */,
@@ -1137,6 +1147,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ClassesWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				INFOPLIST_FILE = ClassesWidget/Info.plist;
@@ -1160,6 +1171,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ClassesWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				INFOPLIST_FILE = ClassesWidget/Info.plist;

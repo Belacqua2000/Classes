@@ -10,28 +10,40 @@ import SwiftUI
 struct SettingsViewiOS: View {
     let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     let versionNumber: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    
     @Binding var viewIsShown: Bool
-    @State var welcomeScreenIsShown: Bool = false
-    #if !os(macOS)
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    #endif
+    @State private var welcomeScreenIsShown: Bool = false
+    @State private var shareSheetIsShown = false
+    
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)])
+    private var lessons: FetchedResults<Lesson>
+    
+    
     var body: some View {
         Form {
-            
-            Section(header: Text("General")) {
+            Section(header: Text("Lessons Sort")) {
                 GeneralSettingsView()
             }
             
-            Section {
+            Section(header: Text("Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
+                Button(action: {
+                    shareSheetIsShown = true
+                }, label: {
+                    Label("Export All Lessons", systemImage: "square.and.arrow.up")
+                })
+                .disabled(lessons.count == 0)
+                .popover(isPresented: $shareSheetIsShown) {
+                    ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons))])
+                }
+            }
+            
+            Section(header: Text("More")) {
                 Button(action: {welcomeScreenIsShown = true}, label: {
                     Label("Welcome Page", systemImage: "face.smiling")
                 })
                 .sheet(isPresented: $welcomeScreenIsShown) {
                     OnboardingView(isPresented: $welcomeScreenIsShown)
                 }
-            }
-            
-            Section {
                 NavigationLink(
                     destination:
                         Form {

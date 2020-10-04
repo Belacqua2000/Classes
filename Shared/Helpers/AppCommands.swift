@@ -11,6 +11,12 @@ import NotificationCenter
 struct AppCommands: Commands {
     let nc = NotificationCenter.default
     var body: some Commands {
+        
+        CommandGroup(after: .newItem) {
+            Button("New Lesson", action: newLesson)
+                .keyboardShortcut("n", modifiers: [.command, .shift])
+        }
+        
         CommandGroup(after: .sidebar) {
             Divider()
             Button("Summary", action: showSummary)
@@ -32,6 +38,11 @@ struct AppCommands: Commands {
     
     func showILO() {
         nc.post(Notification(name: .showILOs))
+    }
+    
+    
+    func newLesson() {
+        nc.post(Notification(name: .newLesson))
     }
 }
 

@@ -13,4 +13,8 @@ extension Notification.Name {
     static let showILOs = Notification.Name("showILOs")
     
     static let scrollToNow = Notification.Name("scrollToNow")
+    static let deleteLessons = Notification.Name("deleteLessons")
+    static let exportLessons = Notification.Name("exportLessons")
+    
+    static let newLesson = Notification.Name("newLesson")
 }

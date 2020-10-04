@@ -50,7 +50,7 @@ struct TabNavigation: View {
                                     Label(title: { Text(tag.name ?? "Untitled") },
                                         icon: {
                                             Image(systemName: "tag")
-                                                s.foregroundColor(tag.swiftUIColor)
+                                                .foregroundColor(tag.swiftUIColor)
                                         }
                                     )
                                 })

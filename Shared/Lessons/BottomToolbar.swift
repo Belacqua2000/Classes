@@ -10,6 +10,8 @@ import SwiftUI
 struct BottomToolbar: View {
     @Environment(\.editMode) private var editMode
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var selection: Set<Lesson>
     
     var lessonCount: Int = 0
@@ -31,9 +33,15 @@ struct BottomToolbar: View {
             Button(action: {/*deleteLessonAlert(lessons: Array(selection))*/}, label: {
                 Label("Delete", systemImage: "trash")
             })
-            Button(action: {/*toggleWatched(lessons: Array(selection))*/}, label: {
+            Button(action: toggleWatched, label: {
                 Label("Toggle Watched", systemImage: "checkmark.circle.fill")
             })
+        }
+    }
+    
+    private func toggleWatched() {
+        for lesson in selection {
+            lesson.toggleWatched(context: viewContext)
         }
     }
 }

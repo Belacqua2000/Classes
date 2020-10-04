@@ -51,6 +51,7 @@ struct LessonsListContent: View {
     @State var sheetIsPresented: Bool = false
     @State private var deleteAlertShown = false
     @State private var detailShowing = false
+    @State private var shareSheetPresented = false
     
     @Binding var filter: LessonsFilter
     @Environment(\.managedObjectContext) private var viewContext
@@ -122,7 +123,11 @@ struct LessonsListContent: View {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
-                        Button(action: {}, label: {
+                        Button(action: {
+                            selection.removeAll()
+                            selection.insert(lesson)
+                            shareSheetPresented = true
+                        }, label: {
                             Label("Export", systemImage: "square.and.arrow.up")
                         })
                         Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
@@ -151,11 +156,6 @@ struct LessonsListContent: View {
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
                         })
-                    /*.toolbar {
-                     Button(action: {scrollToNow(proxy: proxy)}, label: {
-                     Label("Scroll to Next", systemImage: "calendar.badge.clock")
-                     }).help("Scroll to the next lesson after now.")
-                     }*/
                 }
                 #else
                 ScrollViewReader { proxy in
@@ -164,6 +164,11 @@ struct LessonsListContent: View {
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
                         })
+                        .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
+                        .overlay(LessonsPrimaryActionButton(), alignment: .leading)
+                }
+                .popover(isPresented: $shareSheetPresented) {
+                    ShareSheet(isPresented: $shareSheetPresented, activityItems: [Lesson.export(lessons: Array(selection))!])
                 }
                 #endif
             } else {
@@ -182,52 +187,31 @@ struct LessonsListContent: View {
         .sheet(isPresented: $sheetIsPresented, onDismiss: {
             selectedLesson = nil
         }, content: {
-            AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented).environment(\.managedObjectContext, viewContext)
-            //.frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
+            AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
         })
         .toolbar {
             #if !os(macOS)
+            /* BOTTOM BAR BREAKS IN STACKNAVIGATIONVIEWSTYLE
             ToolbarItemGroup(placement: .bottomBar) {
                 BottomToolbar(selection: $selection, lessonCount: filteredLessons.count)
-            }
+            }*/
             #endif
             ToolbarItem(id: "AddLesson", placement: .automatic) {
-                #if os(macOS)
-                /*Menu(content: {
-                 Section(header: Text("Sort")) {
-                 Button(action: {
-                 sort = .dateAscending
-                 }, label: {
-                 Label("Oldest", systemImage: "calendar")
-                 })
-                 .disabled(sort == .dateAscending)
-                 .help("Sort the list of lessons in an ascending date order.")
-                 Button(action: {
-                 sort = .dateDescending
-                 }, label: {
-                 Label("Newest", systemImage: "calendar")
-                 })
-                 .disabled(sort == .dateDescending)
-                 .help("Sort the list of lessons in a descending date order.")
-                 Button(action: {
-                 sort = .name
-                 }, label: {
-                 Label("Name", systemImage: "calendar")
-                 })
-                 .disabled(sort == .name)
-                 .help("Sort the list of lessons by name.")
-                 }
-                 }, label: {
-                 Label("Sort and Filter", systemImage: "line.horizontal.3.decrease.circle")
-                 })
-                 .help("Sort and Filter the List")*/
-                #endif
                 Button(action: addLesson, label: {
                     Label("Add Lesson", systemImage: "plus")
+                })
+                .onReceive(nc.publisher(for: .newLesson), perform: { _ in
+                    addLesson()
                 })
                 .help("Add a New Lesson")
             }
         }
+        .onReceive(nc.publisher(for: .deleteLessons), perform: { _ in
+            deleteLessonAlert(lessons: Array(selection))
+        })
+        .onReceive(nc.publisher(for: .exportLessons), perform: { _ in
+            shareSheetPresented = true
+        })
     }
     
     func addLesson() {

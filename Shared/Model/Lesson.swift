@@ -212,8 +212,8 @@ extension Lesson {
         }
     }
     
-    func export() -> URL? {
-        let lessonjson = LessonJSON(lessons: [self])
+    static func export(lessons: [Lesson]) -> URL? {
+        let lessonjson = LessonJSON(lessons: lessons)
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         var jsonData: Data?
@@ -227,10 +227,16 @@ extension Lesson {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         
-        let url = URL(
-          fileURLWithPath: title ?? "My Lesson",
-          relativeTo: documentsDirectory)
-          .appendingPathExtension("classesdoc")
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        df.timeStyle = .full
+        
+        var url: URL
+        if lessons.count == 1 {
+            url = URL(fileURLWithPath: lessons.first!.title ?? "My Lesson", relativeTo: documentsDirectory).appendingPathExtension("classesdoc")
+        } else {
+            url = URL(fileURLWithPath: "Lessons Backup - \(df.string(from: Date()))", relativeTo: documentsDirectory).appendingPathExtension("classesdoc")
+        }
         do {
             try data.write(to: url)
         } catch {
