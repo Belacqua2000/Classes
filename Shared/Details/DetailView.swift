@@ -213,7 +213,7 @@ struct DetailView: View {
             .alert(isPresented: $isDeleteAlertShown) {
                 Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {isDeleteAlertShown = false}))
             }
-            .background(Color("SecondaryColor-1").edgesIgnoringSafeArea([.bottom, .horizontal]))
+            .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
     }
     
     func createILO(index: Int) {

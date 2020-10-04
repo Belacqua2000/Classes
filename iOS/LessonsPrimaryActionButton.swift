@@ -19,7 +19,7 @@ struct LessonsPrimaryActionButton: View {
                     Button(action: {
                         nc.post(Notification(name: .scrollToNow))
                     }, label: {
-                        ActionButtonItem(imageName: "clock")
+                        ActionButtonItem(imageName: "calendar.badge.clock")
                     })
                         .frame(width: 50)
                 }

@@ -7,6 +7,8 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleIdentifier</key>
+			<string></string>
 			<key>CFBundleTypeName</key>
 			<string>Classes Lessons Document</string>
 			<key>LSHandlerRank</key>
@@ -16,7 +18,6 @@
 				<string>com.baughan.classes.lessons</string>
 			</array>
 		</dict>
-		<dict/>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>

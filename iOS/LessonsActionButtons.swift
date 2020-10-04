@@ -151,7 +151,7 @@ struct ActionButtonItem: View {
  var body: some View {
  Capsule()
  .aspectRatio(CGSize(width: 1, height: numberOfButtons), contentMode: .fit)
- .foregroundColor(Color("SecondaryColor-1"))
+ .foregroundColor(Color("SecondaryColor"))
  }
  }
  
