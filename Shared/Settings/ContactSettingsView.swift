@@ -27,7 +27,7 @@ struct ContactSettingsView: View {
         }, label: {
             Label("Social Media", systemImage: "text.bubble")
         })
-        
+        .navigationTitle("Contact")
     }
 }
 

@@ -28,7 +28,7 @@ struct LessonCell: View {
                     title: { VStack(alignment: .leading) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
-                        Text("\(itemFormatter.string(from: lesson.date ?? Date())) \(relativeText ?? Text(""))")
+                        Text("\(DateFormatter.localizedString(from: lesson.date ?? Date(), dateStyle: .short, timeStyle: .short)) \(relativeText ?? Text(""))")
                             .font(.subheadline)
                         Text(lesson.teacher ?? "No Teacher")
                             .font(.footnote)
@@ -49,13 +49,6 @@ struct LessonCell: View {
             }
         }
     }
-    
-    private let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
-    }()
 }
 /*
  struct LessonCell_Previews: PreviewProvider {

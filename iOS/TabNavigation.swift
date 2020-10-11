@@ -45,7 +45,7 @@ struct TabNavigation: View {
                         ForEach(tags) { tag in
                             NavigationLink(
                                 destination:
-                                    LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag)),
+                                    LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject()),
                                 label: {
                                     Label(title: { Text(tag.name ?? "Untitled") },
                                         icon: {
@@ -161,6 +161,7 @@ struct AllTabView: View {
     var body: some View {
         NavigationView {
             LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
+                .environmentObject(LessonsStateObject())
         }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

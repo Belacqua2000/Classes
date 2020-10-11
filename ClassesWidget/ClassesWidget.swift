@@ -59,10 +59,10 @@ struct ClassesWidget: Widget {
         .description("This is an example widget.")
     }
 }
-
+/*
 struct ClassesWidget_Previews: PreviewProvider {
     static var previews: some View {
         ClassesWidgetEntryView(entry: SimpleEntry(date: Date(), lessons: Lesson.sampleData(context: PersistenceController.preview.container.viewContext)))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
-}
+}*/

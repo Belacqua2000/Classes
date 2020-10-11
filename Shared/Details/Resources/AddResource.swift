@@ -30,7 +30,7 @@ struct AddResource: View {
         .keyboardShortcut(.cancelAction)
     }
     
-    var body: some View {
+    var form: some View {
         Form {
             #if os(macOS)
             Section(header: Text("Add Resource").font(.headline)) {
@@ -68,6 +68,15 @@ struct AddResource: View {
             }
             #endif
         }
+    }
+    
+    var body: some View {
+        #if os(iOS)
+        form
+        #else
+        form
+            .padding()
+        #endif
     }
     func save() {
         let url = URL(string: resourceURL)

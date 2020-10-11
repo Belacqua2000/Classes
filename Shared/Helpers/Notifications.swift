@@ -17,4 +17,8 @@ extension Notification.Name {
     static let exportLessons = Notification.Name("exportLessons")
     
     static let newLesson = Notification.Name("newLesson")
+    static let importLessons = Notification.Name("importLessons")
+    
+    static let addResource = Notification.Name("addResource")
+    static let toggleWatched = Notification.Name("toggleWatched")
 }

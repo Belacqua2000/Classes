@@ -7,13 +7,16 @@
 
 import SwiftUI
 import CoreData
+import UniformTypeIdentifiers
 
 struct ContentView: View {
+    let nc = NotificationCenter.default
     
     let environmentHelpers = EnvironmentHelpers()
     @AppStorage("firstLaunch") var firstLaunch = true
     @State var sheetPresented = false
     @State var importPresented = false
+    @State private var importerPresented = false
     @State var url: URL?
     
     #if !os(macOS)
@@ -48,6 +51,11 @@ struct ContentView: View {
                 OnboardingView(isPresented: $firstLaunch)
                     .frame(idealWidth: 600, idealHeight: 500)
             }
+            .onReceive(nc.publisher(for: .importLessons), perform: { _ in
+                importerPresented = true
+            })
+            .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in
+            })
         #endif
     }
 }

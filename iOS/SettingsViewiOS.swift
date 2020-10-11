@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SettingsViewiOS: View {
     let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
@@ -14,6 +15,7 @@ struct SettingsViewiOS: View {
     @Binding var viewIsShown: Bool
     @State private var welcomeScreenIsShown: Bool = false
     @State private var shareSheetIsShown = false
+    @State private var importSheetIsShown = false
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)])
     private var lessons: FetchedResults<Lesson>
@@ -25,7 +27,7 @@ struct SettingsViewiOS: View {
                 GeneralSettingsView()
             }
             
-            Section(header: Text("Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
+            Section(header: Text("Import and Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
                 Button(action: {
                     shareSheetIsShown = true
                 }, label: {
@@ -35,6 +37,13 @@ struct SettingsViewiOS: View {
                 .popover(isPresented: $shareSheetIsShown) {
                     ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons))])
                 }
+                
+                Button(action: {
+                    importSheetIsShown = true
+                }, label: {
+                    Label("Import Lessons", systemImage: "square.and.arrow.down")
+                })
+                .fileImporter(isPresented: $importSheetIsShown, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in })
             }
             
             Section(header: Text("More")) {

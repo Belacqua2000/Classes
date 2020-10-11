@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct LessonsRow: View {
+    @EnvironmentObject var viewStates: LessonsStateObject
+    
     var lesson: Lesson
     var body: some View {
         #if os(iOS)
-        NavigationLink(destination: DetailView(lesson: lesson), label: {
+        NavigationLink(destination: DetailView(lesson: lesson).environmentObject(viewStates), label: {
             LessonCell(lesson: lesson)
         })
         /*.onDrag({
@@ -19,9 +21,6 @@ struct LessonsRow: View {
         })*/
         #elseif os(macOS)
         LessonCell(lesson: lesson)
-            .onDrag({
-                return NSItemProvider(object: lesson.id!.uuidString as NSString)
-            })
         #endif
     }
 }

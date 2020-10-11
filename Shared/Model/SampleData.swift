@@ -5,7 +5,7 @@
 //  Created by Nick Baughan on 26/09/2020.
 //
 
-#if DEBUG
+
 import Foundation
 import CoreData
 
@@ -38,4 +38,3 @@ extension Lesson {
         }
     }
 }
-#endif

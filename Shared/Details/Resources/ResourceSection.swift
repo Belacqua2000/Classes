@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ResourceSection: View {
     @Environment(\.managedObjectContext) var viewContext
-    @State var isInValidURLAlertShown: Bool = false
-    @Binding var isAddingResource: Bool
-    @State private var selectedResource: Resource?
-    @ObservedObject var lesson: Lesson
     var resources: FetchedResults<Resource>
+    @State var isInValidURLAlertShown: Bool = false
+    @State private var selectedResource: Resource?
+    @EnvironmentObject var viewStates: LessonsStateObject
+    @ObservedObject var lesson: Lesson
     
     var filteredResources: [Resource] {
         //return resources.filter { $0.lesson == lesson }
@@ -48,17 +48,21 @@ struct ResourceSection: View {
                                     .help(re.url?.absoluteString ?? "Link")
                             }
                         }
+                        .onDrag({
+                            guard let url = re.url else { return NSItemProvider(object: NSString(""))}
+                            return NSItemProvider(object: NSURL(string: url.absoluteString)!)
+                        })
                         .contextMenu(ContextMenu(menuItems: {
                             Button(action: {
                                 selectedResource = re
-                                isAddingResource = true
+                                viewStates.addResourcePresented = true
                             }, label: {
                                 Label("Edit", systemImage: "square.and.pencil")
                             })
                             Button(action: {
                                 copyResourceURL(resource.url)
                             }, label: {
-                                Label("Copy URL", systemImage: "doc")
+                                Label("Copy URL", systemImage: "doc.on.doc")
                             })
                         }))
                     }
@@ -77,22 +81,22 @@ struct ResourceSection: View {
             }
             HStack {
                 #if os(iOS)
-                AddResourceButton(isAddingResource: $isAddingResource)
+                AddResourceButton(isAddingResource: $viewStates.addResourcePresented)
                 Spacer()
                 #endif
             }
             .padding(.vertical)
-            .sheet(isPresented: $isAddingResource, onDismiss: {
+            .sheet(isPresented: $viewStates.addResourcePresented, onDismiss: {
                 selectedResource = nil
             },content: {
                 #if !os(macOS)
                 NavigationView {
-                    AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $isAddingResource, resource: $selectedResource, lesson: lesson).environment(\.managedObjectContext, viewContext)
+                    AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $viewStates.addResourcePresented, resource: $selectedResource, lesson: lesson).environment(\.managedObjectContext, viewContext)
                         .navigationTitle("Add Resource")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else
-                AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $isAddingResource, resource: $selectedResource, lesson: lesson)
+                AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $viewStates.addResourcePresented, resource: $selectedResource, lesson: lesson)
                 #endif
             })
         }

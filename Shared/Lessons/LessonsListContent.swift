@@ -31,6 +31,10 @@ struct LessonsListContent: View {
         }
     }
     
+    //MARK: - Environment
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
     #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.editMode) var editMode
@@ -38,23 +42,16 @@ struct LessonsListContent: View {
     
     @AppStorage("currentLessonSort") private var sort: Sort = .dateDescending
     
-    #if os(iOS)
-    @State var selection = Set<Lesson>() // for list selection
-    #elseif os(macOS)
+    // MARK: - Selections
     @Binding var selection: Set<Lesson>
-    #endif
+    
     @State var selectedLessons: [Lesson]? // for delete actions
     @State var selectedLesson: Lesson? // for editing lesson
     
-    @State private var myLesson: Lesson?
-    
-    @State var sheetIsPresented: Bool = false
-    @State private var deleteAlertShown = false
-    @State private var detailShowing = false
-    @State private var shareSheetPresented = false
-    
+    @EnvironmentObject var viewStates: LessonsStateObject
     @Binding var filter: LessonsFilter
-    @Environment(\.managedObjectContext) private var viewContext
+    
+    // MARK: - Model
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
                   animation: .default)
     private var lessons: FetchedResults<Lesson>
@@ -102,10 +99,10 @@ struct LessonsListContent: View {
         case .name:
             filterHelper.sort(by: {$0.title! < $1.title!})
         }
-        
         return filterHelper
     }
     
+    // MARK: - List
     var lessonList: some View {
         List(selection: $selection) {
             ForEach(filteredLessons, id: \.self) { lesson in
@@ -114,8 +111,8 @@ struct LessonsListContent: View {
                     .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
                         Button(action: {
                             let lesson = lesson as Lesson
-                            selectedLesson = lesson
-                            sheetIsPresented = true
+                            viewStates.lessonToChange = lesson
+                            viewStates.addLessonIsPresented = true
                         }, label: {
                             Label("Edit", systemImage: "square.and.pencil")
                         })
@@ -124,32 +121,36 @@ struct LessonsListContent: View {
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
                         Button(action: {
-                            selection.removeAll()
-                            selection.insert(lesson)
-                            shareSheetPresented = true
+                            #if os(iOS)
+                            selection = [lesson]
+                            viewStates.shareSheetShown = true
+                            #else
+                            viewStates.shareSheetShown = true
+                            #endif
                         }, label: {
                             Label("Export", systemImage: "square.and.arrow.up")
                         })
-                        Button(action: {deleteLessonAlert(lessons: [lesson])}, label: {
+                        Button(action: {
+                            selection = [lesson]
+                            viewStates.deleteAlertShown = true
+                        }, label: {
                             Label("Delete", systemImage: "trash")
                         })
                         .foregroundColor(.red)
                     }/*@END_MENU_TOKEN@*/)
             }
             .onDelete(perform: deleteItems)
-            .alert(isPresented: $deleteAlertShown) {
-                Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; selectedLessons = nil}))
-            }
         }
     }
     
+    // MARK: - Body
     var body: some View {
         Group {
             if filteredLessons.count > 0 {
                 #if os(macOS)
                 ScrollViewReader { proxy in
                     lessonList
-                        .onDeleteCommand(perform: {deleteLessonAlert(lessons: Array(selection))})
+                        .onDeleteCommand(perform: {viewStates.deleteAlertShown = true})
                         .navigationTitle(titleString)
                         .navigationSubtitle("\(filteredLessons.count) Lessons")
                         .listStyle(InsetListStyle())
@@ -167,8 +168,8 @@ struct LessonsListContent: View {
                         .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
                         .overlay(LessonsPrimaryActionButton(), alignment: .leading)
                 }
-                .popover(isPresented: $shareSheetPresented) {
-                    ShareSheet(isPresented: $shareSheetPresented, activityItems: [Lesson.export(lessons: Array(selection))!])
+                .popover(isPresented: $viewStates.shareSheetShown) {
+                    ShareSheet(isPresented: $viewStates.shareSheetShown, activityItems: [Lesson.export(lessons: Array(selection))!])
                 }
                 #endif
             } else {
@@ -184,19 +185,13 @@ struct LessonsListContent: View {
                 #endif
             }
         }
-        .sheet(isPresented: $sheetIsPresented, onDismiss: {
-            selectedLesson = nil
-        }, content: {
-            AddLessonView(lesson: $selectedLesson, isPresented: $sheetIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
-        })
         .toolbar {
             #if !os(macOS)
             /* BOTTOM BAR BREAKS IN STACKNAVIGATIONVIEWSTYLE
             ToolbarItemGroup(placement: .bottomBar) {
                 BottomToolbar(selection: $selection, lessonCount: filteredLessons.count)
             }*/
-            #endif
-            ToolbarItem(id: "AddLesson", placement: .automatic) {
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: addLesson, label: {
                     Label("Add Lesson", systemImage: "plus")
                 })
@@ -205,44 +200,39 @@ struct LessonsListContent: View {
                 })
                 .help("Add a New Lesson")
             }
+            #endif
         }
         .onReceive(nc.publisher(for: .deleteLessons), perform: { _ in
-            deleteLessonAlert(lessons: Array(selection))
+            viewStates.deleteAlertShown = true
         })
         .onReceive(nc.publisher(for: .exportLessons), perform: { _ in
-            shareSheetPresented = true
+            #if os(iOS)
+            viewStates.shareSheetShown = true
+            #endif
         })
     }
     
     func addLesson() {
-        sheetIsPresented = true
-    }
-    
-    private func deleteLessonAlert(lessons: [Lesson]) {
-        selectedLessons = lessons
-        deleteAlertShown = true
-    }
-    
-    private func deleteLesson() {
-        guard let lessons = selectedLessons else { return }
-        withAnimation {
-            for lesson in lessons {
-                lesson.delete(context: viewContext)
-            }
-        }
-        selectedLessons = nil
+        viewStates.addLessonIsPresented = true
     }
     
     private func deleteItems(offsets: IndexSet) {
         offsets.map { filteredLessons[$0] }.forEach { lesson in
-            deleteLessonAlert(lessons: [lesson])
+            selection = [lesson]
+            viewStates.deleteAlertShown = true
         }
     }
     
     private func toggleWatched(lessons: [Lesson]) {
+        #if os(iOS)
         for lesson in lessons {
             lesson.toggleWatched(context: viewContext)
         }
+        #else
+        for lesson in selection {
+            lesson.toggleWatched(context: viewContext)
+        }
+        #endif
     }
     
     private func scrollToNow(proxy: ScrollViewProxy) {
@@ -259,13 +249,6 @@ struct LessonsListContent: View {
             }
         }
     }
-    
-    private let itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .medium
-        return formatter
-    }()
     
 }
 

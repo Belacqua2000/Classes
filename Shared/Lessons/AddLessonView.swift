@@ -9,8 +9,9 @@ import SwiftUI
 
 struct AddLessonView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.presentationMode) var presentationMode
     
-    @Binding var lesson: Lesson?
+    var lesson: Lesson?
     @Binding var isPresented: Bool
     @State var type: Lesson.LessonType = .lecture
     @State var tags = [Tag]()
@@ -23,12 +24,12 @@ struct AddLessonView: View {
     @State var notes: String = ""
     var body: some View {
         #if os(macOS)
-        AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
+        AddLessonForm(lesson: lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
             .padding()
             .frame(idealWidth: 400)
         #else
         NavigationView {
-            AddLessonForm(lesson: $lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
+            AddLessonForm(lesson: lesson, tags: $tags, isPresented: $isPresented, type: $type, title: $title, location: $location, teacher: $teacher, date: $date, isCompleted: $isCompleted, notes: $notes)
                 .navigationTitle(lesson == nil ? "Add Lesson" : "Edit Lesson")
         }
         .navigationViewStyle(StackNavigationViewStyle())
@@ -46,8 +47,9 @@ struct AddLessonView: View {
 
 struct AddLessonForm: View {
     @Environment(\.managedObjectContext) var managedObjectContext
+    @Environment(\.presentationMode) var presentationMode
     @State private var hasUpdatedFields = false
-    @Binding var lesson: Lesson?
+    var lesson: Lesson?
     @Binding var tags: [Tag]
     @Binding var isPresented: Bool
     #if os(macOS)
@@ -146,7 +148,7 @@ struct AddLessonForm: View {
                 .disabled(title == "")
             }
             ToolbarItem(placement: .cancellationAction) {
-                Button(action: {isPresented = false}, label: {
+                Button(action: {presentationMode.wrappedValue.dismiss()}, label: {
                     Text("Cancel")
                 })
             }
@@ -172,12 +174,13 @@ struct AddLessonForm: View {
         } else {
             lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags, notes: notes)
         }
+        presentationMode.wrappedValue.dismiss()
         isPresented = false
     }
 }
 
 struct AddLessonView_Previews: PreviewProvider {
     static var previews: some View {
-        AddLessonView(lesson: .constant(nil), isPresented: .constant(true), type: Lesson.LessonType.lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
+        AddLessonView(lesson: nil, isPresented: .constant(true), type: Lesson.LessonType.lecture, title: "", location: "", teacher: "", date: Date(), isCompleted: false)
     }
 }

@@ -70,11 +70,15 @@ struct SummaryView: View {
                                     .font(.subheadline)
                                 ForEach(overdueLessons) { lesson in
                                     let lesson = lesson as Lesson
+                                    #if os(iOS)
                                     NavigationLink(
-                                        destination: DetailView(lesson: lesson),
+                                        destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil, tag: nil), detailLesson: lesson).environmentObject(LessonsStateObject()),
                                         label: {
                                             Label(lesson.title ?? "No Title", systemImage: Lesson.lessonIcon(type: lesson.type!))
                                         })
+                                    #else
+                                    Text(lesson.title ?? "Untitled")
+                                    #endif
                                 }
                             }
                             Spacer()
@@ -94,11 +98,15 @@ struct SummaryView: View {
                                     .font(.subheadline)
                                 ForEach(overdueILOs) { ilo in
                                     let ilo = ilo as ILO
+                                    #if os(iOS)
                                     NavigationLink(
-                                        destination: DetailView(lesson: ilo.lesson!),
+                                        destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil, tag: nil), detailLesson: ilo.lesson).environmentObject(LessonsStateObject()),
                                         label: {
                                             Text(ilo.title ?? "No Title")
                                         })
+                                    #else
+                                    Text(ilo.title ?? "Untitled")
+                                    #endif
                                 }
                             }
                             Spacer()
@@ -125,7 +133,7 @@ struct SummaryView: View {
                 }
             }
             .sheet(isPresented: $addLessonViewShown) {
-                AddLessonView(lesson: .constant(nil), isPresented: $addLessonViewShown)
+                AddLessonView(lesson: nil, isPresented: $addLessonViewShown)
             }
             .padding(.horizontal)
             .navigationTitle("Summary")
@@ -174,7 +182,7 @@ struct TodaysLessonsView: View {
                                 .underline()
                         }
                         NavigationLink(
-                            destination: DetailView(lesson: lesson),
+                            destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil, tag: nil), detailLesson: lesson).environmentObject(LessonsStateObject()),
                             label: {
                                 Label(
                                     title: {

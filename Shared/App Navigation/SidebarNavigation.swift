@@ -34,7 +34,7 @@ struct SidebarNavigation: View {
     @State private var settingsShown = false
     
     @State private var tagDropTargetted = false
-    let dropDelegate = LessonDrop()
+//    let dropDelegate = LessonDrop()
     
     // Tag Fetch Request
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)], animation: .default)
@@ -54,7 +54,7 @@ struct SidebarNavigation: View {
             }
             .tag(SidebarItem(sidebarType: .summary))
             
-            NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))) {
+            NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject())) {
                 Label("All Lessons", systemImage: "books.vertical")
             }
             .tag(SidebarItem(sidebarType: .all))
@@ -66,7 +66,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
-                    NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson))) {
+                    NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsStateObject())) {
                         Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                     }
                     /*.onDrop(of: ["public.text"], isTargeted: $tagDropTargetted, perform: { providers in
@@ -78,7 +78,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Tags")) {
                 ForEach(tags) { tag in
-                    NavigationLink(destination:  LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag))) {
+                    NavigationLink(destination:  LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject())) {
                         Label(
                             title: { Text(tag.name ?? "Untitled") },
                             icon: {
@@ -208,7 +208,7 @@ struct SidebarNavigation: View {
         return true
     }
     
-    struct LessonDrop: DropDelegate {
+    /*struct LessonDrop: DropDelegate {
         // Lessons Fetch Request
         @FetchRequest(sortDescriptors: [])
         private var fetchedLessons: FetchedResults<Lesson>
@@ -237,5 +237,5 @@ struct SidebarNavigation: View {
         }
         
         
-    }
+    }*/
 }

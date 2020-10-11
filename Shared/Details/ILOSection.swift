@@ -9,11 +9,10 @@ import SwiftUI
 
 struct ILOSection: View {
     @Environment(\.managedObjectContext) var viewContext
+    @EnvironmentObject var viewStates: LessonsStateObject
     @ObservedObject var lesson: Lesson
     
-    @Binding var isAddingILO: Bool
     @State private var selectedILO: ILO? = nil
-    @Binding var editILOViewState: EditILOView.AddOutcomeViewState
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
@@ -45,20 +44,24 @@ struct ILOSection: View {
                             Button(action: { toggleILOWritten(ilo: ilo) }, label: {
                                 ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
                             })
-                            .contextMenu(ContextMenu(menuItems: {
-                                Button(action: {
-                                    selectedILO = ilo
-                                    isAddingILO = true
-                                }, label: {
-                                    Label("Edit", systemImage: "square.and.pencil")
-                                })
-                                Button(action: {
-                                    copyILO(ilo)
-                                }, label: {
-                                    Label("Copy Learning Outcome", systemImage: "doc")
-                                })
-                            }))
+                            .help(ilo.written ? "Mark unwritten" : "Mark written")
                         }
+                        .onDrag({
+                            return NSItemProvider(object: NSString(string: ilo.title ?? "Untitled"))
+                        })
+                        .contextMenu(ContextMenu(menuItems: {
+                            Button(action: {
+                                selectedILO = ilo
+                                viewStates.addILOPresented = true
+                            }, label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            })
+                            Button(action: {
+                                copyILO(ilo)
+                            }, label: {
+                                Label("Copy Learning Outcome", systemImage: "doc.on.doc")
+                            })
+                        }))
                     }
                     .onDelete(perform: deleteILOs)
                     .onMove(perform: moveILOs)
@@ -74,23 +77,23 @@ struct ILOSection: View {
             
             HStack {
                 #if os(iOS)
-                AddILOMenu(editILOViewState: $editILOViewState, isAddingILO: $isAddingILO)
+                AddILOMenu(editILOViewState: $viewStates.editILOViewState, isAddingILO: $viewStates.addILOPresented)
                 Spacer()
                 #endif
             }
-            .sheet(isPresented: $isAddingILO, onDismiss: {
+            .sheet(isPresented: $viewStates.addILOPresented, onDismiss: {
                 selectedILO = nil
-                editILOViewState = .single
+                viewStates.editILOViewState = .single
             }, content: {
                 #if !os(macOS)
                 NavigationView {
-                    EditILOView(currentViewState: $editILOViewState, isPresented: $isAddingILO, ilo: $selectedILO, lesson: lesson)
+                    EditILOView(currentViewState: $viewStates.editILOViewState, isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
                         .environment(\.managedObjectContext, viewContext)
                         .navigationTitle("Add Outcome")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else
-                EditILOView(currentViewState: $editILOViewState, isPresented: $isAddingILO, ilo: $selectedILO, lesson: lesson)
+                EditILOView(currentViewState: $viewStates.editILOViewState, isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
                 #endif
             })
             .padding(.vertical)

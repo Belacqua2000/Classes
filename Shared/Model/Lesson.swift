@@ -227,15 +227,11 @@ extension Lesson {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        df.timeStyle = .full
-        
         var url: URL
         if lessons.count == 1 {
             url = URL(fileURLWithPath: lessons.first!.title ?? "My Lesson", relativeTo: documentsDirectory).appendingPathExtension("classesdoc")
         } else {
-            url = URL(fileURLWithPath: "Lessons Backup - \(df.string(from: Date()))", relativeTo: documentsDirectory).appendingPathExtension("classesdoc")
+            url = URL(fileURLWithPath: "Lessons Backup - \(DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .full))", relativeTo: documentsDirectory).appendingPathExtension("classesdoc")
         }
         do {
             try data.write(to: url)

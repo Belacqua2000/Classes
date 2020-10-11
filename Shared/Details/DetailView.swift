@@ -18,17 +18,12 @@ struct DetailView: View {
     #endif
     
     //MARK: - View States
-    @State private var isDeleteAlertShown: Bool = false
+    @EnvironmentObject var viewStates: LessonsStateObject
     @State private var isInValidURLAlertShown: Bool = false
-    @State private var isEditingLesson: Bool = false
-    @State private var isAddingResource: Bool = false
-    @State private var isAddingILO: Bool = false
-    @State private var editILOViewState: EditILOView.AddOutcomeViewState = .single
-    @State private var tagPopoverPresented: Bool = false
     
     //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
-    @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = false
+    @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = true
     
     //MARK: - Model
     @ObservedObject var lesson: Lesson
@@ -46,7 +41,7 @@ struct DetailView: View {
     
     
     //MARK: - ILOs
-    @State var iloListSelection: Set<ILO> = []
+    @State var iloListSelection = Set<ILO>()
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
         animation: .default)
@@ -83,37 +78,6 @@ struct DetailView: View {
     
     
     //MARK: - Views
-    var toggleWatchedButton: some View {
-        Button(action: {
-               withAnimation {
-                    lesson.toggleWatched(context: managedObjectContext)
-                }
-        }, label: {
-            !(lesson.watched) ?
-                Label("Mark as Watched", systemImage: "checkmark.circle") : Label("Mark as Unwatched", systemImage: "checkmark.circle.fill")
-        })
-        .help(!(lesson.watched) ? "Mark the lesson as watched" : "Mark the lesson as unwatched")
-    }
-    
-    var deleteButton: some View {
-        Button(action: {
-            isDeleteAlertShown = true
-        }, label: {
-            Label("Delete Lesson", systemImage: "trash")
-        })
-        .help("Delete the lesson")
-    }
-    
-    var editInfoButton: some View {
-        Button(action: {
-            lessonToEdit = lesson
-            isEditingLesson = true
-        }, label: {
-            Label("Edit Info", systemImage: "rectangle.and.pencil.and.ellipsis")
-        })
-        .help("Edit the lesson info")
-    }
-    
     var body: some View {
             ScrollView(.vertical) {
                 HStack(alignment: .top) {
@@ -147,71 +111,34 @@ struct DetailView: View {
                         }
                         
                         DisclosureGroup(isExpanded: $iloSectionExpanded, content: {
-                            ILOSection(lesson: lesson, isAddingILO: $isAddingILO, editILOViewState: $editILOViewState)
+                            ILOSection(lesson: lesson)
                         }, label: {
                             Label("Learning Outcomes", systemImage: "list.number")
                                 .font(.headline)
                         })
                         
                         DisclosureGroup(isExpanded: $resourceSectionExpanded, content: {
-                            ResourceSection(isAddingResource: $isAddingResource, lesson: lesson, resources: resources)
+                            ResourceSection(resources: resources, lesson: lesson)
                         }, label: {
                             Label("Resources", systemImage: "globe")
                                 .font(.headline)
                         })
-                        
-                        EmptyView()
-                            .sheet(isPresented: $isEditingLesson, onDismiss: {
-                                lessonToEdit = nil
-                            }, content: {
-                                AddLessonView(lesson: $lessonToEdit, isPresented: $isEditingLesson)
-                                    .frame(minWidth: 200, idealWidth: 400, minHeight: 200, idealHeight: 250)
-                            })
                     }
                     .padding(.horizontal)
                 }
             }
             .toolbar {
-                #if os(macOS)
+                #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {
                     Menu(content: {
-                        AddILOMenu(editILOViewState: $editILOViewState, isAddingILO: $isAddingILO)
-                        AddResourceButton(isAddingResource: $isAddingResource)
-                    }, label: {
-                        Label("Add Items", systemImage: "text.badge.plus")
-                    })
-                    .labelStyle(DefaultLabelStyle())
-                    .help("Add learning outcomes and resources")
-                    
-                    Button(action: {
-                        tagPopoverPresented = true
-                    }, label: {
-                        Label("Edit Tags", systemImage: "tag")
-                    })
-                    .help("Edit the tags for this lesson")
-                    .popover(isPresented: $tagPopoverPresented) {
-                        /*AllocateTagView(selectedTags: $lesson.tag.allObjects as? [Tag])*/
-                    }
-                    deleteButton
-                    toggleWatchedButton
-                }
-                ToolbarItem(placement: .primaryAction) {
-                    editInfoButton
-                }
-                #else
-                ToolbarItemGroup(placement: .primaryAction) {
-                    Menu(content: {
-                        toggleWatchedButton
-                        deleteButton
-                        editInfoButton
+                        ToggleWatchedButton(lessons: [lesson])
+                        DeleteLessonButton(lesson: lesson)
+                        EditLessonButton(lessons: [lesson])
                     }, label: {
                         Label("Edit Lesson", systemImage: "ellipsis.circle")
                     })
                 }
                 #endif
-            }
-            .alert(isPresented: $isDeleteAlertShown) {
-                Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannot be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {isDeleteAlertShown = false}))
             }
             .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
     }
