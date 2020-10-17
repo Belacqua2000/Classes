@@ -168,6 +168,15 @@ struct LessonsListContent: View {
                         .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
                         .overlay(LessonsPrimaryActionButton(), alignment: .leading)
                 }
+                .sheet(isPresented: $viewStates.addLessonIsPresented,
+                       onDismiss: {
+                        viewStates.lessonToChange = nil
+                       }, content: {
+                        AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                       })
+                .alert(isPresented: $viewStates.deleteAlertShown) {
+                    Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
+                }
                 .popover(isPresented: $viewStates.shareSheetShown) {
                     ShareSheet(isPresented: $viewStates.shareSheetShown, activityItems: [Lesson.export(lessons: Array(selection))!])
                 }
@@ -221,6 +230,17 @@ struct LessonsListContent: View {
             selection = [lesson]
             viewStates.deleteAlertShown = true
         }
+    }
+    
+    private func deleteLessons() {
+        withAnimation {
+            viewStates.lessonToChange?.delete(context: viewContext)
+            for lesson in selection {
+                lesson.delete(context: viewContext)
+            }
+        }
+        viewStates.lessonToChange = nil
+        selection.removeAll()
     }
     
     private func toggleWatched(lessons: [Lesson]) {

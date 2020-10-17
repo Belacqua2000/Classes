@@ -16,13 +16,13 @@ struct SettingsViewMac: View {
     var body: some View {
         TabView {
             GeneralSettingsView()
+                .padding(.horizontal)
                 .tabItem {
                     Label("General", systemImage: "gear")
                 }
                 .tag(SettingsTab.general)
             Form {
                 ContactSettingsView()
-                    .padding()
             }
                 .tabItem {
                     Label("Contact", systemImage: "person.crop.square")
@@ -30,7 +30,7 @@ struct SettingsViewMac: View {
                 .tag(SettingsTab.contact)
         }
         .padding(20)
-        .frame(width: 400, height: 200)
+        .frame(width: 400)
     }
 }
 

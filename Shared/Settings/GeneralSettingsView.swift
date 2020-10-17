@@ -10,19 +10,28 @@ import SwiftUI
 struct GeneralSettingsView: View {
     @AppStorage("currentLessonSort") private var sort: LessonsListContent.Sort = .dateDescending
     
-    var body: some View {
-        
+    var picker: some View {
         Picker(
             selection: $sort,
-            label: Label("Lesson Sort Order", systemImage: "books.vertical"),
+            label: Label("Lesson Sort Order:", systemImage: "books.vertical"),
             content: {
             ForEach(LessonsListContent.Sort.allCases) { sort in
                 Text(sort.rawValue).tag(sort)
             }
         })
-        .padding(.horizontal)
-        .pickerStyle(SegmentedPickerStyle())
+    }
+    
+    var body: some View {
         
+        #if os(iOS)
+        picker
+            .pickerStyle(SegmentedPickerStyle())
+        #else
+        Form {
+            picker
+                //.pickerStyle(RadioGroupPickerStyle())
+        }
+        #endif
     }
 }
 

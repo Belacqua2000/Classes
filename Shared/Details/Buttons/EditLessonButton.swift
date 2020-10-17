@@ -14,9 +14,7 @@ struct EditLessonButton: View {
         Button(action: {
             guard !lessons.isEmpty else { return }
             viewStates.lessonToChange = lessons.first!
-            #if os(iOS)
             viewStates.addLessonIsPresented = true
-            #endif
         }, label: {
             Label("Edit Info", systemImage: "rectangle.and.pencil.and.ellipsis")
         })

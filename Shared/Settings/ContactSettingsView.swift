@@ -8,6 +8,12 @@
 import SwiftUI
 
 struct ContactSettingsView: View {
+    var socialMediaLinks: some View {
+        Group {
+            Link("Twitter", destination: URL(string: "https://twitter.com/NickBaughanApps")!)
+            Link("Instagram", destination: URL(string: "https://instagram.com/nickbaughanapps?igshid=oxs426ln605n")!)
+        }
+    }
     var body: some View {
         Link(destination: URL(string: "https://nickbaughanapps.wordpress.com")!) {
             Label("Website", systemImage: "globe")
@@ -21,13 +27,17 @@ struct ContactSettingsView: View {
             Label("Rate and Review", systemImage: "app.badge")
         }
         
+        #if os(iOS)
         Menu(content: {
-            Link("Twitter", destination: URL(string: "https://twitter.com/NickBaughanApps")!)
-            Link("Instagram", destination: URL(string: "https://instagram.com/nickbaughanapps?igshid=oxs426ln605n")!)
+            socialMediaLinks
         }, label: {
             Label("Social Media", systemImage: "text.bubble")
         })
         .navigationTitle("Contact")
+        #else
+        Divider()
+        socialMediaLinks
+        #endif
     }
 }
 

@@ -14,8 +14,8 @@ struct LessonsActionButtons: View {
     @Binding var selection: Set<Lesson>
     
     let nc = NotificationCenter.default
-    var numberOfButtons: Int {
-        return editMode?.wrappedValue.isEditing == true ? 4 : 1
+    var numberOfButtons: Double {
+        return editMode?.wrappedValue.isEditing == true ? 3.5 : 1
     }
     var body: some View {
         VStack(alignment: .trailing) {
@@ -24,7 +24,7 @@ struct LessonsActionButtons: View {
                 Spacer()
                 ZStack {
                     ActionButtonsBackground(numberOfButtons: numberOfButtons)
-                        .frame(width: 60)
+                        .frame(width: 50)
                     VStack {
                         if editMode?.wrappedValue.isEditing == true {
                             Button(action: {
@@ -56,10 +56,11 @@ struct LessonsActionButtons: View {
                             })
                         }
                         EditButton()
+                            .font(.caption)
                             .foregroundColor(Color(.label))
                             .animation(.default)
                     }
-                    .frame(width: 50)
+                    .frame(width: 35)
                 }
             }
             .padding()
@@ -75,7 +76,7 @@ struct LessonsActionButtons_Previews: PreviewProvider {
 }
 
 struct ActionButtonsBackground: View {
-    var numberOfButtons: Int
+    var numberOfButtons: Double
     var body: some View {
         Capsule()
             .aspectRatio(CGSize(width: 1, height: numberOfButtons), contentMode: .fit)

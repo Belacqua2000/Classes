@@ -15,6 +15,8 @@ struct ResourceSection: View {
     @EnvironmentObject var viewStates: LessonsStateObject
     @ObservedObject var lesson: Lesson
     
+    let nc = NotificationCenter.default
+    
     var filteredResources: [Resource] {
         //return resources.filter { $0.lesson == lesson }
         let resources = lesson.resource?.allObjects as? [Resource] ?? []
@@ -85,6 +87,9 @@ struct ResourceSection: View {
                 Spacer()
                 #endif
             }
+            .onReceive(nc.publisher(for: .addResource), perform: { _ in
+                viewStates.addResourcePresented = true
+            })
             .padding(.vertical)
             .sheet(isPresented: $viewStates.addResourcePresented, onDismiss: {
                 selectedResource = nil

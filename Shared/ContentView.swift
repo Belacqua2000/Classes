@@ -44,8 +44,9 @@ struct ContentView: View {
         .onOpenURL { url in
             self.url = url
             importPresented = true
-        }        #else
-        SidebarNavigation()
+        }
+        #else
+        SidebarNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
             .sheet(isPresented: $firstLaunch) {
                 OnboardingView(isPresented: $firstLaunch)
@@ -56,6 +57,8 @@ struct ContentView: View {
             })
             .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in
             })
+        /*LessonsView(filter: .init(filterType: .all, lessonType: nil, tag: nil))
+            .environmentObject(LessonsStateObject())*/
         #endif
     }
 }

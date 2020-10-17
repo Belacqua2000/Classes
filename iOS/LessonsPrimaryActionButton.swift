@@ -15,13 +15,13 @@ struct LessonsPrimaryActionButton: View {
             HStack(alignment: .bottom) {
                 ZStack {
                     ActionButtonsBackground(numberOfButtons: 1)
-                        .frame(width: 60)
+                        .frame(width: 50)
                     Button(action: {
                         nc.post(Notification(name: .scrollToNow))
                     }, label: {
                         ActionButtonItem(imageName: "calendar.badge.clock")
                     })
-                        .frame(width: 50)
+                        .frame(width: 35)
                 }
                 Spacer()
             }

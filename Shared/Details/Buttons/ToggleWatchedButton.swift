@@ -12,13 +12,7 @@ struct ToggleWatchedButton: View {
     @Environment(\.managedObjectContext) var viewContext
     var lessons: [Lesson]
     var body: some View {
-        Button(action: {
-            withAnimation {
-                for lesson in lessons {
-                    lesson.toggleWatched(context: viewContext)
-                }
-            }
-        }, label: {
+        Button(action: toggleWatched, label: {
             if lessons.count == 1 {
                 !(lessons.first?.watched ?? false) ?
                 Label("Mark as Watched", systemImage: "checkmark.circle") : Label("Mark as Unwatched", systemImage: "checkmark.circle.fill")
@@ -28,5 +22,16 @@ struct ToggleWatchedButton: View {
         })
         .disabled(lessons.isEmpty)
         .help("Toggle Watched")
+        .onReceive(nc.publisher(for: .toggleWatched), perform: { _ in
+            toggleWatched()
+        })
+    }
+    
+    func toggleWatched() {
+        withAnimation {
+            for lesson in lessons {
+                lesson.toggleWatched(context: viewContext)
+            }
+        }
     }
 }

@@ -14,6 +14,8 @@ struct ILOSection: View {
     
     @State private var selectedILO: ILO? = nil
     
+    let nc = NotificationCenter.default
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
         animation: .default)
@@ -81,6 +83,9 @@ struct ILOSection: View {
                 Spacer()
                 #endif
             }
+            .onReceive(nc.publisher(for: .addILO), perform: { _ in
+                viewStates.addILOPresented = true
+            })
             .sheet(isPresented: $viewStates.addILOPresented, onDismiss: {
                 selectedILO = nil
                 viewStates.editILOViewState = .single

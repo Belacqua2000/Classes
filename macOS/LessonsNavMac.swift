@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 
 struct LessonsNavMac: View {
     @EnvironmentObject var viewStates: LessonsStateObject
+    @Environment(\.managedObjectContext) var viewContext
     
     let nc = NotificationCenter.default
     @Binding var selectedLesson: Set<Lesson>
@@ -19,14 +20,14 @@ struct LessonsNavMac: View {
         GeometryReader { gr in
             HSplitView {
                 LessonsListContent(selection: $selectedLesson, filter: $filter)
-                    //.fileMover(isPresented: $shareSheetShown, file: Lesson.export(lessons: Array(selectedLesson)), onCompletion: {_ in })
+                    .frame(idealWidth: gr.size.width / 2)
                     
                 if selectedLesson.count == 1 {
                     DetailView(lesson: selectedLesson.first!)
                         .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     Text(selectedLesson.isEmpty ? "Select a lesson" : "\(selectedLesson.count) lessons selected")
-                        .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: gr.size.width / 2, maxHeight: .infinity)
                 }
             }
             .sheet(item: $viewStates.lessonToChange, onDismiss: {
@@ -34,8 +35,23 @@ struct LessonsNavMac: View {
             }) { value in
                 AddLessonView(lesson: value, isPresented: .constant(false))
             }
+            .sheet(isPresented: $viewStates.addLessonIsPresented,
+                   onDismiss: {
+                    viewStates.lessonToChange = nil
+                   }, content: {
+                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                   })
+            .alert(isPresented: $viewStates.deleteAlertShown) {
+                Alert(title: Text(selectedLesson.count == 1 ? "Delete Lesson" : "Delete Lessons"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
+            }
             .toolbar {
                 ToolbarItemGroup(placement: .automatic) {
+                    Button(action: {
+                        nc.post(Notification(name: .scrollToNow))
+                    }, label: {
+                        Label("Scroll To Now", systemImage: "calendar.badge.clock")
+                    })
+                    .help("Scroll to the next lesson in the list after now.")
                     ToggleWatchedButton(lessons: Array(selectedLesson))
                     
                     DeleteLessonButton()
@@ -92,10 +108,25 @@ struct LessonsNavMac: View {
                     .help("Add a New Lesson")
                 }
             }
+            .onReceive(nc.publisher(for: .tagAllocateViewShown), perform: { _ in
+                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=code@*/ /*@END_MENU_TOKEN@*/
+            })
         }
     }
+    
     func addLesson() {
         viewStates.addLessonIsPresented = true
+    }
+    
+    private func deleteLessons() {
+        withAnimation {
+            viewStates.lessonToChange?.delete(context: viewContext)
+            for lesson in selectedLesson {
+                lesson.delete(context: viewContext)
+            }
+        }
+        viewStates.lessonToChange = nil
+        selectedLesson.removeAll()
     }
 }
 

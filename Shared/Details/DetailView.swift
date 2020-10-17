@@ -19,8 +19,10 @@ struct DetailView: View {
     
     //MARK: - View States
     @EnvironmentObject var viewStates: LessonsStateObject
+    @EnvironmentObject var appViewState: AppViewState
     @State private var isInValidURLAlertShown: Bool = false
     
+    let nc = NotificationCenter.default
     //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = true
@@ -123,10 +125,32 @@ struct DetailView: View {
                             Label("Resources", systemImage: "globe")
                                 .font(.headline)
                         })
+                        #if os(iOS)
+                        EmptyView()
+                            .sheet(isPresented: $viewStates.addLessonIsPresented,
+                                   onDismiss: {
+                                    viewStates.lessonToChange = nil
+                                   }, content: {
+                                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented).environment(\.managedObjectContext, managedObjectContext)
+                                   })
+                            .alert(isPresented: $viewStates.deleteAlertShown) {
+                                Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
+                            }
+                        #endif
                     }
                     .padding(.horizontal)
                 }
             }
+            .onAppear(perform: {
+                appViewState.detailViewShowing = true
+                print("Appeared")
+                nc.post(.init(name: .detailShowing))
+            })
+            .onDisappear(perform: {
+                appViewState.detailViewShowing = false
+                print("Disappeared")
+                nc.post(.init(name: .detailNotShowing))
+            })
             .toolbar {
                 #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {

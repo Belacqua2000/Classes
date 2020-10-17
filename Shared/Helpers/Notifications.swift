@@ -19,6 +19,12 @@ extension Notification.Name {
     static let newLesson = Notification.Name("newLesson")
     static let importLessons = Notification.Name("importLessons")
     
+    static let addILO = Notification.Name("addILO")
     static let addResource = Notification.Name("addResource")
     static let toggleWatched = Notification.Name("toggleWatched")
+    static let tagAllocateViewShown = Notification.Name("tagAllocateViewShown")
+    
+    
+    static let detailShowing = Notification.Name("detailShowing")
+    static let detailNotShowing = Notification.Name("detailNotShowing")
 }

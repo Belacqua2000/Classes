@@ -10,14 +10,17 @@ import SwiftUI
 @main
 struct ClassesApp: App {
     let persistenceController = PersistenceController.shared
+    
+    let appViewState = AppViewState()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(appViewState)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .commands {
-            AppCommands()
+            AppCommands(appViewState: appViewState)
             SidebarCommands()
             ToolbarCommands()
         }

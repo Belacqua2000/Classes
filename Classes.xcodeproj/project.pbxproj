@@ -49,8 +49,6 @@
 		176E09BE2528781600E1AA26 /* ContactSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09BC2528781600E1AA26 /* ContactSettingsView.swift */; };
 		176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
 		176E09C62528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
-		1775EC9925272DA600957AE3 /* CommandSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775EC9825272DA600957AE3 /* CommandSelectors.swift */; };
-		1775EC9A25272DA600957AE3 /* CommandSelectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775EC9825272DA600957AE3 /* CommandSelectors.swift */; };
 		1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
 		1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
 		1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECB22527DEF600957AE3 /* Notifications.swift */; };
@@ -88,6 +86,8 @@
 		17ABF3502507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
 		17ABF3512507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
 		17B3D7DD2528A7FC00B3D8F3 /* ModelJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D152528A51C00412C55 /* ModelJSON.swift */; };
+		17BBCB052535169800FDEDD4 /* AppViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BBCB042535169800FDEDD4 /* AppViewState.swift */; };
+		17BBCB062535169800FDEDD4 /* AppViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BBCB042535169800FDEDD4 /* AppViewState.swift */; };
 		17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */; };
 		17BD0E84251D3DC900BCC40D /* LessonsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */; };
 		17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */; };
@@ -183,7 +183,6 @@
 		176E09B52528772100E1AA26 /* SettingsViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewMac.swift; sourceTree = "<group>"; };
 		176E09BC2528781600E1AA26 /* ContactSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSettingsView.swift; sourceTree = "<group>"; };
 		176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
-		1775EC9825272DA600957AE3 /* CommandSelectors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSelectors.swift; sourceTree = "<group>"; };
 		1775ECA52527D94200957AE3 /* ContentViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewMac.swift; sourceTree = "<group>"; };
 		1775ECB22527DEF600957AE3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		177909C1250A6D9200C14F5E /* EditILOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditILOView.swift; sourceTree = "<group>"; };
@@ -204,6 +203,7 @@
 		179BF25A2506A86200574A35 /* ILO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILO.swift; sourceTree = "<group>"; };
 		17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagIcon.swift; sourceTree = "<group>"; };
 		17ABF34F2507E789000D4048 /* ILOsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOsView.swift; sourceTree = "<group>"; };
+		17BBCB042535169800FDEDD4 /* AppViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewState.swift; sourceTree = "<group>"; };
 		17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsNavMac.swift; sourceTree = "<group>"; };
 		17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsFilter.swift; sourceTree = "<group>"; };
 		17BD0E8F251D425000BCC40D /* LessonsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsRow.swift; sourceTree = "<group>"; };
@@ -460,8 +460,8 @@
 			children = (
 				170EE3BD251AA861000D8363 /* EnvironmentHelpers.swift */,
 				1787C8F525267FF1005486AC /* AppCommands.swift */,
+				17BBCB042535169800FDEDD4 /* AppViewState.swift */,
 				1775ECB22527DEF600957AE3 /* Notifications.swift */,
-				1775EC9825272DA600957AE3 /* CommandSelectors.swift */,
 				17937D662531B49E001C2540 /* CustomTypes.swift */,
 				17BD0E83251D3DC900BCC40D /* LessonsFilter.swift */,
 			);
@@ -728,7 +728,6 @@
 				179BF25B2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */,
 				17E50BCC250518A100BA8618 /* SettingsViewiOS.swift in Sources */,
-				1775EC9925272DA600957AE3 /* CommandSelectors.swift in Sources */,
 				1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */,
@@ -749,6 +748,7 @@
 				17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */,
 				176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
+				17BBCB052535169800FDEDD4 /* AppViewState.swift in Sources */,
 				17D546782532587200046654 /* AddTagView.swift in Sources */,
 				170B23E325077F1B00F790FE /* TabNavigation.swift in Sources */,
 				177B2D102528A4F200412C55 /* ImportView.swift in Sources */,
@@ -779,7 +779,6 @@
 				1787C8F725267FF1005486AC /* AppCommands.swift in Sources */,
 				17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
 				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
-				1775EC9A25272DA600957AE3 /* CommandSelectors.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
 				17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */,
 				17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
@@ -804,6 +803,7 @@
 				177B2D172528A51C00412C55 /* ModelJSON.swift in Sources */,
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
+				17BBCB062535169800FDEDD4 /* AppViewState.swift in Sources */,
 				179BF2532506834300574A35 /* LessonsView.swift in Sources */,
 				1768DED82514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */,

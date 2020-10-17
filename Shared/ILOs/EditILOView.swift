@@ -22,12 +22,12 @@ struct EditILOView: View {
     
     private enum SplitType: String, CaseIterable, Identifiable {
         var id: String { return self.rawValue }
-        case comma = ","
         case newLine = "New Line"
+        case comma = ","
         case semicolon = ";"
     }
     
-    @State private var currentSplitType: SplitType = .comma
+    @State private var currentSplitType: SplitType = .newLine
     
     private struct SplitILO: Identifiable {
         var id = UUID()

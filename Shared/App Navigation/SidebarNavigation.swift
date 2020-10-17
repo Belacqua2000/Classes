@@ -45,24 +45,29 @@ struct SidebarNavigation: View {
     private var fetchedLessons: FetchedResults<Lesson>
    
     
-    @State var selection: SidebarItem? = SidebarItem(sidebarType: .summary)
+    @State var selection: SidebarItem? = SidebarItem(sidebarType: .all)
     
     var sidebar: some View {
         List(selection: $selection) {
-            NavigationLink(destination: SummaryView()) {
-                Label("Summary", systemImage: "chart.pie")
-            }
-            .tag(SidebarItem(sidebarType: .summary))
             
-            NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject())) {
-                Label("All Lessons", systemImage: "books.vertical")
-            }
-            .tag(SidebarItem(sidebarType: .all))
+            NavigationLink(
+                destination: SummaryView(),
+                tag: SidebarItem(sidebarType: .summary),
+                selection: $selection,
+                label: {Label("Summary", systemImage: "chart.pie")})
+                .tag(SidebarItem(sidebarType: .summary))
             
-            NavigationLink(destination: ILOsView()) {
-                Label("Learning Outcomes", systemImage: "doc")
-            }
-            .tag(SidebarItem(sidebarType: .ilo))
+            NavigationLink(
+                destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject()),
+                tag: SidebarItem(sidebarType: .all),
+                selection: $selection,
+                label: {Label("All Lessons", systemImage: "books.vertical")})
+            
+            NavigationLink(
+                destination: ILOsView(),
+                tag: SidebarItem(sidebarType: .ilo),
+                selection: $selection,
+                label: {Label("Learning Outcomes", systemImage: "doc")})
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
@@ -108,9 +113,10 @@ struct SidebarNavigation: View {
                 Button(action: addTag, label: {
                     Label("Add Tag", systemImage: "plus.circle")
                 })
+                .buttonStyle(BorderlessButtonStyle())
             }
-            .listStyle(SidebarListStyle())
         }
+        .listStyle(SidebarListStyle())
         .sheet(isPresented: $addTagShowing, onDismiss: {
             selectedTag = nil
         }, content: {
@@ -146,6 +152,9 @@ struct SidebarNavigation: View {
                     }
                     #endif
                 }
+            #if os(iOS)
+            SummaryView()
+            #endif
         }
     }
     

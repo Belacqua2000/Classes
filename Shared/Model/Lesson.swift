@@ -158,6 +158,11 @@ extension Lesson {
             }
         }
     }
+    
+    func overDueILOs() -> [ILO] {
+        return ((ilo?.allObjects as! [ILO]).filter({!$0.written})).sorted(by: {$0.index < $1.index})
+    }
+    
 }
 
 

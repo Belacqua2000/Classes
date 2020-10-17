@@ -43,6 +43,10 @@ struct SummaryView: View {
         return ilos.filter({$0.lesson!.date! < Date() && !$0.written})
     }
     
+    var lessonsWithOverdueILOs: [Lesson] {
+        return lessons.filter({($0.ilo?.allObjects as! [ILO]).contains(where: {!$0.written})})
+    }
+    
     var writtenILOs: Int {
         let ilos = self.ilos.filter({$0.written && $0.lesson!.date! < Date()})
         return ilos.count
@@ -72,7 +76,7 @@ struct SummaryView: View {
                                     let lesson = lesson as Lesson
                                     #if os(iOS)
                                     NavigationLink(
-                                        destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil, tag: nil), detailLesson: lesson).environmentObject(LessonsStateObject()),
+                                        destination: DetailView(lesson: lesson).environmentObject(LessonsStateObject()),
                                         label: {
                                             Label(lesson.title ?? "No Title", systemImage: Lesson.lessonIcon(type: lesson.type!))
                                         })
@@ -96,17 +100,23 @@ struct SummaryView: View {
                                 }
                                 Text("You have \(overdueILOs.count) learning outcomes to write up:")
                                     .font(.subheadline)
-                                ForEach(overdueILOs) { ilo in
-                                    let ilo = ilo as ILO
+                                
+                                ForEach(lessonsWithOverdueILOs) { lesson in
+                                    let lesson = lesson as Lesson
                                     #if os(iOS)
                                     NavigationLink(
-                                        destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil, tag: nil), detailLesson: ilo.lesson).environmentObject(LessonsStateObject()),
+                                        destination: DetailView(lesson: lesson).environmentObject(LessonsStateObject()),
                                         label: {
-                                            Text(ilo.title ?? "No Title")
+                                            Label(lesson.title ?? "Untitled", systemImage: Lesson.lessonIcon(type: lesson.type))
+                                                .font(.headline)
                                         })
                                     #else
-                                    Text(ilo.title ?? "Untitled")
+                                    Label(lesson.title ?? "Untitled", systemImage: Lesson.lessonIcon(type: lesson.type))
+                                        .font(.headline)
                                     #endif
+                                    ForEach(lesson.overDueILOs()) { ilo in
+                                        Text("\(ilo.index + 1). \(ilo.title ?? "Untitled")")
+                                    }
                                 }
                             }
                             Spacer()
@@ -182,7 +192,7 @@ struct TodaysLessonsView: View {
                                 .underline()
                         }
                         NavigationLink(
-                            destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil, tag: nil), detailLesson: lesson).environmentObject(LessonsStateObject()),
+                            destination: DetailView(lesson: lesson).environmentObject(LessonsStateObject()),
                             label: {
                                 Label(
                                     title: {
