@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ImportView: View {
     @Environment(\.managedObjectContext) var viewContext
-    @Binding var isPresented: Bool
+    @Environment(\.presentationMode) var presentationMode
+//    @Binding var isPresented: Bool
     @Binding var url: URL?
     
     @State var imported = false
@@ -48,7 +49,9 @@ struct ImportView: View {
             .navigationTitle("Import Lessons")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done", action: {isPresented = false})
+                    Button("Done", action: {
+                        presentationMode.wrappedValue.dismiss()
+                    })
                 }
             }
         }
@@ -67,7 +70,7 @@ struct ImportView: View {
 struct ImportView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ImportView(isPresented: .constant(true), url: .constant(nil))
+            ImportView(url: .constant(nil))
         }
     }
 }

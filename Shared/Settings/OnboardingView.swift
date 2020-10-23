@@ -11,7 +11,8 @@ struct OnboardingView: View {
     #if !os(macOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
-    @Binding var isPresented: Bool
+//    @Binding var isPresented: Bool
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         GeometryReader { gr in
             VStack(alignment: .center) {
@@ -41,11 +42,15 @@ struct OnboardingView: View {
                 #if os(macOS)
                 Button("Get Started", action: {isPresented = false})
                 #else
-                Button("Get Started", action: {isPresented = false})
-                    .frame(width: 300, height: 50)
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Get Started")
+                        .frame(width: 300, height: 50)
+                        .background(Color.accentColor)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                })
                 #endif
             }
             .padding()
@@ -55,6 +60,6 @@ struct OnboardingView: View {
 
 struct OnboardingView_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingView(isPresented: .constant(true))
+        OnboardingView()
     }
 }

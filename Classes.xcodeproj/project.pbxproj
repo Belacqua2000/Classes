@@ -25,6 +25,10 @@
 		1712122C2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
 		17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
+		1724C46A254250DE00F56C93 /* AppFeatures.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeatures.json */; };
+		1724C46B254250DE00F56C93 /* AppFeatures.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeatures.json */; };
+		172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
+		172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
 		173C769C25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		173C769D25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		1751BB222533480D00AA78D6 /* LessonsNaviOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB212533480D00AA78D6 /* LessonsNaviOS.swift */; };
@@ -166,6 +170,8 @@
 		171212202503708000EE7423 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17207ED425208B3E003889C2 /* AddILOMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddILOMenu.swift; sourceTree = "<group>"; };
+		1724C469254250DE00F56C93 /* AppFeatures.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeatures.json; sourceTree = "<group>"; };
+		172FFFF525420B3500CA15B5 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
 		173368E42528DA42005D0932 /* ClassesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassesWidgetExtension.entitlements; sourceTree = "<group>"; };
 		173C769B25162148003FFA6A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -496,6 +502,8 @@
 			children = (
 				176E09BC2528781600E1AA26 /* ContactSettingsView.swift */,
 				176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */,
+				172FFFF525420B3500CA15B5 /* WhatsNew.swift */,
+				1724C469254250DE00F56C93 /* AppFeatures.json */,
 				173C769B25162148003FFA6A /* OnboardingView.swift */,
 			);
 			path = Settings;
@@ -658,6 +666,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1724C46A254250DE00F56C93 /* AppFeatures.json in Resources */,
 				1712122B2503708000EE7423 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -667,6 +676,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1712122C2503708000EE7423 /* Assets.xcassets in Resources */,
+				1724C46B254250DE00F56C93 /* AppFeatures.json in Resources */,
 				17D5468125325D3300046654 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -719,6 +729,7 @@
 				1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */,
 				1787C8F625267FF1005486AC /* AppCommands.swift in Sources */,
 				17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */,
+				172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */,
 				176CC625250CFCDB00FB28B6 /* AddResource.swift in Sources */,
 				17937D852531C03A001C2540 /* ToggleWatchedButton.swift in Sources */,
 				17E50BC92504E22200BA8618 /* DetailView.swift in Sources */,
@@ -804,6 +815,7 @@
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17BBCB062535169800FDEDD4 /* AppViewState.swift in Sources */,
+				172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */,
 				179BF2532506834300574A35 /* LessonsView.swift in Sources */,
 				1768DED82514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */,
@@ -988,7 +1000,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Classes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -997,7 +1009,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.baughan.Classes;
 				PRODUCT_NAME = Classes;
 				SDKROOT = iphoneos;
@@ -1013,7 +1025,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Classes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -1022,7 +1034,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.baughan.Classes;
 				PRODUCT_NAME = Classes;
 				SDKROOT = iphoneos;
@@ -1180,7 +1192,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				INFOPLIST_FILE = ClassesWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1204,7 +1216,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 394ER38X9C;
 				INFOPLIST_FILE = ClassesWidget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

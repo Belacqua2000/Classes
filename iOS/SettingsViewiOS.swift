@@ -14,6 +14,7 @@ struct SettingsViewiOS: View {
     
     @Binding var viewIsShown: Bool
     @State private var welcomeScreenIsShown: Bool = false
+    @State private var whatsNewShown: Bool = false
     @State private var shareSheetIsShown = false
     @State private var importSheetIsShown = false
     
@@ -51,7 +52,15 @@ struct SettingsViewiOS: View {
                     Label("Welcome Page", systemImage: "face.smiling")
                 })
                 .sheet(isPresented: $welcomeScreenIsShown) {
-                    OnboardingView(isPresented: $welcomeScreenIsShown)
+                    OnboardingView()
+                }
+                Button(action: {
+                    whatsNewShown = true
+                }, label: {
+                    Label("What's New", systemImage: "wand.and.stars")
+                })
+                .sheet(isPresented: $whatsNewShown) {
+                    WhatsNew()
                 }
                 NavigationLink(
                     destination:

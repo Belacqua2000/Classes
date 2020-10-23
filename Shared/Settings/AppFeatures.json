@@ -1,0 +1,56 @@
+[
+  {
+    "majorNumber": 1,
+    "minorNumber": 2,
+    "patchNumber": 1,
+    "features": [
+      {
+        "title": "Localised for UK users",
+        "details": "Users in the UK should now see tag colours instead of tag colors!",
+        "imageName": "globe"
+      },
+      {
+        "title": "Grouped Learning Outcomes",
+        "details": "In the summary view, learning outcomes are now grouped by lesson",
+        "imageName": "list.number"
+      },
+      {
+        "title": "iPad Workflow Improvements",
+        "details": "On iPad, you will no longer see a blank screen when opening, allowing you to get to work even quicker!",
+        "imageName": "ipad.landscape"
+      },
+      {
+        "title": "Smaller Editing Buttons",
+        "details": "The new buttons for editing were overwhelmingly big on smaller devices.",
+        "imageName": "calendar.circle.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 2,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "Export and Import Lessons",
+        "details": "Export lessons",
+        "imageName": "globe"
+      },
+      {
+        "title": "Grouped Learning Outcomes",
+        "details": "In the summary view, learning outcomes are now grouped by lesson",
+        "imageName": "list.number"
+      },
+      {
+        "title": "iPad Workflow Improvements",
+        "details": "On iPad, you will no longer see a blank screen when opening, allowing you to get to work even quicker!",
+        "imageName": "ipad.landscape"
+      },
+      {
+        "title": "Smaller Editing Buttons",
+        "details": "The new buttons for editing were overwhelmingly big on smaller devices.",
+        "imageName": "calendar.circle.fill"
+      }
+    ]
+  }
+]
