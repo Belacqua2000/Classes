@@ -11,6 +11,12 @@ import CoreData
 
 struct Provider: TimelineProvider {
     
+    var managedObjectContext : NSManagedObjectContext
+    
+    init(context : NSManagedObjectContext) {
+            self.managedObjectContext = context
+        }
+    
     public typealias Entry = SimpleEntry
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)], predicate: NSPredicate(format: "date > %@", Date() as NSDate), animation: .default)
@@ -52,11 +58,15 @@ struct ClassesWidget: Widget {
     let kind: String = "UpcomingClassesWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider(context: persistentContainer.viewContext)) { entry in
             UpcomingWidgetView(entry: entry)
         }
         .configurationDisplayName("My Widget")
         .description("This is an example widget.")
+    }
+    
+    var persistentContainer: NSPersistentCloudKitContainer {
+        return PersistenceController.shared.container
     }
 }
 /*
