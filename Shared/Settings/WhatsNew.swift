@@ -31,7 +31,7 @@ struct WhatsNew: View {
             self.featureVersion = versionString
             switch type {
             case .all:
-                featureGroups = AppFeatures.all.features
+                featureGroups = AppFeatures.all.features.sorted().reversed()
             case .unseen:
                 featureGroups = AppFeatures().unseenVersions.sorted().reversed()
             case .version:
@@ -59,6 +59,10 @@ struct WhatsNew: View {
             HStack {
                 #if os(iOS)
                 VersionPicker(currentSelection: $currentSelection)
+                    .padding(2)
+                    .background(Color(.systemGray5))
+                    .cornerRadius(5)
+                    .padding()
                 #else
                 VersionPicker(currentSelection: $currentSelection)
                     .frame(width: 200)
@@ -67,15 +71,14 @@ struct WhatsNew: View {
             }
             
             if !currentSelection.featureGroups.isEmpty {
-                ScrollView {
+                /*ScrollView {
                     HStack {
-                        VStack(alignment: .leading, spacing: 20) {
+                        VStack(alignment: .leading, spacing: 20) {*/
+                List {
                             ForEach(currentSelection.featureGroups, id: \.self) { featureGroup in
-                                if currentSelection.type != .version {
+                                Section(header:
                                     Text("Version \(featureGroup.versionString)")
-                                        .font(.headline)
-                                        .underline()
-                                }
+                                ) {
                                 ForEach(featureGroup.features, id: \.self) { feature in
                                     Label(title: {
                                         VStack(alignment: .leading) {
@@ -90,11 +93,14 @@ struct WhatsNew: View {
                                     })
                                     .font(.title)
                                 }
+                                }
                             }
                         }
+//                .listStyle(InsetGroupedListStyle())
+                        /*}
                         Spacer()
                     }
-                }
+                }*/
             } else {
                 Spacer()
                 Text("You are all up to speed with new app features!  Use the menu to review previous changes you may have missed.")
@@ -113,7 +119,7 @@ struct WhatsNew: View {
             Button("Get Started", action: markSeen)
             #endif
         }
-        .padding()
+//        .padding()
         .navigationTitle("What's New")
     }
     
@@ -140,6 +146,8 @@ struct WhatsNew_Previews: PreviewProvider {
         //WhatsNew(unseenFeatures: features.features)
         WhatsNew()
             .preferredColorScheme(.dark)
+            
+            
     }
 }
 #endif
@@ -260,8 +268,8 @@ struct VersionPicker: View {
                 }
         ) {
             Text("Unseen Features").tag(WhatsNew.VersionSelection(type: .unseen, versionString: nil))
-            //                    Text("All Features").tag(VersionSelection(type: .all, versionString: nil))
-            ForEach(AppFeatures.all.features, id: \.self) { version in
+            Text("All Features").tag(WhatsNew.VersionSelection(type: .all, versionString: nil))
+            ForEach(AppFeatures.all.features.sorted().reversed(), id: \.self) { version in
                 Text(version.versionString).tag(WhatsNew.VersionSelection(type: .version, versionString: version.versionString))
             }
         }.animation(nil)

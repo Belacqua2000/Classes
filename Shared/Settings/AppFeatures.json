@@ -57,5 +57,22 @@
         "imageName": "paintpalette.fill"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 2,
+    "patchNumber": 2,
+    "features": [
+      {
+        "title": "Fixed UK English Localisation",
+        "details": "Fixed an issue in the previous version where this was not appearing.  Users in the UK should now see tag colours instead of tag colors!",
+        "imageName": "globe"
+      },
+      {
+        "title": "New iPad Toolbar Buttons",
+        "details": "Buttons for editing the displayed lesson are no longer in a menu, maximising space and reducing two taps to one.",
+        "imageName": "rectangle.and.pencil.and.ellipsis"
+      }
+    ]
   }
 ]

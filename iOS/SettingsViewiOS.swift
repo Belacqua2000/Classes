@@ -38,13 +38,13 @@ struct SettingsViewiOS: View {
                 .popover(isPresented: $shareSheetIsShown) {
                     ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons))])
                 }
-                
+                /*
                 Button(action: {
                     importSheetIsShown = true
                 }, label: {
                     Label("Import Lessons", systemImage: "square.and.arrow.down")
                 })
-                .fileImporter(isPresented: $importSheetIsShown, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in })
+                .fileImporter(isPresented: $importSheetIsShown, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in })*/
             }
             
             Section(header: Text("More")) {

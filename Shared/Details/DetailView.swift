@@ -154,13 +154,18 @@ struct DetailView: View {
             .toolbar {
                 #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {
-                    Menu(content: {
-                        ToggleWatchedButton(lessons: [lesson])
+                    if horizontalSizeClass == .compact {
+                        Menu(content: {
+                            ToggleWatchedButton(lessons: [lesson])
+                            DeleteLessonButton(lesson: lesson)
+                            EditLessonButton(lessons: [lesson])
+                        }, label: {
+                            Label("Edit Lesson", systemImage: "ellipsis.circle")
+                        })
+                    } else {
                         DeleteLessonButton(lesson: lesson)
                         EditLessonButton(lessons: [lesson])
-                    }, label: {
-                        Label("Edit Lesson", systemImage: "ellipsis.circle")
-                    })
+                    }
                 }
                 #endif
             }
