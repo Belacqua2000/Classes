@@ -40,7 +40,9 @@ struct OnboardingView: View {
                     }
                 }
                 #if os(macOS)
-                Button("Get Started", action: {isPresented = false})
+                Button("Get Started", action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
                 #else
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct WhatsNew: View {
-//    @Binding var isShowing: Bool
+
     @Environment(\.presentationMode) var presentationMode
-    private struct VersionSelection: Hashable {
+    struct VersionSelection: Hashable {
         let type: FeatureType
         let featureGroups: [AppVersionFeatures]
         let featureVersion: String?
@@ -33,7 +33,7 @@ struct WhatsNew: View {
             case .all:
                 featureGroups = AppFeatures.all.features
             case .unseen:
-                featureGroups = AppFeatures().unseenVersions
+                featureGroups = AppFeatures().unseenVersions.sorted().reversed()
             case .version:
                 featureGroups = AppFeatures.all.featuresForVersion(versionString!)
             }
@@ -57,50 +57,42 @@ struct WhatsNew: View {
                 .padding(.bottom, 20)
             
             HStack {
-                Picker(selection: $currentSelection,
-                       label:
-                        HStack {
-                            Text(currentSelection.string)
-                            Image(systemName: "chevron.down")
-                        }
-                        .padding(5)
-                        .background(Color(.systemGray5))
-                        .cornerRadius(5)
-                ) {
-                    Text("Unseen Features").tag(VersionSelection(type: .unseen, versionString: nil))
-//                    Text("All Features").tag(VersionSelection(type: .all, versionString: nil))
-                    ForEach(AppFeatures.all.features, id: \.self) { version in
-                        Text(version.versionString).tag(VersionSelection(type: .version, versionString: version.versionString))
-                    }
-                }.animation(nil)
-                .pickerStyle(MenuPickerStyle())
+                #if os(iOS)
+                VersionPicker(currentSelection: $currentSelection)
+                #else
+                VersionPicker(currentSelection: $currentSelection)
+                    .frame(width: 200)
+                #endif
                 Spacer()
             }
             
             if !currentSelection.featureGroups.isEmpty {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        ForEach(currentSelection.featureGroups, id: \.self) { featureGroup in
-                            if currentSelection.type != .version {
-                                Text("Version \(featureGroup.versionString)")
-                                    .font(.headline)
-                                    .underline()
-                            }
-                            ForEach(featureGroup.features, id: \.self) { feature in
-                                Label(title: {
-                                    VStack(alignment: .leading) {
-                                        Text(feature.title)
-                                            .bold()
-                                        Text(feature.details)
-                                            .font(.body)
-                                    }
-                                }, icon: {
-                                    Image(systemName: feature.imageName)
-                                        .foregroundColor(.accentColor)
-                                })
-                                .font(.title)
+                    HStack {
+                        VStack(alignment: .leading, spacing: 20) {
+                            ForEach(currentSelection.featureGroups, id: \.self) { featureGroup in
+                                if currentSelection.type != .version {
+                                    Text("Version \(featureGroup.versionString)")
+                                        .font(.headline)
+                                        .underline()
+                                }
+                                ForEach(featureGroup.features, id: \.self) { feature in
+                                    Label(title: {
+                                        VStack(alignment: .leading) {
+                                            Text(feature.title)
+                                                .bold()
+                                            Text(feature.details)
+                                                .font(.body)
+                                        }
+                                    }, icon: {
+                                        Image(systemName: feature.imageName)
+                                            .foregroundColor(.accentColor)
+                                    })
+                                    .font(.title)
+                                }
                             }
                         }
+                        Spacer()
                     }
                 }
             } else {
@@ -109,7 +101,7 @@ struct WhatsNew: View {
             }
             
             Spacer()
-            
+            #if os(iOS)
             Button(action: markSeen, label: {
                 Text("Get Started")
                     .foregroundColor(.white)
@@ -117,6 +109,9 @@ struct WhatsNew: View {
                     .background(Color.accentColor)
             })
             .cornerRadius(10)
+            #else
+            Button("Get Started", action: markSeen)
+            #endif
         }
         .padding()
         .navigationTitle("What's New")
@@ -128,6 +123,7 @@ struct WhatsNew: View {
     }
 }
 
+#if DEBUG
 struct WhatsNew_Previews: PreviewProvider {
     static let file = Bundle.main.path(forResource: "AppFeatures", ofType: "json")!
     static func getData() -> Data {
@@ -143,8 +139,10 @@ struct WhatsNew_Previews: PreviewProvider {
     static var previews: some View {
         //WhatsNew(unseenFeatures: features.features)
         WhatsNew()
+            .preferredColorScheme(.dark)
     }
 }
+#endif
 
 struct AppFeatures {
     let lastOpenedVersion: [String: Any] = UserDefaults.standard.dictionary(forKey: "lastOpenedVersion") ?? ["majorNumber": 0, "minorNumber": 0, "patchNumber": 0]
@@ -174,7 +172,7 @@ struct AppFeatures {
         let majorNumber = lastOpenedVersion["majorNumber"] as? Int ?? 1
         let minorNumber = lastOpenedVersion["minorNumber"] as? Int ?? 2
         let patchNumber = lastOpenedVersion["patchNumber"] as? Int ?? 0
-        print(majorNumber)
+        print([majorNumber,minorNumber,patchNumber])
         let currentVersionFeatures = AppVersionFeatures(majorNumber: majorNumber, minorNumber: minorNumber, patchNumber: patchNumber, features: [])
         
         return self.features.filter({ $0 > currentVersionFeatures})
@@ -243,3 +241,30 @@ struct AppFeature: Hashable, Codable {
     var imageName: String
 }
 
+
+struct VersionPicker: View {
+    @Binding var currentSelection: WhatsNew.VersionSelection
+    var body: some View {
+        Picker(selection: $currentSelection,
+               label:
+                VStack {
+                    #if os(iOS)
+                HStack {
+                    Text(currentSelection.string)
+                    Image(systemName: "chevron.down")
+                }
+                .padding(5)
+//                .background(Color(.systemGray5))
+                .cornerRadius(5)
+                    #endif
+                }
+        ) {
+            Text("Unseen Features").tag(WhatsNew.VersionSelection(type: .unseen, versionString: nil))
+            //                    Text("All Features").tag(VersionSelection(type: .all, versionString: nil))
+            ForEach(AppFeatures.all.features, id: \.self) { version in
+                Text(version.versionString).tag(WhatsNew.VersionSelection(type: .version, versionString: version.versionString))
+            }
+        }.animation(nil)
+        .pickerStyle(MenuPickerStyle())
+    }
+}

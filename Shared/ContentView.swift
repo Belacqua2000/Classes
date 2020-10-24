@@ -68,10 +68,24 @@ struct ContentView: View {
         #else
         SidebarNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
-            .sheet(isPresented: $firstLaunch) {
-                OnboardingView(isPresented: $firstLaunch)
-                    .frame(idealWidth: 600, idealHeight: 500)
-            }
+            .sheet(item: $currentModalView, onDismiss: {
+                currentModalView = nil
+            }, content: { item in
+                switch item {
+                case .importView:
+                    EmptyView()
+                case .onboardingView:
+                    OnboardingView()
+                        .frame(idealWidth: 600, idealHeight: 500)
+                case .whatsnewView:
+                    WhatsNew()
+                        .frame(idealWidth: 600, idealHeight: 500)
+                }
+            })
+            .onAppear(perform: checkWhatsNew)
+            .onReceive(nc.publisher(for: .showWhatsNew), perform: { _ in
+                currentModalView = .whatsnewView
+            })
             .onReceive(nc.publisher(for: .importLessons), perform: { _ in
                 importerPresented = true
             })
@@ -84,9 +98,11 @@ struct ContentView: View {
     
     private func checkWhatsNew() {
         if firstLaunch {
+            // if the first launch, show onboarding.
             firstLaunch = false
             currentModalView = .onboardingView
             modalViewShown = true
+            // set the last opened version to the current version, so that new users don't see the what's new screen
             AppFeatures.all.setLastOpenedVersion()
             return
         }

@@ -33,23 +33,28 @@
     "features": [
       {
         "title": "Export and Import Lessons",
-        "details": "Export lessons",
-        "imageName": "globe"
+        "details": "Export lessons, learning outcomes, and resources as a .classesdoc file.  Share with others or create a backup from settings",
+        "imageName": "square.and.arrow.up.fill"
       },
       {
-        "title": "Grouped Learning Outcomes",
-        "details": "In the summary view, learning outcomes are now grouped by lesson",
-        "imageName": "list.number"
+        "title": "Batch Edit Lessons",
+        "details": "New action buttons for applying actions such as delete and share to multiple lessons at once",
+        "imageName": "wrench.and.screwdriver.fill"
       },
       {
-        "title": "iPad Workflow Improvements",
-        "details": "On iPad, you will no longer see a blank screen when opening, allowing you to get to work even quicker!",
-        "imageName": "ipad.landscape"
-      },
-      {
-        "title": "Smaller Editing Buttons",
-        "details": "The new buttons for editing were overwhelmingly big on smaller devices.",
+        "title": "Scroll to Next Lesson",
+        "details": "A new button allows you to quickly jump to your next lesson in the list!",
         "imageName": "calendar.circle.fill"
+      },
+      {
+        "title": "New Icons for PBL and CBL",
+        "details": "Changed the icons of Problem Based Learning and Case Based Learning lessons to make them less similar",
+        "imageName": "doc.richtext.fill"
+      },
+      {
+        "title": "New Color",
+        "details": "Changed the blue background color to make it look less washed out",
+        "imageName": "paintpalette.fill"
       }
     ]
   }

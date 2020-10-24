@@ -47,6 +47,7 @@ struct AppCommands: Commands {
         }
     
         CommandGroup(replacing: .help) {
+            Button("What's New", action: whatsNew)
             Button("Launch Website", action: {
                 openURL.callAsFunction(URL(string: "https://nickbaughanapps.wordpress.com")!)
             })
@@ -114,6 +115,11 @@ struct AppCommands: Commands {
     
     func detailViewChanged(_ bool: Bool) {
         detailViewShowing = bool
+    }
+    
+    
+    func whatsNew() {
+        nc.post(Notification(name: .showWhatsNew))
     }
 }
 
