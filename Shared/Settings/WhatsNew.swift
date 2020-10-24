@@ -119,7 +119,7 @@ struct WhatsNew: View {
             Button("Get Started", action: markSeen)
             #endif
         }
-//        .padding()
+        .padding(.vertical)
         .navigationTitle("What's New")
     }
     
@@ -141,12 +141,13 @@ struct WhatsNew_Previews: PreviewProvider {
         }
     }
     static var features = AppFeatures.debug(data: String(data: getData(), encoding: .utf8)!)
-    
     static var previews: some View {
         //WhatsNew(unseenFeatures: features.features)
+        Text("Root View")
+            .sheet(isPresented: .constant(true)) {
         WhatsNew()
-            .preferredColorScheme(.dark)
-            
+            .preferredColorScheme(.light)
+            }
             
     }
 }
