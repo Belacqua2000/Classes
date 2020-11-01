@@ -37,13 +37,7 @@ struct AppCommands: Commands {
                 .disabled(!detailViewShowing)
             Button("Add Resource", action: addResource)
                 .keyboardShortcut("R", modifiers: .command)
-                .disabled(!detailViewShowing)
-                .onReceive(nc.publisher(for: .detailShowing), perform: { _ in
-                    detailViewChanged(true)
-                })
-                .onReceive(nc.publisher(for: .detailNotShowing), perform: { _ in
-                    detailViewChanged(false)
-                })
+                .disabled(!appViewState.detailViewShowing)
         }
     
         CommandGroup(replacing: .help) {

@@ -23,6 +23,8 @@ struct DetailView: View {
     @State private var isInValidURLAlertShown: Bool = false
     
     let nc = NotificationCenter.default
+    
+    static let userActivityType = "com.baughan.classes.detailview"
     //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = true
@@ -94,11 +96,11 @@ struct DetailView: View {
                                         TagIcon(tag: tag)
                                     }
                                 }
-                                .padding(.horizontal, 2)
+                                .cornerRadius(20)
                             }
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20).stroke(Color.accentColor)
-                            )
+                            .cornerRadius(20)
+                            .overlay(RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.accentColor, lineWidth: 3))
                             .padding(.bottom)
                         }
                         if lesson.notes != "" && lesson.notes != nil {

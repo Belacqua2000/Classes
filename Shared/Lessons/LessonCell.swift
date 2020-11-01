@@ -13,12 +13,14 @@ struct LessonCell: View {
         return lesson.tag?.allObjects as? [Tag] ?? []
     }
     
-    var relativeText: Text? {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) && lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
-            return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
-        }
-        return nil
+    let calendar = Calendar.current
+    
+    var dateText: String {
+        return DateFormatter.localizedString(from: lesson.date ?? Date(), dateStyle: .short, timeStyle: .short)
+    }
+    
+    var relativeText: Text {
+        return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
     }
     
     var body: some View {
@@ -28,10 +30,29 @@ struct LessonCell: View {
                     title: { VStack(alignment: .leading) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
-                        Text("\(DateFormatter.localizedString(from: lesson.date ?? Date(), dateStyle: .short, timeStyle: .short)) \(relativeText ?? Text(""))")
-                            .font(.subheadline)
-                        Text(lesson.teacher ?? "No Teacher")
-                            .font(.footnote)
+                        
+                        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) && lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
+                            Text("\(dateText) \(relativeText)")
+                                .font(.subheadline)
+                                .foregroundColor(lesson.date ?? Date() > Date() ? .blue : .primary)
+                        } else {
+                            Text(dateText)
+                                .font(.subheadline)
+                                .foregroundColor(lesson.date ?? Date() > Date() ? .blue : .primary)
+                        }
+                        
+                        
+                        if !(lesson.teacher?.isEmpty ?? true) {
+                            Text(lesson.teacher ?? "No Teacher")
+                                .font(.footnote)
+                        }
+                        
+                        /*HStack {
+                         ForEach(lesson.tag!.allObjects as! [Tag]) { tag in
+                         Image(systemName: "tag.circle.fill")
+                         .foregroundColor(tag.swiftUIColor)
+                         }
+                         }*/
                     } },
                     icon: {
                         Image(systemName: Lesson.lessonIcon(type: lesson.type))
@@ -44,7 +65,7 @@ struct LessonCell: View {
                 if lesson.watched {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.accentColor)
-                        //.renderingMode(.original)
+                    //.renderingMode(.original)
                 }
             }
         }

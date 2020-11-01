@@ -10,29 +10,43 @@ import SwiftUI
 struct TagIcon: View {
     var tag: Tag
     var body: some View {
-        let rectShape: RoundedRectangle = RoundedRectangle(cornerRadius: 20)
-        HStack {
-            Image(systemName: "tag")
-                .offset(x: 2)
-            Text(tag.name ?? "Tag")
-                .offset(x: -2)
+        ZStack {
+            ContainerRelativeShape()
+                .fill(tag.swiftUIColor!)
+            HStack {
+                Image(systemName: "tag")
+                    .offset(x: 2)
+                Text(tag.name ?? "Tag")
+                    .offset(x: -2)
+            }
+//            .foregroundColor(textColor(bgColor: tag.swiftUIColor!))
+            .padding(3.0)
+            .font(.footnote)
         }
-        .padding(3.0)
-        .background(
-            rectShape.fill(tag.swiftUIColor!.opacity(0.8))
-        )
-        .overlay(
-            rectShape
-                .stroke(tag.swiftUIColor!)
-        )
-        .font(.footnote)
+    }
+    
+    private func textColor(bgColor: Color) -> Color {
+        
+        var w: CGFloat = 0.0
+        var a: CGFloat = 0.0
+        
+        #if os(iOS)
+        UIColor(bgColor).getWhite(&w, alpha: &a)
+        #else
+        NSColor(bgColor).getWhite(&w, alpha: &a)
+        #endif
+        
+        return w < 0.5 ? .white : .black
     }
 }
 
-/*
+
 struct TagIcon_Previews: PreviewProvider {
     static var previews: some View {
-        TagIcon()
+        let context = PersistenceController.preview.container.viewContext
+        let tag = Tag(context: context)
+        tag.name = "Tag Name"
+        return TagIcon(tag: tag).environment(\.managedObjectContext, context)
     }
 }
-*/
+

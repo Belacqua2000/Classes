@@ -175,7 +175,7 @@ struct AddLessonForm: View {
             lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags, notes: notes)
         }
         presentationMode.wrappedValue.dismiss()
-        isPresented = false
+//        isPresented = false
     }
 }
 

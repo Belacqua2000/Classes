@@ -206,7 +206,12 @@ struct AppFeatures {
     
     init() {
         print("here")
-        if let path = Bundle.main.path(forResource: "AppFeatures", ofType: "json") {
+        #if os(iOS)
+        let filePathString = "AppFeaturesiOS"
+        #else
+        let filePathString = "AppFeaturesMac"
+        #endif
+        if let path = Bundle.main.path(forResource: filePathString, ofType: "json") {
             let decoder = JSONDecoder()
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)

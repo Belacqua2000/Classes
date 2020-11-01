@@ -44,7 +44,6 @@ struct SidebarNavigation: View {
     @FetchRequest(sortDescriptors: [])
     private var fetchedLessons: FetchedResults<Lesson>
    
-    
     @State var selection: SidebarItem? = SidebarItem(sidebarType: .all)
     
     var sidebar: some View {

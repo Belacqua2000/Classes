@@ -26,7 +26,7 @@ struct ILOSection: View {
     
     var listHeight: CGFloat {
         #if os(macOS)
-        return 100
+        return 200
         #else
         return 200
         #endif

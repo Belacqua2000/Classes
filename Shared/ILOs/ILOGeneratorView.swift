@@ -17,7 +17,8 @@ struct ILOGeneratorView: View {
     @EnvironmentObject var environmentHelpers: EnvironmentHelpers
     
     @Binding var isPresented: Bool
-    @State var ilos: [ILO]
+    
+    var ilos: [ILO]
     @State var currentILOIndex = 0
     
     var isFirstILO: Bool {

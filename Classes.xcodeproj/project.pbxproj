@@ -25,10 +25,11 @@
 		1712122C2503708000EE7423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171211FC2503708000EE7423 /* Assets.xcassets */; };
 		17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
-		1724C46A254250DE00F56C93 /* AppFeatures.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeatures.json */; };
-		1724C46B254250DE00F56C93 /* AppFeatures.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeatures.json */; };
+		1724C46A254250DE00F56C93 /* AppFeaturesiOS.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeaturesiOS.json */; };
 		172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
 		172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
+		17391A592545DD78006A6CD9 /* ILOFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17391A582545DD78006A6CD9 /* ILOFilterView.swift */; };
+		17391A5A2545DD78006A6CD9 /* ILOFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17391A582545DD78006A6CD9 /* ILOFilterView.swift */; };
 		173C769C25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		173C769D25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		1751BB222533480D00AA78D6 /* LessonsNaviOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB212533480D00AA78D6 /* LessonsNaviOS.swift */; };
@@ -53,6 +54,7 @@
 		176E09BE2528781600E1AA26 /* ContactSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09BC2528781600E1AA26 /* ContactSettingsView.swift */; };
 		176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
 		176E09C62528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
+		17739A07254647F500156067 /* AppFeaturesMac.json in Resources */ = {isa = PBXBuildFile; fileRef = 17739A05254647F500156067 /* AppFeaturesMac.json */; };
 		1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
 		1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
 		1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECB22527DEF600957AE3 /* Notifications.swift */; };
@@ -171,10 +173,11 @@
 		171212202503708000EE7423 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		171212222503708000EE7423 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17207ED425208B3E003889C2 /* AddILOMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddILOMenu.swift; sourceTree = "<group>"; };
-		1724C469254250DE00F56C93 /* AppFeatures.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeatures.json; sourceTree = "<group>"; };
+		1724C469254250DE00F56C93 /* AppFeaturesiOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeaturesiOS.json; sourceTree = "<group>"; };
 		172FFFF525420B3500CA15B5 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
 		173368E42528DA42005D0932 /* ClassesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassesWidgetExtension.entitlements; sourceTree = "<group>"; };
+		17391A582545DD78006A6CD9 /* ILOFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOFilterView.swift; sourceTree = "<group>"; };
 		173C769B25162148003FFA6A /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		1751BB1B25325F3500AA78D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1751BB212533480D00AA78D6 /* LessonsNaviOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsNaviOS.swift; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		176E09B52528772100E1AA26 /* SettingsViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewMac.swift; sourceTree = "<group>"; };
 		176E09BC2528781600E1AA26 /* ContactSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSettingsView.swift; sourceTree = "<group>"; };
 		176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		17739A05254647F500156067 /* AppFeaturesMac.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeaturesMac.json; sourceTree = "<group>"; };
 		1775ECA52527D94200957AE3 /* ContentViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewMac.swift; sourceTree = "<group>"; };
 		1775ECB22527DEF600957AE3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		177909C1250A6D9200C14F5E /* EditILOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditILOView.swift; sourceTree = "<group>"; };
@@ -456,6 +460,7 @@
 			children = (
 				177909C1250A6D9200C14F5E /* EditILOView.swift */,
 				17ABF34F2507E789000D4048 /* ILOsView.swift */,
+				17391A582545DD78006A6CD9 /* ILOFilterView.swift */,
 				1781EF23251F7F3A00BA91BB /* AllILOsList.swift */,
 				17D551D42514DDF900A502EA /* ILOGeneratorView.swift */,
 			);
@@ -504,7 +509,8 @@
 				176E09BC2528781600E1AA26 /* ContactSettingsView.swift */,
 				176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */,
 				172FFFF525420B3500CA15B5 /* WhatsNew.swift */,
-				1724C469254250DE00F56C93 /* AppFeatures.json */,
+				1724C469254250DE00F56C93 /* AppFeaturesiOS.json */,
+				17739A05254647F500156067 /* AppFeaturesMac.json */,
 				173C769B25162148003FFA6A /* OnboardingView.swift */,
 			);
 			path = Settings;
@@ -667,7 +673,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1724C46A254250DE00F56C93 /* AppFeatures.json in Resources */,
+				1724C46A254250DE00F56C93 /* AppFeaturesiOS.json in Resources */,
 				17B36A4D2544CEEE00307C00 /* Localizable.strings in Resources */,
 				1712122B2503708000EE7423 /* Assets.xcassets in Resources */,
 			);
@@ -678,7 +684,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1712122C2503708000EE7423 /* Assets.xcassets in Resources */,
-				1724C46B254250DE00F56C93 /* AppFeatures.json in Resources */,
+				17739A07254647F500156067 /* AppFeaturesMac.json in Resources */,
 				17D5468125325D3300046654 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,6 +729,7 @@
 				17937D672531B49E001C2540 /* CustomTypes.swift in Sources */,
 				177B2D162528A51C00412C55 /* ModelJSON.swift in Sources */,
 				17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */,
+				17391A592545DD78006A6CD9 /* ILOFilterView.swift in Sources */,
 				176CC627250CFD3C00FB28B6 /* Resource.swift in Sources */,
 				17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
 				1781EF16251F6C3000BA91BB /* SampleData.swift in Sources */,
@@ -793,6 +800,7 @@
 				17BD0E85251D3DC900BCC40D /* LessonsFilter.swift in Sources */,
 				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
+				17391A5A2545DD78006A6CD9 /* ILOFilterView.swift in Sources */,
 				17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */,
 				17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */,
