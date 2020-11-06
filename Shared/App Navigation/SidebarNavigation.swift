@@ -12,6 +12,7 @@ struct SidebarNavigation: View {
     
     //Environment
     @Environment(\.managedObjectContext) var viewContext
+    @EnvironmentObject var appViewState: AppViewState
     
     //Sidebar struct
     struct SidebarItem: Hashable {
@@ -126,6 +127,14 @@ struct SidebarNavigation: View {
     var body: some View {
         NavigationView {
             sidebar
+                .onChange(of: selection, perform: { value in
+                    switch selection?.sidebarType {
+                    case .summary: appViewState.currentTab = .summary
+                    case .all: appViewState.currentTab = .all
+                    case .ilo: appViewState.currentTab = .ilo
+                    default: break
+                    }
+                })
                 .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
                     selection = SidebarItem(sidebarType: .summary)
                 })

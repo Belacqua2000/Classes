@@ -24,6 +24,13 @@ struct ILOSection: View {
         return ilos.filter { $0.lesson == lesson }
     }
     
+    var completedILOs: Double {
+        let iloCount = Double(filteredILOs.count)
+        let completedILOs = Double(filteredILOs.filter({$0.written}).count)
+        let value = completedILOs / iloCount
+        return iloCount == 0 ? 1 : value
+    }
+    
     var listHeight: CGFloat {
         #if os(macOS)
         return 200
@@ -34,7 +41,10 @@ struct ILOSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Label("Learning Outcomes", systemImage: "list.number")
+                    .font(.headline)
             if filteredILOs.count > 0 {
+                ILOsProgressView(completedILOs: completedILOs)
                 #if !os(macOS)
                 EditButton()
                 #endif
@@ -68,7 +78,7 @@ struct ILOSection: View {
                     .onDelete(perform: deleteILOs)
                     .onMove(perform: moveILOs)
                 }
-                .cornerRadius(10)
+                .cornerRadius(8)
                 .frame(height: listHeight)
             } else {
                 HStack {
@@ -101,7 +111,6 @@ struct ILOSection: View {
                 EditILOView(currentViewState: $viewStates.editILOViewState, isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
                 #endif
             })
-            .padding(.vertical)
         }
     }
     

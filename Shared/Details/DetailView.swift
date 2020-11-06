@@ -85,48 +85,20 @@ struct DetailView: View {
     var body: some View {
             ScrollView(.vertical) {
                 HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 5) {
+                    VStack(alignment: .leading, spacing: 10) {
                         LessonDetails(lesson: lesson)
                         if !(tags?.isEmpty ?? true) {
-                            Label("Tags", systemImage: "tag")
-                                .font(.headline)
-                            ScrollView(.horizontal) {
-                                HStack {
-                                    ForEach(tags ?? []) { tag in
-                                        TagIcon(tag: tag)
-                                    }
-                                }
-                                .cornerRadius(20)
-                            }
-                            .cornerRadius(20)
-                            .overlay(RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.accentColor, lineWidth: 3))
-                            .padding(.bottom)
+                            DetailViewTags(tags: tags)
                         }
                         if lesson.notes != "" && lesson.notes != nil {
-                            Label("Notes", systemImage: "text.justifyleft")
-                                .font(.headline)
-                            Text(lesson.notes ?? "")
-                                .multilineTextAlignment(.leading)
-                                .padding(.bottom)
-                        }
-                        if filteredILOs.count != 0 {
-                            ILOsProgressView(completedILOs: completedILOs)
+                            DetailNotesSection(text: lesson.notes ?? "")
                         }
                         
-                        DisclosureGroup(isExpanded: $iloSectionExpanded, content: {
-                            ILOSection(lesson: lesson)
-                        }, label: {
-                            Label("Learning Outcomes", systemImage: "list.number")
-                                .font(.headline)
-                        })
+                        ILOSection(lesson: lesson)
+                            .modifier(DetailBlock())
                         
-                        DisclosureGroup(isExpanded: $resourceSectionExpanded, content: {
-                            ResourceSection(resources: resources, lesson: lesson)
-                        }, label: {
-                            Label("Resources", systemImage: "globe")
-                                .font(.headline)
-                        })
+                        ResourceSection(resources: resources, lesson: lesson)
+                            .modifier(DetailBlock())
                         #if os(iOS)
                         EmptyView()
                             .sheet(isPresented: $viewStates.addLessonIsPresented,
@@ -140,7 +112,7 @@ struct DetailView: View {
                             }
                         #endif
                     }
-                    .padding(.horizontal)
+                    .padding(.all)
                 }
             }
             .onAppear(perform: {
@@ -157,6 +129,7 @@ struct DetailView: View {
                 #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {
                     if horizontalSizeClass == .compact {
+                        
                         Menu(content: {
                             ToggleWatchedButton(lessons: [lesson])
                             DeleteLessonButton(lesson: lesson)
@@ -171,7 +144,8 @@ struct DetailView: View {
                 }
                 #endif
             }
-            .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
+            .background(LinearGradient(gradient: Gradient(colors: [.init("SecondaryColorLight"), .init("SecondaryColor")]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea([.bottom, .horizontal]))
+//            .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
     }
     
     func createILO(index: Int) {
@@ -211,6 +185,7 @@ struct ILOsProgressView: View {
     var body: some View {
         HStack {
             Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of learning outcomes written")
+                .fixedSize(horizontal: false, vertical: true)
             ProgressView(value: completedILOs)
                 .progressViewStyle(LinearProgressViewStyle())
         }
@@ -221,4 +196,43 @@ struct ILOsProgressView: View {
         formatter.numberStyle = .percent
         return formatter
     }()
+}
+
+struct DetailViewTags: View {
+    var tags: [Tag]?
+    var body: some View {
+        VStack(alignment: .leading) {
+            Label("Tags", systemImage: "tag")
+                .font(.headline)
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(tags ?? []) { tag in
+                        TagIcon(tag: tag)
+                    }
+                }
+                .cornerRadius(20)
+            }
+            .cornerRadius(20)
+            .overlay(RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.accentColor, lineWidth: 3))
+        }
+        .modifier(DetailBlock())
+    }
+}
+
+struct DetailNotesSection: View {
+    var text: String
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+            Label("Notes", systemImage: "text.justifyleft")
+                .font(.headline)
+            Text(text)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+        }.modifier(DetailBlock())
+    }
 }

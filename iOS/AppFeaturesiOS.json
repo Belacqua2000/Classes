@@ -74,5 +74,22 @@
         "imageName": "rectangle.and.pencil.and.ellipsis"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 3,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "Now Available on Mac!",
+        "details": "Classes is now available on Mac.  It features a new interface, designed to feel right in-place with macOS Big Sur.  It supports advanced Mac features such as multiple windows, keyboard shortcuts and more, allowing you to organise lessons with ease.\nAll of your lessons will automatically sync between devices via iCloud.\nDownload for free on the Mac App Store.",
+        "imageName": "macwindow"
+      },
+      {
+        "title": "New Lesson Details and Summary Design",
+        "details": "Lesson details now appear in a modern, colourful design.  Improvements in contrast, spacing, and depth make it much easier to view and interact with your content.  This has been brought over to Summary view as well.",
+        "imageName": "wand.and.stars"
+      }
+    ]
   }
 ]

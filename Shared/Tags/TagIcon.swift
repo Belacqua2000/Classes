@@ -19,7 +19,7 @@ struct TagIcon: View {
                 Text(tag.name ?? "Tag")
                     .offset(x: -2)
             }
-//            .foregroundColor(textColor(bgColor: tag.swiftUIColor!))
+            .foregroundColor(textColor(bgColor: tag.swiftUIColor!))
             .padding(3.0)
             .font(.footnote)
         }
@@ -33,7 +33,14 @@ struct TagIcon: View {
         #if os(iOS)
         UIColor(bgColor).getWhite(&w, alpha: &a)
         #else
-        NSColor(bgColor).getWhite(&w, alpha: &a)
+        var r: CGFloat = 0.0
+        var g: CGFloat = 0.0
+        var b: CGFloat = 0.0
+        
+        NSColor(bgColor).getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        w = ((r * 299) + (g * 587) + (b * 114)) / 1000
+//        w = (r+g+b)/3
         #endif
         
         return w < 0.5 ? .white : .black

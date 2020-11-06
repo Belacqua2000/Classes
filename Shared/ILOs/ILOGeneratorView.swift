@@ -90,13 +90,6 @@ struct ILOGeneratorView: View {
                 
                 nextButton
             }
-            ToolbarItem(placement: .cancellationAction) {
-                Button(action: {
-                    environmentHelpers.iloRandomiserShown = false
-                }, label: {
-                    Text("Close")
-                })
-            }
             #endif
         }
     }

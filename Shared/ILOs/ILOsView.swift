@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ILOsView: View {
     
+    @EnvironmentObject var appViewState: AppViewState
+    
     private enum ViewStates: String, CaseIterable, Identifiable {
         var id: String { return rawValue }
         case list = "Browse"
@@ -130,6 +132,9 @@ struct ILOsView: View {
                 Text("No Learning Outcomes.  Add outcomes from the lesson info page.")
             }
         }
+        .onAppear(perform: {
+            appViewState.currentTab = .all
+        })
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Picker("Current View", selection: $currentILOView) {

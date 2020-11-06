@@ -44,8 +44,6 @@
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
-			<key>CFBundleIdentifier</key>
-			<string></string>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.json</string>
@@ -57,7 +55,12 @@
 			<key>UTTypeIdentifier</key>
 			<string>com.baughan.classes.lessons</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>classesdoc</string>
+				</array>
+			</dict>
 		</dict>
 	</array>
 </dict>

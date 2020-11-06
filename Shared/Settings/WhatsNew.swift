@@ -116,7 +116,7 @@ struct WhatsNew: View {
             })
             .cornerRadius(10)
             #else
-            Button("Get Started", action: markSeen)
+            Button("Get Started", action: markSeen).keyboardShortcut(.defaultAction)
             #endif
         }
         .padding(.vertical)

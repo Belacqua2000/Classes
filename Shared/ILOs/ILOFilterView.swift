@@ -217,6 +217,7 @@ struct FilterILOPill: View {
             title: { Text(text) },
             icon: { Image(systemName: image) }
         )
+        .foregroundColor(.primary)
         .padding(mac ? 5 : 10)
         .background(selected ? color : .gray)
         .cornerRadius(5)

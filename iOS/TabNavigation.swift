@@ -73,7 +73,7 @@ struct TabNavigation: View {
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
-                .navigationTitle("Lesson Types")
+                .navigationTitle("Browse")
                 .toolbar {
                     #if !os(macOS)
                     ToolbarItem(placement: .primaryAction) {

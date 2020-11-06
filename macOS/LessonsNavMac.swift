@@ -20,15 +20,15 @@ struct LessonsNavMac: View {
         GeometryReader { gr in
             HSplitView {
                 LessonsListContent(selection: $selectedLesson, filter: $filter)
-                    .frame(idealWidth: gr.size.width / 2)
-                    
+                    .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width * 0.3)
+                VStack {
                 if selectedLesson.count == 1 {
                     DetailView(lesson: selectedLesson.first!)
-                        .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     Text(selectedLesson.isEmpty ? "Select a lesson" : "\(selectedLesson.count) lessons selected")
-                        .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: gr.size.width / 2, maxHeight: .infinity)
                 }
+                }
+                .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width * 0.6, maxWidth: .infinity, maxHeight: .infinity)
             }
             .sheet(item: $viewStates.lessonToChange, onDismiss: {
                 viewStates.lessonToChange = nil
@@ -109,9 +109,15 @@ struct LessonsNavMac: View {
                 }
             }
             .onReceive(nc.publisher(for: .tagAllocateViewShown), perform: { _ in
-                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=code@*/ /*@END_MENU_TOKEN@*/
+                viewStates.tagPopoverPresented = true
             })
         }
+        .fileExporter(
+            isPresented: $viewStates.shareSheetShown,
+            document: LessonFile(url: Lesson.export(lessons: Array(selectedLesson))?.absoluteString ?? ""), contentType: .classesFormat,
+            onCompletion: {_ in 
+                
+            })
     }
     
     func addLesson() {

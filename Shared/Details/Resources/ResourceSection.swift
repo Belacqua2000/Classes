@@ -35,6 +35,8 @@ struct ResourceSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Label("Resources", systemImage: "globe")
+                .font(.headline)
             if filteredResources.count > 0 {
                 #if !os(macOS)
                 EditButton()
@@ -73,7 +75,7 @@ struct ResourceSection: View {
                         Alert(title: Text("Invalid URL"), message: Text("Unable to open the URL.  Please check it is correct."), dismissButton: .cancel(Text("Dismiss")))
                     }
                 }
-                .cornerRadius(10)
+                .cornerRadius(8)
                 .frame(height: listHeight)
             } else {
                 HStack {
@@ -90,7 +92,6 @@ struct ResourceSection: View {
             .onReceive(nc.publisher(for: .addResource), perform: { _ in
                 viewStates.addResourcePresented = true
             })
-            .padding(.vertical)
             .sheet(isPresented: $viewStates.addResourcePresented, onDismiss: {
                 selectedResource = nil
             },content: {

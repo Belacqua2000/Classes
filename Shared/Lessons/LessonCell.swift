@@ -23,22 +23,31 @@ struct LessonCell: View {
         return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
     }
     
+    let gridItem: [GridItem] = [GridItem(.adaptive(minimum: 15))]
+    
     var body: some View {
-        VStack(alignment: .leading) {
             HStack {
                 Label(
-                    title: { VStack(alignment: .leading) {
+                    title: { VStack(alignment: .leading, spacing: 0) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
                         
-                        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) && lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
-                            Text("\(dateText) \(relativeText)")
-                                .font(.subheadline)
-                                .foregroundColor(lesson.date ?? Date() > Date() ? .blue : .primary)
+                        if lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
+                            
+                            if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) {
+                                Text("\(dateText) \(relativeText)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.blue)
+                            } else {
+                                Text(dateText)
+                                    .font(.subheadline)
+                                    .foregroundColor(.blue)
+                            }
+                            
                         } else {
                             Text(dateText)
                                 .font(.subheadline)
-                                .foregroundColor(lesson.date ?? Date() > Date() ? .blue : .primary)
+                                .foregroundColor(.primary)
                         }
                         
                         
@@ -47,12 +56,12 @@ struct LessonCell: View {
                                 .font(.footnote)
                         }
                         
-                        /*HStack {
-                         ForEach(lesson.tag!.allObjects as! [Tag]) { tag in
-                         Image(systemName: "tag.circle.fill")
-                         .foregroundColor(tag.swiftUIColor)
-                         }
-                         }*/
+                        LazyVGrid(columns: gridItem) {
+                            ForEach((lesson.tag?.allObjects as? [Tag] ?? []).sorted(by: {$0.name ?? "" < $1.name ?? ""})) { tag in
+                                Image(systemName: "tag.circle.fill")
+                                    .foregroundColor(tag.swiftUIColor)
+                            }
+                        }
                     } },
                     icon: {
                         Image(systemName: Lesson.lessonIcon(type: lesson.type))
@@ -68,7 +77,6 @@ struct LessonCell: View {
                     //.renderingMode(.original)
                 }
             }
-        }
     }
 }
 /*
