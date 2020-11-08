@@ -89,6 +89,11 @@
         "title": "New Lesson Details and Summary Design",
         "details": "Lesson details now appear in a modern, colourful design.  Improvements in contrast, spacing, and depth make it much easier to view and interact with your content.  This has been brought over to Summary view as well.",
         "imageName": "wand.and.stars"
+      },
+      {
+        "title": "View Tags in List",
+        "details": "When browsing lessons in a list, small icons will show its tags.  This can help you find specific lessons at a glance, without opening and closing each one indiviually.",
+        "imageName": "wand.and.stars"
       }
     ]
   }

@@ -140,14 +140,14 @@ struct AddLessonForm: View {
             }
             #endif
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
+        .toolbar(id: "AddLessonViewToolbar") {
+            ToolbarItem(id: "AddLessonToolbarSaveButton", placement: .confirmationAction) {
                 Button(action: createLesson, label: {
                     Text("Save")
                 })
                 .disabled(title == "")
             }
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(id: "AddLessonToolbarDismissButton", placement: .cancellationAction) {
                 Button(action: {presentationMode.wrappedValue.dismiss()}, label: {
                     Text("Cancel")
                 })

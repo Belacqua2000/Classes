@@ -23,106 +23,129 @@ struct ILOFilterView: View {
     
     var allLessonTypes = Lesson.LessonType.allCases
     
-    var unselectedLessonTypes: [Lesson.LessonType] {
-        return allLessonTypes.filter({!includedLessonTypes.contains($0)})
-    }
-    
-    var unselectedTags: [Tag] {
-        return allTags.filter({!includedTags.contains($0)})
-    }
-    
     @Binding var includedTags: [Tag]
     @Binding var includedLessonTypes: [Lesson.LessonType]
     
     @Binding var excludedTags: [Tag]
     @Binding var excludedLessonTypes: [Lesson.LessonType]
     
-    @Binding var includedFilterActive: Bool
-    @Binding var excludedFilterActive: Bool
+    @Binding var includedLessonTypeFilterActive: Bool
+    @Binding var excludedLessonTypeFilterActive: Bool
+    
+    @Binding var includedTagFilterActive: Bool
+    @Binding var excludedTagFilterActive: Bool
     
     var body: some View {
-        GeometryReader { gr in
-            VStack {
-                VStack(alignment: .leading) {
-                    Toggle(isOn: $includedFilterActive, label: {
-                        Text("Include Only These Tags:")
-                            .font(.title)
-                            .bold()
-                    })
-                    .toggleStyle(SwitchToggleStyle())
-                    ScrollView(.horizontal) {
-                        LazyHGrid(rows: gridItem, content: {
-                            ForEach(allLessonTypes) { type in
-                                Button(action: {
-                                    selectedLessonTypeToInclude(type)
-                                }, label: {
-                                    FilterILOPill(text: type.rawValue, image: Lesson.lessonIcon(type: type.rawValue), color: .accentColor, selected: includedLessonTypes.contains(type))
-                                })
-//                                .scaleEffect(includedLessonTypes.contains(type) ? 2 : 1)
-                                .buttonStyle(BorderlessButtonStyle())
-                                .disabled(!includedFilterActive)
-                            }
-                            ForEach(allTags) { tag in
-                                let tag = tag as Tag
-                                Button(action: {
-                                    selectedTagToInclude(tag)
-                                }, label: {
-                                    FilterILOPill(text: tag.name!, image: "tag", color: tag.swiftUIColor!, selected: includedTags.contains(tag))
-                                })
-//                                .scaleEffect(includedTags.contains(tag) ? 2 : 1)
-                                .buttonStyle(BorderlessButtonStyle())
-                                .disabled(!includedFilterActive)
-                            }
-                        })
-                    }
-                }.frame(height: gr.size.height * 0.5)
-                
-                Divider()
-                
-                VStack(alignment: .leading) {
-                    Toggle(isOn: $excludedFilterActive, label: {
-                        Text("Exclude These Tags:")
-                            .font(.title)
-                            .bold()
-                    })
-                    .toggleStyle(SwitchToggleStyle())
-                    ScrollView(.horizontal) {
-                        LazyHGrid(rows: gridItem, content: {
-                            ForEach(allLessonTypes) { type in
-                                Button(action: {
-                                    selectedLessonTypeToExclude(type)
-                                }, label: {
-                                    FilterILOPill(text: type.rawValue, image: Lesson.lessonIcon(type: type.rawValue), color: .accentColor, selected: excludedLessonTypes.contains(type))
-                                })
-//                                .scaleEffect(excludedLessonTypes.contains(type) ? 2 : 1)
-                                .buttonStyle(BorderlessButtonStyle())
-                                .disabled(!excludedFilterActive)
-                            }
-                            ForEach(allTags) { tag in
-                                let tag = tag as Tag
-                                Button(action: {
-                                    selectedTagToExclude(tag)
-                                }, label: {
-                                    FilterILOPill(text: tag.name!, image: "tag", color: tag.swiftUIColor!, selected: excludedTags.contains(tag))
-                                })
-//                                .scaleEffect(excludedTags.contains(tag) ? 2 : 1)
-                                .buttonStyle(BorderlessButtonStyle())
-                                .disabled(!excludedFilterActive)
-                            }
-                        })
-                    }
-                }.frame(height: gr.size.height * 0.5)
-                
-            }
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done", action: {
-                        isPresented = false
+        ScrollView(.vertical) {
+            
+            // Included Lesson Types
+            VStack(alignment: .leading) {
+                Toggle(isOn: $includedLessonTypeFilterActive, label: {
+                    Text("Include Only These Lesson Types:")
+                        .font(.title)
+                        .bold()
+                })
+                .toggleStyle(SwitchToggleStyle())
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: gridItem, content: {
+                        ForEach(allLessonTypes) { type in
+                            Button(action: {
+                                selectedLessonTypeToInclude(type)
+                            }, label: {
+                                FilterILOPill(text: type.rawValue, image: Lesson.lessonIcon(type: type.rawValue), color: .accentColor, selected: includedLessonTypes.contains(type))
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .disabled(!includedLessonTypeFilterActive)
+                        }
                     })
                 }
             }
-            .navigationTitle("Learning Outcome Filter")
+            
+            VStack(alignment: .leading) {
+                Toggle(isOn: $includedTagFilterActive, label: {
+                    Text("Include Only These Tags:")
+                        .font(.title)
+                        .bold()
+                })
+                .toggleStyle(SwitchToggleStyle())
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: gridItem, content: {
+                        ForEach(allTags) { tag in
+                            let tag = tag as Tag
+                            Button(action: {
+                                selectedTagToInclude(tag)
+                            }, label: {
+                                FilterILOPill(text: tag.name!, image: "tag", color: tag.swiftUIColor!, selected: includedTags.contains(tag))
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .disabled(!includedTagFilterActive)
+                        }
+                    })
+                }
+            }
+            
+            //Included Tags
+            
+            Divider()
+            
+            
+            //Excluded Lesson Types
+            VStack(alignment: .leading) {
+                Toggle(isOn: $excludedLessonTypeFilterActive, label: {
+                    Text("Exclude These Lesson Types:")
+                        .font(.title)
+                        .bold()
+                })
+                .toggleStyle(SwitchToggleStyle())
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: gridItem, content: {
+                        ForEach(allLessonTypes) { type in
+                            Button(action: {
+                                selectedLessonTypeToExclude(type)
+                            }, label: {
+                                FilterILOPill(text: type.rawValue, image: Lesson.lessonIcon(type: type.rawValue), color: .accentColor, selected: excludedLessonTypes.contains(type))
+                            })
+                            //                                .scaleEffect(excludedLessonTypes.contains(type) ? 2 : 1)
+                            .buttonStyle(BorderlessButtonStyle())
+                            .disabled(!excludedLessonTypeFilterActive)
+                        }
+                    })
+                }
+            }
+            
+            // Excluded Tags
+            VStack(alignment: .leading) {
+                Toggle(isOn: $excludedTagFilterActive, label: {
+                    Text("Exclude These Tags:")
+                        .font(.title)
+                        .bold()
+                })
+                .toggleStyle(SwitchToggleStyle())
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: gridItem, content: {
+                        ForEach(allTags) { tag in
+                            let tag = tag as Tag
+                            Button(action: {
+                                selectedTagToExclude(tag)
+                            }, label: {
+                                FilterILOPill(text: tag.name!, image: "tag", color: tag.swiftUIColor!, selected: excludedTags.contains(tag))
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .disabled(!excludedTagFilterActive)
+                        }
+                    })
+                }
+            }
+            
         }
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done", action: {
+                    isPresented = false
+                })
+            }
+        }
+        .navigationTitle("Learning Outcome Filter")
     }
     
     private func selectedTagToInclude(_ tag: Tag) {
@@ -190,12 +213,12 @@ struct ILOFilterView_Previews: PreviewProvider {
     static var previews: some View {
         #if os(iOS)
         NavigationView {
-            ILOFilterView(isPresented: .constant(true), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedFilterActive: .constant(false), excludedFilterActive: .constant(false))
+            ILOFilterView(isPresented: .constant(true), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedLessonTypeFilterActive: .constant(false), excludedLessonTypeFilterActive: .constant(false), includedTagFilterActive: .constant(false), excludedTagFilterActive: .constant(false))
                 .padding()
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else
-        ILOFilterView(isPresented: .constant(true), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedFilterActive: .constant(false), excludedFilterActive: .constant(false))
+        ILOFilterView(isPresented: .constant(true), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedLessonTypeFilterActive: .constant(false), excludedLessonTypeFilterActive: .constant(false), includedTagFilterActive: .constant(false), excludedTagFilterActive: .constant(false))
             .padding()
         #endif
         //            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
@@ -220,6 +243,6 @@ struct FilterILOPill: View {
         .foregroundColor(.primary)
         .padding(mac ? 5 : 10)
         .background(selected ? color : .gray)
-        .cornerRadius(5)
+        .cornerRadius(10)
     }
 }

@@ -27,7 +27,9 @@ struct ContentView: View {
 //    @State var importPresented = false
     @State var modalViewShown = false
     @State private var importerPresented = false
+    @State private var exporterPresented = false
     @State var url: URL?
+    @State var lessonsToImport: LessonJSON?
     
     @State var whatsNewShown = false
     
@@ -52,7 +54,9 @@ struct ContentView: View {
         }, content: { item in
             switch item {
             case .importView:
-                ImportView(url: $url)
+                NavigationView {
+                    ImportView(url: $url, lessonsInFile: $lessonsToImport)
+                }
             case .onboardingView:
                 OnboardingView()
             case .whatsnewView:
@@ -61,6 +65,7 @@ struct ContentView: View {
         })
         .onOpenURL { url in
             self.url = url
+            self.lessonsToImport = LessonJSON(url: url)
             currentModalView = .importView
             modalViewShown = true
         }
@@ -68,12 +73,18 @@ struct ContentView: View {
         #else
         SidebarNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
+            .onOpenURL { url in
+                self.url = url
+                self.lessonsToImport = LessonJSON(url: url)
+                currentModalView = .importView
+                modalViewShown = true
+            }
             .sheet(item: $currentModalView, onDismiss: {
                 currentModalView = nil
             }, content: { item in
                 switch item {
                 case .importView:
-                    EmptyView()
+                    ImportView(url: $url, lessonsInFile: $lessonsToImport)
                 case .onboardingView:
                     OnboardingView()
                         .frame(idealWidth: 600, idealHeight: 500)
@@ -89,7 +100,16 @@ struct ContentView: View {
             .onReceive(nc.publisher(for: .importLessons), perform: { _ in
                 importerPresented = true
             })
-            .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in
+            .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { result in
+                switch result {
+                case .success(let url):
+                    self.url = url
+                    self.lessonsToImport = LessonJSON(url: url)
+                    currentModalView = .importView
+                    modalViewShown = true
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             })
         /*LessonsView(filter: .init(filterType: .all, lessonType: nil, tag: nil))
             .environmentObject(LessonsStateObject())*/

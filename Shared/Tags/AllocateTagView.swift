@@ -86,10 +86,12 @@ struct AllocateTagView: View {
     }
     
     func selectedTag(_ tag: Tag) {
-        if let index = selectedTags.firstIndex(of: tag) {
-            selectedTags.remove(at: index)
-        } else {
-            selectedTags.append(tag)
+        withAnimation {
+            if let index = selectedTags.firstIndex(of: tag) {
+                selectedTags.remove(at: index)
+            } else {
+                selectedTags.append(tag)
+            }
         }
     }
 }

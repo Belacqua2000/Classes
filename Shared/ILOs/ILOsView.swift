@@ -22,12 +22,17 @@ struct ILOsView: View {
     @State private var generatorShown = false
     @State private var filterShown = false
     
-    @State private var includedFilterActive = false
-    @State private var currentIncludedTags = [Tag]()
+    @State private var includedLessonTypeFilterActive = false
     @State private var currentIncludedLessonTypes = [Lesson.LessonType]()
-    @State private var excludedFilterActive = false
-    @State private var currentExcludedTags = [Tag]()
+    
+    @State private var includedTagsFilterActive = false
+    @State private var currentIncludedTags = [Tag]()
+    
+    @State private var excludedLessonTypeFilterActive = false
     @State private var currentExcludedLessonTypes = [Lesson.LessonType]()
+    
+    @State private var excludedTagsFilterActive = false
+    @State private var currentExcludedTags = [Tag]()
     
     @EnvironmentObject var randomiserShown: EnvironmentHelpers
     
@@ -76,11 +81,13 @@ struct ILOsView: View {
     
     private var filteredLessons: [Lesson] {
         var lessons = Array(self.lessons)
-        if includedFilterActive {
+        if includedLessonTypeFilterActive {
             lessons = lessons.filter({
                 currentIncludedLessonTypes.contains(Lesson.LessonType(rawValue: $0.type!) ?? .lecture)
             })
-            
+        }
+        
+        if includedTagsFilterActive {
             for tag in currentIncludedTags {
                 lessons = lessons.filter({
                     ($0.tag?.contains(tag) ?? false)
@@ -88,11 +95,13 @@ struct ILOsView: View {
             }
         }
         
-        if excludedFilterActive {
+        if excludedLessonTypeFilterActive {
             lessons = lessons.filter({
                 !currentExcludedLessonTypes.contains(Lesson.LessonType(rawValue: $0.type!) ?? .lecture)
             })
-            
+        }
+        
+        if excludedTagsFilterActive {
             for tag in currentExcludedTags {
                 lessons = lessons.filter({
                     !($0.tag?.contains(tag) ?? false)
@@ -155,11 +164,11 @@ struct ILOsView: View {
                 .sheet(isPresented: $filterShown) {
                     #if os(iOS)
                     NavigationView {
-                        ILOFilterView(isPresented: $filterShown, includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedFilterActive: $includedFilterActive, excludedFilterActive: $excludedFilterActive)
+                        ILOFilterView(isPresented: $filterShown, includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedLessonTypeFilterActive: $includedLessonTypeFilterActive, excludedLessonTypeFilterActive: $excludedLessonTypeFilterActive, includedTagFilterActive: $includedTagsFilterActive, excludedTagFilterActive: $excludedTagsFilterActive)
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
                     #else
-                    ILOFilterView(isPresented: $filterShown, includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedFilterActive: $includedFilterActive, excludedFilterActive: $excludedFilterActive)
+                    ILOFilterView(isPresented: $filterShown, includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedLessonTypeFilterActive: $includedLessonTypeFilterActive, excludedLessonTypeFilterActive: $excludedLessonTypeFilterActive, includedTagFilterActive: $includedTagsFilterActive, excludedTagFilterActive: $excludedTagsFilterActive)
                         .padding()
                         .frame(minWidth: 400, minHeight: 200)
                     #endif

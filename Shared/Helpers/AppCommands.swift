@@ -21,6 +21,11 @@ struct AppCommands: Commands {
                 .keyboardShortcut("n", modifiers: [.command, .shift])
         }
         
+        CommandGroup(replacing: .importExport) {
+            Button("Import Lessons", action: {postNotification(.init(name: .importLessons))})
+//            Button("Export All Lessons", action: {postNotification(.init(name: .exportAll))})
+        }
+        
         CommandMenu("Lesson") {
             Button("Edit Lesson Details", action: {postNotification(.init(name: .editLesson))})
                 .keyboardShortcut("E", modifiers: .command)
@@ -90,10 +95,6 @@ struct AppCommands: Commands {
     
     func newLesson() {
         nc.post(Notification(name: .newLesson))
-    }
-    
-    func importFiles() {
-        nc.post(Notification(name: .importLessons))
     }
     
     

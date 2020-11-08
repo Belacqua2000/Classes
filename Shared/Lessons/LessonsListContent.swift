@@ -120,16 +120,44 @@ struct LessonsListContent: View {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
                         })
+                        #if os(iOS)
+                        Menu(content: {
+                            Button(action: {
+                                #if os(iOS)
+                                selection = [lesson]
+                                viewStates.shareSheetShown = true
+                                #else
+                                viewStates.shareSheetShown = true
+                                #endif
+                            }, label: {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                            })
+                            
+                            Button(action: {
+                                #if os(iOS)
+                                selection = [lesson]
+                                viewStates.exporterShown = true
+                                #else
+                                viewStates.exporterShown = true
+                                #endif
+                            }, label: {
+                                Label("Save to Files", systemImage: "folder")
+                            })
+                        }, label: {
+                            Label("Export", systemImage: "square.and.arrow.up")
+                        })
+                        #else
                         Button(action: {
                             #if os(iOS)
                             selection = [lesson]
                             viewStates.shareSheetShown = true
                             #else
-                            viewStates.shareSheetShown = true
+                            viewStates.exporterShown = true
                             #endif
                         }, label: {
                             Label("Export", systemImage: "square.and.arrow.up")
                         })
+                        #endif
                         Button(action: {
                             selection = [lesson]
                             viewStates.deleteAlertShown = true
@@ -168,6 +196,11 @@ struct LessonsListContent: View {
                         .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
                         .overlay(LessonsPrimaryActionButton(), alignment: .leading)
                 }
+                .fileExporter(
+                    isPresented: $viewStates.exporterShown,
+                    document: LessonJSON(lessons: Array(selection)),
+                    contentType: .classesFormat,
+                    onCompletion: {_ in })
                 .alert(isPresented: $viewStates.deleteAlertShown) {
                     Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
                 }
