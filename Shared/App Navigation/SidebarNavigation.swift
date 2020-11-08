@@ -54,25 +54,53 @@ struct SidebarNavigation: View {
                 destination: SummaryView(),
                 tag: SidebarItem(sidebarType: .summary),
                 selection: $selection,
-                label: {Label("Summary", systemImage: "chart.pie")})
+                label: {
+                    Label(
+                        title: {Text("Summary")},
+                        icon: {
+                            Image(systemName: "chart.pie")
+                                .foregroundColor(.accentColor)
+                        })
+                })
                 .tag(SidebarItem(sidebarType: .summary))
             
             NavigationLink(
                 destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject()),
                 tag: SidebarItem(sidebarType: .all),
                 selection: $selection,
-                label: {Label("All Lessons", systemImage: "books.vertical")})
+                label: {
+                    Label(
+                        title: {Text("All Lessons")},
+                        icon: {
+                            Image(systemName: "books.vertical")
+                                .foregroundColor(.accentColor)
+                        })
+                })
             
             NavigationLink(
                 destination: ILOsView(),
                 tag: SidebarItem(sidebarType: .ilo),
                 selection: $selection,
-                label: {Label("Learning Outcomes", systemImage: "doc")})
+                label: {
+                    Label(
+                        title: {Text("Learning Outcomes")},
+                        icon: {
+                            Image(systemName: "doc")
+                                .foregroundColor(.accentColor)
+                        })
+                })
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
                     NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsStateObject())) {
-                        Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
+                        Label(
+                            title: {
+                                Text(Lesson.lessonTypePlural(type: lesson.rawValue))
+                            },
+                            icon: {
+                                Image(systemName: Lesson.lessonIcon(type: lesson.rawValue))
+                            }
+                        )
                     }
                     /*.onDrop(of: ["public.text"], isTargeted: $tagDropTargetted, perform: { providers in
                         dropTag(providers: providers, tag: Tag(context: viewContext))

@@ -16,6 +16,7 @@ struct SettingsViewiOS: View {
     @State private var welcomeScreenIsShown: Bool = false
     @State private var whatsNewShown: Bool = false
     @State private var shareSheetIsShown = false
+    @State private var exportSheetIsShown = false
     @State private var importSheetIsShown = false
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)])
@@ -36,16 +37,16 @@ struct SettingsViewiOS: View {
                 })
                 .disabled(lessons.count == 0)
                 .popover(isPresented: $shareSheetIsShown) {
-                    ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons))])
+                    ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons)) as Any])
                 }
+                .fileExporter(isPresented: $exportSheetIsShown, document: LessonJSON(lessons: Array(lessons)), contentType: .classesFormat, onCompletion: {_ in})
                 
-                Button(action: {
-                    importSheetIsShown = true
+                /*Button(action: {
+                    NotificationCenter.default.post(.init(name: .importLessons))
                 }, label: {
                     Label("Import Lessons", systemImage: "square.and.arrow.down")
-                })
+                })*/
             }
-            .fileImporter(isPresented: $importSheetIsShown, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in })
             
             Section(header: Text("More")) {
                 Button(action: {welcomeScreenIsShown = true}, label: {

@@ -50,8 +50,8 @@ struct LessonsNavMac: View {
                    }, content: {
                     AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
                    })
-            .toolbar(id: "MacMainToolbar") {
-                ToolbarItem(id: "ScrollToolbarButton", placement: .automatic) {
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
                     Button(action: {
                         nc.post(Notification(name: .scrollToNow))
                     }, label: {
@@ -60,16 +60,16 @@ struct LessonsNavMac: View {
                     .help("Scroll to the next lesson in the list after now.")
                 }
                 
-                ToolbarItem(id: "ToggleWatchedToolbarButton", placement: .automatic) {
+                ToolbarItem(placement: .automatic) {
                     ToggleWatchedButton(lessons: Array(selectedLesson))
                 }
                 
-                ToolbarItem(id: "DeleteLessonToolbarButton", placement: .automatic) {
+                ToolbarItem(placement: .automatic) {
                     DeleteLessonButton().environmentObject(viewStates)
                     .disabled(selectedLesson.isEmpty)
                 }
                 
-                ToolbarItem(id: "TagToolbarButton", placement: .automatic) {
+                ToolbarItem(placement: .automatic) {
                     Button(action: {
                         viewStates.tagPopoverPresented = true
                     }, label: {
@@ -94,7 +94,7 @@ struct LessonsNavMac: View {
                     }
                 }
                 
-                ToolbarItem(id: "AddILOResourceToolbarMenu", placement: .automatic) {
+                ToolbarItem(placement: .automatic) {
                     Menu(content: {
                         AddILOMenu(editILOViewState: $viewStates.editILOViewState, isAddingILO: $viewStates.addILOPresented)
                             .disabled(selectedLesson.count != 1)
@@ -107,11 +107,11 @@ struct LessonsNavMac: View {
                     .help("Add learning outcomes and resources")
                 }
                 
-                ToolbarItem(id: "EditLessonToolbarButton", placement: .automatic) {
+                ToolbarItem(placement: .automatic) {
                     EditLessonButton(lessons: Array(selectedLesson))
                 }
                 
-                ToolbarItem(id: "AddLessonToolbarButton", placement: .primaryAction) {
+                ToolbarItem(placement: .primaryAction) {
                     Button(action: addLesson, label: {
                         Label("Add Lesson", systemImage: "plus")
                     })

@@ -63,6 +63,9 @@ struct ContentView: View {
                 WhatsNew()
             }
         })
+        .onReceive(nc.publisher(for: .importLessons), perform: { _ in
+            importerPresented = true
+        })
         .onOpenURL { url in
             self.url = url
             self.lessonsToImport = LessonJSON(url: url)

@@ -82,7 +82,12 @@ struct ILOSection: View {
                 .frame(height: listHeight)
             } else {
                 HStack {
+                    #if os(macOS)
+                    Text("No learning outcomes.  To add, press \(Image(systemName: "text.badge.plus")) in the toolbar.")
+                        .fixedSize(horizontal: false, vertical: true)
+                    #else
                     Text("No learning outcomes.")
+                    #endif
                     Spacer()
                 }
             }

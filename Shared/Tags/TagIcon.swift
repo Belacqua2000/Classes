@@ -37,7 +37,8 @@ struct TagIcon: View {
         var g: CGFloat = 0.0
         var b: CGFloat = 0.0
         
-        NSColor(bgColor).getRed(&r, green: &g, blue: &b, alpha: &a)
+        NSColor(bgColor).usingColorSpace(.sRGB)?.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
         
         w = ((r * 299) + (g * 587) + (b * 114)) / 1000
 //        w = (r+g+b)/3

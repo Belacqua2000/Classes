@@ -91,9 +91,19 @@
         "imageName": "wand.and.stars"
       },
       {
-        "title": "View Tags in List",
+        "title": "Learning Outcome Filter",
+        "details": "Filter learning outcomes by type and tag.  This lets you browse or use the Outcome Randomiser for specific outcomes only",
+        "imageName": "line.horizontal.3.decrease.circle.fill"
+      },
+      {
+        "title": "Tag Icons in Lessons List",
         "details": "When browsing lessons in a list, small icons will show its tags.  This can help you find specific lessons at a glance, without opening and closing each one indiviually.",
         "imageName": "wand.and.stars"
+      },
+      {
+          "title": "Improvements to Exporting / Importing .classesdoc files",
+          "details": "View which lessons are contained in the file before importing, and selectively import only the lessons you choose.  Adds a new option to save generated docs to files.",
+          "imageName": "arrow.up.doc.fill"
       }
     ]
   }

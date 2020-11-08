@@ -40,7 +40,7 @@ struct LessonsListContent: View {
     @Environment(\.editMode) var editMode
     #endif
     
-    @AppStorage("currentLessonSort") private var sort: Sort = .dateDescending
+    @AppStorage("currentLessonSort") private var sort: Sort = .dateAscending
     
     // MARK: - Selections
     @Binding var selection: Set<Lesson>
@@ -210,12 +210,17 @@ struct LessonsListContent: View {
                 #endif
             } else {
                 #if os(macOS)
-                Text("No Lessons.  Click the + button in the toolbar to create one.")
-                    .padding()
-                    .navigationTitle(titleString)
-                    .navigationSubtitle("\(filteredLessons.count) Lessons")
+                VStack {
+                    Spacer()
+                    Text("No Lessons.  Click the + button in the toolbar to create one.")
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding()
+                        .navigationTitle(titleString)
+                        .navigationSubtitle("\(filteredLessons.count) Lessons")
+                    Spacer()
+                }
                 #else
-                Text("No Lessons.  Click the + button in the toolbar to create one.")
+                Text("No Lessons.  Press the + button in the toolbar to create one.")
                     .navigationTitle(titleString)
                     .padding()
                 #endif
