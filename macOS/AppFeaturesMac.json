@@ -1,0 +1,14 @@
+[
+  {
+    "majorNumber": 1,
+    "minorNumber": 0,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "New Mac Version",
+        "details": "Now available to use on Mac",
+        "imageName": "laptopcomputer"
+      }
+    ]
+  }
+]
