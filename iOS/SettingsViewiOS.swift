@@ -12,6 +12,8 @@ struct SettingsViewiOS: View {
     let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     let versionNumber: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @Binding var viewIsShown: Bool
     @State private var welcomeScreenIsShown: Bool = false
     @State private var whatsNewShown: Bool = false
@@ -41,11 +43,14 @@ struct SettingsViewiOS: View {
                 }
                 .fileExporter(isPresented: $exportSheetIsShown, document: LessonJSON(lessons: Array(lessons)), contentType: .classesFormat, onCompletion: {_ in})
                 
-                /*Button(action: {
-                    NotificationCenter.default.post(.init(name: .importLessons))
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        NotificationCenter.default.post(.init(name: .importLessons))
+                    }
                 }, label: {
                     Label("Import Lessons", systemImage: "square.and.arrow.down")
-                })*/
+                })
             }
             
             Section(header: Text("More")) {

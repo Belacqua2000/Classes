@@ -12,7 +12,7 @@ struct SidebarNavigation: View {
     
     //Environment
     @Environment(\.managedObjectContext) var viewContext
-    @EnvironmentObject var appViewState: AppViewState
+//    @EnvironmentObject var appViewState: AppViewState
     
     //Sidebar struct
     struct SidebarItem: Hashable {
@@ -59,7 +59,6 @@ struct SidebarNavigation: View {
                         title: {Text("Summary")},
                         icon: {
                             Image(systemName: "chart.pie")
-                                .foregroundColor(.accentColor)
                         })
                 })
                 .tag(SidebarItem(sidebarType: .summary))
@@ -73,7 +72,6 @@ struct SidebarNavigation: View {
                         title: {Text("All Lessons")},
                         icon: {
                             Image(systemName: "books.vertical")
-                                .foregroundColor(.accentColor)
                         })
                 })
             
@@ -86,7 +84,6 @@ struct SidebarNavigation: View {
                         title: {Text("Learning Outcomes")},
                         icon: {
                             Image(systemName: "doc")
-                                .foregroundColor(.accentColor)
                         })
                 })
             
@@ -155,14 +152,6 @@ struct SidebarNavigation: View {
     var body: some View {
         NavigationView {
             sidebar
-                .onChange(of: selection, perform: { value in
-                    switch selection?.sidebarType {
-                    case .summary: appViewState.currentTab = .summary
-                    case .all: appViewState.currentTab = .all
-                    case .ilo: appViewState.currentTab = .ilo
-                    default: break
-                    }
-                })
                 .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
                     selection = SidebarItem(sidebarType: .summary)
                 })
@@ -176,7 +165,9 @@ struct SidebarNavigation: View {
                 .toolbar {
                     #if !os(macOS)
                     ToolbarItem(id: "ShowSettingsButton", placement: .primaryAction) {
-                        Button(action: {settingsShown = true}, label: {
+                        Button(action: {
+                                settingsShown = true
+                        }, label: {
                             Label("Settings", systemImage: "gear")
                         })
                         .keyboardShortcut(",", modifiers: .command)

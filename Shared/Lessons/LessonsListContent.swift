@@ -196,6 +196,12 @@ struct LessonsListContent: View {
                         .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
                         .overlay(LessonsPrimaryActionButton(), alignment: .leading)
                 }
+                .sheet(isPresented: $viewStates.addLessonIsPresented,
+                       onDismiss: {
+                        viewStates.lessonToChange = nil
+                       }, content: {
+                        AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                       })
                 .fileExporter(
                     isPresented: $viewStates.exporterShown,
                     document: LessonJSON(lessons: Array(selection)),
@@ -223,15 +229,15 @@ struct LessonsListContent: View {
                 Text("No Lessons.  Press the + button in the toolbar to create one.")
                     .navigationTitle(titleString)
                     .padding()
+                    .sheet(isPresented: $viewStates.addLessonIsPresented,
+                           onDismiss: {
+                            viewStates.lessonToChange = nil
+                           }, content: {
+                            AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                           })
                 #endif
             }
         }
-        .sheet(isPresented: $viewStates.addLessonIsPresented,
-               onDismiss: {
-                viewStates.lessonToChange = nil
-               }, content: {
-                AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
-               })
         .toolbar {
             #if !os(macOS)
             /* BOTTOM BAR BREAKS IN STACKNAVIGATIONVIEWSTYLE

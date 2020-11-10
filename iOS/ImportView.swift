@@ -75,13 +75,13 @@ struct ImportView: View {
                 })
                 .buttonStyle(BorderlessButtonStyle())
                 .cornerRadius(10)
-                    .disabled(url == nil || imported == true)
+                .disabled(url == nil || imported == true || lessonsToBeImported.isEmpty)
                 .navigationBarTitleDisplayMode(.inline)
                 #endif
                 if imported {
                     Text("Lessons have been imported")
                 }
-            }
+        }.padding()
         .frame(idealWidth: 600, idealHeight: 300)
             .alert(isPresented: $alertShown, content: {
                 Alert(

@@ -66,6 +66,17 @@ struct ContentView: View {
         .onReceive(nc.publisher(for: .importLessons), perform: { _ in
             importerPresented = true
         })
+        .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { result in
+            switch result {
+            case .success(let url):
+                self.url = url
+                self.lessonsToImport = LessonJSON(url: url)
+                currentModalView = .importView
+                modalViewShown = true
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
         .onOpenURL { url in
             self.url = url
             self.lessonsToImport = LessonJSON(url: url)

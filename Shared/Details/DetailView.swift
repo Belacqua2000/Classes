@@ -115,11 +115,11 @@ struct DetailView: View {
                     .padding(.all)
                 }
             }
-            .onAppear(perform: {
+            /*.onAppear(perform: {
                 appViewState.detailViewShowing = true
                 print("Appeared")
                 nc.post(.init(name: .detailShowing))
-            })
+            })*/
             .onDisappear(perform: {
                 appViewState.detailViewShowing = false
                 print("Disappeared")
@@ -208,6 +208,7 @@ struct DetailViewTags: View {
                 HStack {
                     ForEach(tags ?? []) { tag in
                         TagIcon(tag: tag)
+                        
                     }
                 }
                 .cornerRadius(20)
