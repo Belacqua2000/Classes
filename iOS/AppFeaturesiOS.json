@@ -101,9 +101,36 @@
         "imageName": "wand.and.stars"
       },
       {
-          "title": "Improvements to Exporting / Importing .classesdoc files",
-          "details": "View which lessons are contained in the file before importing, and selectively import only the lessons you choose.  Adds a new option to save generated docs to files.",
-          "imageName": "arrow.up.doc.fill"
+        "title": "Improvements to Exporting / Importing .classesdoc files",
+        "details": "View which lessons are contained in the file before importing, and selectively import only the lessons you choose.  Adds a new option to save generated docs to files.",
+        "imageName": "arrow.up.doc.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "New User Experience",
+        "details": "The user interface has been streamlined and simplified.  On iPhone, the Tab View has been removed to avoid duplicate function.  The Summary and Learning Outcome modes have been integrated to the lesson list, giving them more customisation and flexibility based on the current list.",
+        "imageName": "sidebar.leading"
+      },
+      {
+        "title": "New List Filters",
+        "details": "Custom filters allow you to filter each lesson list further than a single tag or lesson type.  Choose whether to view only watched or unwatched lessons, and specify multiple tags and lesson types to include and exclude.",
+        "imageName": "line.horizontal.3.decrease.circle.fill"
+      },
+      {
+        "title": "New Smart Lists",
+        "details": "Today’s Lessons, Unwatched Lessons, and Lessons with Unwritten ILOs appear as their own category in the main view.  This is a replacement and upgrade to the Summary view, which allows you to view and edit these lessons more easily than before.",
+        "imageName": "list.star"
+      },
+      {
+        "title": "More Customisable Learning Outcome Randomiser",
+        "details": "As well as being integrated into each lesson list, the outcome randomiser adds options for shuffling and only showing completed outcomes.",
+        "imageName": "doc.fill"
       }
     ]
   }
