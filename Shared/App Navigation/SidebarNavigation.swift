@@ -13,6 +13,9 @@ struct SidebarNavigation: View {
     //Environment
     @Environment(\.managedObjectContext) var viewContext
 //    @EnvironmentObject var appViewState: AppViewState
+    #if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
     
     //Sidebar struct
     struct SidebarItem: Hashable {
@@ -22,6 +25,10 @@ struct SidebarNavigation: View {
             case ilo
             case lessonType
             case tag
+            
+            case today
+            case unwatched
+            case unwritten
         }
         var sidebarType: SidebarTypes
         var lessonTypes: Lesson.LessonType?
@@ -45,26 +52,17 @@ struct SidebarNavigation: View {
     @FetchRequest(sortDescriptors: [])
     private var fetchedLessons: FetchedResults<Lesson>
    
-    @State var selection: SidebarItem? = SidebarItem(sidebarType: .all)
+    #if os(macOS)
+    @State var selection: SidebarItem?// = SidebarItem(sidebarType: .all)
+    #else
+    @State var selection: SidebarItem?
+    #endif
     
     var sidebar: some View {
         List(selection: $selection) {
             
             NavigationLink(
-                destination: SummaryView(),
-                tag: SidebarItem(sidebarType: .summary),
-                selection: $selection,
-                label: {
-                    Label(
-                        title: {Text("Summary")},
-                        icon: {
-                            Image(systemName: "chart.pie")
-                        })
-                })
-                .tag(SidebarItem(sidebarType: .summary))
-            
-            NavigationLink(
-                destination: LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject()),
+                destination: LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject()),
                 tag: SidebarItem(sidebarType: .all),
                 selection: $selection,
                 label: {
@@ -75,21 +73,47 @@ struct SidebarNavigation: View {
                         })
                 })
             
+            Section(header: Text("Smart Groups")) {
             NavigationLink(
-                destination: ILOsView(),
-                tag: SidebarItem(sidebarType: .ilo),
+                destination: LessonsView(listType: LessonsListType(filterType: .today, lessonType: nil)).environmentObject(LessonsStateObject()),
+                tag: SidebarItem(sidebarType: .today, lessonTypes: nil, tag: nil),
                 selection: $selection,
                 label: {
                     Label(
-                        title: {Text("Learning Outcomes")},
+                        title: {Text("Today")},
                         icon: {
-                            Image(systemName: "doc")
+                            Image(systemName: "calendar")
                         })
                 })
+                
+                NavigationLink(
+                    destination: LessonsView(listType: LessonsListType(filterType: .unwatched, lessonType: nil)).environmentObject(LessonsStateObject()),
+                    tag: SidebarItem(sidebarType: .unwatched, lessonTypes: nil, tag: nil),
+                    selection: $selection,
+                    label: {
+                        Label(
+                            title: {Text("Unwatched")},
+                            icon: {
+                                Image(systemName: "eye.slash")
+                            })
+                    })
+                
+                NavigationLink(
+                    destination: LessonsView(listType: LessonsListType(filterType: .unwritten, lessonType: nil)).environmentObject(LessonsStateObject()),
+                    tag: SidebarItem(sidebarType: .unwritten, lessonTypes: nil, tag: nil),
+                    selection: $selection,
+                    label: {
+                        Label(
+                            title: {Text("Unwritten")},
+                            icon: {
+                                Image(systemName: "pencil.slash")
+                            })
+                    })
+            }
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
-                    NavigationLink(destination: LessonsView(filter: LessonsFilter(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsStateObject())) {
+                    NavigationLink(destination: LessonsView(listType: LessonsListType(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsStateObject())) {
                         Label(
                             title: {
                                 Text(Lesson.lessonTypePlural(type: lesson.rawValue))
@@ -108,7 +132,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Tags")) {
                 ForEach(tags) { tag in
-                    NavigationLink(destination:  LessonsView(filter: LessonsFilter(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject())) {
+                    NavigationLink(destination:  LessonsView(listType: LessonsListType(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject())) {
                         Label(
                             title: { Text(tag.name ?? "Untitled") },
                             icon: {
@@ -141,7 +165,6 @@ struct SidebarNavigation: View {
                 .buttonStyle(BorderlessButtonStyle())
             }
         }
-        .listStyle(SidebarListStyle())
         .sheet(isPresented: $addTagShowing, onDismiss: {
             selectedTag = nil
         }, content: {
@@ -151,7 +174,20 @@ struct SidebarNavigation: View {
     
     var body: some View {
         NavigationView {
-            sidebar
+            Group {
+                #if os(macOS)
+                sidebar
+                    .listStyle(SidebarListStyle())
+                #else
+                if horizontalSizeClass == .compact {
+                    sidebar
+                        .listStyle(InsetGroupedListStyle())
+                } else {
+                    sidebar
+                        .listStyle(SidebarListStyle())
+                }
+                #endif
+            }
                 .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
                     selection = SidebarItem(sidebarType: .summary)
                 })
@@ -179,8 +215,16 @@ struct SidebarNavigation: View {
                     }
                     #endif
                 }
+            #if os(macOS)
+            Text("List View")
+            ZStack {
+                BlurVisualEffectViewMac(material: .underWindowBackground, blendMode: .behindWindow)
+                Text("Select a lesson")
+            }
+            #endif
             #if os(iOS)
-            SummaryView()
+            LessonsView(listType: .init(filterType: .all)).environmentObject(LessonsStateObject())
+            Text("Select a lesson")
             #endif
         }
     }

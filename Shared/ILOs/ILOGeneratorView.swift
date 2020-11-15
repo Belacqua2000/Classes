@@ -18,7 +18,12 @@ struct ILOGeneratorView: View {
     
     @Binding var isPresented: Bool
     
+    @State var writtenFilterActive = true
+    
     var ilos: [ILO]
+    var filteredILOs: [ILO] {
+        return writtenFilterActive ? ilos.filter({$0.written}) : ilos
+    }
     @State var currentILOIndex = 0
     
     var isFirstILO: Bool {
@@ -26,7 +31,7 @@ struct ILOGeneratorView: View {
     }
     
     var isLastILO: Bool {
-        return currentILOIndex >= ilos.count - 1
+        return currentILOIndex >= filteredILOs.count - 1
     }
     
     var previousButton: some View {
@@ -45,36 +50,49 @@ struct ILOGeneratorView: View {
     
     var body: some View {
         Group {
-            if ilos.count != 0 {
-                HStack {
-                    #if os(macOS)
-                    previousButton
-                        .padding()
-                    #endif
+            if filteredILOs.count != 0 {
+                VStack {
                     Spacer()
-                    VStack(spacing: 20) {
-                        Text(ilos[currentILOIndex].title ?? "No Title")
-                            .font(.title)
-                        Label(
-                            title: { Text(ilos[currentILOIndex].lesson!.title ?? "Untitled").italic() },
-                            icon: { Image(systemName: Lesson.lessonIcon(type: ilos[currentILOIndex].lesson?.type)) }
-                        )
-                        .font(.title3)
+                    HStack {
+                        #if os(macOS)
+                        previousButton
+                            .padding()
+                        #endif
+                        Spacer()
+                        VStack(spacing: 20) {
+                            Spacer()
+                            Text(filteredILOs[currentILOIndex].title ?? "No Title")
+                                .font(.title)
+                            Label(
+                                title: { Text(filteredILOs[currentILOIndex].lesson!.title ?? "Untitled").italic() },
+                                icon: { Image(systemName: Lesson.lessonIcon(type: filteredILOs[currentILOIndex].lesson?.type)) }
+                            )
+                            .font(.title3)
+                            Spacer()
+                        }
+                        Spacer()
+                        #if os(macOS)
+                        nextButton
+                            .padding()
+                        #endif
                     }
                     Spacer()
-                    #if os(macOS)
-                    nextButton
-                        .padding()
-                    #endif
+                    HStack {
+                        Toggle(isOn: $writtenFilterActive, label: {
+                            Text("Only Show Written")
+                        })
+                        Spacer()
+                        #if os(macOS)
+                        filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")
+                            .disabled(true)
+                        #endif
+                    }.padding()
                 }
             } else {
                 Text("No outcomes to Randomise")
                     .font(.title)
             }
         }
-        .onChange(of: horizontalSizeClass, perform: { value in
-            presentationMode.wrappedValue.dismiss()
-        })
         .navigationTitle("Outcome Randomiser")
         .toolbar {
             #if !os(macOS)
@@ -83,7 +101,7 @@ struct ILOGeneratorView: View {
                 
                 Spacer()
                 
-                ilos.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(ilos.count)")
+                filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")
                     .disabled(true)
                 
                 Spacer()
@@ -91,6 +109,11 @@ struct ILOGeneratorView: View {
                 nextButton
             }
             #endif
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Close", action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            }
         }
     }
     
@@ -108,8 +131,6 @@ struct ILOGeneratorView: View {
 
 struct ILOGeneratorView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
             ILOGeneratorView(isPresented: .constant(true), ilos: [])
-        }
     }
 }

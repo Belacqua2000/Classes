@@ -23,8 +23,8 @@ struct ContentView: View {
     
     let environmentHelpers = EnvironmentHelpers()
     @AppStorage("firstLaunch") var firstLaunch = true
-//    @State var sheetPresented = false
-//    @State var importPresented = false
+    //    @State var sheetPresented = false
+    //    @State var importPresented = false
     @State var modalViewShown = false
     @State private var importerPresented = false
     @State private var exporterPresented = false
@@ -33,57 +33,46 @@ struct ContentView: View {
     
     @State var whatsNewShown = false
     
-    #if !os(macOS)
-    private var idiom : UIUserInterfaceIdiom { UIDevice.current.userInterfaceIdiom }
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    #endif
-    
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     var body: some View {
         #if os(iOS)
-        Group {
-            if horizontalSizeClass == .compact {
-                TabNavigation().environmentObject(environmentHelpers)
-            } else {
-                SidebarNavigation().environmentObject(environmentHelpers)
-            }
-        }
-        .sheet(item: $currentModalView, onDismiss: {
-            currentModalView = nil
-        }, content: { item in
-            switch item {
-            case .importView:
-                NavigationView {
-                    ImportView(url: $url, lessonsInFile: $lessonsToImport)
+        SidebarNavigation().environmentObject(environmentHelpers)
+            .sheet(item: $currentModalView, onDismiss: {
+                currentModalView = nil
+            }, content: { item in
+                switch item {
+                case .importView:
+                    NavigationView {
+                        ImportView(url: $url, lessonsInFile: $lessonsToImport)
+                    }
+                case .onboardingView:
+                    OnboardingView()
+                case .whatsnewView:
+                    WhatsNew()
                 }
-            case .onboardingView:
-                OnboardingView()
-            case .whatsnewView:
-                WhatsNew()
-            }
-        })
-        .onReceive(nc.publisher(for: .importLessons), perform: { _ in
-            importerPresented = true
-        })
-        .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { result in
-            switch result {
-            case .success(let url):
+            })
+            .onReceive(nc.publisher(for: .importLessons), perform: { _ in
+                importerPresented = true
+            })
+            .fileImporter(isPresented: $importerPresented, allowedContentTypes: [UTType.classesFormat], onCompletion: { result in
+                switch result {
+                case .success(let url):
+                    self.url = url
+                    self.lessonsToImport = LessonJSON(url: url)
+                    currentModalView = .importView
+                    modalViewShown = true
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            })
+            .onOpenURL { url in
                 self.url = url
                 self.lessonsToImport = LessonJSON(url: url)
                 currentModalView = .importView
                 modalViewShown = true
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-        })
-        .onOpenURL { url in
-            self.url = url
-            self.lessonsToImport = LessonJSON(url: url)
-            currentModalView = .importView
-            modalViewShown = true
-        }
-        .onAppear(perform: checkWhatsNew)
+            .onAppear(perform: checkWhatsNew)
         #else
         SidebarNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
@@ -126,7 +115,7 @@ struct ContentView: View {
                 }
             })
         /*LessonsView(filter: .init(filterType: .all, lessonType: nil, tag: nil))
-            .environmentObject(LessonsStateObject())*/
+         .environmentObject(LessonsStateObject())*/
         #endif
     }
     
@@ -147,26 +136,26 @@ struct ContentView: View {
         }
     }
     /*
-    @ViewBuilder
-    private func sheetContent() -> some View {
-        if currentModalView == .onboardingView {
-            OnboardingView(isPresented: $modalViewShown)
-        } else if currentModalView == .whatsnewView {
-            WhatsNew(isShowing: $modalViewShown)
-        } else if currentModalView == .importView {
-            ImportView(isPresented: $modalViewShown, url: $url)
-        }
-        /*switch currentModalView {
-        case .importView:
-            ImportView(isPresented: $modalViewShown, url: $url)
-        case .onboardingView:
-            OnboardingView(isPresented: $modalViewShown)
-        case .whatsnewView:
-            WhatsNew(isShowing: $modalViewShown)
-        case .none:
-            EmptyView()
-        }*/
-    }*/
+     @ViewBuilder
+     private func sheetContent() -> some View {
+     if currentModalView == .onboardingView {
+     OnboardingView(isPresented: $modalViewShown)
+     } else if currentModalView == .whatsnewView {
+     WhatsNew(isShowing: $modalViewShown)
+     } else if currentModalView == .importView {
+     ImportView(isPresented: $modalViewShown, url: $url)
+     }
+     /*switch currentModalView {
+     case .importView:
+     ImportView(isPresented: $modalViewShown, url: $url)
+     case .onboardingView:
+     OnboardingView(isPresented: $modalViewShown)
+     case .whatsnewView:
+     WhatsNew(isShowing: $modalViewShown)
+     case .none:
+     EmptyView()
+     }*/
+     }*/
 }
 
 struct ContentView_Previews: PreviewProvider {

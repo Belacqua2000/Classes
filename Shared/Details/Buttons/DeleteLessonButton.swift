@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DeleteLessonButton: View {
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @ObservedObject var viewStates: DetailViewStates
     #if os(iOS)
     var lesson: Lesson
     #endif
@@ -29,7 +29,7 @@ struct DeleteLessonButton: View {
 struct DeleteLessonButton_Previews: PreviewProvider {
     static var previews: some View {
         #if os(macOS)
-        DeleteLessonButton()
+        DeleteLessonButton(viewStates: DetailViewStates())
         #endif
     }
 }

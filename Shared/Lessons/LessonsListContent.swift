@@ -9,6 +9,12 @@ import SwiftUI
 
 struct LessonsListContent: View {
     
+    @State private var statsShown = false
+    @State private var addLessonShown = false
+    @State private var ilosViewShown = false
+    @State private var filterViewActive = false
+    @State private var deleteAlertShown = false
+    
     let nc = NotificationCenter.default
     
     enum Sort: String, CaseIterable, Identifiable {
@@ -19,15 +25,21 @@ struct LessonsListContent: View {
     }
     
     var titleString: String {
-        switch filter.filterType {
+        switch listType.filterType {
         case .all:
             return("All Lessons")
         case .tag:
-            return("Tag: \(filter.tag?.name ?? "")")
+            return("Tag: \(listType.tag?.name ?? "")")
         case .lessonType:
-            return Lesson.lessonTypePlural(type: filter.lessonType?.rawValue)
+            return Lesson.lessonTypePlural(type: listType.lessonType?.rawValue)
         case .watched:
             return("Watched Lessons")
+        case .today:
+            return "Today's Lessons"
+        case .unwatched:
+            return "Unwatched Lessons"
+        case .unwritten:
+            return "Unwritten Lessons"
         }
     }
     
@@ -43,13 +55,15 @@ struct LessonsListContent: View {
     @AppStorage("currentLessonSort") private var sort: Sort = .dateAscending
     
     // MARK: - Selections
+    
     @Binding var selection: Set<Lesson>
     
     @State var selectedLessons: [Lesson]? // for delete actions
     @State var selectedLesson: Lesson? // for editing lesson
     
     @EnvironmentObject var viewStates: LessonsStateObject
-    @Binding var filter: LessonsFilter
+    @Binding var listType: LessonsListType
+    @StateObject var listFilter = LessonsListFilter()
     
     // MARK: - Model
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
@@ -57,15 +71,18 @@ struct LessonsListContent: View {
     private var lessons: FetchedResults<Lesson>
     
     private var filteredLessons: [Lesson] {
+        
         var filterHelper = [Lesson]()
-        switch filter.filterType {
+        
+        // Apply filters based on list type sent from parent view
+        switch listType.filterType {
         case .all:
             filterHelper = lessons.filter({ !$0.isDeleted })
         case .tag:
-            guard let passedTag = filter.tag else { filterHelper = lessons.filter({ !$0.isDeleted });break }
+            guard let passedTag = listType.tag else { filterHelper = lessons.filter({ !$0.isDeleted });break }
             filterHelper = lessons.filter({ ($0.tag?.contains(passedTag) ?? !$0.isDeleted)})
         case .lessonType:
-            switch filter.lessonType {
+            switch listType.lessonType {
             case .lecture:
                 filterHelper = lessons.filter({ $0.type == Lesson.LessonType.lecture.rawValue })
             case .tutorial:
@@ -87,10 +104,54 @@ struct LessonsListContent: View {
             case .none:
                 filterHelper = lessons.filter({ !$0.isDeleted })
             }
+            
+        case .today:
+            let calendar = Calendar.current
+            filterHelper = lessons.filter({calendar.isDateInToday($0.date!)})
+            
+        case .unwatched:
+            filterHelper = lessons.filter({!$0.watched})
+            
+        case .unwritten:
+            filterHelper = lessons.filter({ ($0.ilo?.allObjects as! [ILO]).contains(where: { ilo in !ilo.written})})
         case .watched:
             return filterHelper.filter({ $0.watched })
         }
         
+        // Filter additional attributes from LessonsFilterView
+        if listFilter.watchedOnly {
+            filterHelper = filterHelper.filter({$0.watched})
+        }
+        if listFilter.unwatchedOnly {
+            filterHelper = filterHelper.filter({!$0.watched})
+        }
+        if listFilter.includedLessonTypesActive {
+            filterHelper = filterHelper.filter({
+                listFilter.includedLessonTypes.contains(Lesson.LessonType(rawValue: $0.type!) ?? .lecture)
+            })
+        }
+        if listFilter.excludedLessonTypesActive {
+            filterHelper = filterHelper.filter({
+                !listFilter.excludedLessonTypes.contains(Lesson.LessonType(rawValue: $0.type!) ?? .lecture)
+            })
+        }
+        if listFilter.includedTagsActive {
+            for tag in listFilter.includedTags {
+                filterHelper = filterHelper.filter({
+                    ($0.tag?.contains(tag) ?? false)
+                })
+            }
+        }
+        if listFilter.excludedTagsActive {
+            for tag in listFilter.excludedTags {
+                filterHelper = filterHelper.filter({
+                    !($0.tag?.contains(tag) ?? false)
+                })
+            }
+        }
+        
+        
+        // Sort the List
         switch sort {
         case .dateAscending:
             filterHelper.sort(by: {$0.date! < $1.date!})
@@ -99,6 +160,7 @@ struct LessonsListContent: View {
         case .name:
             filterHelper.sort(by: {$0.title! < $1.title!})
         }
+        
         return filterHelper
     }
     
@@ -106,7 +168,7 @@ struct LessonsListContent: View {
     var lessonList: some View {
         List(selection: $selection) {
             ForEach(filteredLessons, id: \.self) { lesson in
-                LessonsRow(lesson: lesson)
+                LessonsRow(selection: $selection, lesson: lesson)
                     .tag(lesson)
                     .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
                         Button(action: {
@@ -160,7 +222,7 @@ struct LessonsListContent: View {
                         #endif
                         Button(action: {
                             selection = [lesson]
-                            viewStates.deleteAlertShown = true
+                            deleteAlertShown = true
                         }, label: {
                             Label("Delete", systemImage: "trash")
                         })
@@ -173,8 +235,8 @@ struct LessonsListContent: View {
     
     // MARK: - Body
     var body: some View {
-        Group {
-            if filteredLessons.count > 0 {
+        VStack {
+            if filteredLessons.count >= 0 {
                 #if os(macOS)
                 ScrollViewReader { proxy in
                     lessonList
@@ -185,6 +247,9 @@ struct LessonsListContent: View {
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
                         })
+                        .alert(isPresented: $deleteAlertShown) {
+                            Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; viewStates.lessonToChange = nil}))
+                        }
                 }
                 #else
                 ScrollViewReader { proxy in
@@ -194,31 +259,19 @@ struct LessonsListContent: View {
                             scrollToNow(proxy: proxy)
                         })
                         .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
-                        .overlay(LessonsPrimaryActionButton(), alignment: .leading)
-                }
-                .sheet(isPresented: $viewStates.addLessonIsPresented,
-                       onDismiss: {
-                        viewStates.lessonToChange = nil
-                       }, content: {
-                        AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
-                       })
-                .fileExporter(
-                    isPresented: $viewStates.exporterShown,
-                    document: LessonJSON(lessons: Array(selection)),
-                    contentType: .classesFormat,
-                    onCompletion: {_ in })
-                .alert(isPresented: $viewStates.deleteAlertShown) {
-                    Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
                 }
                 .popover(isPresented: $viewStates.shareSheetShown) {
                     ShareSheet(isPresented: $viewStates.shareSheetShown, activityItems: [Lesson.export(lessons: Array(selection))!])
+                }
+                .alert(isPresented: $deleteAlertShown) {
+                    Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; viewStates.lessonToChange = nil}))
                 }
                 #endif
             } else {
                 #if os(macOS)
                 VStack {
                     Spacer()
-                    Text("No Lessons.  Click the + button in the toolbar to create one.")
+                    Text("No Lessons.  Click the \(Image(systemName: "plus")) button in the toolbar to create one.")
                         .fixedSize(horizontal: false, vertical: true)
                         .padding()
                         .navigationTitle(titleString)
@@ -226,25 +279,26 @@ struct LessonsListContent: View {
                     Spacer()
                 }
                 #else
-                Text("No Lessons.  Press the + button in the toolbar to create one.")
-                    .navigationTitle(titleString)
+                Text("No Lessons.  Press the \(Image(systemName: "plus")) button in the toolbar to create one.")
                     .padding()
-                    .sheet(isPresented: $viewStates.addLessonIsPresented,
-                           onDismiss: {
-                            viewStates.lessonToChange = nil
-                           }, content: {
-                            AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
-                           })
+                    .navigationTitle(titleString)
                 #endif
             }
+            EmptyView()
         }
-        .toolbar {
-            #if !os(macOS)
-            /* BOTTOM BAR BREAKS IN STACKNAVIGATIONVIEWSTYLE
-            ToolbarItemGroup(placement: .bottomBar) {
-                BottomToolbar(selection: $selection, lessonCount: filteredLessons.count)
-            }*/
-            ToolbarItem(placement: .primaryAction) {
+        .sheet(isPresented: $addLessonShown,
+               onDismiss: {
+                viewStates.lessonToChange = nil
+               }, content: {
+                AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+               })
+        .fileExporter(
+            isPresented: $viewStates.exporterShown,
+            document: LessonJSON(lessons: Array(selection)),
+            contentType: .classesFormat,
+            onCompletion: {_ in })
+        .toolbar(id: "MainToolbar") {
+            ToolbarItem(id: "AddLessonButton", placement: .primaryAction) {
                 Button(action: addLesson, label: {
                     Label("Add Lesson", systemImage: "plus")
                 })
@@ -253,7 +307,117 @@ struct LessonsListContent: View {
                 })
                 .help("Add a New Lesson")
             }
+            #if !os(macOS)
+            // BOTTOM BAR BREAKS IN STACKNAVIGATIONVIEWSTYLE
+            /*ToolbarItemGroup(placement: .bottomBar) {
+                BottomToolbar(selection: $selection, lessonCount: filteredLessons.count)*/
+            ToolbarItem(id: "ScrollNowButton", placement: .bottomBar) {
+                Button(action: {
+                    nc.post(Notification(name: .scrollToNow))
+                }, label: {
+                    Label("Scroll To Now", systemImage: "calendar.badge.clock")
+                })
+                .help("Scroll to the next lesson in the list after now.")
+            }
+            
+            ToolbarItem(id: "Spacer", placement: .bottomBar) {
+                Spacer()
+            }
+            
+            ToolbarItem(id: "ILO", placement: .bottomBar) {
+                Button(action: {ilosViewShown = true}, label: {
+                    Label("Generate Learning Outcomes", systemImage: "doc")
+                })
+                .help("View Statistics")
+                .fullScreenCover(isPresented: $ilosViewShown, content: {
+                    #if os(macOS)
+                    ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                    #else
+                    NavigationView {
+                        ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                    }
+                    #endif
+                })
+            }
+            
+//            ToolbarItem(id: "Stats", placement: .bottomBar) {
+//                Button(action: {statsShown = true}, label: {
+//                    Label("View Statistics", systemImage: "chart.pie")
+//                })
+//                .help("View Statistics")
+//                .sheet(isPresented: $statsShown) {
+//                    NavigationView {
+//                        SummaryView(lessons: filteredLessons)
+//                    }
+//                }
+//
+//            }
+            
+            ToolbarItem(id: "Spacer", placement: .bottomBar) {
+                Spacer()
+            }
+            
+            ToolbarItem(id: "Filter", placement: .bottomBar) {
+                Button(action: {filterViewActive = true}, label: {
+                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
+                })
+                .help("Filter Lessons in the View")
+                .sheet(isPresented: $filterViewActive) {
+                    NavigationView {
+                        LessonsFilterView(viewShown: $filterViewActive, listType: listType, filter: listFilter)
+                    }
+                }
+            }
+            
+            #else
+            
+            ToolbarItem(id: "ScrollNowButton", placement: .automatic) {
+                Button(action: {
+                    nc.post(Notification(name: .scrollToNow))
+                }, label: {
+                    Label("Scroll To Now", systemImage: "calendar.badge.clock")
+                })
+                .help("Scroll to the next lesson in the list after now.")
+            }
+            
+            ToolbarItem(id: "ILO", placement: .automatic) {
+                Button(action: {ilosViewShown = true}, label: {
+                    Label("Generate Learning Outcomes", systemImage: "doc")
+                })
+                .help("View Statistics")
+//                .sheet(isPresented: $ilosViewShown, content: {
+//                    #if os(macOS)
+//                    ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+//                    #else
+//                    NavigationView {
+//                        ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+//                    }
+//                    #endif
+//                })
+            }
+//            ToolbarItem(id: "Stats", placement: .automatic) {
+//                Button(action: {statsShown = true}, label: {
+//                    Label("View Statistics", systemImage: "chart.pie")
+//                })
+//                .help("View Statistics")
+//                .sheet(isPresented: $statsShown) {
+//                    SummaryView(lessons: filteredLessons)
+//                }
+//            }
+            
+            ToolbarItem(id: "Filter", placement: .automatic) {
+                Button(action: {filterViewActive = true}, label: {
+                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
+                })
+//                .sheet(isPresented: $filterViewActive) {
+//                    LessonsFilterView(viewShown: $filterViewActive, listType: listType, filter: listFilter)
+//                        .frame(idealWidth: 600)
+//                }
+                .help("View Statistics")
+            }
+            
             #endif
+            
         }
         .onReceive(nc.publisher(for: .deleteLessons), perform: { _ in
             viewStates.deleteAlertShown = true
@@ -265,14 +429,15 @@ struct LessonsListContent: View {
         })
     }
     
-    func addLesson() {
+    private func addLesson() {
+//        self.addLessonShown = true
         viewStates.addLessonIsPresented = true
     }
     
     private func deleteItems(offsets: IndexSet) {
         offsets.map { filteredLessons[$0] }.forEach { lesson in
             selection = [lesson]
-            viewStates.deleteAlertShown = true
+            deleteAlertShown = true
         }
     }
     
@@ -318,7 +483,7 @@ struct LessonsListContent: View {
 
 struct LessonsView_Previews: PreviewProvider {
     static var previews: some View {
-        LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil))
+        LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

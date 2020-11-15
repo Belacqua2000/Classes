@@ -30,19 +30,19 @@ struct AppCommands: Commands {
             Button("Edit Lesson Details", action: {postNotification(.init(name: .editLesson))})
                 .keyboardShortcut("E", modifiers: .command)
                 .help("Edit the lessons")
-                .disabled(!appViewState.detailViewShowing)
+//                .disabled(!appViewState.detailViewShowing)
             Button("Toggle Watched", action: toggleWatched)
                 .keyboardShortcut("Y", modifiers: .command)
             Button("Edit Tags", action: allocateTagView)
                 .keyboardShortcut("T", modifiers: .command)
-                .disabled(!appViewState.detailViewShowing)
+//                .disabled(!appViewState.detailViewShowing)
             Divider()
             Button("Add Learning Outcome", action: addILO)
                 .keyboardShortcut("L", modifiers: .command)
-                .disabled(!appViewState.detailViewShowing)
+//                .disabled(!appViewState.detailViewShowing)
             Button("Add Resource", action: addResource)
                 .keyboardShortcut("R", modifiers: .command)
-                .disabled(!appViewState.detailViewShowing)
+//                .disabled(!appViewState.detailViewShowing)
         }
     
         CommandGroup(replacing: .help) {
@@ -57,7 +57,7 @@ struct AppCommands: Commands {
             Divider()
             Button("Scroll List to Now", action: scrollToNow)
                 .keyboardShortcut("s")
-            Divider()
+            /*Divider()
             Button("Summary", action: showSummary)
                 .keyboardShortcut("1", modifiers: .command)
                 .disabled(appViewState.currentTab == .summary)
@@ -66,7 +66,7 @@ struct AppCommands: Commands {
                 .disabled(appViewState.currentTab == .all)
             Button("Learning Outcomes", action: showILO)
                 .keyboardShortcut("3", modifiers: .command)
-                .disabled(appViewState.currentTab == .ilo)
+                .disabled(appViewState.currentTab == .ilo)*/
             Divider()
         }
     }

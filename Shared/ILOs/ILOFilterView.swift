@@ -23,6 +23,8 @@ struct ILOFilterView: View {
     
     var allLessonTypes = Lesson.LessonType.allCases
     
+    var listType: LessonsListType
+    
     @Binding var includedTags: [Tag]
     @Binding var includedLessonTypes: [Lesson.LessonType]
     
@@ -36,18 +38,20 @@ struct ILOFilterView: View {
     @Binding var excludedTagFilterActive: Bool
     
     var body: some View {
-        ScrollView(.vertical) {
+        // Included Lesson Types
+        if listType.filterType != .lessonType {
             
-            // Included Lesson Types
-            VStack(alignment: .leading) {
+            #if os(macOS)
+            Divider()
+            #endif
+            Section(header: Label("Lesson Type", systemImage: "books.vertical")) {
                 Toggle(isOn: $includedLessonTypeFilterActive, label: {
                     Text("Include Only These Lesson Types:")
-                        .font(.title)
-                        .bold()
                 })
                 .toggleStyle(SwitchToggleStyle())
+                
                 ScrollView(.horizontal) {
-                    LazyHGrid(rows: gridItem, content: {
+                    HStack {
                         ForEach(allLessonTypes) { type in
                             Button(action: {
                                 selectedLessonTypeToInclude(type)
@@ -57,48 +61,16 @@ struct ILOFilterView: View {
                             .buttonStyle(BorderlessButtonStyle())
                             .disabled(!includedLessonTypeFilterActive)
                         }
-                    })
+                    }
                 }
-            }
-            
-            VStack(alignment: .leading) {
-                Toggle(isOn: $includedTagFilterActive, label: {
-                    Text("Include Only These Tags:")
-                        .font(.title)
-                        .bold()
-                })
-                .toggleStyle(SwitchToggleStyle())
-                ScrollView(.horizontal) {
-                    LazyHGrid(rows: gridItem, content: {
-                        ForEach(allTags) { tag in
-                            let tag = tag as Tag
-                            Button(action: {
-                                selectedTagToInclude(tag)
-                            }, label: {
-                                FilterILOPill(text: tag.name!, image: "tag", color: tag.swiftUIColor!, selected: includedTags.contains(tag))
-                            })
-                            .buttonStyle(BorderlessButtonStyle())
-                            .disabled(!includedTagFilterActive)
-                        }
-                    })
-                }
-            }
-            
-            //Included Tags
-            
-            Divider()
-            
-            
-            //Excluded Lesson Types
-            VStack(alignment: .leading) {
+                //Excluded Lesson Types
                 Toggle(isOn: $excludedLessonTypeFilterActive, label: {
                     Text("Exclude These Lesson Types:")
-                        .font(.title)
-                        .bold()
                 })
                 .toggleStyle(SwitchToggleStyle())
+                
                 ScrollView(.horizontal) {
-                    LazyHGrid(rows: gridItem, content: {
+                    HStack {
                         ForEach(allLessonTypes) { type in
                             Button(action: {
                                 selectedLessonTypeToExclude(type)
@@ -109,20 +81,47 @@ struct ILOFilterView: View {
                             .buttonStyle(BorderlessButtonStyle())
                             .disabled(!excludedLessonTypeFilterActive)
                         }
-                    })
+                    }
                 }
             }
+        }
+        
+        if listType.filterType != .tag {
             
-            // Excluded Tags
-            VStack(alignment: .leading) {
-                Toggle(isOn: $excludedTagFilterActive, label: {
-                    Text("Exclude These Tags:")
-                        .font(.title)
-                        .bold()
+            #if os(macOS)
+            Divider()
+            #endif
+            Section(header: Label("Tag", systemImage: "tag")) {
+                Toggle(isOn: $includedTagFilterActive, label: {
+                    Text("Include Only These Tags:")
                 })
                 .toggleStyle(SwitchToggleStyle())
                 ScrollView(.horizontal) {
-                    LazyHGrid(rows: gridItem, content: {
+                    HStack {
+                        ForEach(allTags) { tag in
+                            let tag = tag as Tag
+                            Button(action: {
+                                selectedTagToInclude(tag)
+                            }, label: {
+                                FilterILOPill(text: tag.name!, image: "tag", color: tag.swiftUIColor!, selected: includedTags.contains(tag))
+                            })
+                            .buttonStyle(BorderlessButtonStyle())
+                            .disabled(!includedTagFilterActive)
+                        }
+                    }
+                }
+                
+                //Included Tags
+                
+                
+                // Excluded Tags
+                Toggle(isOn: $excludedTagFilterActive, label: {
+                    Text("Exclude These Tags:")
+                })
+                .toggleStyle(SwitchToggleStyle())
+                
+                ScrollView(.horizontal) {
+                    HStack {
                         ForEach(allTags) { tag in
                             let tag = tag as Tag
                             Button(action: {
@@ -133,19 +132,10 @@ struct ILOFilterView: View {
                             .buttonStyle(BorderlessButtonStyle())
                             .disabled(!excludedTagFilterActive)
                         }
-                    })
+                    }
                 }
             }
-            
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done", action: {
-                    isPresented = false
-                })
-            }
-        }
-        .navigationTitle("Learning Outcome Filter")
     }
     
     private func selectedTagToInclude(_ tag: Tag) {
@@ -213,12 +203,12 @@ struct ILOFilterView_Previews: PreviewProvider {
     static var previews: some View {
         #if os(iOS)
         NavigationView {
-            ILOFilterView(isPresented: .constant(true), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedLessonTypeFilterActive: .constant(false), excludedLessonTypeFilterActive: .constant(false), includedTagFilterActive: .constant(false), excludedTagFilterActive: .constant(false))
+            ILOFilterView(isPresented: .constant(true), listType: .init(filterType: .all), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedLessonTypeFilterActive: .constant(false), excludedLessonTypeFilterActive: .constant(false), includedTagFilterActive: .constant(false), excludedTagFilterActive: .constant(false))
                 .padding()
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else
-        ILOFilterView(isPresented: .constant(true), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedLessonTypeFilterActive: .constant(false), excludedLessonTypeFilterActive: .constant(false), includedTagFilterActive: .constant(false), excludedTagFilterActive: .constant(false))
+        ILOFilterView(isPresented: .constant(true), listType: .init(filterType: .all), includedTags: .constant([]), includedLessonTypes: $selectedLessonTypes, excludedTags: .constant([]), excludedLessonTypes: .constant([]), includedLessonTypeFilterActive: .constant(false), excludedLessonTypeFilterActive: .constant(false), includedTagFilterActive: .constant(false), excludedTagFilterActive: .constant(false))
             .padding()
         #endif
         //            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
@@ -231,7 +221,7 @@ struct FilterILOPill: View {
     var color: Color
     var selected: Bool
     #if os(macOS)
-    var mac: Bool = false
+    var mac: Bool = true
     #else
     var mac: Bool = false
     #endif
@@ -243,6 +233,6 @@ struct FilterILOPill: View {
         .foregroundColor(.primary)
         .padding(mac ? 5 : 10)
         .background(selected ? color : .gray)
-        .cornerRadius(10)
+        .cornerRadius(5)
     }
 }

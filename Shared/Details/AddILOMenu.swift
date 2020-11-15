@@ -8,30 +8,31 @@
 import SwiftUI
 
 struct AddILOMenu: View {
-    @Binding var editILOViewState: EditILOView.AddOutcomeViewState
-    @Binding var isAddingILO: Bool
+    @ObservedObject var detailStates: DetailViewStates
     var body: some View {
-        Menu("Add Learning Outcome") {
+        Menu(content: {
             Button(action: {
-                editILOViewState = .single
-                isAddingILO = true
+                detailStates.editILOViewState = .single
+                detailStates.addILOPresented = true
             }, label: {
                 Text("Add Single Outcome")
             })
             
             Button(action: {
-                editILOViewState = .multiple
-                isAddingILO = true
+                detailStates.editILOViewState = .multiple
+                detailStates.addILOPresented = true
             }, label: {
                 Text("Batch Add Outcomes")
             })
-        }
-        .help("Add learning outcomes and resources to this lesson")
+        }, label: {
+            Label("Add Learning Outcomes", systemImage: "text.badge.plus")
+        })
+        .help("Add learning outcomes to this lesson")
     }
 }
 
 struct AddILOMenu_Previews: PreviewProvider {
     static var previews: some View {
-        AddILOMenu(editILOViewState: .constant(.single), isAddingILO: .constant(false))
+        AddILOMenu(detailStates: DetailViewStates())
     }
 }

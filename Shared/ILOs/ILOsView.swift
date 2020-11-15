@@ -74,10 +74,7 @@ struct ILOsView: View {
         })
     }
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
-        animation: .default)
-    private var lessons: FetchedResults<Lesson>
+    var lessons: [Lesson]
     
     private var filteredLessons: [Lesson] {
         var lessons = Array(self.lessons)
@@ -164,11 +161,11 @@ struct ILOsView: View {
                 .sheet(isPresented: $filterShown) {
                     #if os(iOS)
                     NavigationView {
-                        ILOFilterView(isPresented: $filterShown, includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedLessonTypeFilterActive: $includedLessonTypeFilterActive, excludedLessonTypeFilterActive: $excludedLessonTypeFilterActive, includedTagFilterActive: $includedTagsFilterActive, excludedTagFilterActive: $excludedTagsFilterActive)
+                        ILOFilterView(isPresented: $filterShown, listType: .init(filterType: .all), includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedLessonTypeFilterActive: $includedLessonTypeFilterActive, excludedLessonTypeFilterActive: $excludedLessonTypeFilterActive, includedTagFilterActive: $includedTagsFilterActive, excludedTagFilterActive: $excludedTagsFilterActive)
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
                     #else
-                    ILOFilterView(isPresented: $filterShown, includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedLessonTypeFilterActive: $includedLessonTypeFilterActive, excludedLessonTypeFilterActive: $excludedLessonTypeFilterActive, includedTagFilterActive: $includedTagsFilterActive, excludedTagFilterActive: $excludedTagsFilterActive)
+                    ILOFilterView(isPresented: $filterShown, listType: .init(filterType: .all), includedTags: $currentIncludedTags, includedLessonTypes: $currentIncludedLessonTypes, excludedTags: $currentExcludedTags, excludedLessonTypes: $currentExcludedLessonTypes, includedLessonTypeFilterActive: $includedLessonTypeFilterActive, excludedLessonTypeFilterActive: $excludedLessonTypeFilterActive, includedTagFilterActive: $includedTagsFilterActive, excludedTagFilterActive: $excludedTagsFilterActive)
                         .padding()
                         .frame(minWidth: 400, minHeight: 200)
                     #endif
@@ -185,11 +182,11 @@ struct ILOsView_Previews: PreviewProvider {
     static var previews: some View {
         #if os(iOS)
         NavigationView {
-            ILOsView()
+            ILOsView(lessons: [])
         }
         .navigationViewStyle(StackNavigationViewStyle())
         #else
-        ILOsView()
+        ILOsView(lessons: [])
         #endif
 //            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }

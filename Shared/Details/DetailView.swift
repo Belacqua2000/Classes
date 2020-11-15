@@ -22,6 +22,8 @@ struct DetailView: View {
     @EnvironmentObject var appViewState: AppViewState
     @State private var isInValidURLAlertShown: Bool = false
     
+    @StateObject var detailStates = DetailViewStates()
+    
     let nc = NotificationCenter.default
     
     static let userActivityType = "com.baughan.classes.detailview"
@@ -94,27 +96,28 @@ struct DetailView: View {
                             DetailNotesSection(text: lesson.notes ?? "")
                         }
                         
-                        ILOSection(lesson: lesson)
+                        ILOSection(viewStates: detailStates, lesson: lesson)
                             .modifier(DetailBlock())
                         
-                        ResourceSection(resources: resources, lesson: lesson)
+                        ResourceSection(resources: resources, addResourcePresented: $detailStates.addResourcePresented, lesson: lesson)
                             .modifier(DetailBlock())
-                        #if os(iOS)
+                        
                         EmptyView()
-                            .sheet(isPresented: $viewStates.addLessonIsPresented,
+                            .sheet(isPresented: $detailStates.editLessonShown,
                                    onDismiss: {
-                                    viewStates.lessonToChange = nil
+                                    detailStates.lessonToChange = nil
                                    }, content: {
-                                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented).environment(\.managedObjectContext, managedObjectContext)
+                                    AddLessonView(lesson: detailStates.lessonToChange, isPresented: $detailStates.editLessonShown).environment(\.managedObjectContext, managedObjectContext)
                                    })
-                            .alert(isPresented: $viewStates.deleteAlertShown) {
+                            .alert(isPresented: $detailStates.deleteAlertShown) {
                                 Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
                             }
-                        #endif
+                        
                     }
                     .padding(.all)
                 }
             }
+            .navigationTitle(lesson.title ?? "Untitled Lesson")
             /*.onAppear(perform: {
                 appViewState.detailViewShowing = true
                 print("Appeared")
@@ -125,42 +128,96 @@ struct DetailView: View {
                 print("Disappeared")
                 nc.post(.init(name: .detailNotShowing))
             })
+            .onReceive(nc.publisher(for: .tagAllocateViewShown), perform: { _ in
+                viewStates.tagPopoverPresented = true
+            })
             .toolbar {
-                #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {
+                    #if os(iOS)
                     if horizontalSizeClass == .compact {
-                        
                         Menu(content: {
                             ToggleWatchedButton(lessons: [lesson])
-                            DeleteLessonButton(lesson: lesson)
-                            EditLessonButton(lessons: [lesson])
+                            DeleteLessonButton(viewStates: detailStates, lesson: lesson)
+                            EditLessonButton(detailStates: detailStates, lessons: [lesson])
                         }, label: {
                             Label("Edit Lesson", systemImage: "ellipsis.circle")
                         })
+                        
                     } else {
-                        DeleteLessonButton(lesson: lesson)
-                        EditLessonButton(lessons: [lesson])
+                        DeleteLessonButton(viewStates: detailStates, lesson: lesson)
+                        EditLessonButton(detailStates: detailStates, lessons: [lesson])
                     }
+                    #endif
+                }
+            }
+            .toolbar(id: "DetailToolbar") {
+                #if os(iOS)
+                ToolbarItem(id: "Spacer", placement: .automatic) {
+                        
+                        EmptyView()
+                    
+                    }
+                #else
+                ToolbarItem(id: "Toggle Watched Button", placement: .automatic) {
+                    ToggleWatchedButton(lessons: [lesson])
+                }
+                ToolbarItem(id: "Spacer") {
+                    Spacer()
+                }
+                
+                ToolbarItem(id: "Tag Button", placement: .automatic) {
+                    Button(action: {
+                        viewStates.tagPopoverPresented = true
+                    }, label: {
+                        Label("Edit Tags", systemImage: "tag")
+                    })
+//                    .disabled(selectedLesson.count != 1)
+                    .help("Edit the tags for this lesson")
+                    .popover(isPresented: $viewStates.tagPopoverPresented) {
+                        AllocateTagView(selectedTags:
+                                            Binding(
+                                                get: {lesson.tag!.allObjects as! [Tag]},
+                                                set: {
+                                                    for tag in lesson.tag!.allObjects as! [Tag] {
+                                                        lesson.removeFromTag(tag)
+                                                    }
+                                                    for tag in $0 {
+                                                        lesson.addToTag(tag)
+                                                    }
+                                                })
+                        )
+                        .frame(width: 200, height: 150)
+                    }
+                }
+                
+                ToolbarItem(id: "AddResourceButton", placement: .automatic) {
+                    AddResourceButton(isAddingResource: $detailStates.addResourcePresented)
+                }
+                ToolbarItem(id: "AddILOMenu", placement: .automatic) {
+                    AddILOMenu(detailStates: detailStates)
+                }
+                ToolbarItem(id: "DeleteButton") {
+                    DeleteLessonButton(viewStates: detailStates)
+                }
+                ToolbarItem(id: "EditButton") {
+                    EditLessonButton(detailStates: detailStates, lessons: [lesson])
                 }
                 #endif
             }
             .background(LinearGradient(gradient: Gradient(colors: [.init("SecondaryColorLight"), .init("SecondaryColor")]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea([.bottom, .horizontal]))
-//            .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
     }
     
-    func createILO(index: Int) {
+    private func createILO(index: Int) {
         ILO.create(in: managedObjectContext, title: newILOText, index: index, lesson: lesson)
         newILOText = ""
     }
     
-    func deleteLesson() {
+    private func deleteLesson() {
         lesson.delete(context: managedObjectContext)
         presentationMode.wrappedValue.dismiss()
     }
     
 }
-
-
 
 
 struct DetailView_Previews: PreviewProvider {

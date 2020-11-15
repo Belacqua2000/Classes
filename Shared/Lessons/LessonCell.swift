@@ -65,7 +65,7 @@ struct LessonCell: View {
                     } },
                     icon: {
                         Image(systemName: Lesson.lessonIcon(type: lesson.type))
-                            .foregroundColor(.accentColor)
+//                            .foregroundColor(.accentColor)
                             .font(.headline)
                     }
                 )

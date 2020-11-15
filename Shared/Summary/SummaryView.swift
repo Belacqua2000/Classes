@@ -9,12 +9,14 @@ import SwiftUI
 
 struct SummaryView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var appViewState: AppViewState
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
-        animation: .default)
-    private var lessons: FetchedResults<Lesson>
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
+//        animation: .default)
+//    private var lessons: FetchedResults<Lesson>
+    var lessons: [Lesson]
     
     @State var addLessonViewShown = false
     @State private var detailShown = false
@@ -74,9 +76,9 @@ struct SummaryView: View {
                 .padding(.all)
             }
             .toolbar(id: "SummaryViewToolbar") {
-                ToolbarItem(id: "SummaryAddLesson", placement: .automatic) {
-                    Button(action: {addLessonViewShown = true}, label: {
-                        Label("Add Lesson", systemImage: "plus")
+                ToolbarItem(id: "Dismiss", placement: .confirmationAction) {
+                    Button(action: {presentationMode.wrappedValue.dismiss()}, label: {
+                        Text("Close")
                     })
                 }
             }
@@ -102,13 +104,13 @@ struct SummaryView_Previews: PreviewProvider {
     static var previews: some View {
         #if !os(macOS)
         Group {
-            SummaryView()
+            SummaryView(lessons: [])
                 .previewDevice(PreviewDevice(rawValue: "iPhone 11"))
-            SummaryView()
+            SummaryView(lessons: [])
                 .previewDevice(PreviewDevice(rawValue: "iPad Pro (11-inch) (2nd generation)"))
         }
         #else
-        SummaryView()
+        SummaryView(lessons: [])
         #endif
     }
 }

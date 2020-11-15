@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditLessonButton: View {
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @ObservedObject var detailStates: DetailViewStates
     var lessons: [Lesson]
     var body: some View {
         Button(action: editLesson, label: {
@@ -23,7 +23,7 @@ struct EditLessonButton: View {
     
     private func editLesson() {
         guard !lessons.isEmpty else { return }
-        viewStates.lessonToChange = lessons.first!
-        viewStates.addLessonIsPresented = true
+        detailStates.lessonToChange = lessons.first!
+        detailStates.editLessonShown = true
     }
 }

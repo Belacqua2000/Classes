@@ -103,14 +103,18 @@ struct LessonJSON: FileDocument, Codable {
             watched = lesson.watched
             
             var ilos = [ILOJSON]()
-            for ilo in lesson.ilo?.allObjects as! [ILO] {
+            if let lessonILOs = lesson.ilo?.allObjects as? [ILO] {
+            for ilo in lessonILOs {
                 ilos.append(ILOJSON(index: ilo.index, title: ilo.title ?? "Untitled", written: ilo.written))
+            }
             }
             ilo = ilos
             
             var resources = [ResourceJSON]()
-            for resource in lesson.resource?.allObjects as! [Resource] {
+            if let lessonResources = lesson.resource?.allObjects as? [Resource] {
+            for resource in lessonResources {
                 resources.append(ResourceJSON(name: resource.name ?? "Untitled", url: resource.url))
+            }
             }
             resource = resources
         }

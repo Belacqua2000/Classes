@@ -11,7 +11,8 @@ struct LessonsView: View {
     // MARK: - Environment
     @Environment(\.managedObjectContext) var viewContext
     
-    @State var filter: LessonsFilter
+    @State var listType: LessonsListType
+    
     @State private var selection = Set<Lesson>()
     
     // MARK: - View States
@@ -23,18 +24,12 @@ struct LessonsView: View {
     let nc = NotificationCenter.default
     
     var body: some View {
-        Group {
-            #if os(macOS)
-            LessonsNavMac(selectedLesson: $selection, filter: $filter)
-            #else
-            LessonsListContent(selection: $selection, filter: $filter)
-            #endif
-        }
+            LessonsListContent(selection: $selection, listType: $listType)
     }
 }
 
 struct AllLessonsView_Previews: PreviewProvider {
     static var previews: some View {
-        LessonsView(filter: LessonsFilter(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject())
+        LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject())
     }
 }

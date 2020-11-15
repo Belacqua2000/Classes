@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ILOSection: View {
     @Environment(\.managedObjectContext) var viewContext
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @ObservedObject var viewStates: DetailViewStates
     @ObservedObject var lesson: Lesson
     
     @State private var selectedILO: ILO? = nil
@@ -94,7 +94,7 @@ struct ILOSection: View {
             
             HStack {
                 #if os(iOS)
-                AddILOMenu(editILOViewState: $viewStates.editILOViewState, isAddingILO: $viewStates.addILOPresented)
+                AddILOMenu(detailStates: viewStates)
                 Spacer()
                 #endif
             }
