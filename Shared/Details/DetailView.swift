@@ -136,7 +136,6 @@ struct DetailView: View {
                     #if os(iOS)
                     if horizontalSizeClass == .compact {
                         Menu(content: {
-                            ToggleWatchedButton(lessons: [lesson])
                             DeleteLessonButton(viewStates: detailStates, lesson: lesson)
                             EditLessonButton(detailStates: detailStates, lessons: [lesson])
                         }, label: {

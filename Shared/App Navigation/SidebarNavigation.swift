@@ -220,7 +220,7 @@ struct SidebarNavigation: View {
             ZStack {
                 BlurVisualEffectViewMac(material: .underWindowBackground, blendMode: .behindWindow)
                 Text("Select a lesson")
-            }
+            }.disabled(true)
             #endif
             #if os(iOS)
             LessonsView(listType: .init(filterType: .all)).environmentObject(LessonsStateObject())

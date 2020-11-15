@@ -15,10 +15,13 @@ extension Notification.Name {
     static let scrollToNow = Notification.Name("scrollToNow")
     static let deleteLessons = Notification.Name("deleteLessons")
     static let exportLessons = Notification.Name("exportLessons")
+    static let showFilterView = Notification.Name("showFilterView")
+    static let showILORandomiser = Notification.Name("showILORandomiser")
     
     static let newLesson = Notification.Name("newLesson")
     static let importLessons = Notification.Name("importLessons")
     static let exportAll = Notification.Name("ExportAll")
+    static let exportCurrentView = Notification.Name("ExportCurrentView")
     
     static let editLesson = Notification.Name("editLesson")
     static let addILO = Notification.Name("addILO")

@@ -23,7 +23,8 @@ struct AppCommands: Commands {
         
         CommandGroup(replacing: .importExport) {
             Button("Import Lessons", action: {postNotification(.init(name: .importLessons))})
-//            Button("Export All Lessons", action: {postNotification(.init(name: .exportAll))})
+            Button("Export Lessons in Current View", action: {postNotification(.init(name: .exportCurrentView))})
+            Button("Export All Lessons", action: {postNotification(.init(name: .exportAll))})
         }
         
         CommandMenu("Lesson") {
@@ -31,11 +32,11 @@ struct AppCommands: Commands {
                 .keyboardShortcut("E", modifiers: .command)
                 .help("Edit the lessons")
 //                .disabled(!appViewState.detailViewShowing)
-            Button("Toggle Watched", action: toggleWatched)
-                .keyboardShortcut("Y", modifiers: .command)
             Button("Edit Tags", action: allocateTagView)
                 .keyboardShortcut("T", modifiers: .command)
 //                .disabled(!appViewState.detailViewShowing)
+            Button("Toggle Watched", action: toggleWatched)
+                .keyboardShortcut("Y", modifiers: .command)
             Divider()
             Button("Add Learning Outcome", action: addILO)
                 .keyboardShortcut("L", modifiers: .command)
@@ -57,16 +58,10 @@ struct AppCommands: Commands {
             Divider()
             Button("Scroll List to Now", action: scrollToNow)
                 .keyboardShortcut("s")
-            /*Divider()
-            Button("Summary", action: showSummary)
-                .keyboardShortcut("1", modifiers: .command)
-                .disabled(appViewState.currentTab == .summary)
-            Button("All Lessons", action: showAll)
-                .keyboardShortcut("2", modifiers: .command)
-                .disabled(appViewState.currentTab == .all)
-            Button("Learning Outcomes", action: showILO)
-                .keyboardShortcut("3", modifiers: .command)
-                .disabled(appViewState.currentTab == .ilo)*/
+            Button("Filter Lessons in View", action: {postNotification(.init(name: .showFilterView))})
+                .keyboardShortcut("f")
+            Button("Show Learning Outcome Randomiser", action: {postNotification(.init(name: .showILORandomiser))})
+                .keyboardShortcut("l")
             Divider()
         }
     }

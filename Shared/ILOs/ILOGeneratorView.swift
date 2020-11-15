@@ -19,10 +19,12 @@ struct ILOGeneratorView: View {
     @Binding var isPresented: Bool
     
     @State var writtenFilterActive = true
+    @State var shuffled = false
     
     var ilos: [ILO]
     var filteredILOs: [ILO] {
-        return writtenFilterActive ? ilos.filter({$0.written}) : ilos
+        let filter = writtenFilterActive ? ilos.filter({$0.written}) : ilos
+        return shuffled ? filter.shuffled() : filter
     }
     @State var currentILOIndex = 0
     
@@ -78,9 +80,14 @@ struct ILOGeneratorView: View {
                     }
                     Spacer()
                     HStack {
-                        Toggle(isOn: $writtenFilterActive, label: {
-                            Text("Only Show Written")
-                        })
+                        VStack(alignment: .leading) {
+                            Toggle(isOn: $writtenFilterActive, label: {
+                                Label("Only Show Written", systemImage: "pencil")
+                            })
+                            Toggle(isOn: $shuffled, label: {
+                                Label("Shuffle Order", systemImage: "shuffle")
+                            })
+                        }
                         Spacer()
                         #if os(macOS)
                         filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")

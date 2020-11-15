@@ -268,8 +268,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "469"
-            endingLineNumber = "469"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "scrollToNow(proxy:)"
             landmarkType = "7">
             <Locations>
@@ -316,8 +316,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "471"
-            endingLineNumber = "471"
+            startingLineNumber = "519"
+            endingLineNumber = "519"
             landmarkName = "scrollToNow(proxy:)"
             landmarkType = "7">
             <Locations>
@@ -366,8 +366,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "269"
             endingLineNumber = "269"
-            landmarkName = "dropTag(providers:tag:)"
-            landmarkType = "7">
+            landmarkName = "SidebarNavigation"
+            landmarkType = "14">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -380,8 +380,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "433"
-            endingLineNumber = "433"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
             landmarkName = "addLesson()"
             landmarkType = "7">
          </BreakpointContent>
@@ -414,8 +414,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "122"
             endingLineNumber = "122"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -428,8 +428,8 @@
             filePath = "Shared/Helpers/AppCommands.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -444,8 +444,8 @@
             filePath = "Shared/Helpers/AppCommands.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -603,8 +603,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "lessonList"
             landmarkType = "24">
          </BreakpointContent>
@@ -705,11 +705,11 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 9e395a5b179c2406"
+                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 9da17a1e35a9874a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.onReceive&lt;A where A1: Combine.Publisher, A1.Failure == Swift.Never&gt;(_: A1, perform: (A1.Output) -&gt; ()) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
+                  symbolName = "closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.sheet&lt;A where A1: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, onDismiss: Swift.Optional&lt;() -&gt; ()&gt;, content: () -&gt; A1) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
                   moduleName = "Classes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/nickbaughan/Documents/Code/Classes/macOS/LessonsNavMac.swift"
@@ -717,14 +717,14 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "39"
                   endingLineNumber = "39"
-                  offsetFromSymbolStart = "1833">
+                  offsetFromSymbolStart = "1466">
                </Location>
                <Location
-                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 43219bbb4f59b9da"
+                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 1fccbb9c2c00af3a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; SwiftUI.Alert in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.onReceive&lt;A where A1: Combine.Publisher, A1.Failure == Swift.Never&gt;(_: A1, perform: (A1.Output) -&gt; ()) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
+                  symbolName = "closure #2 () -&gt; SwiftUI.Alert in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.sheet&lt;A where A1: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, onDismiss: Swift.Optional&lt;() -&gt; ()&gt;, content: () -&gt; A1) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
                   moduleName = "Classes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/nickbaughan/Documents/Code/Classes/macOS/LessonsNavMac.swift"
@@ -751,6 +751,117 @@
             endingLineNumber = "56"
             landmarkName = "body"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7945D40D-1735-4984-AA41-48A87624BDE1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Lessons/LessonsListContent.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
+            landmarkName = "deleteItems(offsets:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7945D40D-1735-4984-AA41-48A87624BDE1 - 39749e2e785fd3c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Classes.LessonsListContent.(deleteItems in _CE7827F35D0EE20AAF593E845C5B79FC)(offsets: Foundation.IndexSet) -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "469"
+                  endingLineNumber = "469"
+                  offsetFromSymbolStart = "290">
+               </Location>
+               <Location
+                  uuid = "7945D40D-1735-4984-AA41-48A87624BDE1 - 754d6ec518d7f36b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Int) -&gt; Classes.Lesson in Classes.LessonsListContent.(deleteItems in _CE7827F35D0EE20AAF593E845C5B79FC)(offsets: Foundation.IndexSet) -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "469"
+                  endingLineNumber = "469"
+                  offsetFromSymbolStart = "184">
+               </Location>
+               <Location
+                  uuid = "7945D40D-1735-4984-AA41-48A87624BDE1 - 302047feef859e39"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Classes.Lesson) -&gt; () in Classes.LessonsListContent.(deleteItems in _CE7827F35D0EE20AAF593E845C5B79FC)(offsets: Foundation.IndexSet) -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "470"
+                  endingLineNumber = "470"
+                  offsetFromSymbolStart = "194">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D50FA05-D390-4A8E-83D2-C2733E24DAE6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Lessons/LessonsListContent.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "493"
+            endingLineNumber = "493"
+            landmarkName = "deleteLessons()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3D50FA05-D390-4A8E-83D2-C2733E24DAE6 - 609991c7a34d134b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Classes.LessonsListContent.(deleteLessons in _CE7827F35D0EE20AAF593E845C5B79FC)() -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "476"
+                  endingLineNumber = "476"
+                  offsetFromSymbolStart = "224">
+               </Location>
+               <Location
+                  uuid = "3D50FA05-D390-4A8E-83D2-C2733E24DAE6 - 82353d2c50647acd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in Classes.LessonsListContent.(deleteLessons in _CE7827F35D0EE20AAF593E845C5B79FC)() -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "477"
+                  endingLineNumber = "477"
+                  offsetFromSymbolStart = "196">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
