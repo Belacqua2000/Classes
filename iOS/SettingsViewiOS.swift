@@ -31,9 +31,21 @@ struct SettingsViewiOS: View {
                 GeneralSettingsView()
             }
             
-            Section(header: Text("Import and Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
+            Section(header: Text("Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
                 Button(action: {
                     shareSheetIsShown = true
+//                    Menu(content: {
+//                        Button(action: {
+//                            shareSheetIsShown = true
+//                        }, label: {
+//                            Label("Share", systemImage: "square.and.arrow.up")
+//                        })
+//                        
+//                        Button(action: {
+//                            exportSheetIsShown = true
+//                        }, label: {
+//                            Label("Save to Files", systemImage: "folder")
+//                        })
                 }, label: {
                     Label("Export All Lessons", systemImage: "square.and.arrow.up")
                 })
@@ -43,14 +55,14 @@ struct SettingsViewiOS: View {
                 }
                 .fileExporter(isPresented: $exportSheetIsShown, document: LessonJSON(lessons: Array(lessons)), contentType: .classesFormat, onCompletion: {_ in})
                 
-                Button(action: {
+                /*Button(action: {
                     presentationMode.wrappedValue.dismiss()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         NotificationCenter.default.post(.init(name: .importLessons))
                     }
                 }, label: {
                     Label("Import Lessons", systemImage: "square.and.arrow.down")
-                })
+                })*/
             }
             
             Section(header: Text("More")) {

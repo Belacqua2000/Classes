@@ -118,6 +118,11 @@
         "imageName": "sidebar.leading"
       },
       {
+        "title": "iPad Layout Optimisation",
+        "details": "The app layout has been optimised for iPad with a new three-column layout to maximise space available on the larger display.  On smaller iPads, you can view the list of lessons and lesson details at the same time, and change the current list with a tap or swipe.  On larger iPads, you can view all three columns at once!",
+        "imageName": "ipad.landscape"
+      },
+      {
         "title": "New List Filters",
         "details": "Custom filters allow you to filter each lesson list further than a single tag or lesson type.  Choose whether to view only watched or unwatched lessons, and specify multiple tags and lesson types to include and exclude.",
         "imageName": "line.horizontal.3.decrease.circle.fill"

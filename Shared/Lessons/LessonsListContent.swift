@@ -186,7 +186,7 @@ struct LessonsListContent: View {
                         Button(action: {
                             let lesson = lesson as Lesson
                             viewStates.lessonToChange = lesson
-                            viewStates.addLessonIsPresented = true
+                            sheetToPresent = .addLesson
                         }, label: {
                             Label("Edit", systemImage: "square.and.pencil")
                         })

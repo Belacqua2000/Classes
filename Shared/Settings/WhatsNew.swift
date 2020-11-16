@@ -142,12 +142,12 @@ struct WhatsNew_Previews: PreviewProvider {
     }
     static var features = AppFeatures.debug(data: String(data: getData(), encoding: .utf8)!)
     static var previews: some View {
-        //WhatsNew(unseenFeatures: features.features)
-        Text("Root View")
-            .sheet(isPresented: .constant(true)) {
         WhatsNew()
-            .preferredColorScheme(.light)
-            }
+//        Text("Root View")
+//            .sheet(isPresented: .constant(true)) {
+//        WhatsNew()
+//            .preferredColorScheme(.light)
+//            }
             
     }
 }
