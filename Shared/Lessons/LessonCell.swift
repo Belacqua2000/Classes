@@ -47,7 +47,6 @@ struct LessonCell: View {
                         } else {
                             Text(dateText)
                                 .font(.subheadline)
-                                .foregroundColor(.primary)
                         }
                         
                         

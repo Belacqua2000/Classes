@@ -51,10 +51,9 @@ struct ILOGeneratorView: View {
     }
     
     var body: some View {
-        Group {
-            if filteredILOs.count != 0 {
-                VStack {
-                    Spacer()
+        VStack {
+            Spacer()
+            if filteredILOs.count > 0 {
                     HStack {
                         #if os(macOS)
                         previousButton
@@ -78,27 +77,26 @@ struct ILOGeneratorView: View {
                             .padding()
                         #endif
                     }
-                    Spacer()
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Toggle(isOn: $writtenFilterActive, label: {
-                                Label("Only Show Written", systemImage: "pencil")
-                            })
-                            Toggle(isOn: $shuffled, label: {
-                                Label("Shuffle Order", systemImage: "shuffle")
-                            })
-                        }
-                        Spacer()
-                        #if os(macOS)
-                        filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")
-                            .disabled(true)
-                        #endif
-                    }.padding()
-                }
             } else {
                 Text("No outcomes to Randomise")
                     .font(.title)
             }
+            Spacer()
+            HStack {
+                VStack(alignment: .leading) {
+                    Toggle(isOn: $writtenFilterActive, label: {
+                        Label("Only Show Written", systemImage: "pencil")
+                    })
+                    Toggle(isOn: $shuffled, label: {
+                        Label("Shuffle Order", systemImage: "shuffle")
+                    })
+                }
+                Spacer()
+                #if os(macOS)
+                filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")
+                    .disabled(true)
+                #endif
+            }.padding()
         }
         .navigationTitle("Outcome Randomiser")
         .toolbar {

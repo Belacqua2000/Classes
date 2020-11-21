@@ -28,7 +28,8 @@ extension Notification.Name {
     static let addResource = Notification.Name("addResource")
     static let toggleWatched = Notification.Name("toggleWatched")
     static let tagAllocateViewShown = Notification.Name("tagAllocateViewShown")
-    
+    static let markILOsWritten = Notification.Name("markILOsWatched")
+    static let markILOsUnwritten = Notification.Name("markILOsUnwatched")
     
     static let detailShowing = Notification.Name("detailShowing")
     static let detailNotShowing = Notification.Name("detailNotShowing")

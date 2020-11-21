@@ -189,11 +189,28 @@ struct LessonsListContent: View {
                             sheetToPresent = .addLesson
                         }, label: {
                             Label("Edit", systemImage: "square.and.pencil")
-                        })
+                        }).keyboardShortcut("E", modifiers: .command)
+                        Divider()
                         Button(action: {toggleWatched(lessons: [lesson])}, label: {
                             !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
                                 : Label("Mark Unwatched", systemImage: "checkmark.circle")
-                        })
+                        }).keyboardShortcut("Y", modifiers: .command)
+                        
+                        Button(action: {
+                            guard let lesson = selection.first else {return}
+                            markAllOutcomes(written: true, lesson: lesson)
+                        }, label: {
+                            Label("Mark Outcomes as Written", systemImage: "checkmark.circle")
+                        }).keyboardShortcut("D", modifiers: .command)
+                        
+                        Button(action: {
+                            guard let lesson = selection.first else {return}
+                            markAllOutcomes(written: false, lesson: lesson)
+                        }, label: {
+                            Label("Mark outcomes as Unwritten", systemImage: "xmark.circle")
+                        }).keyboardShortcut("U", modifiers: .command)
+                        
+                        Divider()
                         #if os(iOS)
                         Menu(content: {
                             Button(action: {
@@ -474,6 +491,15 @@ struct LessonsListContent: View {
             selection = Set(filteredLessons)
             exporterShown = true
         })
+        .onReceive(nc.publisher(for: .markILOsWritten), perform: { _ in
+            guard let lesson = selection.first else {return}
+            markAllOutcomes(written: true, lesson: lesson)
+        })
+        .onReceive(nc.publisher(for: .markILOsUnwritten), perform: { _ in
+            guard let lesson = selection.first else {return}
+            markAllOutcomes(written: false, lesson: lesson)
+        })
+        
     }
     
     private func addLesson() {
@@ -510,6 +536,14 @@ struct LessonsListContent: View {
             lesson.toggleWatched(context: viewContext)
         }
         #endif
+    }
+    
+    private func markAllOutcomes(written: Bool, lesson: Lesson) {
+        if written {
+            lesson.markAllILOsWritten(context: viewContext)
+        } else {
+            lesson.markAllILOsUnwritten(context: viewContext)
+        }
     }
     
     private func scrollToNow(proxy: ScrollViewProxy) {

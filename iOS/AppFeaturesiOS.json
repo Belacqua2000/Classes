@@ -138,5 +138,27 @@
         "imageName": "doc.fill"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 1,
+    "features": [
+      {
+        "title": "Mark All Learning Outcomes as Written/Unwritten",
+        "details": "New options for marking all outcomes of a lesson as written or unwritten.  Hold down or right-click on a lesson to access.",
+        "imageName": "checkmark.circle.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Fixed bug where the outcome randomiser would not show any learning outcomes if none in the selection had been marked as written.\n\nFixed incorrect colour of the lesson date on iPad.",
+        "imageName": "ladybug.fill"
+      },
+      {
+        "title": "Improved Context Menu",
+        "details": "Improved the layout of the context menu.  Access by holding down/right-clicking on a lesson.",
+        "imageName": "contextualmenu.and.cursorarrow"
+      }
+    ]
   }
 ]

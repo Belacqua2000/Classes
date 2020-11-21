@@ -90,6 +90,24 @@ extension Lesson {
         }
     }
     
+    func markAllILOsWritten(context managedObjectContext: NSManagedObjectContext) {
+        (ilo?.allObjects as? [ILO])?.forEach({$0.written = true})
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    func markAllILOsUnwritten(context managedObjectContext: NSManagedObjectContext) {
+        (ilo?.allObjects as? [ILO])?.forEach({$0.written = false})
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
     func delete(context managedObjectContext: NSManagedObjectContext) {
         managedObjectContext.delete(self)
         do {

@@ -53,7 +53,9 @@ struct ImportView: View {
                     VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Button("Select All", action: selectAll)
+                            .disabled(lessonsToBeImported.count == lessonsInFile?.lessonData.count)
                         Button("Deselect All", action: deselectAll)
+                            .disabled(lessonsToBeImported.isEmpty)
                     }
                     Text("\(lessonsToBeImported.count) lessons selected.").bold()
                     Text("Please note, if any of these lessons are already in the app, they will be reimported.").italic()

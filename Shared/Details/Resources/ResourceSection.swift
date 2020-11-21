@@ -36,7 +36,7 @@ struct ResourceSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Label("Resources", systemImage: "globe")
+            Label("Resources", systemImage: "link")
                 .font(.headline)
             if filteredResources.count > 0 {
                 #if !os(macOS)

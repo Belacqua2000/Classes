@@ -132,8 +132,8 @@ struct DetailView: View {
                 viewStates.tagPopoverPresented = true
             })
             .toolbar {
+                #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {
-                    #if os(iOS)
                     if horizontalSizeClass == .compact {
                         Menu(content: {
                             DeleteLessonButton(viewStates: detailStates, lesson: lesson)
@@ -146,8 +146,36 @@ struct DetailView: View {
                         DeleteLessonButton(viewStates: detailStates, lesson: lesson)
                         EditLessonButton(detailStates: detailStates, lessons: [lesson])
                     }
-                    #endif
                 }
+                
+                /*
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if horizontalSizeClass == .regular {
+                        Button(action: {
+                            viewStates.tagPopoverPresented = true
+                        }, label: {
+                            Label("Edit Tags", systemImage: "tag")
+                        })
+    //                    .disabled(selectedLesson.count != 1)
+                        .help("Edit the tags for this lesson")
+                        .popover(isPresented: $viewStates.tagPopoverPresented) {
+                            AllocateTagView(selectedTags:
+                                                Binding(
+                                                    get: {lesson.tag!.allObjects as! [Tag]},
+                                                    set: {
+                                                        for tag in lesson.tag!.allObjects as! [Tag] {
+                                                            lesson.removeFromTag(tag)
+                                                        }
+                                                        for tag in $0 {
+                                                            lesson.addToTag(tag)
+                                                        }
+                                                    })
+                            )
+                            .frame(width: 200, height: 150)
+                        }
+                    }
+                }*/
+                #endif
             }
             .toolbar(id: "DetailToolbar") {
                 #if os(iOS)

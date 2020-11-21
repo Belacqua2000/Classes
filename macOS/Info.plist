@@ -53,7 +53,7 @@
 			<key>UTTypeIcons</key>
 			<dict>
 				<key>UTTypeIconText</key>
-				<string></string>
+				<string>Classes</string>
 			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>com.baughan.classes.lessons</string>
