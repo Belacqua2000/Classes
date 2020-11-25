@@ -10,7 +10,7 @@ import SwiftUI
 struct AllocateTagView: View {
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))],
         animation: .default)
     private var tags: FetchedResults<Tag>
     @Binding var selectedTags: [Tag]

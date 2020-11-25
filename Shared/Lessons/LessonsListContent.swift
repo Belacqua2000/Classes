@@ -197,6 +197,9 @@ struct LessonsListContent: View {
                         }).keyboardShortcut("Y", modifiers: .command)
                         
                         Button(action: {
+                            #if os(iOS)
+                            selection = [lesson]
+                            #endif
                             guard let lesson = selection.first else {return}
                             markAllOutcomes(written: true, lesson: lesson)
                         }, label: {
@@ -204,6 +207,9 @@ struct LessonsListContent: View {
                         }).keyboardShortcut("D", modifiers: .command)
                         
                         Button(action: {
+                            #if os(iOS)
+                            selection = [lesson]
+                            #endif
                             guard let lesson = selection.first else {return}
                             markAllOutcomes(written: false, lesson: lesson)
                         }, label: {

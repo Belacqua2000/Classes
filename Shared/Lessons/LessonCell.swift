@@ -56,7 +56,7 @@ struct LessonCell: View {
                         }
                         
                         LazyVGrid(columns: gridItem) {
-                            ForEach((lesson.tag?.allObjects as? [Tag] ?? []).sorted(by: {$0.name ?? "" < $1.name ?? ""})) { tag in
+                            ForEach((lesson.tag?.allObjects as? [Tag] ?? []).sorted {$0.name?.localizedStandardCompare($1.name ?? "") == .orderedAscending}) { tag in
                                 Image(systemName: "tag.circle.fill")
                                     .foregroundColor(tag.swiftUIColor)
                             }

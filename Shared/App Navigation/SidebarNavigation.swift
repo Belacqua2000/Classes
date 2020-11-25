@@ -45,7 +45,7 @@ struct SidebarNavigation: View {
 //    let dropDelegate = LessonDrop()
     
     // Tag Fetch Request
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)], animation: .default)
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))], animation: .default)
     private var tags: FetchedResults<Tag>
     
     // Lessons Fetch Request

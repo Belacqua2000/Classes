@@ -160,5 +160,17 @@
         "imageName": "contextualmenu.and.cursorarrow"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 2,
+    "features": [
+      {
+        "title": "Bug Fixes",
+        "details": "Improved alphabetical ordering of tags with numbers in their name, so that “10” does not appear between “1” and “2”.\n\nFixed a bug where the new “Mark Outcomes as Written/Unwritten” action would not work.",
+        "imageName": "ladybug.fill"
+      }
+    ]
   }
 ]

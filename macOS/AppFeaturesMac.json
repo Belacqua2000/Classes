@@ -52,5 +52,17 @@
         "imageName": "contextualmenu.and.cursorarrow"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 2,
+    "features": [
+      {
+        "title": "Bug Fixes",
+        "details": "Improved alphabetical ordering of tags with numbers, so that “10” does not appear between “1” and “2”.",
+        "imageName": "ladybug.fill"
+      }
+    ]
   }
 ]

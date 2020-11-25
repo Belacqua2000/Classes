@@ -40,9 +40,10 @@ struct DetailView: View {
     private var unfilteredTags: FetchedResults<Tag>
     private var tags: [Tag]? {
         let tags = lesson.tag?.allObjects as? [Tag]
-        return tags?.sorted(by: {
-            $0.name! < $1.name!
-        })
+        return tags?.sorted {
+            $0.name?.localizedStandardCompare($1.name ?? "") == .orderedAscending
+        }
+        
     }
     
     
