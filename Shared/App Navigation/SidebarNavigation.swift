@@ -109,7 +109,8 @@ struct SidebarNavigation: View {
                                 Image(systemName: "pencil.slash")
                             })
                     })
-            }
+            }.listItemTint(.preferred(.init("SecondaryColorMidpoint")))
+            
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
@@ -132,15 +133,21 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Tags")) {
                 ForEach(tags) { tag in
-                    NavigationLink(destination:  LessonsView(listType: LessonsListType(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject())) {
-                        Label(
-                            title: { Text(tag.name ?? "Untitled") },
-                            icon: {
-                                Image(systemName: "tag")
+                    
+                    NavigationLink(destination:  LessonsView(listType: LessonsListType(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject()), label: {
+                        if #available(iOS 14.3, *) {
+                            Label(tag.name ?? "Untitled", systemImage: "tag")
+                        } else {
+                            Label(
+                                title: { Text(tag.name ?? "Untitled") },
+                                icon: { Image(systemName: "tag")
                                     .foregroundColor(tag.swiftUIColor)
-                            }
-                        )
-                    }
+                                }
+                            )
+                        }
+                        
+                    })
+                    
                     .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
                         Button(action: {editTag(tag: tag)}, label: {
                             Label("Edit", systemImage: "square.and.pencil")
@@ -150,7 +157,7 @@ struct SidebarNavigation: View {
                         })
                     }/*@END_MENU_TOKEN@*/)
                     .tag(SidebarItem(sidebarType: .tag, lessonTypes: nil, tag: tag))
-                    
+                    .listItemTint(tag.swiftUIColor)
                     /*.onDrop(of: [UTType.text], isTargeted: $tagDropTargetted, perform: { providers in
                         dropTag(providers: providers, tag: tag)
                     })*/

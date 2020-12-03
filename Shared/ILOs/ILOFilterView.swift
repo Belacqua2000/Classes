@@ -18,7 +18,9 @@ struct ILOFilterView: View {
     let gridItem: [GridItem] = [GridItem(.flexible())]
     #endif
     
-    @FetchRequest(entity: Tag.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)])
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))],
+        animation: .default)
     var allTags: FetchedResults<Tag>
     
     var allLessonTypes = Lesson.LessonType.allCases

@@ -74,23 +74,25 @@ struct AddLessonForm: View {
     var body: some View {
         Form {
             Section {
-                HStack {
-                    Image(systemName: "textformat")
-                    TextField("Title", text: $title)
-                }
-                HStack {
-                    Image(systemName: "mappin")
-                    TextField("Location", text: $location)
-                }
-                HStack {
-                    Image(systemName: "graduationcap")
-                    #if os(macOS)
-                    TextField("Teacher", text: $teacher)
-                    #else
-                    TextField("Teacher", text: $teacher)
-                        .textContentType(.name)
-                    #endif
-                }
+                Label(
+                    title: {TextField("Title", text: $title)},
+                    icon: {Image(systemName: "textformat")}
+                )
+                Label(
+                    title: {TextField("Location", text: $location)},
+                    icon: {Image(systemName: "mappin")}
+                )
+                Label(
+                    title: {
+                        #if os(macOS)
+                        TextField("Teacher", text: $teacher)
+                        #else
+                        TextField("Teacher", text: $teacher)
+                            .textContentType(.name)
+                        #endif
+                    },
+                    icon: {Image(systemName: "graduationcap")}
+                )
                 DatePicker(selection: $date) {
                     Label("Date", systemImage: "calendar")
                 }

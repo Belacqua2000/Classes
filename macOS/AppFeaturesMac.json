@@ -64,5 +64,22 @@
         "imageName": "ladybug.fill"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 3,
+    "features": [
+      {
+        "title": "Color Improvements",
+        "details": "Now featuring a more colorful sidebar, and minor adjustments to some colors throughout the app.  Fixed tag colors not always showing in the sidebar.",
+        "imageName": "paintpalette.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Improved tag sorting introduced in 1.1.2 is now used in the filter lessons view.",
+        "imageName": "ladybug.fill"
+      }
+    ]
   }
 ]

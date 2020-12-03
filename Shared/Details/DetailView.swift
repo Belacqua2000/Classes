@@ -22,6 +22,8 @@ struct DetailView: View {
     @EnvironmentObject var appViewState: AppViewState
     @State private var isInValidURLAlertShown: Bool = false
     
+    @State var tagShown = false
+    
     @StateObject var detailStates = DetailViewStates()
     
     let nc = NotificationCenter.default
@@ -90,6 +92,23 @@ struct DetailView: View {
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 10) {
                         LessonDetails(lesson: lesson)
+                            .popover(isPresented: $tagShown) {
+                                
+                                AllocateTagView(selectedTags:
+                                                    Binding(
+                                                        get: {lesson.tag!.allObjects as! [Tag]},
+                                                        set: {
+                                                            for tag in lesson.tag!.allObjects as! [Tag] {
+                                                                lesson.removeFromTag(tag)
+                                                            }
+                                                            for tag in $0 {
+                                                                lesson.addToTag(tag)
+                                                            }
+                                                        })
+                                
+                                )
+                                            .frame(width: 400, height: 200)
+                            }
                         if !(tags?.isEmpty ?? true) {
                             DetailViewTags(tags: tags)
                         }
@@ -139,6 +158,12 @@ struct DetailView: View {
                         Menu(content: {
                             DeleteLessonButton(viewStates: detailStates, lesson: lesson)
                             EditLessonButton(detailStates: detailStates, lessons: [lesson])
+                            Button(action: {
+                                tagShown = true
+                            }, label: {
+                                Label("Edit Tags", systemImage: "tag")
+                            })
+                            .help("Edit the tags for this lesson")
                         }, label: {
                             Label("Edit Lesson", systemImage: "ellipsis.circle")
                         })
@@ -149,33 +174,17 @@ struct DetailView: View {
                     }
                 }
                 
-                /*
+                
                 ToolbarItem(placement: .navigationBarLeading) {
                     if horizontalSizeClass == .regular {
                         Button(action: {
-                            viewStates.tagPopoverPresented = true
+                            tagShown = true
                         }, label: {
                             Label("Edit Tags", systemImage: "tag")
                         })
-    //                    .disabled(selectedLesson.count != 1)
                         .help("Edit the tags for this lesson")
-                        .popover(isPresented: $viewStates.tagPopoverPresented) {
-                            AllocateTagView(selectedTags:
-                                                Binding(
-                                                    get: {lesson.tag!.allObjects as! [Tag]},
-                                                    set: {
-                                                        for tag in lesson.tag!.allObjects as! [Tag] {
-                                                            lesson.removeFromTag(tag)
-                                                        }
-                                                        for tag in $0 {
-                                                            lesson.addToTag(tag)
-                                                        }
-                                                    })
-                            )
-                            .frame(width: 200, height: 150)
-                        }
                     }
-                }*/
+                }
                 #endif
             }
             .toolbar(id: "DetailToolbar") {

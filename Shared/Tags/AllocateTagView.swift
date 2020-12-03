@@ -48,11 +48,18 @@ struct AllocateTagView: View {
     var body: some View {
         VStack {
             if !tags.isEmpty {
-        List {
-            ForEach(tags) { tag in
-                HStack {
-                    Label(tag.name ?? "", systemImage: "tag")
-                    Spacer()
+                List {
+                    ForEach(tags) { tag in
+                        HStack {
+                            Label(
+                                title: {
+                                    Text(tag.name ?? "")
+                                },
+                                icon: {
+                                    Image(systemName: "tag")
+                                        .foregroundColor(tag.swiftUIColor)
+                                })
+                            Spacer()
                     Button(action: { selectedTag(tag) }, label: {
                         selectedTags.contains(tag) ?
                             Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")

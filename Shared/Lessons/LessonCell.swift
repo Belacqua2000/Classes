@@ -37,11 +37,11 @@ struct LessonCell: View {
                             if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) {
                                 Text("\(dateText) \(relativeText)")
                                     .font(.subheadline)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.init("SecondaryColorMidpoint"))
                             } else {
                                 Text(dateText)
                                     .font(.subheadline)
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.init("SecondaryColorMidpoint"))
                             }
                             
                         } else {

@@ -172,5 +172,27 @@
         "imageName": "ladybug.fill"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 3,
+    "features": [
+      {
+        "title": "Edit Tag Improvements",
+        "details": "A new button in the iPad toolbar allows you to quickly edit tags, without having to edit the full lesson.",
+        "imageName": "tag.fill"
+      },
+      {
+        "title": "Color Improvements",
+        "details": "Now featuring a more colorful sidebar, and minor adjustments to some colors throughout the app.",
+        "imageName": "paintpalette.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Improved tag sorting introduced in 1.4.2 is now used in the filter lessons view.",
+        "imageName": "ladybug.fill"
+      }
+    ]
   }
 ]
