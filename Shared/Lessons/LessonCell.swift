@@ -70,10 +70,14 @@ struct LessonCell: View {
                 )
                 Spacer()
                 Text(lesson.location ?? "No Location")
+                
+                ILOProgressGauge(lesson: lesson)
+                
                 if lesson.watched {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.accentColor)
-                    //.renderingMode(.original)
+                } else {
+                    EmptyView()
                 }
             }
     }

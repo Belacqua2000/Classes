@@ -126,6 +126,8 @@
 		17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17CACE362529B43200D906E4 /* LessonsActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CACE352529B43200D906E4 /* LessonsActionButtons.swift */; };
 		17CACE4C2529CC9A00D906E4 /* LessonsPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */; };
+		17D1A3A925798307001F885E /* ILOProgressShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1A3A825798307001F885E /* ILOProgressShape.swift */; };
+		17D1A3AA25798307001F885E /* ILOProgressShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1A3A825798307001F885E /* ILOProgressShape.swift */; };
 		17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D48C22251963F800CBF0A0 /* Helpers.swift */; };
 		17D546782532587200046654 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC61D250CB40F00FB28B6 /* AddTagView.swift */; };
 		17D546792532587300046654 /* AddTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176CC61D250CB40F00FB28B6 /* AddTagView.swift */; };
@@ -254,6 +256,7 @@
 		17C9737D250E2A62000ACF16 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		17CACE352529B43200D906E4 /* LessonsActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LessonsActionButtons.swift; path = iOS/LessonsActionButtons.swift; sourceTree = SOURCE_ROOT; };
 		17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsPrimaryActionButton.swift; sourceTree = "<group>"; };
+		17D1A3A825798307001F885E /* ILOProgressShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOProgressShape.swift; sourceTree = "<group>"; };
 		17D48C22251963F800CBF0A0 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		17D5468025325D3200046654 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		17D551D42514DDF900A502EA /* ILOGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOGeneratorView.swift; sourceTree = "<group>"; };
@@ -492,6 +495,7 @@
 				1702DDD72526562100B6863C /* BottomToolbar.swift */,
 				17BD0E8F251D425000BCC40D /* LessonsRow.swift */,
 				17E50BC52504D8F800BA8618 /* LessonCell.swift */,
+				17D1A3A825798307001F885E /* ILOProgressShape.swift */,
 				17E50BC22504D81E00BA8618 /* AddLessonView.swift */,
 			);
 			path = Lessons;
@@ -775,6 +779,7 @@
 				1750A3F82555733600A7A2E7 /* BlurVisualEffectView.swift in Sources */,
 				17BDFB3F2555B58500E5EA88 /* StatisticsView.swift in Sources */,
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
+				17D1A3A925798307001F885E /* ILOProgressShape.swift in Sources */,
 				17BDFB432555B58500E5EA88 /* UnwrittenILOsList.swift in Sources */,
 				176E09BD2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
 				1751BB292533514000AA78D6 /* LessonsStateObject.swift in Sources */,
@@ -905,6 +910,7 @@
 				17E50BD125065CB300BA8618 /* Lesson.swift in Sources */,
 				1726BFD12555C98200C1E1D0 /* LessonFile.swift in Sources */,
 				17937D712531BE8B001C2540 /* EditLessonButton.swift in Sources */,
+				17D1A3AA25798307001F885E /* ILOProgressShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
