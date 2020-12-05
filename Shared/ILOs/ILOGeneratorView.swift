@@ -23,7 +23,15 @@ struct ILOGeneratorView: View {
     
     var ilos: [ILO]
     var filteredILOs: [ILO] {
-        let filter = writtenFilterActive ? ilos.filter({$0.written}) : ilos
+        var filter = writtenFilterActive ? ilos.filter({$0.written}) : ilos
+        filter.sort {
+            if $0.lesson?.title ?? "" != $1.lesson?.title ?? "" {
+                return $0.lesson?.title ?? "" < $1.lesson?.title ?? ""
+            }
+            else {
+                return $0.index < $1.index
+            }
+        }
         return shuffled ? filter.shuffled() : filter
     }
     @State var currentILOIndex = 0

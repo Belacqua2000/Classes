@@ -41,7 +41,7 @@ struct LessonsListContent: View {
         case .all:
             return("All Lessons")
         case .tag:
-            return("Tag: \(listType.tag?.name ?? "")")
+            return listType.tag?.name ?? ""
         case .lessonType:
             return Lesson.lessonTypePlural(type: listType.lessonType?.rawValue)
         case .watched:
@@ -419,7 +419,7 @@ struct LessonsListContent: View {
             
             ToolbarItem(id: "Filter", placement: .bottomBar) {
                 Button(action: {filterViewActive = true}, label: {
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
+                    Label("Filter", systemImage: listFilter.anyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
                 })
                 .help("Filter Lessons in the View")
                 .sheet(isPresented: $filterViewActive) {
@@ -461,7 +461,7 @@ struct LessonsListContent: View {
             
             ToolbarItem(id: "Filter", placement: .automatic) {
                 Button(action: {nc.post(.init(name: .showFilterView))}, label: {
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
+                    Label("Filter", systemImage: listFilter.anyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
                 })
                 .help("Filter the lessons in the list")
                 .onReceive(nc.publisher(for: .showFilterView), perform: { _ in

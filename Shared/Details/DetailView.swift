@@ -198,9 +198,6 @@ struct DetailView: View {
                 ToolbarItem(id: "Toggle Watched Button", placement: .automatic) {
                     ToggleWatchedButton(lessons: [lesson])
                 }
-                ToolbarItem(id: "Spacer") {
-                    Spacer()
-                }
                 
                 ToolbarItem(id: "Tag Button", placement: .automatic) {
                     Button(action: {
@@ -227,12 +224,21 @@ struct DetailView: View {
                     }
                 }
                 
+                ToolbarItem(id: "Spacer") {
+                    Spacer()
+                }
+                
                 ToolbarItem(id: "AddResourceButton", placement: .automatic) {
                     AddResourceButton(isAddingResource: $detailStates.addResourcePresented)
                 }
                 ToolbarItem(id: "AddILOMenu", placement: .automatic) {
                     AddILOMenu(detailStates: detailStates)
                 }
+                
+                ToolbarItem(id: "Spacer") {
+                    Spacer()
+                }
+                
                 ToolbarItem(id: "DeleteButton") {
                     DeleteLessonButton(viewStates: detailStates)
                 }
