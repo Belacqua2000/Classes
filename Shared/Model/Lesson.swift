@@ -117,6 +117,10 @@ extension Lesson {
         }
     }
     
+    var completedILOs: Double {
+        return Double((ilo?.allObjects as? [ILO])?.filter({$0.written}).count ?? 0)
+    }
+    
     static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool, tags: [Tag], notes: String) {
         let lesson = Lesson(context: managedObjectContext)
         lesson.id = UUID()

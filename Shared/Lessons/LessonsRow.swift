@@ -11,7 +11,7 @@ struct LessonsRow: View {
     @EnvironmentObject var viewStates: LessonsStateObject
     @Binding var selection: Set<Lesson>
     
-    var lesson: Lesson
+    @ObservedObject var lesson: Lesson
     var lessonSet: Set<Lesson> {
         var set = Set<Lesson>()
         set.insert(lesson)

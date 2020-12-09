@@ -17,8 +17,8 @@ struct ILOProgressGauge: View {
     
     @ObservedObject var lesson: Lesson
     
-    var completedILOs: Double {
-        return Double((lesson.ilo?.allObjects as? [ILO])?.filter({$0.written}).count ?? 0)
+    var completedILOs: [ILO] {
+        return (lesson.ilo?.allObjects as? [ILO])?.filter({$0.written}) ?? []
     }
     
     var totalILOs: Double {
@@ -28,14 +28,15 @@ struct ILOProgressGauge: View {
     var body: some View {
         
         ZStack {
-            ILOProgressShape(amountComplete: completedILOs/totalILOs)
+            ILOProgressShape(lesson: lesson, amountComplete: Double(completedILOs.count)/totalILOs)
                 .stroke(Color.accentColor, lineWidth: 2)
                 .frame(width: iconSize, height: iconSize)
-            Text(nf.string(from: NSNumber(value: completedILOs/totalILOs)) ?? "")
+            Text(nf.string(from: NSNumber(value: Double(completedILOs.count)/totalILOs)) ?? "")
                 .minimumScaleFactor(0.01)
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .offset(x: 0, y: iconSize)
+            Text("\((lesson.ilo?.allObjects as? [ILO])?.filter({$0.written}).count ?? 5)")
         }
     }
     
@@ -48,11 +49,13 @@ struct ILOProgressGauge: View {
 
 struct ILOProgressShape: Shape {
     
+    @ObservedObject var lesson: Lesson
+    
     var amountComplete: Double
     
     func path(in rect: CGRect) -> Path {
         let startAngle = Angle.degrees(-90)
-        let endAngle = Angle.degrees(360 * amountComplete - 90)
+        let endAngle = Angle.degrees(360 * lesson.completedILOs / Double(lesson.iloCount) - 90)
         
         var path = Path()
         
