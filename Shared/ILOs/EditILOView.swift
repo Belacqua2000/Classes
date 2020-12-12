@@ -97,13 +97,6 @@ struct EditILOView: View {
                 TextField("Outcome Text", text: $iloText)
                     .navigationTitle("Add Outcome")
             }
-            #if os(macOS)
-            HStack {
-                Spacer()
-                cancelButton
-                saveButton
-            }
-            #endif
         }
         .onAppear(perform: {
             if let ilo = ilo {
@@ -144,13 +137,6 @@ struct EditILOView: View {
                             .frame(height: 100)
                         #endif
                     })
-            #if os(macOS)
-            HStack {
-                Spacer()
-                cancelButton
-                saveButton
-            }
-            #endif
         }
     }
     
@@ -173,14 +159,12 @@ struct EditILOView: View {
             }
         }
         .toolbar {
-            #if !os(macOS)
             ToolbarItem(placement: .confirmationAction) {
                 saveButton
             }
             ToolbarItem(placement: .cancellationAction) {
                 cancelButton
             }
-            #endif
         }
     }
     

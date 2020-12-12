@@ -12,7 +12,7 @@ struct EditLessonButton: View {
     var lessons: [Lesson]
     var body: some View {
         Button(action: editLesson, label: {
-            Label("Edit Info", systemImage: "rectangle.and.pencil.and.ellipsis")
+            Label("Edit Info", systemImage: "pencil")
         })
         .disabled(lessons.count != 1)
         .help("Edit the lesson info")

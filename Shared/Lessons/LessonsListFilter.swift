@@ -25,4 +25,8 @@ class LessonsListFilter: ObservableObject {
     
     @Published var excludedTagsActive = false
     @Published var excludedTags = [Tag]()
+    
+    var anyFilterActive: Bool {
+        return watchedOnly || unwatchedOnly || includedTagsActive || excludedTagsActive || includedLessonTypesActive || excludedLessonTypesActive
+    }
 }
