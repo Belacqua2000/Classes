@@ -27,17 +27,17 @@ struct ILOProgressGauge: View {
     
     var body: some View {
         
-        ZStack {
-            ILOProgressShape(lesson: lesson, amountComplete: Double(completedILOs.count)/totalILOs)
-                .stroke(Color.accentColor, lineWidth: 2)
-                .frame(width: iconSize, height: iconSize)
-            Text(nf.string(from: NSNumber(value: Double(completedILOs.count)/totalILOs)) ?? "")
-                .minimumScaleFactor(0.01)
-                .font(.footnote)
-                .foregroundColor(.gray)
-                .offset(x: 0, y: iconSize)
-            Text("\((lesson.ilo?.allObjects as? [ILO])?.filter({$0.written}).count ?? 5)")
-        }
+        ILOProgressShape(lesson: lesson, amountComplete: Double(completedILOs.count)/totalILOs)
+            .stroke(Color.accentColor, lineWidth: 2)
+            .frame(width: iconSize, height: iconSize)
+            .overlay(
+                Text(completedILOs.count != 0 ? (nf.string(from: NSNumber(value: Double(completedILOs.count)/totalILOs)) ?? "") : "")
+                    //                        .minimumScaleFactor(0.01)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .offset(x: 0, y: iconSize)
+            )
     }
     
     private let nf: NumberFormatter = {

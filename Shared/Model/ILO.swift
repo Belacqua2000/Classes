@@ -37,6 +37,7 @@ extension ILO {
     
     func toggleWritten(context managedObjectContext: NSManagedObjectContext) {
         written.toggle()
+        lesson?.objectWillChange.send()
         do {
             try managedObjectContext.save()
         } catch {

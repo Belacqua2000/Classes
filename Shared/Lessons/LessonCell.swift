@@ -49,12 +49,16 @@ struct LessonCell: View {
                                 .font(.subheadline)
                         }
                         
-                        
+                        HStack {
+                        if !(lesson.location?.isEmpty ?? true) {
+                        Text(lesson.location ?? "No Location")
+                            .font(.footnote)
+                        }
                         if !(lesson.teacher?.isEmpty ?? true) {
                             Text(lesson.teacher ?? "No Teacher")
                                 .font(.footnote)
                         }
-                        
+                        }
                         LazyVGrid(columns: gridItem) {
                             ForEach((lesson.tag?.allObjects as? [Tag] ?? []).sorted {$0.name?.localizedStandardCompare($1.name ?? "") == .orderedAscending}) { tag in
                                 Image(systemName: "tag.circle.fill")
@@ -69,7 +73,6 @@ struct LessonCell: View {
                     }
                 )
                 Spacer()
-                Text(lesson.location ?? "No Location")
                 
                 ILOProgressGauge(lesson: lesson)
                 

@@ -92,6 +92,7 @@ extension Lesson {
     
     func markAllILOsWritten(context managedObjectContext: NSManagedObjectContext) {
         (ilo?.allObjects as? [ILO])?.forEach({$0.written = true})
+        objectWillChange.send()
         do {
             try managedObjectContext.save()
         } catch {
@@ -101,6 +102,7 @@ extension Lesson {
     
     func markAllILOsUnwritten(context managedObjectContext: NSManagedObjectContext) {
         (ilo?.allObjects as? [ILO])?.forEach({$0.written = false})
+        objectWillChange.send()
         do {
             try managedObjectContext.save()
         } catch {
