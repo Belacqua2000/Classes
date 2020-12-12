@@ -194,5 +194,27 @@
         "imageName": "ladybug.fill"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 4,
+    "features": [
+      {
+        "title": "New Outcome Progress Chart",
+        "details": "A new icon shows the proportion of learning outcomes written up",
+        "imageName": "circle"
+      },
+      {
+        "title": "Icon Updates",
+        "details": "Changed the icon for editing lessons to make its purpose more clear.\nThe filter icon is now filled to show if a filter is active.",
+        "imageName": "pencil"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Learning outcomes are correctly sorted by name in the outcome randomiser.",
+        "imageName": "ladybug.fill"
+      }
+    ]
   }
 ]

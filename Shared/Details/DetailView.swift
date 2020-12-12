@@ -235,10 +235,6 @@ struct DetailView: View {
                     AddILOMenu(detailStates: detailStates)
                 }
                 
-                ToolbarItem(id: "Spacer") {
-                    Spacer()
-                }
-                
                 ToolbarItem(id: "DeleteButton") {
                     DeleteLessonButton(viewStates: detailStates)
                 }
