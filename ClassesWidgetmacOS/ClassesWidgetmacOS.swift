@@ -1,16 +1,15 @@
 //
-//  ClassesWidget.swift
-//  ClassesWidget
+//  ClassesWidgetmacOS.swift
+//  ClassesWidgetmacOS
 //
-//  Created by Nick Baughan on 29/09/2020.
+//  Created by Nick Baughan on 02/01/2021.
 //
 
 import WidgetKit
 import SwiftUI
-import CoreData
 
 struct Provider: TimelineProvider {
-    
+
     var managedObjectContext : NSManagedObjectContext
     
     init(context : NSManagedObjectContext) {
@@ -45,7 +44,7 @@ struct SimpleEntry: TimelineEntry {
     let lessons: [Lesson]
 }
 
-struct ClassesWidgetEntryView : View {
+struct ClassesWidgetmacOSEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
@@ -54,7 +53,7 @@ struct ClassesWidgetEntryView : View {
 }
 
 @main
-struct ClassesWidget: Widget {
+struct ClassesWidgetmacOS: Widget {
     let kind: String = "UpcomingClassesWidget"
 
     var body: some WidgetConfiguration {
@@ -69,10 +68,11 @@ struct ClassesWidget: Widget {
         return PersistenceController.shared.container
     }
 }
-/*
-struct ClassesWidget_Previews: PreviewProvider {
+
+struct ClassesWidgetmacOS_Previews: PreviewProvider {
+    static let viewContext = PersistenceController.preview.container.viewContext
     static var previews: some View {
-        ClassesWidgetEntryView(entry: SimpleEntry(date: Date(), lessons: Lesson.sampleData(context: PersistenceController.preview.container.viewContext)))
+        ClassesWidgetmacOSEntryView(entry: SimpleEntry(date: Date(), lessons: Lesson.sampleData(context: viewContext)))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
-}*/
+}

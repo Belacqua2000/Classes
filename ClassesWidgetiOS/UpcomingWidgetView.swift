@@ -13,8 +13,11 @@ struct UpcomingWidgetView: View {
     
     var entry: Provider.Entry
     
-    var nextLesson: Lesson {
-        return entry.lessons.first!
+    var nextLesson: [Lesson] {
+        if let first = entry.lessons.first {
+            return [first]
+        }
+        return []
     }
     
     var nextTwoLessons: [Lesson] {
@@ -37,7 +40,9 @@ struct UpcomingWidgetView: View {
                 
                 switch widgetFamily {
                 case .systemSmall:
-                    UpcomingLessonSession(lesson: nextLesson)
+                    ForEach(nextLesson) { lesson in
+                        UpcomingLessonSession(lesson: lesson)
+                    }
                 case .systemMedium:
                     ForEach(nextTwoLessons) { lesson in
                         UpcomingLessonSession(lesson: lesson)
@@ -47,7 +52,9 @@ struct UpcomingWidgetView: View {
                         UpcomingLessonSession(lesson: lesson)
                     }
                 default:
-                    UpcomingLessonSession(lesson: nextLesson)
+                    ForEach(nextLesson) { lesson in
+                        UpcomingLessonSession(lesson: lesson)
+                    }
                 }
             }
             .padding()
