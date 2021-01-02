@@ -199,8 +199,8 @@ struct LessonsListContent: View {
                         Button(action: {
                             #if os(iOS)
                             selection = [lesson]
-                            #endif
                             guard let lesson = selection.first else {return}
+                            #endif
                             markAllOutcomes(written: true, lesson: lesson)
                         }, label: {
                             Label("Mark Outcomes as Written", systemImage: "checkmark.circle")
@@ -209,8 +209,8 @@ struct LessonsListContent: View {
                         Button(action: {
                             #if os(iOS)
                             selection = [lesson]
-                            #endif
                             guard let lesson = selection.first else {return}
+                            #endif
                             markAllOutcomes(written: false, lesson: lesson)
                         }, label: {
                             Label("Mark outcomes as Unwritten", systemImage: "xmark.circle")
@@ -260,8 +260,8 @@ struct LessonsListContent: View {
                             deleteAlertShown = true
                         }, label: {
                             Label("Delete", systemImage: "trash")
+                                .foregroundColor(.red)
                         })
-                        .foregroundColor(.red)
                     }/*@END_MENU_TOKEN@*/)
             }
             .onDelete(perform: deleteItems)
@@ -386,7 +386,7 @@ struct LessonsListContent: View {
             
             ToolbarItem(id: "ILO", placement: .bottomBar) {
                 Button(action: {ilosViewShown = true}, label: {
-                    Label("Generate Learning Outcomes", systemImage: "doc")
+                    Label("Generate Learning Outcomes", systemImage: "list.number")
                 })
                 .help("View Statistics")
                 .fullScreenCover(isPresented: $ilosViewShown, content: {
@@ -442,22 +442,13 @@ struct LessonsListContent: View {
             
             ToolbarItem(id: "ILO", placement: .automatic) {
                 Button(action: {nc.post(.init(name: .showILORandomiser))}, label: {
-                    Label("Learning Outcome Randomiser", systemImage: "doc")
+                    Label("Learning Outcome Randomiser", systemImage: "list.number")
                 })
                 .help("View the Learning Outcome Randomiser for the current selection of lessons")
                 .onReceive(nc.publisher(for: .showILORandomiser), perform: { _ in
                     sheetToPresent = .ilo
                 })
             }
-//            ToolbarItem(id: "Stats", placement: .automatic) {
-//                Button(action: {statsShown = true}, label: {
-//                    Label("View Statistics", systemImage: "chart.pie")
-//                })
-//                .help("View Statistics")
-//                .sheet(isPresented: $statsShown) {
-//                    SummaryView(lessons: filteredLessons)
-//                }
-//            }
             
             ToolbarItem(id: "Filter", placement: .automatic) {
                 Button(action: {nc.post(.init(name: .showFilterView))}, label: {
@@ -533,22 +524,18 @@ struct LessonsListContent: View {
     }
     
     private func toggleWatched(lessons: [Lesson]) {
-        #if os(iOS)
         for lesson in lessons {
             lesson.toggleWatched(context: viewContext)
         }
-        #else
-        for lesson in selection {
-            lesson.toggleWatched(context: viewContext)
-        }
-        #endif
     }
     
     private func markAllOutcomes(written: Bool, lesson: Lesson) {
-        if written {
-            lesson.markAllILOsWritten(context: viewContext)
-        } else {
-            lesson.markAllILOsUnwritten(context: viewContext)
+        withAnimation {
+            if written {
+                lesson.markAllILOsWritten(context: viewContext)
+            } else {
+                lesson.markAllILOsUnwritten(context: viewContext)
+            }
         }
     }
     

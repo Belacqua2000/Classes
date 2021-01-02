@@ -51,7 +51,10 @@ struct ILOSection: View {
                 List {
                     ForEach(filteredILOs) { ilo in
                         HStack {
-                            Text("\(ilo.index + 1). \(ilo.title ?? "")")
+                            HStack(alignment: .firstTextBaseline) {
+                                Text("\(ilo.index + 1).").bold()
+                                Text("\(ilo.title ?? "")")
+                            }
                             Spacer()
                             Button(action: { toggleILOWritten(ilo: ilo) }, label: {
                                 ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")

@@ -190,8 +190,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
             endingLineNumber = "190"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "Lesson"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -268,10 +268,10 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "557"
-            endingLineNumber = "557"
-            landmarkName = "scrollToNow(proxy:)"
-            landmarkType = "7">
+            startingLineNumber = "544"
+            endingLineNumber = "544"
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "C7776EB9-3AD3-4022-B3B5-1F4D8C78249A - b693f74442cf7e0d"
@@ -316,10 +316,10 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "559"
-            endingLineNumber = "559"
-            landmarkName = "scrollToNow(proxy:)"
-            landmarkType = "7">
+            startingLineNumber = "546"
+            endingLineNumber = "546"
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "57E21096-D9A6-4462-895E-DAD754BCC7A5 - b693f74442cf7e43"
@@ -380,10 +380,10 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "512"
-            endingLineNumber = "512"
-            landmarkName = "addLesson()"
-            landmarkType = "7">
+            startingLineNumber = "503"
+            endingLineNumber = "503"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -589,8 +589,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "235"
             endingLineNumber = "235"
-            landmarkName = "lessonList"
-            landmarkType = "24">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -699,10 +699,10 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "517"
-            endingLineNumber = "517"
-            landmarkName = "deleteItems(offsets:)"
-            landmarkType = "7">
+            startingLineNumber = "508"
+            endingLineNumber = "508"
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "7945D40D-1735-4984-AA41-48A87624BDE1 - 39749e2e785fd5b6"
@@ -762,10 +762,10 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
-            landmarkName = "deleteLessons()"
-            landmarkType = "7">
+            startingLineNumber = "516"
+            endingLineNumber = "516"
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   uuid = "3D50FA05-D390-4A8E-83D2-C2733E24DAE6 - 609991c7a34d153c"

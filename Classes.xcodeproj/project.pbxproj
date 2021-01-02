@@ -420,6 +420,7 @@
 			isa = PBXGroup;
 			children = (
 				17E50BC82504E22200BA8618 /* DetailView.swift */,
+				1768DEC42514CB41008CDCAC /* LessonDetails.swift */,
 				179F27F7256123AA00D65DD7 /* DetailViewStates.swift */,
 				1750A3F72555733600A7A2E7 /* BlurVisualEffectView.swift */,
 				1750A4042555737A00A7A2E7 /* BlurVisualEffectViewMac.swift */,
@@ -428,7 +429,6 @@
 				1768DECF2514CB5B008CDCAC /* ILOSection.swift */,
 				17207ED425208B3E003889C2 /* AddILOMenu.swift */,
 				176CC623250CFCCD00FB28B6 /* Resources */,
-				1768DEC42514CB41008CDCAC /* LessonDetails.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";

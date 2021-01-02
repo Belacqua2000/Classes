@@ -39,20 +39,24 @@ struct LessonDetails: View {
                 .font(.title2)
                 #endif
                 
-                Label(title: {
-                    Text(lesson.teacher ?? "")
-                        .fixedSize(horizontal: false, vertical: true)
-                }, icon: {
-                    Image(systemName: "graduationcap")
-                })
-                .font(.title2)
+                if let teacher = lesson.teacher, !teacher.isEmpty {
+                    Label(title: {
+                        Text(teacher)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }, icon: {
+                        Image(systemName: "graduationcap")
+                    })
+                    .font(.title2)
+                }
                 
-                Label(title: {
-                    Text(lesson.location ?? "No Location")
-                }, icon: {
-                    Image(systemName: "mappin")
-                })
-                .font(.title2)
+                if let location = lesson.location, !location.isEmpty {
+                    Label(title: {
+                        Text(location)
+                    }, icon: {
+                        Image(systemName: "mappin")
+                    })
+                    .font(.title2)
+                }
                 
                 #if os(iOS)
                 Button(action: {lesson.toggleWatched(context: viewContext)}, label: {

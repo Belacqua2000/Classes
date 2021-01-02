@@ -17,8 +17,8 @@ struct ILOProgressGauge: View {
     
     @ObservedObject var lesson: Lesson
     
-    var completedILOs: [ILO] {
-        return (lesson.ilo?.allObjects as? [ILO])?.filter({$0.written}) ?? []
+    var completedILOs: Double {
+        return Double((lesson.ilo?.allObjects as? [ILO])?.filter({$0.written}).count ?? 0)
     }
     
     var totalILOs: Double {
@@ -27,12 +27,11 @@ struct ILOProgressGauge: View {
     
     var body: some View {
         
-        ILOProgressShape(lesson: lesson, amountComplete: Double(completedILOs.count)/totalILOs)
+        ILOProgressShape(amountComplete: completedILOs/totalILOs)
             .stroke(Color.accentColor, lineWidth: 2)
             .frame(width: iconSize, height: iconSize)
             .overlay(
-                Text(completedILOs.count != 0 ? (nf.string(from: NSNumber(value: Double(completedILOs.count)/totalILOs)) ?? "") : "")
-                    //                        .minimumScaleFactor(0.01)
+                Text(totalILOs != 0 ? (nf.string(from: NSNumber(value: completedILOs/totalILOs)) ?? "") : "")
                     .fixedSize(horizontal: true, vertical: false)
                     .font(.footnote)
                     .foregroundColor(.gray)
@@ -49,17 +48,19 @@ struct ILOProgressGauge: View {
 
 struct ILOProgressShape: Shape {
     
-    @ObservedObject var lesson: Lesson
-    
     var amountComplete: Double
+    
+    var animatableData: Double {
+        get { amountComplete }
+        set { self.amountComplete = newValue }
+    }
     
     func path(in rect: CGRect) -> Path {
         let startAngle = Angle.degrees(-90)
-        let endAngle = Angle.degrees(360 * lesson.completedILOs / Double(lesson.iloCount) - 90)
+        let endAngle = Angle.degrees(360 * amountComplete - 90)
         
         var path = Path()
         
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
         path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2, startAngle: startAngle, endAngle: endAngle, clockwise: false)
         
         return path

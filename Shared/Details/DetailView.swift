@@ -165,8 +165,9 @@ struct DetailView: View {
                             })
                             .help("Edit the tags for this lesson")
                         }, label: {
-                            Label("Edit Lesson", systemImage: "ellipsis.circle")
+                            Label("More Actions", systemImage: "ellipsis.circle")
                         })
+                        .imageScale(.large)
                         
                     } else {
                         DeleteLessonButton(viewStates: detailStates, lesson: lesson)
@@ -240,6 +241,7 @@ struct DetailView: View {
                 }
                 ToolbarItem(id: "EditButton") {
                     EditLessonButton(detailStates: detailStates, lessons: [lesson])
+                        .labelStyle(TitleOnlyLabelStyle())
                 }
                 #endif
             }
