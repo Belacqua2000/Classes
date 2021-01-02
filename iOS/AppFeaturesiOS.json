@@ -1,0 +1,220 @@
+[
+  {
+    "majorNumber": 1,
+    "minorNumber": 2,
+    "patchNumber": 1,
+    "features": [
+      {
+        "title": "Localised for UK users",
+        "details": "Users in the UK should now see tag colours instead of tag colors!",
+        "imageName": "globe"
+      },
+      {
+        "title": "Grouped Learning Outcomes",
+        "details": "In the summary view, learning outcomes are now grouped by lesson",
+        "imageName": "list.number"
+      },
+      {
+        "title": "iPad Workflow Improvements",
+        "details": "On iPad, you will no longer see a blank screen when opening, allowing you to get to work even quicker!",
+        "imageName": "ipad.landscape"
+      },
+      {
+        "title": "Smaller Editing Buttons",
+        "details": "The new buttons for editing were overwhelmingly big on smaller devices.",
+        "imageName": "calendar.circle.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 2,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "Export and Import Lessons",
+        "details": "Export lessons, learning outcomes, and resources as a .classesdoc file.  Share with others or create a backup from settings",
+        "imageName": "square.and.arrow.up.fill"
+      },
+      {
+        "title": "Batch Edit Lessons",
+        "details": "New action buttons for applying actions such as delete and share to multiple lessons at once",
+        "imageName": "wrench.and.screwdriver.fill"
+      },
+      {
+        "title": "Scroll to Next Lesson",
+        "details": "A new button allows you to quickly jump to your next lesson in the list!",
+        "imageName": "calendar.circle.fill"
+      },
+      {
+        "title": "New Icons for PBL and CBL",
+        "details": "Changed the icons of Problem Based Learning and Case Based Learning lessons to make them less similar",
+        "imageName": "doc.richtext.fill"
+      },
+      {
+        "title": "New Color",
+        "details": "Changed the blue background color to make it look less washed out",
+        "imageName": "paintpalette.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 2,
+    "patchNumber": 2,
+    "features": [
+      {
+        "title": "Fixed UK English Localisation",
+        "details": "Fixed an issue in the previous version where this was not appearing.  Users in the UK should now see tag colours instead of tag colors!",
+        "imageName": "globe"
+      },
+      {
+        "title": "New iPad Toolbar Buttons",
+        "details": "Buttons for editing the displayed lesson are no longer in a menu, maximising space and reducing two taps to one.",
+        "imageName": "rectangle.and.pencil.and.ellipsis"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 3,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "Now Available on Mac!",
+        "details": "Classes is now available on Mac.  It features a new interface, designed to feel right in-place with macOS Big Sur.  It supports advanced Mac features such as multiple windows, keyboard shortcuts and more, allowing you to organise lessons with ease.\nAll of your lessons will automatically sync between devices via iCloud.\nDownload for free on the Mac App Store.",
+        "imageName": "macwindow"
+      },
+      {
+        "title": "New Lesson Details and Summary Design",
+        "details": "Lesson details now appear in a modern, colourful design.  Improvements in contrast, spacing, and depth make it much easier to view and interact with your content.  This has been brought over to Summary view as well.",
+        "imageName": "wand.and.stars"
+      },
+      {
+        "title": "Learning Outcome Filter",
+        "details": "Filter learning outcomes by type and tag.  This lets you browse or use the Outcome Randomiser for specific outcomes only",
+        "imageName": "line.horizontal.3.decrease.circle.fill"
+      },
+      {
+        "title": "Tag Icons in Lessons List",
+        "details": "When browsing lessons in a list, small icons will show its tags.  This can help you find specific lessons at a glance, without opening and closing each one indiviually.",
+        "imageName": "wand.and.stars"
+      },
+      {
+        "title": "Improvements to Exporting / Importing .classesdoc files",
+        "details": "View which lessons are contained in the file before importing, and selectively import only the lessons you choose.  Adds a new option to save generated docs to files.",
+        "imageName": "arrow.up.doc.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "New User Experience",
+        "details": "The user interface has been streamlined and simplified.  On iPhone, the Tab View has been removed to avoid duplicate function.  The Summary and Learning Outcome modes have been integrated to the lesson list, giving them more customisation and flexibility based on the current list.",
+        "imageName": "sidebar.leading"
+      },
+      {
+        "title": "iPad Layout Optimisation",
+        "details": "The app layout has been optimised for iPad with a new three-column layout to maximise space available on the larger display.  On smaller iPads, you can view the list of lessons and lesson details at the same time, and change the current list with a tap or swipe.  On larger iPads, you can view all three columns at once!",
+        "imageName": "ipad.landscape"
+      },
+      {
+        "title": "New List Filters",
+        "details": "Custom filters allow you to filter each lesson list further than a single tag or lesson type.  Choose whether to view only watched or unwatched lessons, and specify multiple tags and lesson types to include and exclude.",
+        "imageName": "line.horizontal.3.decrease.circle.fill"
+      },
+      {
+        "title": "New Smart Lists",
+        "details": "Today’s Lessons, Unwatched Lessons, and Lessons with Unwritten ILOs appear as their own category in the main view.  This is a replacement and upgrade to the Summary view, which allows you to view and edit these lessons more easily than before.",
+        "imageName": "list.star"
+      },
+      {
+        "title": "More Customisable Learning Outcome Randomiser",
+        "details": "As well as being integrated into each lesson list, the outcome randomiser adds options for shuffling and only showing completed outcomes.",
+        "imageName": "doc.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 1,
+    "features": [
+      {
+        "title": "Mark All Learning Outcomes as Written/Unwritten",
+        "details": "New options for marking all outcomes of a lesson as written or unwritten.  Hold down or right-click on a lesson to access.",
+        "imageName": "checkmark.circle.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Fixed bug where the outcome randomiser would not show any learning outcomes if none in the selection had been marked as written.\n\nFixed incorrect colour of the lesson date on iPad.",
+        "imageName": "ladybug.fill"
+      },
+      {
+        "title": "Improved Context Menu",
+        "details": "Improved the layout of the context menu.  Access by holding down/right-clicking on a lesson.",
+        "imageName": "contextualmenu.and.cursorarrow"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 2,
+    "features": [
+      {
+        "title": "Bug Fixes",
+        "details": "Improved alphabetical ordering of tags with numbers in their name, so that “10” does not appear between “1” and “2”.\n\nFixed a bug where the new “Mark Outcomes as Written/Unwritten” action would not work.",
+        "imageName": "ladybug.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 3,
+    "features": [
+      {
+        "title": "Edit Tag Improvements",
+        "details": "A new button in the iPad toolbar allows you to quickly edit tags, without having to edit the full lesson.",
+        "imageName": "tag.fill"
+      },
+      {
+        "title": "Color Improvements",
+        "details": "Now featuring a more colorful sidebar, and minor adjustments to some colors throughout the app.",
+        "imageName": "paintpalette.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Improved tag sorting introduced in 1.4.2 is now used in the filter lessons view.",
+        "imageName": "ladybug.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 4,
+    "patchNumber": 4,
+    "features": [
+      {
+        "title": "New Outcome Progress Chart",
+        "details": "A new icon shows the proportion of learning outcomes written up",
+        "imageName": "circle"
+      },
+      {
+        "title": "Icon Updates",
+        "details": "Changed the icon for editing lessons to make its purpose more clear.\nThe filter icon is now filled to show if a filter is active.",
+        "imageName": "pencil"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Learning outcomes are correctly sorted by name in the outcome randomiser.",
+        "imageName": "ladybug.fill"
+      }
+    ]
+  }
+]

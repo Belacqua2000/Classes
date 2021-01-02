@@ -14,36 +14,41 @@ struct AppCommands: Commands {
     @Environment(\.openURL) var openURL
     @ObservedObject var appViewState: AppViewState
     
-    @State private var detailViewShowing: Bool = false
-    
     var body: some Commands {
         
         CommandGroup(after: .newItem) {
             Button("New Lesson", action: newLesson)
                 .keyboardShortcut("n", modifiers: [.command, .shift])
-//            Divider()
-//            Button("Import...", action: importFiles)
+        }
+        
+        CommandGroup(replacing: .importExport) {
+            Button("Import Lessons", action: {postNotification(.init(name: .importLessons))})
+            Button("Export Lessons in Current View", action: {postNotification(.init(name: .exportCurrentView))})
+            Button("Export All Lessons", action: {postNotification(.init(name: .exportAll))})
         }
         
         CommandMenu("Lesson") {
-            Button("Toggle Watched", action: toggleWatched)
-                .keyboardShortcut("Y", modifiers: .command)
+            Button("Edit Lesson Details", action: {postNotification(.init(name: .editLesson))})
+                .keyboardShortcut("E", modifiers: .command)
+                .help("Edit the lessons")
+//                .disabled(!appViewState.detailViewShowing)
             Button("Edit Tags", action: allocateTagView)
                 .keyboardShortcut("T", modifiers: .command)
-                .disabled(!detailViewShowing)
+//                .disabled(!appViewState.detailViewShowing)
+            Divider()
+            Button("Toggle Watched", action: toggleWatched)
+                .keyboardShortcut("Y", modifiers: .command)
+            Button("Mark Learning Outcomes as Written", action: {postNotification(.init(name: .markILOsWritten))})
+                .keyboardShortcut("D", modifiers: .command)
+            Button("Mark Learning Outcomes as Unwritten", action: {postNotification(.init(name: .markILOsUnwritten))})
+                .keyboardShortcut("U", modifiers: .command)
             Divider()
             Button("Add Learning Outcome", action: addILO)
                 .keyboardShortcut("L", modifiers: .command)
-                .disabled(!detailViewShowing)
+//                .disabled(!appViewState.detailViewShowing)
             Button("Add Resource", action: addResource)
                 .keyboardShortcut("R", modifiers: .command)
-                .disabled(!detailViewShowing)
-                .onReceive(nc.publisher(for: .detailShowing), perform: { _ in
-                    detailViewChanged(true)
-                })
-                .onReceive(nc.publisher(for: .detailNotShowing), perform: { _ in
-                    detailViewChanged(false)
-                })
+//                .disabled(!appViewState.detailViewShowing)
         }
     
         CommandGroup(replacing: .help) {
@@ -58,14 +63,16 @@ struct AppCommands: Commands {
             Divider()
             Button("Scroll List to Now", action: scrollToNow)
                 .keyboardShortcut("s")
+            Button("Filter Lessons in View", action: {postNotification(.init(name: .showFilterView))})
+                .keyboardShortcut("f")
+            Button("Show Learning Outcome Randomiser", action: {postNotification(.init(name: .showILORandomiser))})
+                .keyboardShortcut("l")
             Divider()
-            Button("Summary", action: showSummary)
-                .keyboardShortcut("1", modifiers: .command)
-            Button("All Lessons", action: showAll)
-                .keyboardShortcut("2", modifiers: .command)
-            Button("Learning Outcomes", action: showILO)
-                .keyboardShortcut("3", modifiers: .command)
         }
+    }
+    
+    func postNotification(_ notification: Notification) {
+        nc.post(notification)
     }
     
     
@@ -90,10 +97,6 @@ struct AppCommands: Commands {
         nc.post(Notification(name: .newLesson))
     }
     
-    func importFiles() {
-        nc.post(Notification(name: .importLessons))
-    }
-    
     
     func addILO() {
         nc.post(Notification(name: .addILO))
@@ -109,12 +112,6 @@ struct AppCommands: Commands {
     
     func allocateTagView() {
         nc.post(Notification(name: .tagAllocateViewShown))
-    }
-    
-    
-    
-    func detailViewChanged(_ bool: Bool) {
-        detailViewShowing = bool
     }
     
     

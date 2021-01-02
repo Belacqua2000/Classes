@@ -1,0 +1,112 @@
+[
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "New User Experience",
+        "details": "The user interface has been streamlined and simplified.  The new three-columned view provides a clearer toolbar, with buttons confined to their separate areas.  The Summary and Learning Outcome modes have been integrated to the lesson list, giving them more customisation and flexibility based on the current list.",
+        "imageName": "sidebar.leading"
+      },
+      {
+        "title": "Move Lessons Into Their Own Window",
+        "details": "Double click on a lesson to bring it into its own window.  This is useful for ‘collecting’ the current lessons you are working on, so you can easily find them.",
+        "imageName": "macwindow.badge.plus"
+      },
+      {
+        "title": "New List Filters",
+        "details": "Custom filters allow you to filter each lesson list further than a single tag or lesson type.  Choose whether to view only watched or unwatched lessons, and specify multiple tags and lesson types to include and exclude.",
+        "imageName": "line.horizontal.3.decrease.circle.fill"
+      },
+      {
+        "title": "New Smart Lists",
+        "details": "Today’s Lessons, Unwatched Lessons, and Lessons with Unwritten ILOs appear as their own category in the main view.  This is a replacement and upgrade to the Summary view, which allows you to view and edit these lessons more easily than before.",
+        "imageName": "list.star"
+      },
+      {
+        "title": "More Customisable Learning Outcome Randomiser",
+        "details": "As well as being integrated into each lesson list, the outcome randomiser adds options for shuffling and only showing completed outcomes.",
+        "imageName": "doc.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 1,
+    "features": [
+      {
+        "title": "Mark All Learning Outcomes as Written/Unwritten",
+        "details": "New options for marking all outcomes of a lesson as written or unwritten.  To access, right-click on a lesson or find in the menu bar.",
+        "imageName": "checkmark.circle.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Fixed bug where the outcome randomiser would not show any learning outcomes if none in the selection had been marked as written.",
+        "imageName": "ladybug.fill"
+      },
+      {
+        "title": "Improved Context Menu",
+        "details": "Improved the layout of the context menu.  Access by right-clicking on a lesson.",
+        "imageName": "contextualmenu.and.cursorarrow"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 2,
+    "features": [
+      {
+        "title": "Bug Fixes",
+        "details": "Improved alphabetical ordering of tags with numbers, so that “10” does not appear between “1” and “2”.",
+        "imageName": "ladybug.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 3,
+    "features": [
+      {
+        "title": "Color Improvements",
+        "details": "Now featuring a more colorful sidebar, and minor adjustments to some colors throughout the app.  Fixed tag colors not always showing in the sidebar.",
+        "imageName": "paintpalette.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Improved tag sorting introduced in 1.1.2 is now used in the filter lessons view.",
+        "imageName": "ladybug.fill"
+      }
+    ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 1,
+    "patchNumber": 4,
+    "features": [
+      {
+        "title": "New Outcome Progress Chart",
+        "details": "A new icon shows the proportion of learning outcomes written up",
+        "imageName": "circle"
+      },
+      {
+        "title": "Button Icon Updates",
+        "details": "Changed the icon for editing lessons to make its purpose more clear.\nThe filter icon is now filled to show if a filter is active.",
+        "imageName": "pencil"
+      },
+      {
+        "title": "Improved App Icon",
+        "details": "The app icon has slight changes to match the size and shadows found in apps on macOS.",
+        "imageName": "app.fill"
+      },
+      {
+        "title": "Bug Fixes",
+        "details": "Learning outcomes are correctly sorted by name in the outcome randomiser.",
+        "imageName": "ladybug.fill"
+      }
+    ]
+  }
+]

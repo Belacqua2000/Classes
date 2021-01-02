@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ILOSection: View {
     @Environment(\.managedObjectContext) var viewContext
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @ObservedObject var viewStates: DetailViewStates
     @ObservedObject var lesson: Lesson
     
     @State private var selectedILO: ILO? = nil
@@ -24,9 +24,16 @@ struct ILOSection: View {
         return ilos.filter { $0.lesson == lesson }
     }
     
+    var completedILOs: Double {
+        let iloCount = Double(filteredILOs.count)
+        let completedILOs = Double(filteredILOs.filter({$0.written}).count)
+        let value = completedILOs / iloCount
+        return iloCount == 0 ? 1 : value
+    }
+    
     var listHeight: CGFloat {
         #if os(macOS)
-        return 100
+        return 200
         #else
         return 200
         #endif
@@ -34,14 +41,20 @@ struct ILOSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Label("Learning Outcomes", systemImage: "list.number")
+                    .font(.headline)
             if filteredILOs.count > 0 {
+                ILOsProgressView(completedILOs: completedILOs)
                 #if !os(macOS)
                 EditButton()
                 #endif
                 List {
                     ForEach(filteredILOs) { ilo in
                         HStack {
-                            Text("\(ilo.index + 1). \(ilo.title ?? "")")
+                            HStack(alignment: .firstTextBaseline) {
+                                Text("\(ilo.index + 1).").bold()
+                                Text("\(ilo.title ?? "")")
+                            }
                             Spacer()
                             Button(action: { toggleILOWritten(ilo: ilo) }, label: {
                                 ilo.written ? Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
@@ -68,18 +81,23 @@ struct ILOSection: View {
                     .onDelete(perform: deleteILOs)
                     .onMove(perform: moveILOs)
                 }
-                .cornerRadius(10)
+                .cornerRadius(8)
                 .frame(height: listHeight)
             } else {
                 HStack {
+                    #if os(macOS)
+                    Text("No learning outcomes.  To add, press \(Image(systemName: "text.badge.plus")) in the toolbar.")
+                        .fixedSize(horizontal: false, vertical: true)
+                    #else
                     Text("No learning outcomes.")
+                    #endif
                     Spacer()
                 }
             }
             
             HStack {
                 #if os(iOS)
-                AddILOMenu(editILOViewState: $viewStates.editILOViewState, isAddingILO: $viewStates.addILOPresented)
+                AddILOMenu(detailStates: viewStates)
                 Spacer()
                 #endif
             }
@@ -101,7 +119,6 @@ struct ILOSection: View {
                 EditILOView(currentViewState: $viewStates.editILOViewState, isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
                 #endif
             })
-            .padding(.vertical)
         }
     }
     

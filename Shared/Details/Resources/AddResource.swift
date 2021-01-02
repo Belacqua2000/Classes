@@ -37,11 +37,11 @@ struct AddResource: View {
                 TextField("Resource Name", text: $resourceText)
                 TextField("Resource URL", text: $resourceURL)
             }
-            HStack {
-                Spacer()
-                cancelButton
-                saveButton
-            }
+//            HStack {
+//                Spacer()
+//                cancelButton
+//                saveButton
+//            }
             #else
             TextField("Resource Name", text: $resourceText)
                 .navigationTitle("Add ILO")
@@ -58,15 +58,15 @@ struct AddResource: View {
             }
         })
         .frame(idealWidth: 300, idealHeight: 100)
-        .toolbar {
-            #if !os(macOS)
-            ToolbarItem(placement: .confirmationAction) {
+        .toolbar(id: "AddResourceToolbar") {
+//            #if !os(macOS)
+            ToolbarItem(id: "AddResourceSave", placement: .confirmationAction) {
                 saveButton
             }
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(id: "AddResourceCancel", placement: .cancellationAction) {
                 cancelButton
             }
-            #endif
+//            #endif
         }
     }
     

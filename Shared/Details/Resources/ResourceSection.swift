@@ -12,7 +12,8 @@ struct ResourceSection: View {
     var resources: FetchedResults<Resource>
     @State var isInValidURLAlertShown: Bool = false
     @State private var selectedResource: Resource?
-    @EnvironmentObject var viewStates: LessonsStateObject
+//    @EnvironmentObject var viewStates: LessonsStateObject
+    @Binding var addResourcePresented: Bool
     @ObservedObject var lesson: Lesson
     
     let nc = NotificationCenter.default
@@ -35,6 +36,8 @@ struct ResourceSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            Label("Resources", systemImage: "link")
+                .font(.headline)
             if filteredResources.count > 0 {
                 #if !os(macOS)
                 EditButton()
@@ -57,7 +60,7 @@ struct ResourceSection: View {
                         .contextMenu(ContextMenu(menuItems: {
                             Button(action: {
                                 selectedResource = re
-                                viewStates.addResourcePresented = true
+                                addResourcePresented = true
                             }, label: {
                                 Label("Edit", systemImage: "square.and.pencil")
                             })
@@ -73,7 +76,7 @@ struct ResourceSection: View {
                         Alert(title: Text("Invalid URL"), message: Text("Unable to open the URL.  Please check it is correct."), dismissButton: .cancel(Text("Dismiss")))
                     }
                 }
-                .cornerRadius(10)
+                .cornerRadius(8)
                 .frame(height: listHeight)
             } else {
                 HStack {
@@ -83,25 +86,24 @@ struct ResourceSection: View {
             }
             HStack {
                 #if os(iOS)
-                AddResourceButton(isAddingResource: $viewStates.addResourcePresented)
+                AddResourceButton(isAddingResource: $addResourcePresented)
                 Spacer()
                 #endif
             }
             .onReceive(nc.publisher(for: .addResource), perform: { _ in
-                viewStates.addResourcePresented = true
+                addResourcePresented = true
             })
-            .padding(.vertical)
-            .sheet(isPresented: $viewStates.addResourcePresented, onDismiss: {
+            .sheet(isPresented: $addResourcePresented, onDismiss: {
                 selectedResource = nil
             },content: {
                 #if !os(macOS)
                 NavigationView {
-                    AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $viewStates.addResourcePresented, resource: $selectedResource, lesson: lesson).environment(\.managedObjectContext, viewContext)
+                    AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $addResourcePresented, resource: $selectedResource, lesson: lesson).environment(\.managedObjectContext, viewContext)
                         .navigationTitle("Add Resource")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else
-                AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $viewStates.addResourcePresented, resource: $selectedResource, lesson: lesson)
+                AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $addResourcePresented, resource: $selectedResource, lesson: lesson)
                 #endif
             })
         }

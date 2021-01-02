@@ -81,6 +81,7 @@ struct ActionButtonsBackground: View {
         Capsule()
             .aspectRatio(CGSize(width: 1, height: numberOfButtons), contentMode: .fit)
             .foregroundColor(Color("SecondaryColorTranslucent"))
+            .shadow(radius: 10)
     }
 }
 

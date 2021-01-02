@@ -12,10 +12,13 @@ struct SettingsViewiOS: View {
     let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
     let versionNumber: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @Binding var viewIsShown: Bool
     @State private var welcomeScreenIsShown: Bool = false
     @State private var whatsNewShown: Bool = false
     @State private var shareSheetIsShown = false
+    @State private var exportSheetIsShown = false
     @State private var importSheetIsShown = false
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)])
@@ -28,23 +31,38 @@ struct SettingsViewiOS: View {
                 GeneralSettingsView()
             }
             
-            Section(header: Text("Import and Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
+            Section(header: Text("Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
                 Button(action: {
                     shareSheetIsShown = true
+//                    Menu(content: {
+//                        Button(action: {
+//                            shareSheetIsShown = true
+//                        }, label: {
+//                            Label("Share", systemImage: "square.and.arrow.up")
+//                        })
+//                        
+//                        Button(action: {
+//                            exportSheetIsShown = true
+//                        }, label: {
+//                            Label("Save to Files", systemImage: "folder")
+//                        })
                 }, label: {
                     Label("Export All Lessons", systemImage: "square.and.arrow.up")
                 })
                 .disabled(lessons.count == 0)
                 .popover(isPresented: $shareSheetIsShown) {
-                    ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons))])
+                    ShareSheet(isPresented: $shareSheetIsShown, activityItems: [Lesson.export(lessons: Array(lessons)) as Any])
                 }
+                .fileExporter(isPresented: $exportSheetIsShown, document: LessonJSON(lessons: Array(lessons)), contentType: .classesFormat, onCompletion: {_ in})
                 
-                Button(action: {
-                    importSheetIsShown = true
+                /*Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        NotificationCenter.default.post(.init(name: .importLessons))
+                    }
                 }, label: {
                     Label("Import Lessons", systemImage: "square.and.arrow.down")
-                })
-                .fileImporter(isPresented: $importSheetIsShown, allowedContentTypes: [UTType.classesFormat], onCompletion: { _ in })
+                })*/
             }
             
             Section(header: Text("More")) {

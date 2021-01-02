@@ -10,7 +10,7 @@ import SwiftUI
 struct AllocateTagView: View {
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))],
         animation: .default)
     private var tags: FetchedResults<Tag>
     @Binding var selectedTags: [Tag]
@@ -48,11 +48,18 @@ struct AllocateTagView: View {
     var body: some View {
         VStack {
             if !tags.isEmpty {
-        List {
-            ForEach(tags) { tag in
-                HStack {
-                    Label(tag.name ?? "", systemImage: "tag")
-                    Spacer()
+                List {
+                    ForEach(tags) { tag in
+                        HStack {
+                            Label(
+                                title: {
+                                    Text(tag.name ?? "")
+                                },
+                                icon: {
+                                    Image(systemName: "tag")
+                                        .foregroundColor(tag.swiftUIColor)
+                                })
+                            Spacer()
                     Button(action: { selectedTag(tag) }, label: {
                         selectedTags.contains(tag) ?
                             Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
@@ -86,10 +93,12 @@ struct AllocateTagView: View {
     }
     
     func selectedTag(_ tag: Tag) {
-        if let index = selectedTags.firstIndex(of: tag) {
-            selectedTags.remove(at: index)
-        } else {
-            selectedTags.append(tag)
+        withAnimation {
+            if let index = selectedTags.firstIndex(of: tag) {
+                selectedTags.remove(at: index)
+            } else {
+                selectedTags.append(tag)
+            }
         }
     }
 }

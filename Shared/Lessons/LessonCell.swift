@@ -13,41 +13,76 @@ struct LessonCell: View {
         return lesson.tag?.allObjects as? [Tag] ?? []
     }
     
-    var relativeText: Text? {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) && lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
-            return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
-        }
-        return nil
+    let calendar = Calendar.current
+    
+    var dateText: String {
+        return DateFormatter.localizedString(from: lesson.date ?? Date(), dateStyle: .short, timeStyle: .short)
     }
     
+    var relativeText: Text {
+        return Text("— in \(lesson.date!, style: .relative)").foregroundColor(.red)
+    }
+    
+    let gridItem: [GridItem] = [GridItem(.adaptive(minimum: 15))]
+    
     var body: some View {
-        VStack(alignment: .leading) {
             HStack {
                 Label(
-                    title: { VStack(alignment: .leading) {
+                    title: { VStack(alignment: .leading, spacing: 0) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
-                        Text("\(DateFormatter.localizedString(from: lesson.date ?? Date(), dateStyle: .short, timeStyle: .short)) \(relativeText ?? Text(""))")
-                            .font(.subheadline)
-                        Text(lesson.teacher ?? "No Teacher")
-                            .font(.footnote)
+                        
+                        if lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
+                            
+                            if calendar.isDateInToday(lesson.date ?? Date(timeIntervalSince1970: 0)) {
+                                Text("\(dateText) \(relativeText)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.init("SecondaryColorMidpoint"))
+                            } else {
+                                Text(dateText)
+                                    .font(.subheadline)
+                                    .foregroundColor(.init("SecondaryColorMidpoint"))
+                            }
+                            
+                        } else {
+                            Text(dateText)
+                                .font(.subheadline)
+                        }
+                        
+                        HStack {
+                            if !(lesson.location?.isEmpty ?? true) {
+                                Text(lesson.location ?? "No Location")
+                                    .font(.footnote)
+                            }
+                            if !(lesson.teacher?.isEmpty ?? true) {
+                                Text(lesson.teacher ?? "No Teacher")
+                                    .font(.footnote)
+                            }
+                        }
+                        LazyVGrid(columns: gridItem) {
+                            ForEach((lesson.tag?.allObjects as? [Tag] ?? []).sorted {$0.name?.localizedStandardCompare($1.name ?? "") == .orderedAscending}) { tag in
+                                Image(systemName: "tag.circle.fill")
+                                    .foregroundColor(tag.swiftUIColor)
+                            }
+                        }
                     } },
                     icon: {
                         Image(systemName: Lesson.lessonIcon(type: lesson.type))
-                            .foregroundColor(.accentColor)
+//                            .foregroundColor(.accentColor)
                             .font(.headline)
                     }
                 )
                 Spacer()
-                Text(lesson.location ?? "No Location")
+                
+                ILOProgressGauge(lesson: lesson)
+                
                 if lesson.watched {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.accentColor)
-                        //.renderingMode(.original)
+                } else {
+                    EmptyView()
                 }
             }
-        }
     }
 }
 /*

@@ -32,7 +32,7 @@ struct OnboardingView: View {
                         Text("Features")
                             .font(.title2)
                             .bold()
-                        Text("• Add lessons by pressing the + button in the toolbar.")
+                        Text("• Add lessons by pressing the \(Image(systemName: "plus")) button in the toolbar.")
                         Text("• Assign multiple tags to organise your lessons.")
                         Text("• Add learning outcomes for each lesson, and use the outcome randomiser to give you topics to study.")
                         Text("• Use the summary view to manage your workload and prioritise your day.")
@@ -42,7 +42,7 @@ struct OnboardingView: View {
                 #if os(macOS)
                 Button("Get Started", action: {
                     presentationMode.wrappedValue.dismiss()
-                })
+                }).keyboardShortcut(.defaultAction)
                 #else
                 Button(action: {
                     presentationMode.wrappedValue.dismiss()

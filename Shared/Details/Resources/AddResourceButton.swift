@@ -10,8 +10,12 @@ import SwiftUI
 struct AddResourceButton: View {
     @Binding var isAddingResource: Bool
     var body: some View {
-        Button("Add Resource", action: {isAddingResource = true})
-            .help("Add a resource to the lesson.")
+        Button(action: {
+            NotificationCenter.default.post(.init(name: .addResource))
+        }, label: {
+            Label("Add Resource", systemImage: "link.badge.plus")
+        })
+        .help("Add a resource to the lesson.")
     }
 }
 

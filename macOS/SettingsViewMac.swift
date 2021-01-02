@@ -18,7 +18,7 @@ struct SettingsViewMac: View {
             GeneralSettingsView()
                 .padding(.horizontal)
                 .tabItem {
-                    Label("General", systemImage: "gear")
+                    Label("General", systemImage: "gearshape")
                 }
                 .tag(SettingsTab.general)
             Form {

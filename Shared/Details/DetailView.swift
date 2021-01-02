@@ -22,7 +22,13 @@ struct DetailView: View {
     @EnvironmentObject var appViewState: AppViewState
     @State private var isInValidURLAlertShown: Bool = false
     
+    @State var tagShown = false
+    
+    @StateObject var detailStates = DetailViewStates()
+    
     let nc = NotificationCenter.default
+    
+    static let userActivityType = "com.baughan.classes.detailview"
     //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = true
@@ -36,9 +42,10 @@ struct DetailView: View {
     private var unfilteredTags: FetchedResults<Tag>
     private var tags: [Tag]? {
         let tags = lesson.tag?.allObjects as? [Tag]
-        return tags?.sorted(by: {
-            $0.name! < $1.name!
-        })
+        return tags?.sorted {
+            $0.name?.localizedStandardCompare($1.name ?? "") == .orderedAscending
+        }
+        
     }
     
     
@@ -83,103 +90,175 @@ struct DetailView: View {
     var body: some View {
             ScrollView(.vertical) {
                 HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 5) {
+                    VStack(alignment: .leading, spacing: 10) {
                         LessonDetails(lesson: lesson)
-                        if !(tags?.isEmpty ?? true) {
-                            Label("Tags", systemImage: "tag")
-                                .font(.headline)
-                            ScrollView(.horizontal) {
-                                HStack {
-                                    ForEach(tags ?? []) { tag in
-                                        TagIcon(tag: tag)
-                                    }
-                                }
-                                .padding(.horizontal, 2)
+                            .popover(isPresented: $tagShown) {
+                                
+                                AllocateTagView(selectedTags:
+                                                    Binding(
+                                                        get: {lesson.tag!.allObjects as! [Tag]},
+                                                        set: {
+                                                            for tag in lesson.tag!.allObjects as! [Tag] {
+                                                                lesson.removeFromTag(tag)
+                                                            }
+                                                            for tag in $0 {
+                                                                lesson.addToTag(tag)
+                                                            }
+                                                        })
+                                
+                                )
+                                            .frame(width: 400, height: 200)
                             }
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20).stroke(Color.accentColor)
-                            )
-                            .padding(.bottom)
+                        if !(tags?.isEmpty ?? true) {
+                            DetailViewTags(tags: tags)
                         }
                         if lesson.notes != "" && lesson.notes != nil {
-                            Label("Notes", systemImage: "text.justifyleft")
-                                .font(.headline)
-                            Text(lesson.notes ?? "")
-                                .multilineTextAlignment(.leading)
-                                .padding(.bottom)
-                        }
-                        if filteredILOs.count != 0 {
-                            ILOsProgressView(completedILOs: completedILOs)
+                            DetailNotesSection(text: lesson.notes ?? "")
                         }
                         
-                        DisclosureGroup(isExpanded: $iloSectionExpanded, content: {
-                            ILOSection(lesson: lesson)
-                        }, label: {
-                            Label("Learning Outcomes", systemImage: "list.number")
-                                .font(.headline)
-                        })
+                        ILOSection(viewStates: detailStates, lesson: lesson)
+                            .modifier(DetailBlock())
                         
-                        DisclosureGroup(isExpanded: $resourceSectionExpanded, content: {
-                            ResourceSection(resources: resources, lesson: lesson)
-                        }, label: {
-                            Label("Resources", systemImage: "globe")
-                                .font(.headline)
-                        })
-                        #if os(iOS)
+                        ResourceSection(resources: resources, addResourcePresented: $detailStates.addResourcePresented, lesson: lesson)
+                            .modifier(DetailBlock())
+                        
                         EmptyView()
-                            .sheet(isPresented: $viewStates.addLessonIsPresented,
+                            .sheet(isPresented: $detailStates.editLessonShown,
                                    onDismiss: {
-                                    viewStates.lessonToChange = nil
+                                    detailStates.lessonToChange = nil
                                    }, content: {
-                                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented).environment(\.managedObjectContext, managedObjectContext)
+                                    AddLessonView(lesson: detailStates.lessonToChange, isPresented: $detailStates.editLessonShown).environment(\.managedObjectContext, managedObjectContext)
                                    })
-                            .alert(isPresented: $viewStates.deleteAlertShown) {
+                            .alert(isPresented: $detailStates.deleteAlertShown) {
                                 Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
                             }
-                        #endif
+                        
                     }
-                    .padding(.horizontal)
+                    .padding(.all)
                 }
             }
-            .onAppear(perform: {
+            .navigationTitle(lesson.title ?? "Untitled Lesson")
+            /*.onAppear(perform: {
                 appViewState.detailViewShowing = true
                 print("Appeared")
                 nc.post(.init(name: .detailShowing))
-            })
+            })*/
             .onDisappear(perform: {
                 appViewState.detailViewShowing = false
                 print("Disappeared")
                 nc.post(.init(name: .detailNotShowing))
             })
+            .onReceive(nc.publisher(for: .tagAllocateViewShown), perform: { _ in
+                viewStates.tagPopoverPresented = true
+            })
             .toolbar {
                 #if os(iOS)
                 ToolbarItemGroup(placement: .primaryAction) {
-                    Menu(content: {
-                        ToggleWatchedButton(lessons: [lesson])
-                        DeleteLessonButton(lesson: lesson)
-                        EditLessonButton(lessons: [lesson])
-                    }, label: {
-                        Label("Edit Lesson", systemImage: "ellipsis.circle")
-                    })
+                    if horizontalSizeClass == .compact {
+                        Menu(content: {
+                            DeleteLessonButton(viewStates: detailStates, lesson: lesson)
+                            EditLessonButton(detailStates: detailStates, lessons: [lesson])
+                            Button(action: {
+                                tagShown = true
+                            }, label: {
+                                Label("Edit Tags", systemImage: "tag")
+                            })
+                            .help("Edit the tags for this lesson")
+                        }, label: {
+                            Label("More Actions", systemImage: "ellipsis.circle")
+                        })
+                        .imageScale(.large)
+                        
+                    } else {
+                        DeleteLessonButton(viewStates: detailStates, lesson: lesson)
+                        EditLessonButton(detailStates: detailStates, lessons: [lesson])
+                    }
+                }
+                
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if horizontalSizeClass == .regular {
+                        Button(action: {
+                            tagShown = true
+                        }, label: {
+                            Label("Edit Tags", systemImage: "tag")
+                        })
+                        .help("Edit the tags for this lesson")
+                    }
                 }
                 #endif
             }
-            .background(Color("SecondaryColor").edgesIgnoringSafeArea([.bottom, .horizontal]))
+            .toolbar(id: "DetailToolbar") {
+                #if os(iOS)
+                ToolbarItem(id: "Spacer", placement: .automatic) {
+                        
+                        EmptyView()
+                    
+                    }
+                #else
+                ToolbarItem(id: "Toggle Watched Button", placement: .automatic) {
+                    ToggleWatchedButton(lessons: [lesson])
+                }
+                
+                ToolbarItem(id: "Tag Button", placement: .automatic) {
+                    Button(action: {
+                        viewStates.tagPopoverPresented = true
+                    }, label: {
+                        Label("Edit Tags", systemImage: "tag")
+                    })
+//                    .disabled(selectedLesson.count != 1)
+                    .help("Edit the tags for this lesson")
+                    .popover(isPresented: $viewStates.tagPopoverPresented) {
+                        AllocateTagView(selectedTags:
+                                            Binding(
+                                                get: {lesson.tag!.allObjects as! [Tag]},
+                                                set: {
+                                                    for tag in lesson.tag!.allObjects as! [Tag] {
+                                                        lesson.removeFromTag(tag)
+                                                    }
+                                                    for tag in $0 {
+                                                        lesson.addToTag(tag)
+                                                    }
+                                                })
+                        )
+                        .frame(width: 200, height: 150)
+                    }
+                }
+                
+                ToolbarItem(id: "Spacer") {
+                    Spacer()
+                }
+                
+                ToolbarItem(id: "AddResourceButton", placement: .automatic) {
+                    AddResourceButton(isAddingResource: $detailStates.addResourcePresented)
+                }
+                ToolbarItem(id: "AddILOMenu", placement: .automatic) {
+                    AddILOMenu(detailStates: detailStates)
+                }
+                
+                ToolbarItem(id: "DeleteButton") {
+                    DeleteLessonButton(viewStates: detailStates)
+                }
+                ToolbarItem(id: "EditButton") {
+                    EditLessonButton(detailStates: detailStates, lessons: [lesson])
+                        .labelStyle(TitleOnlyLabelStyle())
+                }
+                #endif
+            }
+            .background(LinearGradient(gradient: Gradient(colors: [.init("SecondaryColorLight"), .init("SecondaryColor")]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea([.bottom, .horizontal]))
     }
     
-    func createILO(index: Int) {
+    private func createILO(index: Int) {
         ILO.create(in: managedObjectContext, title: newILOText, index: index, lesson: lesson)
         newILOText = ""
     }
     
-    func deleteLesson() {
+    private func deleteLesson() {
         lesson.delete(context: managedObjectContext)
         presentationMode.wrappedValue.dismiss()
     }
     
 }
-
-
 
 
 struct DetailView_Previews: PreviewProvider {
@@ -204,6 +283,7 @@ struct ILOsProgressView: View {
     var body: some View {
         HStack {
             Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of learning outcomes written")
+                .fixedSize(horizontal: false, vertical: true)
             ProgressView(value: completedILOs)
                 .progressViewStyle(LinearProgressViewStyle())
         }
@@ -214,4 +294,44 @@ struct ILOsProgressView: View {
         formatter.numberStyle = .percent
         return formatter
     }()
+}
+
+struct DetailViewTags: View {
+    var tags: [Tag]?
+    var body: some View {
+        VStack(alignment: .leading) {
+            Label("Tags", systemImage: "tag")
+                .font(.headline)
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(tags ?? []) { tag in
+                        TagIcon(tag: tag)
+                        
+                    }
+                }
+                .cornerRadius(20)
+            }
+            .cornerRadius(20)
+            .overlay(RoundedRectangle(cornerRadius: 20)
+                        .stroke(Color.accentColor, lineWidth: 3))
+        }
+        .modifier(DetailBlock())
+    }
+}
+
+struct DetailNotesSection: View {
+    var text: String
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+            Label("Notes", systemImage: "text.justifyleft")
+                .font(.headline)
+            Text(text)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+        }.modifier(DetailBlock())
+    }
 }

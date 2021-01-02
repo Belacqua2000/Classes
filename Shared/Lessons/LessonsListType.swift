@@ -1,5 +1,5 @@
 //
-//  LessonsFilter.swift
+//  LessonsListType.swift
 //  Classes
 //
 //  Created by Nick Baughan on 24/09/2020.
@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct LessonsFilter: Hashable {
+struct LessonsListType: Hashable {
     enum FilterTypes {
-        case all, tag, lessonType, watched
+        case all, tag, lessonType, watched, today, unwatched, unwritten
     }
     var filterType: FilterTypes
     var lessonType: Lesson.LessonType?

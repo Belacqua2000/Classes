@@ -9,5 +9,5 @@ import Foundation
 import UniformTypeIdentifiers
 
 extension UTType {
-    public static let classesFormat = UTType(exportedAs: "com.baughan.classes.lessons", conformingTo: .json)
+    public static let classesFormat = UTType(exportedAs: "com.baughan.classes.lessons")
 }

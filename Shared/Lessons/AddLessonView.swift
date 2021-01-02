@@ -74,23 +74,25 @@ struct AddLessonForm: View {
     var body: some View {
         Form {
             Section {
-                HStack {
-                    Image(systemName: "textformat")
-                    TextField("Title", text: $title)
-                }
-                HStack {
-                    Image(systemName: "mappin")
-                    TextField("Location", text: $location)
-                }
-                HStack {
-                    Image(systemName: "graduationcap")
-                    #if os(macOS)
-                    TextField("Teacher", text: $teacher)
-                    #else
-                    TextField("Teacher", text: $teacher)
-                        .textContentType(.name)
-                    #endif
-                }
+                Label(
+                    title: {TextField("Title", text: $title)},
+                    icon: {Image(systemName: "textformat")}
+                )
+                Label(
+                    title: {TextField("Location", text: $location)},
+                    icon: {Image(systemName: "mappin")}
+                )
+                Label(
+                    title: {
+                        #if os(macOS)
+                        TextField("Teacher", text: $teacher)
+                        #else
+                        TextField("Teacher", text: $teacher)
+                            .textContentType(.name)
+                        #endif
+                    },
+                    icon: {Image(systemName: "graduationcap")}
+                )
                 DatePicker(selection: $date) {
                     Label("Date", systemImage: "calendar")
                 }
@@ -140,14 +142,14 @@ struct AddLessonForm: View {
             }
             #endif
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
+        .toolbar(id: "AddLessonViewToolbar") {
+            ToolbarItem(id: "AddLessonToolbarSaveButton", placement: .confirmationAction) {
                 Button(action: createLesson, label: {
                     Text("Save")
                 })
                 .disabled(title == "")
             }
-            ToolbarItem(placement: .cancellationAction) {
+            ToolbarItem(id: "AddLessonToolbarDismissButton", placement: .cancellationAction) {
                 Button(action: {presentationMode.wrappedValue.dismiss()}, label: {
                     Text("Cancel")
                 })
@@ -175,7 +177,7 @@ struct AddLessonForm: View {
             lesson!.update(in: managedObjectContext, title: title, type: type, teacher: teacher, date: date, location: location, watched: isCompleted, tags: tags, notes: notes)
         }
         presentationMode.wrappedValue.dismiss()
-        isPresented = false
+//        isPresented = false
     }
 }
 

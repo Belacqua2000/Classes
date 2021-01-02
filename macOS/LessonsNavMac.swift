@@ -14,21 +14,30 @@ struct LessonsNavMac: View {
     
     let nc = NotificationCenter.default
     @Binding var selectedLesson: Set<Lesson>
-    @Binding var filter: LessonsFilter
+    @Binding var listType: LessonsListType
     
     var body: some View {
         GeometryReader { gr in
             HSplitView {
-                LessonsListContent(selection: $selectedLesson, filter: $filter)
-                    .frame(idealWidth: gr.size.width / 2)
-                    
-                if selectedLesson.count == 1 {
-                    DetailView(lesson: selectedLesson.first!)
-                        .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: .infinity, maxHeight: .infinity)
-                } else {
-                    Text(selectedLesson.isEmpty ? "Select a lesson" : "\(selectedLesson.count) lessons selected")
-                        .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width / 2, maxWidth: gr.size.width / 2, maxHeight: .infinity)
+                LessonsListContent(selection: $selectedLesson, listType: $listType)
+                    .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width * 0.3)
+                    .onDeleteCommand(perform: {
+                        viewStates.deleteAlertShown = true
+                    })
+                VStack {
+                    if selectedLesson.count == 1 {
+                        DetailView(lesson: selectedLesson.first!)
+                    } else {
+                        ZStack {
+                            BlurVisualEffectViewMac(material: .underWindowBackground, blendMode: .behindWindow)
+                            Text(selectedLesson.isEmpty ? "Select a lesson" : "\(selectedLesson.count) lessons selected")
+                        }
+                    }
                 }
+                .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width * 0.6, maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .alert(isPresented: $viewStates.deleteAlertShown) {
+                Alert(title: Text(selectedLesson.count == 1 ? "Delete Lesson" : "Delete Lessons"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
             }
             .sheet(item: $viewStates.lessonToChange, onDismiss: {
                 viewStates.lessonToChange = nil
@@ -39,79 +48,20 @@ struct LessonsNavMac: View {
                    onDismiss: {
                     viewStates.lessonToChange = nil
                    }, content: {
-                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: filter.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
                    })
-            .alert(isPresented: $viewStates.deleteAlertShown) {
-                Alert(title: Text(selectedLesson.count == 1 ? "Delete Lesson" : "Delete Lessons"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .automatic) {
-                    Button(action: {
-                        nc.post(Notification(name: .scrollToNow))
-                    }, label: {
-                        Label("Scroll To Now", systemImage: "calendar.badge.clock")
-                    })
-                    .help("Scroll to the next lesson in the list after now.")
-                    ToggleWatchedButton(lessons: Array(selectedLesson))
-                    
-                    DeleteLessonButton()
-                        .disabled(selectedLesson.isEmpty)
-                    
-                    Spacer()
-                }
                 
-                ToolbarItemGroup(placement: .automatic) {
-                    Button(action: {
-                        viewStates.tagPopoverPresented = true
-                    }, label: {
-                        Label("Edit Tags", systemImage: "tag")
-                    })
-                    .disabled(selectedLesson.count != 1)
-                    .help("Edit the tags for this lesson")
-                    .popover(isPresented: $viewStates.tagPopoverPresented) {
-                        AllocateTagView(selectedTags:
-                                            Binding(
-                                                get: {selectedLesson.first!.tag!.allObjects as! [Tag]},
-                                                set: {
-                                                    for tag in selectedLesson.first!.tag!.allObjects as! [Tag] {
-                                                        (selectedLesson.first!).removeFromTag(tag)
-                                                    }
-                                                    for tag in $0 {
-                                                        selectedLesson.first!.addToTag(tag)
-                                                    }
-                                                })
-                        )
-                        .frame(width: 200, height: 150)
-                    }
-                    Menu(content: {
-                        AddILOMenu(editILOViewState: $viewStates.editILOViewState, isAddingILO: $viewStates.addILOPresented)
-                            .disabled(selectedLesson.count != 1)
-                        AddResourceButton(isAddingResource: $viewStates.addResourcePresented)
-                            .disabled(selectedLesson.count != 1)
-                    }, label: {
-                        Label("Add Items", systemImage: "text.badge.plus")
-                    })
-                    .labelStyle(DefaultLabelStyle())
-                    .help("Add learning outcomes and resources")
-                    
-                    EditLessonButton(lessons: Array(selectedLesson))
-                    Spacer()
-                }
-                
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: addLesson, label: {
-                        Label("Add Lesson", systemImage: "plus")
-                    })
-                    .onReceive(nc.publisher(for: .newLesson), perform: { _ in
-                        addLesson()
-                    })
-                    .help("Add a New Lesson")
-                }
             }
             .onReceive(nc.publisher(for: .tagAllocateViewShown), perform: { _ in
-                /*@START_MENU_TOKEN@*//*@PLACEHOLDER=code@*/ /*@END_MENU_TOKEN@*/
+                viewStates.tagPopoverPresented = true
             })
-        }
+        .fileExporter(
+            isPresented: $viewStates.exporterShown,
+            document: LessonJSON(lessons: Array(selectedLesson)),
+            contentType: .classesFormat,
+            onCompletion: {_ in 
+                
+            })
     }
     
     func addLesson() {
@@ -132,6 +82,6 @@ struct LessonsNavMac: View {
 
 struct LessonsNavMac_Previews: PreviewProvider {
     static var previews: some View {
-        LessonsNavMac(selectedLesson: .constant(Set<Lesson>()), filter: .constant(LessonsFilter(filterType: .all, lessonType: nil, tag: nil)))
+        LessonsNavMac(selectedLesson: .constant(Set<Lesson>()), listType: .constant(LessonsListType(filterType: .all, lessonType: nil, tag: nil)))
     }
 }

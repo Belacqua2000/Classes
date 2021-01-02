@@ -90,6 +90,26 @@ extension Lesson {
         }
     }
     
+    func markAllILOsWritten(context managedObjectContext: NSManagedObjectContext) {
+        (ilo?.allObjects as? [ILO])?.forEach({$0.written = true})
+        objectWillChange.send()
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    func markAllILOsUnwritten(context managedObjectContext: NSManagedObjectContext) {
+        (ilo?.allObjects as? [ILO])?.forEach({$0.written = false})
+        objectWillChange.send()
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
     func delete(context managedObjectContext: NSManagedObjectContext) {
         managedObjectContext.delete(self)
         do {
@@ -97,6 +117,10 @@ extension Lesson {
         } catch {
             print("Unable to save due to Error: \(error)")
         }
+    }
+    
+    var completedILOs: Double {
+        return Double((ilo?.allObjects as? [ILO])?.filter({$0.written}).count ?? 0)
     }
     
     static func create(in managedObjectContext: NSManagedObjectContext, title: String, type: Lesson.LessonType, teacher: String, date: Date, location: String, watched: Bool, save: Bool, tags: [Tag], notes: String) {

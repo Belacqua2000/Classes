@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct GeneralSettingsView: View {
     @AppStorage("currentLessonSort") private var sort: LessonsListContent.Sort = .dateDescending
+    @State var importSheetIsShown = false
+    
+    let buildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+    let versionNumber: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     
     var picker: some View {
         Picker(
@@ -29,7 +34,11 @@ struct GeneralSettingsView: View {
         #else
         Form {
             picker
-                //.pickerStyle(RadioGroupPickerStyle())
+            Divider()
+            Section {
+                Text("Version Number: \(versionNumber)")
+                Text("Build Number: \(buildNumber)")
+            }
         }
         #endif
     }

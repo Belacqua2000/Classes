@@ -15,5 +15,6 @@ class LessonsStateObject: ObservableObject {
     @Published var editILOViewState: EditILOView.AddOutcomeViewState = .single
     @Published var lessonToChange: Lesson? = nil
     @Published var shareSheetShown = false
+    @Published var exporterShown = false
     @Published var tagPopoverPresented = false
 }

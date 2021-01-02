@@ -17,7 +17,23 @@ struct ILOGeneratorView: View {
     @EnvironmentObject var environmentHelpers: EnvironmentHelpers
     
     @Binding var isPresented: Bool
-    @State var ilos: [ILO]
+    
+    @State var writtenFilterActive = true
+    @State var shuffled = false
+    
+    var ilos: [ILO]
+    var filteredILOs: [ILO] {
+        var filter = writtenFilterActive ? ilos.filter({$0.written}) : ilos
+        filter.sort {
+            if $0.lesson?.title ?? "" != $1.lesson?.title ?? "" {
+                return $0.lesson?.title ?? "" < $1.lesson?.title ?? ""
+            }
+            else {
+                return $0.index < $1.index
+            }
+        }
+        return shuffled ? filter.shuffled() : filter
+    }
     @State var currentILOIndex = 0
     
     var isFirstILO: Bool {
@@ -25,7 +41,7 @@ struct ILOGeneratorView: View {
     }
     
     var isLastILO: Bool {
-        return currentILOIndex >= ilos.count - 1
+        return currentILOIndex >= filteredILOs.count - 1
     }
     
     var previousButton: some View {
@@ -43,37 +59,53 @@ struct ILOGeneratorView: View {
     }
     
     var body: some View {
-        Group {
-            if ilos.count != 0 {
-                HStack {
-                    #if os(macOS)
-                    previousButton
-                        .padding()
-                    #endif
-                    Spacer()
-                    VStack(spacing: 20) {
-                        Text(ilos[currentILOIndex].title ?? "No Title")
-                            .font(.title)
-                        Label(
-                            title: { Text(ilos[currentILOIndex].lesson!.title ?? "Untitled").italic() },
-                            icon: { Image(systemName: Lesson.lessonIcon(type: ilos[currentILOIndex].lesson?.type)) }
-                        )
-                        .font(.title3)
+        VStack {
+            Spacer()
+            if filteredILOs.count > 0 {
+                    HStack {
+                        #if os(macOS)
+                        previousButton
+                            .padding()
+                        #endif
+                        Spacer()
+                        VStack(spacing: 20) {
+                            Spacer()
+                            Text(filteredILOs[currentILOIndex].title ?? "No Title")
+                                .font(.title)
+                            Label(
+                                title: { Text(filteredILOs[currentILOIndex].lesson!.title ?? "Untitled").italic() },
+                                icon: { Image(systemName: Lesson.lessonIcon(type: filteredILOs[currentILOIndex].lesson?.type)) }
+                            )
+                            .font(.title3)
+                            Spacer()
+                        }
+                        Spacer()
+                        #if os(macOS)
+                        nextButton
+                            .padding()
+                        #endif
                     }
-                    Spacer()
-                    #if os(macOS)
-                    nextButton
-                        .padding()
-                    #endif
-                }
             } else {
                 Text("No outcomes to Randomise")
                     .font(.title)
             }
+            Spacer()
+            HStack {
+                VStack(alignment: .leading) {
+                    Toggle(isOn: $writtenFilterActive, label: {
+                        Label("Only Show Written", systemImage: "pencil")
+                    })
+                    Toggle(isOn: $shuffled, label: {
+                        Label("Shuffle Order", systemImage: "shuffle")
+                    })
+                }
+                Spacer()
+                #if os(macOS)
+                filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")
+                    .disabled(true)
+                #endif
+            }.padding()
         }
-        .onChange(of: horizontalSizeClass, perform: { value in
-            presentationMode.wrappedValue.dismiss()
-        })
         .navigationTitle("Outcome Randomiser")
         .toolbar {
             #if !os(macOS)
@@ -82,21 +114,19 @@ struct ILOGeneratorView: View {
                 
                 Spacer()
                 
-                ilos.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(ilos.count)")
+                filteredILOs.count == 0 ? Text("").disabled(true) : Text("Outcome \(currentILOIndex + 1) of \(filteredILOs.count)")
                     .disabled(true)
                 
                 Spacer()
                 
                 nextButton
             }
+            #endif
             ToolbarItem(placement: .cancellationAction) {
-                Button(action: {
-                    environmentHelpers.iloRandomiserShown = false
-                }, label: {
-                    Text("Close")
+                Button("Close", action: {
+                    presentationMode.wrappedValue.dismiss()
                 })
             }
-            #endif
         }
     }
     
@@ -114,8 +144,6 @@ struct ILOGeneratorView: View {
 
 struct ILOGeneratorView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
             ILOGeneratorView(isPresented: .constant(true), ilos: [])
-        }
     }
 }

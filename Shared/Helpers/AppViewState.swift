@@ -8,5 +8,10 @@
 import Foundation
 
 class AppViewState: ObservableObject {
+    enum TabKind {
+        case summary, all, ilo
+    }
+    
     @Published var detailViewShowing = false
+    @Published var currentTab: TabKind? = nil
 }

@@ -54,7 +54,7 @@ struct UpcomingWidgetView: View {
         }
     }
 }
-/*
+
 struct UpcomingWidgetView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -69,7 +69,7 @@ struct UpcomingWidgetView_Previews: PreviewProvider {
         }
         .environment(\.colorScheme, .dark)
     }
-}*/
+}
 
 struct UpcomingLessonSession: View {
     @Environment(\.widgetFamily) var widgetFamily
