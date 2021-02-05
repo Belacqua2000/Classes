@@ -172,6 +172,7 @@
 		17EA042225A0BB81008B566A /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17937D662531B49E001C2540 /* CustomTypes.swift */; };
 		17EA042925A0BBAF008B566A /* UpcomingWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F62B252523123C00DCA5C1 /* UpcomingWidgetView.swift */; };
 		17EA043025A0BC75008B566A /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BCF25065CB300BA8618 /* Lesson.swift */; };
+		17EA043725A0BCCA008B566A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179BF255250697F500574A35 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -383,6 +384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17EA043725A0BCCA008B566A /* CloudKit.framework in Frameworks */,
 				17EA03FD25A0BB52008B566A /* SwiftUI.framework in Frameworks */,
 				17EA03FC25A0BB52008B566A /* WidgetKit.framework in Frameworks */,
 			);
