@@ -1,0 +1,36 @@
+{
+  "images" : [
+    {
+      "filename" : "Tutorial-Add Lesson-iPhone-Light.heic",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Tutorial-Add Lesson-iPhone-Dark.heic",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "Tutorial-Add Lesson-Mac-Light.heic",
+      "idiom" : "mac"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Tutorial-Add Lesson-Mac-Dark.heic",
+      "idiom" : "mac"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

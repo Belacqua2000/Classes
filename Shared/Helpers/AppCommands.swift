@@ -53,6 +53,7 @@ struct AppCommands: Commands {
     
         CommandGroup(replacing: .help) {
             Button("What's New", action: whatsNew)
+            Button("Tutorial", action: {postNotification(.init(name: .onboarding))})
             Button("Launch Website", action: {
                 openURL.callAsFunction(URL(string: "https://nickbaughanapps.wordpress.com")!)
             })
@@ -71,7 +72,7 @@ struct AppCommands: Commands {
         }
     }
     
-    func postNotification(_ notification: Notification) {
+    private func postNotification(_ notification: Notification) {
         nc.post(notification)
     }
     

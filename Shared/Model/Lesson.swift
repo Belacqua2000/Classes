@@ -186,10 +186,18 @@ extension Lesson {
     func overDueILOs() -> [ILO] {
         return ((ilo?.allObjects as! [ILO]).filter({!$0.written})).sorted(by: {$0.index < $1.index})
     }
+    static func lol() {
+        print("LOL")
+    }
+    
+    func duplicate(context: NSManagedObjectContext) {
+        Lesson.create(in: context, title: title!, type: Lesson.LessonType(rawValue: type ?? "lecture") ?? .lecture, teacher: teacher!, date: date!, location: location!, watched: watched, save: true, tags: tag?.allObjects as? [Tag] ?? [], notes: notes!)
+    }
     
 }
 
 
+// MARK: - Lesson File
 extension Lesson {
     static func parseJSON(url: URL, context: NSManagedObjectContext) {
         if let data = try? Data(contentsOf: url) {

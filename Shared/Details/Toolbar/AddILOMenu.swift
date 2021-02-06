@@ -11,23 +11,22 @@ struct AddILOMenu: View {
     @ObservedObject var detailStates: DetailViewStates
     var body: some View {
         Menu(content: {
-            Button(action: {
-                detailStates.editILOViewState = .single
-                detailStates.addILOPresented = true
-            }, label: {
-                Text("Add Single Outcome")
-            })
-            
-            Button(action: {
-                detailStates.editILOViewState = .multiple
-                detailStates.addILOPresented = true
-            }, label: {
-                Text("Batch Add Outcomes")
-            })
+            Button("Add Single Outcome", action: addSingleILO)
+            Button("Add Multiple Outcomes", action: addMultipleILOs)
         }, label: {
             Label("Add Learning Outcomes", systemImage: "text.badge.plus")
         })
         .help("Add learning outcomes to this lesson")
+    }
+    
+    private func addSingleILO() {
+        detailStates.editILOViewState = .single
+        detailStates.addILOPresented = true
+    }
+    
+    private func addMultipleILOs() {
+        detailStates.editILOViewState = .multiple
+        detailStates.addILOPresented = true
     }
 }
 

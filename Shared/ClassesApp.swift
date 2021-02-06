@@ -28,9 +28,6 @@ struct ClassesApp: App {
         #if os(macOS)
         Settings {
             SettingsViewMac()
-            /*SettingsView(viewIsShown: .constant(true))
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)*/
         }
         #endif
     }

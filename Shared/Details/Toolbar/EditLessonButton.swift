@@ -9,21 +9,28 @@ import SwiftUI
 
 struct EditLessonButton: View {
     @ObservedObject var detailStates: DetailViewStates
-    var lessons: [Lesson]
+    @ObservedObject var lesson: Lesson
+    
+    #if os(macOS)
+    let buttonText = "Edit"
+    #else
+    let buttonText = "Edit Lesson"
+    #endif
+    
     var body: some View {
+        
         Button(action: editLesson, label: {
-            Label("Edit Info", systemImage: "pencil")
+            Label(buttonText, systemImage: "pencil")
         })
-        .disabled(lessons.count != 1)
         .help("Edit the lesson info")
         .onReceive(NotificationCenter.default.publisher(for: .editLesson), perform: { _ in
             editLesson()
         })
+        
     }
     
     private func editLesson() {
-        guard !lessons.isEmpty else { return }
-        detailStates.lessonToChange = lessons.first!
+        detailStates.lessonToChange = lesson
         detailStates.editLessonShown = true
     }
 }

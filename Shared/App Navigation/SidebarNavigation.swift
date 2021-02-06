@@ -10,14 +10,30 @@ import UniformTypeIdentifiers
 
 struct SidebarNavigation: View {
     
-    //Environment
+    // MARK: - Environment
     @Environment(\.managedObjectContext) var viewContext
-//    @EnvironmentObject var appViewState: AppViewState
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
     
-    //Sidebar struct
+    // MARK: - State Properties
+    @State var addTagShowing: Bool = false
+    @State var selectedTag: Tag?
+    @State private var deleteAlertShown = false
+    @State private var settingsShown = false
+    
+    // MARK: - Model
+    // Tag Fetch Request
+    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))], animation: .default)
+    private var tags: FetchedResults<Tag>
+    
+    // Lessons Fetch Request
+    @FetchRequest(sortDescriptors: [])
+    private var fetchedLessons: FetchedResults<Lesson>
+   
+    
+    // MARK: - Selection
+    
     struct SidebarItem: Hashable {
         enum SidebarTypes {
             case summary
@@ -35,34 +51,17 @@ struct SidebarNavigation: View {
         var tag: Tag?
     }
     
-    // State properties
-    @State var addTagShowing: Bool = false
-    @State var selectedTag: Tag?
-    @State private var deleteAlertShown = false
-    @State private var settingsShown = false
-    
-    @State private var tagDropTargetted = false
-//    let dropDelegate = LessonDrop()
-    
-    // Tag Fetch Request
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))], animation: .default)
-    private var tags: FetchedResults<Tag>
-    
-    // Lessons Fetch Request
-    @FetchRequest(sortDescriptors: [])
-    private var fetchedLessons: FetchedResults<Lesson>
-   
     #if os(macOS)
     @State var selection: SidebarItem?// = SidebarItem(sidebarType: .all)
     #else
     @State var selection: SidebarItem?
     #endif
     
+    // MARK: - Sidebar
     var sidebar: some View {
         List(selection: $selection) {
-            
             NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject()),
+                destination: LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
                 tag: SidebarItem(sidebarType: .all),
                 selection: $selection,
                 label: {
@@ -75,7 +74,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Smart Groups")) {
             NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .today, lessonType: nil)).environmentObject(LessonsStateObject()),
+                destination: LessonsView(listType: LessonsListType(filterType: .today, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
                 tag: SidebarItem(sidebarType: .today, lessonTypes: nil, tag: nil),
                 selection: $selection,
                 label: {
@@ -87,7 +86,7 @@ struct SidebarNavigation: View {
                 })
                 
                 NavigationLink(
-                    destination: LessonsView(listType: LessonsListType(filterType: .unwatched, lessonType: nil)).environmentObject(LessonsStateObject()),
+                    destination: LessonsView(listType: LessonsListType(filterType: .unwatched, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
                     tag: SidebarItem(sidebarType: .unwatched, lessonTypes: nil, tag: nil),
                     selection: $selection,
                     label: {
@@ -99,7 +98,7 @@ struct SidebarNavigation: View {
                     })
                 
                 NavigationLink(
-                    destination: LessonsView(listType: LessonsListType(filterType: .unwritten, lessonType: nil)).environmentObject(LessonsStateObject()),
+                    destination: LessonsView(listType: LessonsListType(filterType: .unwritten, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
                     tag: SidebarItem(sidebarType: .unwritten, lessonTypes: nil, tag: nil),
                     selection: $selection,
                     label: {
@@ -114,7 +113,7 @@ struct SidebarNavigation: View {
             
             Section(header: Text("Class Type")) {
                 ForEach(Lesson.LessonType.allCases) { lesson in
-                    NavigationLink(destination: LessonsView(listType: LessonsListType(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsStateObject())) {
+                    NavigationLink(destination: LessonsView(listType: LessonsListType(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsListHelper(context: viewContext))) {
                         Label(
                             title: {
                                 Text(Lesson.lessonTypePlural(type: lesson.rawValue))
@@ -134,7 +133,7 @@ struct SidebarNavigation: View {
             Section(header: Text("Tags")) {
                 ForEach(tags) { tag in
                     
-                    NavigationLink(destination:  LessonsView(listType: LessonsListType(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsStateObject()), label: {
+                    NavigationLink(destination:  LessonsView(listType: LessonsListType(filterType: .tag, lessonType: nil, tag: tag)).environmentObject(LessonsListHelper(context: viewContext)), label: {
                         if #available(iOS 14.3, *) {
                             Label(tag.name ?? "Untitled", systemImage: "tag")
                         } else {
@@ -179,12 +178,16 @@ struct SidebarNavigation: View {
         })
     }
     
+    
+    // MARK: - Body
     var body: some View {
         NavigationView {
             Group {
                 #if os(macOS)
+                
                 sidebar
                     .listStyle(SidebarListStyle())
+                
                 #else
                 if horizontalSizeClass == .compact {
                     sidebar
@@ -230,7 +233,7 @@ struct SidebarNavigation: View {
             }.disabled(true)
             #endif
             #if os(iOS)
-            LessonsView(listType: .init(filterType: .all)).environmentObject(LessonsStateObject())
+            LessonsView(listType: .init(filterType: .all)).environmentObject(LessonsListHelper(context: viewContext))
             Text("Select a lesson")
             #endif
         }

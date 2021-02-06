@@ -101,6 +101,9 @@ struct ContentView: View {
             .onReceive(nc.publisher(for: .showWhatsNew), perform: { _ in
                 currentModalView = .whatsnewView
             })
+            .onReceive(nc.publisher(for: .onboarding), perform: {_ in
+                currentModalView = .onboardingView
+            })
             .onReceive(nc.publisher(for: .importLessons), perform: { _ in
                 importerPresented = true
             })
@@ -136,27 +139,6 @@ struct ContentView: View {
             modalViewShown = true
         }
     }
-    /*
-     @ViewBuilder
-     private func sheetContent() -> some View {
-     if currentModalView == .onboardingView {
-     OnboardingView(isPresented: $modalViewShown)
-     } else if currentModalView == .whatsnewView {
-     WhatsNew(isShowing: $modalViewShown)
-     } else if currentModalView == .importView {
-     ImportView(isPresented: $modalViewShown, url: $url)
-     }
-     /*switch currentModalView {
-     case .importView:
-     ImportView(isPresented: $modalViewShown, url: $url)
-     case .onboardingView:
-     OnboardingView(isPresented: $modalViewShown)
-     case .whatsnewView:
-     WhatsNew(isShowing: $modalViewShown)
-     case .none:
-     EmptyView()
-     }*/
-     }*/
 }
 
 struct ContentView_Previews: PreviewProvider {

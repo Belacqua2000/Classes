@@ -35,4 +35,5 @@ extension Notification.Name {
     static let detailNotShowing = Notification.Name("detailNotShowing")
     
     static let showWhatsNew = Notification.Name("showWhatsNew")
+    static let onboarding = Notification.Name("onboarding")
 }

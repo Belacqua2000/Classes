@@ -27,12 +27,9 @@
 		17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		1724C46A254250DE00F56C93 /* AppFeaturesiOS.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeaturesiOS.json */; };
-		1726BFD02555C98200C1E1D0 /* LessonFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1726BFCF2555C98200C1E1D0 /* LessonFile.swift */; };
-		1726BFD12555C98200C1E1D0 /* LessonFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1726BFCF2555C98200C1E1D0 /* LessonFile.swift */; };
 		172E28092556B81100676351 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D0F2528A4F200412C55 /* ImportView.swift */; };
 		172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
 		172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
-		173403FB25612F920074C8B0 /* BlurVisualEffectViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1750A4042555737A00A7A2E7 /* BlurVisualEffectViewMac.swift */; };
 		1734040725614AE70074C8B0 /* LessonsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1734040625614AE70074C8B0 /* LessonsListFilter.swift */; };
 		1734040825614AE70074C8B0 /* LessonsListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1734040625614AE70074C8B0 /* LessonsListFilter.swift */; };
 		17391A592545DD78006A6CD9 /* ILOFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17391A582545DD78006A6CD9 /* ILOFilterView.swift */; };
@@ -41,8 +38,8 @@
 		173C769D25162148003FFA6A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173C769B25162148003FFA6A /* OnboardingView.swift */; };
 		1750A3F82555733600A7A2E7 /* BlurVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1750A3F72555733600A7A2E7 /* BlurVisualEffectView.swift */; };
 		1751BB222533480D00AA78D6 /* LessonsNaviOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB212533480D00AA78D6 /* LessonsNaviOS.swift */; };
-		1751BB292533514000AA78D6 /* LessonsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB282533514000AA78D6 /* LessonsStateObject.swift */; };
-		1751BB2A2533514000AA78D6 /* LessonsStateObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB282533514000AA78D6 /* LessonsStateObject.swift */; };
+		1751BB292533514000AA78D6 /* LessonsListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB282533514000AA78D6 /* LessonsListHelper.swift */; };
+		1751BB2A2533514000AA78D6 /* LessonsListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1751BB282533514000AA78D6 /* LessonsListHelper.swift */; };
 		1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
 		1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DEC42514CB41008CDCAC /* LessonDetails.swift */; };
 		1768DED02514CB5B008CDCAC /* ILOSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1768DECF2514CB5B008CDCAC /* ILOSection.swift */; };
@@ -63,6 +60,20 @@
 		176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
 		176E09C62528783E00E1AA26 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */; };
 		17739A07254647F500156067 /* AppFeaturesMac.json in Resources */ = {isa = PBXBuildFile; fileRef = 17739A05254647F500156067 /* AppFeaturesMac.json */; };
+		1775705425CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775705325CDFD5600EAD6E1 /* OnboardingContent.swift */; };
+		1775705525CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775705325CDFD5600EAD6E1 /* OnboardingContent.swift */; };
+		1775706125CE143E00EAD6E1 /* DetailToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775706025CE143E00EAD6E1 /* DetailToolbar.swift */; };
+		1775706225CE143E00EAD6E1 /* DetailToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775706025CE143E00EAD6E1 /* DetailToolbar.swift */; };
+		1775706E25CE189300EAD6E1 /* LessonNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775706D25CE189300EAD6E1 /* LessonNotes.swift */; };
+		1775706F25CE189300EAD6E1 /* LessonNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775706D25CE189300EAD6E1 /* LessonNotes.swift */; };
+		1775708625CE19AF00EAD6E1 /* BlurVisualEffectViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1750A4042555737A00A7A2E7 /* BlurVisualEffectViewMac.swift */; };
+		1775709225CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775709125CE1E5800EAD6E1 /* LessonTypePicker.swift */; };
+		1775709325CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775709125CE1E5800EAD6E1 /* LessonTypePicker.swift */; };
+		1775709925CE232E00EAD6E1 /* DetailBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F912B2554D1C700BAD25A /* DetailBackgroundGradient.swift */; };
+		177570AF25CEB9D100EAD6E1 /* LessonContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177570AE25CEB9D100EAD6E1 /* LessonContextMenu.swift */; };
+		177570B025CEB9D100EAD6E1 /* LessonContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177570AE25CEB9D100EAD6E1 /* LessonContextMenu.swift */; };
+		177570CC25CED51400EAD6E1 /* LessonsListToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177570CB25CED51400EAD6E1 /* LessonsListToolbar.swift */; };
+		177570CD25CED51400EAD6E1 /* LessonsListToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177570CB25CED51400EAD6E1 /* LessonsListToolbar.swift */; };
 		1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
 		1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECA52527D94200957AE3 /* ContentViewMac.swift */; };
 		1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1775ECB22527DEF600957AE3 /* Notifications.swift */; };
@@ -79,6 +90,8 @@
 		1781EF24251F7F3A00BA91BB /* AllILOsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF23251F7F3A00BA91BB /* AllILOsList.swift */; };
 		1781EF25251F7F3A00BA91BB /* AllILOsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781EF23251F7F3A00BA91BB /* AllILOsList.swift */; };
 		1781EF2A251F804E00BA91BB /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
+		1787362C25CD658100115BCD /* VersionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1787362B25CD658100115BCD /* VersionDetails.swift */; };
+		1787362D25CD658100115BCD /* VersionDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1787362B25CD658100115BCD /* VersionDetails.swift */; };
 		1787C8F625267FF1005486AC /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1787C8F525267FF1005486AC /* AppCommands.swift */; };
 		1787C8F725267FF1005486AC /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1787C8F525267FF1005486AC /* AppCommands.swift */; };
 		17937D672531B49E001C2540 /* CustomTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17937D662531B49E001C2540 /* CustomTypes.swift */; };
@@ -100,7 +113,6 @@
 		179F27F8256123AA00D65DD7 /* DetailViewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F27F7256123AA00D65DD7 /* DetailViewStates.swift */; };
 		179F27F9256123AA00D65DD7 /* DetailViewStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F27F7256123AA00D65DD7 /* DetailViewStates.swift */; };
 		179F912C2554D1C700BAD25A /* DetailBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F912B2554D1C700BAD25A /* DetailBackgroundGradient.swift */; };
-		179F912D2554D1C700BAD25A /* DetailBackgroundGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 179F912B2554D1C700BAD25A /* DetailBackgroundGradient.swift */; };
 		17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */; };
 		17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A6D50C250D7A3F00E7C6E8 /* TagIcon.swift */; };
 		17ABF3502507E789000D4048 /* ILOsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17ABF34F2507E789000D4048 /* ILOsView.swift */; };
@@ -114,16 +126,6 @@
 		17BD0E85251D3DC900BCC40D /* LessonsListType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E83251D3DC900BCC40D /* LessonsListType.swift */; };
 		17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E8F251D425000BCC40D /* LessonsRow.swift */; };
 		17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD0E8F251D425000BCC40D /* LessonsRow.swift */; };
-		17BDFB3D2555B58500E5EA88 /* UnwatchedLessonsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB392555B58400E5EA88 /* UnwatchedLessonsList.swift */; };
-		17BDFB3E2555B58500E5EA88 /* UnwatchedLessonsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB392555B58400E5EA88 /* UnwatchedLessonsList.swift */; };
-		17BDFB3F2555B58500E5EA88 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB3A2555B58400E5EA88 /* StatisticsView.swift */; };
-		17BDFB402555B58500E5EA88 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB3A2555B58400E5EA88 /* StatisticsView.swift */; };
-		17BDFB412555B58500E5EA88 /* TodaysLessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB3B2555B58500E5EA88 /* TodaysLessonsView.swift */; };
-		17BDFB422555B58500E5EA88 /* TodaysLessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB3B2555B58500E5EA88 /* TodaysLessonsView.swift */; };
-		17BDFB432555B58500E5EA88 /* UnwrittenILOsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB3C2555B58500E5EA88 /* UnwrittenILOsList.swift */; };
-		17BDFB442555B58500E5EA88 /* UnwrittenILOsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BDFB3C2555B58500E5EA88 /* UnwrittenILOsList.swift */; };
-		17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
-		17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17C9737D250E2A62000ACF16 /* SummaryView.swift */; };
 		17CACE362529B43200D906E4 /* LessonsActionButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CACE352529B43200D906E4 /* LessonsActionButtons.swift */; };
 		17CACE4C2529CC9A00D906E4 /* LessonsPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */; };
 		17D1A3A925798307001F885E /* ILOProgressShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D1A3A825798307001F885E /* ILOProgressShape.swift */; };
@@ -198,7 +200,6 @@
 		1717A6542557F50400F8DC3C /* SampleExport.classesdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleExport.classesdoc; sourceTree = "<group>"; };
 		17207ED425208B3E003889C2 /* AddILOMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddILOMenu.swift; sourceTree = "<group>"; };
 		1724C469254250DE00F56C93 /* AppFeaturesiOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeaturesiOS.json; sourceTree = "<group>"; };
-		1726BFCF2555C98200C1E1D0 /* LessonFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonFile.swift; sourceTree = "<group>"; };
 		172FFFF525420B3500CA15B5 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
 		173368E42528DA42005D0932 /* ClassesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassesWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -209,7 +210,7 @@
 		1750A4042555737A00A7A2E7 /* BlurVisualEffectViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurVisualEffectViewMac.swift; sourceTree = "<group>"; };
 		1751BB1B25325F3500AA78D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1751BB212533480D00AA78D6 /* LessonsNaviOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsNaviOS.swift; sourceTree = "<group>"; };
-		1751BB282533514000AA78D6 /* LessonsStateObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsStateObject.swift; sourceTree = "<group>"; };
+		1751BB282533514000AA78D6 /* LessonsListHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListHelper.swift; sourceTree = "<group>"; };
 		1768DEC42514CB41008CDCAC /* LessonDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetails.swift; sourceTree = "<group>"; };
 		1768DECF2514CB5B008CDCAC /* ILOSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOSection.swift; sourceTree = "<group>"; };
 		1768DED62514CB68008CDCAC /* ResourceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSection.swift; sourceTree = "<group>"; };
@@ -222,6 +223,12 @@
 		176E09BC2528781600E1AA26 /* ContactSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSettingsView.swift; sourceTree = "<group>"; };
 		176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		17739A05254647F500156067 /* AppFeaturesMac.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeaturesMac.json; sourceTree = "<group>"; };
+		1775705325CDFD5600EAD6E1 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
+		1775706025CE143E00EAD6E1 /* DetailToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailToolbar.swift; sourceTree = "<group>"; };
+		1775706D25CE189300EAD6E1 /* LessonNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNotes.swift; sourceTree = "<group>"; };
+		1775709125CE1E5800EAD6E1 /* LessonTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypePicker.swift; sourceTree = "<group>"; };
+		177570AE25CEB9D100EAD6E1 /* LessonContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonContextMenu.swift; sourceTree = "<group>"; };
+		177570CB25CED51400EAD6E1 /* LessonsListToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListToolbar.swift; sourceTree = "<group>"; };
 		1775ECA52527D94200957AE3 /* ContentViewMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewMac.swift; sourceTree = "<group>"; };
 		1775ECB22527DEF600957AE3 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		177909C1250A6D9200C14F5E /* EditILOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditILOView.swift; sourceTree = "<group>"; };
@@ -230,6 +237,7 @@
 		1781EF15251F6C3000BA91BB /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		1781EF1C251F76D200BA91BB /* AddResourceButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResourceButton.swift; sourceTree = "<group>"; };
 		1781EF23251F7F3A00BA91BB /* AllILOsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllILOsList.swift; sourceTree = "<group>"; };
+		1787362B25CD658100115BCD /* VersionDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionDetails.swift; sourceTree = "<group>"; };
 		1787C8F525267FF1005486AC /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		17937D662531B49E001C2540 /* CustomTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypes.swift; sourceTree = "<group>"; };
 		17937D6F2531BE8B001C2540 /* EditLessonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonButton.swift; sourceTree = "<group>"; };
@@ -249,11 +257,6 @@
 		17BD0E78251D2EDB00BCC40D /* LessonsNavMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsNavMac.swift; sourceTree = "<group>"; };
 		17BD0E83251D3DC900BCC40D /* LessonsListType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListType.swift; sourceTree = "<group>"; };
 		17BD0E8F251D425000BCC40D /* LessonsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsRow.swift; sourceTree = "<group>"; };
-		17BDFB392555B58400E5EA88 /* UnwatchedLessonsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwatchedLessonsList.swift; sourceTree = "<group>"; };
-		17BDFB3A2555B58400E5EA88 /* StatisticsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		17BDFB3B2555B58500E5EA88 /* TodaysLessonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodaysLessonsView.swift; sourceTree = "<group>"; };
-		17BDFB3C2555B58500E5EA88 /* UnwrittenILOsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnwrittenILOsList.swift; sourceTree = "<group>"; };
-		17C9737D250E2A62000ACF16 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		17CACE352529B43200D906E4 /* LessonsActionButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LessonsActionButtons.swift; path = iOS/LessonsActionButtons.swift; sourceTree = SOURCE_ROOT; };
 		17CACE4B2529CC9900D906E4 /* LessonsPrimaryActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsPrimaryActionButton.swift; sourceTree = "<group>"; };
 		17D1A3A825798307001F885E /* ILOProgressShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOProgressShape.swift; sourceTree = "<group>"; };
@@ -344,7 +347,7 @@
 				171211FA2503707E00EE7423 /* ContentView.swift */,
 				1717A6542557F50400F8DC3C /* SampleExport.classesdoc */,
 				17EEFDCB25260DEA0069E89E /* Settings */,
-				17BDFB0F2555B4C600E5EA88 /* Summary */,
+				1787362525CD64C300115BCD /* What's New */,
 				17DAC797251AA7D20013790A /* Helpers */,
 				17ABF352250848E4000D4048 /* App Navigation */,
 				17ABF353250848EE000D4048 /* Lessons */,
@@ -421,13 +424,11 @@
 			children = (
 				17E50BC82504E22200BA8618 /* DetailView.swift */,
 				1768DEC42514CB41008CDCAC /* LessonDetails.swift */,
+				1775706D25CE189300EAD6E1 /* LessonNotes.swift */,
 				179F27F7256123AA00D65DD7 /* DetailViewStates.swift */,
-				1750A3F72555733600A7A2E7 /* BlurVisualEffectView.swift */,
-				1750A4042555737A00A7A2E7 /* BlurVisualEffectViewMac.swift */,
-				179F912B2554D1C700BAD25A /* DetailBackgroundGradient.swift */,
-				17937D6E2531BE73001C2540 /* Buttons */,
+				1775707525CE18F400EAD6E1 /* Design */,
+				17937D6E2531BE73001C2540 /* Toolbar */,
 				1768DECF2514CB5B008CDCAC /* ILOSection.swift */,
-				17207ED425208B3E003889C2 /* AddILOMenu.swift */,
 				176CC623250CFCCD00FB28B6 /* Resources */,
 			);
 			path = Details;
@@ -453,14 +454,47 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		17937D6E2531BE73001C2540 /* Buttons */ = {
+		1775707525CE18F400EAD6E1 /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				1750A3F72555733600A7A2E7 /* BlurVisualEffectView.swift */,
+				1750A4042555737A00A7A2E7 /* BlurVisualEffectViewMac.swift */,
+				179F912B2554D1C700BAD25A /* DetailBackgroundGradient.swift */,
+			);
+			path = Design;
+			sourceTree = "<group>";
+		};
+		177570C025CED04F00EAD6E1 /* Lesson List Row */ = {
+			isa = PBXGroup;
+			children = (
+				17BD0E8F251D425000BCC40D /* LessonsRow.swift */,
+				17E50BC52504D8F800BA8618 /* LessonCell.swift */,
+				17D1A3A825798307001F885E /* ILOProgressShape.swift */,
+				177570AE25CEB9D100EAD6E1 /* LessonContextMenu.swift */,
+			);
+			path = "Lesson List Row";
+			sourceTree = "<group>";
+		};
+		1787362525CD64C300115BCD /* What's New */ = {
+			isa = PBXGroup;
+			children = (
+				172FFFF525420B3500CA15B5 /* WhatsNew.swift */,
+				173C769B25162148003FFA6A /* OnboardingView.swift */,
+				1775705325CDFD5600EAD6E1 /* OnboardingContent.swift */,
+			);
+			path = "What's New";
+			sourceTree = "<group>";
+		};
+		17937D6E2531BE73001C2540 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				1775706025CE143E00EAD6E1 /* DetailToolbar.swift */,
 				17937D6F2531BE8B001C2540 /* EditLessonButton.swift */,
 				17937D7C2531BFD9001C2540 /* DeleteLessonButton.swift */,
 				17937D842531C03A001C2540 /* ToggleWatchedButton.swift */,
+				17207ED425208B3E003889C2 /* AddILOMenu.swift */,
 			);
-			path = Buttons;
+			path = Toolbar;
 			sourceTree = "<group>";
 		};
 		179BF254250697F500574A35 /* Frameworks */ = {
@@ -490,12 +524,12 @@
 				17BD0E83251D3DC900BCC40D /* LessonsListType.swift */,
 				1734040625614AE70074C8B0 /* LessonsListFilter.swift */,
 				179F27E32560BDDB00D65DD7 /* LessonsFilterView.swift */,
-				1751BB282533514000AA78D6 /* LessonsStateObject.swift */,
+				1751BB282533514000AA78D6 /* LessonsListHelper.swift */,
 				17E50BBF2504D81200BA8618 /* LessonsListContent.swift */,
+				177570CB25CED51400EAD6E1 /* LessonsListToolbar.swift */,
+				1775709125CE1E5800EAD6E1 /* LessonTypePicker.swift */,
 				1702DDD72526562100B6863C /* BottomToolbar.swift */,
-				17BD0E8F251D425000BCC40D /* LessonsRow.swift */,
-				17E50BC52504D8F800BA8618 /* LessonCell.swift */,
-				17D1A3A825798307001F885E /* ILOProgressShape.swift */,
+				177570C025CED04F00EAD6E1 /* Lesson List Row */,
 				17E50BC22504D81E00BA8618 /* AddLessonView.swift */,
 			);
 			path = Lessons;
@@ -511,26 +545,6 @@
 				17D551D42514DDF900A502EA /* ILOGeneratorView.swift */,
 			);
 			path = ILOs;
-			sourceTree = "<group>";
-		};
-		17BDFB0F2555B4C600E5EA88 /* Summary */ = {
-			isa = PBXGroup;
-			children = (
-				17C9737D250E2A62000ACF16 /* SummaryView.swift */,
-				17BDFB382555B57300E5EA88 /* Summary Blocks */,
-			);
-			path = Summary;
-			sourceTree = "<group>";
-		};
-		17BDFB382555B57300E5EA88 /* Summary Blocks */ = {
-			isa = PBXGroup;
-			children = (
-				17BDFB3A2555B58400E5EA88 /* StatisticsView.swift */,
-				17BDFB3B2555B58500E5EA88 /* TodaysLessonsView.swift */,
-				17BDFB392555B58400E5EA88 /* UnwatchedLessonsList.swift */,
-				17BDFB3C2555B58500E5EA88 /* UnwrittenILOsList.swift */,
-			);
-			path = "Summary Blocks";
 			sourceTree = "<group>";
 		};
 		17DAC797251AA7D20013790A /* Helpers */ = {
@@ -549,7 +563,6 @@
 			isa = PBXGroup;
 			children = (
 				171211FB2503707E00EE7423 /* Persistence.swift */,
-				1726BFCF2555C98200C1E1D0 /* LessonFile.swift */,
 				171211F72503707E00EE7423 /* Shared.xcdatamodeld */,
 				176CC620250CB92E00FB28B6 /* Tag.swift */,
 				17E50BCF25065CB300BA8618 /* Lesson.swift */,
@@ -566,8 +579,7 @@
 			children = (
 				176E09BC2528781600E1AA26 /* ContactSettingsView.swift */,
 				176E09C42528783E00E1AA26 /* GeneralSettingsView.swift */,
-				172FFFF525420B3500CA15B5 /* WhatsNew.swift */,
-				173C769B25162148003FFA6A /* OnboardingView.swift */,
+				1787362B25CD658100115BCD /* VersionDetails.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -777,12 +789,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1750A3F82555733600A7A2E7 /* BlurVisualEffectView.swift in Sources */,
-				17BDFB3F2555B58500E5EA88 /* StatisticsView.swift in Sources */,
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				17D1A3A925798307001F885E /* ILOProgressShape.swift in Sources */,
-				17BDFB432555B58500E5EA88 /* UnwrittenILOsList.swift in Sources */,
 				176E09BD2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
-				1751BB292533514000AA78D6 /* LessonsStateObject.swift in Sources */,
+				1751BB292533514000AA78D6 /* LessonsListHelper.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				17BD0E84251D3DC900BCC40D /* LessonsListType.swift in Sources */,
@@ -798,27 +808,31 @@
 				1781EF24251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
 				1751BB222533480D00AA78D6 /* LessonsNaviOS.swift in Sources */,
 				1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */,
+				177570AF25CEB9D100EAD6E1 /* LessonContextMenu.swift in Sources */,
+				1775706125CE143E00EAD6E1 /* DetailToolbar.swift in Sources */,
 				1787C8F625267FF1005486AC /* AppCommands.swift in Sources */,
-				17C9737E250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */,
 				176CC625250CFCDB00FB28B6 /* AddResource.swift in Sources */,
 				17937D852531C03A001C2540 /* ToggleWatchedButton.swift in Sources */,
+				177570CC25CED51400EAD6E1 /* LessonsListToolbar.swift in Sources */,
 				179F27E42560BDDB00D65DD7 /* LessonsFilterView.swift in Sources */,
 				17E50BC92504E22200BA8618 /* DetailView.swift in Sources */,
 				1768DED02514CB5B008CDCAC /* ILOSection.swift in Sources */,
 				17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
+				1775705425CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */,
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
+				1775709225CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */,
 				179BF25B2506A86200574A35 /* ILO.swift in Sources */,
 				17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */,
 				17E50BCC250518A100BA8618 /* SettingsViewiOS.swift in Sources */,
 				1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				171212232503708000EE7423 /* Shared.xcdatamodeld in Sources */,
-				17BDFB412555B58500E5EA88 /* TodaysLessonsView.swift in Sources */,
 				17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				17937D702531BE8B001C2540 /* EditLessonButton.swift in Sources */,
 				176CC621250CB92E00FB28B6 /* Tag.swift in Sources */,
 				1781EF1D251F76D200BA91BB /* AddResourceButton.swift in Sources */,
 				1734040725614AE70074C8B0 /* LessonsListFilter.swift in Sources */,
+				1787362C25CD658100115BCD /* VersionDetails.swift in Sources */,
 				179F912C2554D1C700BAD25A /* DetailBackgroundGradient.swift in Sources */,
 				171212272503708000EE7423 /* ContentView.swift in Sources */,
 				17CACE4C2529CC9A00D906E4 /* LessonsPrimaryActionButton.swift in Sources */,
@@ -828,19 +842,18 @@
 				17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */,
 				1702DDD82526562100B6863C /* BottomToolbar.swift in Sources */,
 				170EE3BE251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
-				1726BFD02555C98200C1E1D0 /* LessonFile.swift in Sources */,
 				1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */,
 				1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */,
 				17937D7D2531BFD9001C2540 /* DeleteLessonButton.swift in Sources */,
 				179F27F8256123AA00D65DD7 /* DetailViewStates.swift in Sources */,
 				17BD0E90251D425000BCC40D /* LessonsRow.swift in Sources */,
 				176E09C52528783E00E1AA26 /* GeneralSettingsView.swift in Sources */,
+				1775706E25CE189300EAD6E1 /* LessonNotes.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				17BBCB052535169800FDEDD4 /* AppViewState.swift in Sources */,
 				17D546782532587200046654 /* AddTagView.swift in Sources */,
 				177B2D102528A4F200412C55 /* ImportView.swift in Sources */,
 				17ABF3502507E789000D4048 /* ILOsView.swift in Sources */,
-				17BDFB3D2555B58500E5EA88 /* UnwatchedLessonsList.swift in Sources */,
 				17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -850,24 +863,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				179F27E52560BDDB00D65DD7 /* LessonsFilterView.swift in Sources */,
+				177570CD25CED51400EAD6E1 /* LessonsListToolbar.swift in Sources */,
 				1775ECB42527DEF600957AE3 /* Notifications.swift in Sources */,
-				173403FB25612F920074C8B0 /* BlurVisualEffectViewMac.swift in Sources */,
+				1775708625CE19AF00EAD6E1 /* BlurVisualEffectViewMac.swift in Sources */,
 				1734040825614AE70074C8B0 /* LessonsListFilter.swift in Sources */,
 				173C769D25162148003FFA6A /* OnboardingView.swift in Sources */,
-				1751BB2A2533514000AA78D6 /* LessonsStateObject.swift in Sources */,
+				1751BB2A2533514000AA78D6 /* LessonsListHelper.swift in Sources */,
 				1781EF25251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
 				170EE3BF251AA861000D8363 /* EnvironmentHelpers.swift in Sources */,
+				1775706225CE143E00EAD6E1 /* DetailToolbar.swift in Sources */,
 				171212262503708000EE7423 /* ClassesApp.swift in Sources */,
 				1781EF1E251F76D200BA91BB /* AddResourceButton.swift in Sources */,
 				17ABF3512507E789000D4048 /* ILOsView.swift in Sources */,
+				1787362D25CD658100115BCD /* VersionDetails.swift in Sources */,
 				176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				1781EF2A251F804E00BA91BB /* ILOGeneratorView.swift in Sources */,
 				176E09B62528772100E1AA26 /* SettingsViewMac.swift in Sources */,
 				17E50BCA2504E22200BA8618 /* DetailView.swift in Sources */,
 				1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */,
-				17BDFB442555B58500E5EA88 /* UnwrittenILOsList.swift in Sources */,
 				17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */,
-				17BDFB3E2555B58500E5EA88 /* UnwatchedLessonsList.swift in Sources */,
 				17937D862531C03A001C2540 /* ToggleWatchedButton.swift in Sources */,
 				1787C8F725267FF1005486AC /* AppCommands.swift in Sources */,
 				17BD0E85251D3DC900BCC40D /* LessonsListType.swift in Sources */,
@@ -875,22 +889,23 @@
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
 				17391A5A2545DD78006A6CD9 /* ILOFilterView.swift in Sources */,
 				17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */,
+				177570B025CEB9D100EAD6E1 /* LessonContextMenu.swift in Sources */,
 				17A6D50E250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
 				1768DEC62514CB41008CDCAC /* LessonDetails.swift in Sources */,
-				17C9737F250E2A62000ACF16 /* SummaryView.swift in Sources */,
 				176CC629250D13CC00FB28B6 /* Resource.swift in Sources */,
 				1712122A2503708000EE7423 /* Persistence.swift in Sources */,
+				1775709925CE232E00EAD6E1 /* DetailBackgroundGradient.swift in Sources */,
 				176E09BE2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
 				17937D7E2531BFD9001C2540 /* DeleteLessonButton.swift in Sources */,
 				17D546792532587300046654 /* AddTagView.swift in Sources */,
 				17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */,
-				17BDFB402555B58500E5EA88 /* StatisticsView.swift in Sources */,
 				179BF25C2506A86200574A35 /* ILO.swift in Sources */,
 				1781EF17251F6C3000BA91BB /* SampleData.swift in Sources */,
 				17E50BC42504D81E00BA8618 /* AddLessonView.swift in Sources */,
 				171212242503708000EE7423 /* Shared.xcdatamodeld in Sources */,
 				172E28092556B81100676351 /* ImportView.swift in Sources */,
 				176CC622250CBD4000FB28B6 /* Tag.swift in Sources */,
+				1775706F25CE189300EAD6E1 /* LessonNotes.swift in Sources */,
 				17937D682531B49E001C2540 /* CustomTypes.swift in Sources */,
 				176E09C62528783E00E1AA26 /* GeneralSettingsView.swift in Sources */,
 				17BD0E7A251D2EDB00BCC40D /* LessonsNavMac.swift in Sources */,
@@ -899,17 +914,16 @@
 				177909C3250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				177B2D172528A51C00412C55 /* ModelJSON.swift in Sources */,
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
+				1775709325CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17BBCB062535169800FDEDD4 /* AppViewState.swift in Sources */,
 				172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */,
-				179F912D2554D1C700BAD25A /* DetailBackgroundGradient.swift in Sources */,
-				17BDFB422555B58500E5EA88 /* TodaysLessonsView.swift in Sources */,
 				179BF2532506834300574A35 /* LessonsView.swift in Sources */,
 				1768DED82514CB68008CDCAC /* ResourceSection.swift in Sources */,
 				1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */,
 				17E50BD125065CB300BA8618 /* Lesson.swift in Sources */,
-				1726BFD12555C98200C1E1D0 /* LessonFile.swift in Sources */,
 				17937D712531BE8B001C2540 /* EditLessonButton.swift in Sources */,
+				1775705525CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */,
 				17D1A3AA25798307001F885E /* ILOProgressShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -124,6 +124,7 @@ struct ILOGeneratorView: View {
             #endif
             ToolbarItem(placement: .cancellationAction) {
                 Button("Close", action: {
+                    isPresented = false
                     presentationMode.wrappedValue.dismiss()
                 })
             }

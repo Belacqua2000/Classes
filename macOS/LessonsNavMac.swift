@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct LessonsNavMac: View {
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @EnvironmentObject var viewStates: LessonsListHelper
     @Environment(\.managedObjectContext) var viewContext
     
     let nc = NotificationCenter.default
@@ -19,7 +19,7 @@ struct LessonsNavMac: View {
     var body: some View {
         GeometryReader { gr in
             HSplitView {
-                LessonsListContent(selection: $selectedLesson, listType: $listType)
+                LessonsListContent(listType: $listType)
                     .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width * 0.3)
                     .onDeleteCommand(perform: {
                         viewStates.deleteAlertShown = true

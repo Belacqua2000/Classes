@@ -9,11 +9,7 @@ import SwiftUI
 
 struct DetailBackgroundGradient: View {
     var body: some View {
-        VStack(alignment: .leading) {
-            Label("Lesson Details", systemImage: "book")
-            Text("Teacher: Professor JP Leach")
-            Text("Location: Online")
-        }.modifier(DetailBlock())
+        LinearGradient(gradient: Gradient(colors: [.init("SecondaryColorLight"), .init("SecondaryColor")]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea([.bottom, .horizontal])
     }
 }
 
@@ -36,12 +32,22 @@ struct DetailBlock: ViewModifier {
 struct DetailBackgroundGradient_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DetailBackgroundGradient()
+            
+            VStack(alignment: .leading) {
+                Label("Lesson Details", systemImage: "book")
+                Text("Teacher: Professor JP Leach")
+                Text("Location: Online")
+            }.modifier(DetailBlock())
                 .preferredColorScheme(.light)
                 .padding()
                 .background(Color.blue)
             
-            DetailBackgroundGradient()
+            
+            VStack(alignment: .leading) {
+                Label("Lesson Details", systemImage: "book")
+                Text("Teacher: Professor JP Leach")
+                Text("Location: Online")
+            }.modifier(DetailBlock())
                 .preferredColorScheme(.dark)
                 .padding()
                 .background(Color.blue)

@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LessonTypeNavigationList: View {
+    @Environment(\.managedObjectContext) var viewContext
     var body: some View {
         ForEach(Lesson.LessonType.allCases) { lesson in
             NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsStateObject()),
+                destination: LessonsView(listType: LessonsListType(filterType: .lessonType, lessonType: lesson)).environmentObject(LessonsListHelper(context: viewContext)),
                 label: {
                     Label(Lesson.lessonTypePlural(type: lesson.rawValue), systemImage: Lesson.lessonIcon(type: lesson.rawValue))
                 })

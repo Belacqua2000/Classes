@@ -88,7 +88,7 @@ struct AllocateTagView: View {
             }
             #endif
         }
-        .navigationTitle("Allocate Tags")
+        .navigationTitle("Choose Tags")
         //.navigationBarTitleDisplayMode(.inline)
     }
     

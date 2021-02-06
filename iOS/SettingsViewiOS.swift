@@ -69,7 +69,7 @@ struct SettingsViewiOS: View {
                 Button(action: {welcomeScreenIsShown = true}, label: {
                     Label("Welcome Page", systemImage: "face.smiling")
                 })
-                .sheet(isPresented: $welcomeScreenIsShown) {
+                .fullScreenCover(isPresented: $welcomeScreenIsShown) {
                     OnboardingView()
                 }
                 Button(action: {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LessonsRow: View {
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @EnvironmentObject var viewStates: LessonsListHelper
     @Binding var selection: Set<Lesson>
     
     @ObservedObject var lesson: Lesson

@@ -9,17 +9,7 @@ import SwiftUI
 
 struct LessonsListContent: View {
     
-    @State private var statsShown = false
-    @State private var addLessonShown = false
-    @State private var ilosViewShown = false
-    @State private var filterViewActive = false
-    @State private var deleteAlertShown = false
-    @State private var exporterShown = false
-    
-    @State private var sheetPresented = false
-    @State private var sheetToPresent: Sheets?
-    
-    private enum Sheets: String, Identifiable {
+    enum Sheets: String, Identifiable {
         var id: String { return rawValue }
         case addLesson
         case filter
@@ -68,12 +58,11 @@ struct LessonsListContent: View {
     
     // MARK: - Selections
     
-    @Binding var selection: Set<Lesson>
-    
     @State var selectedLessons: [Lesson]? // for delete actions
     @State var selectedLesson: Lesson? // for editing lesson
     
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @EnvironmentObject var listHelper: LessonsListHelper
+    
     @Binding var listType: LessonsListType
     @StateObject var listFilter = LessonsListFilter()
     
@@ -178,94 +167,34 @@ struct LessonsListContent: View {
     
     // MARK: - List
     var lessonList: some View {
-        List(selection: $selection) {
+        List(selection: $listHelper.selection) {
             ForEach(filteredLessons, id: \.self) { lesson in
-                LessonsRow(selection: $selection, lesson: lesson)
+                LessonsRow(selection: $listHelper.selection, lesson: lesson)
                     .tag(lesson)
-                    .contextMenu(menuItems: /*@START_MENU_TOKEN@*/{
-                        Button(action: {
-                            let lesson = lesson as Lesson
-                            viewStates.lessonToChange = lesson
-                            sheetToPresent = .addLesson
-                        }, label: {
-                            Label("Edit", systemImage: "square.and.pencil")
-                        }).keyboardShortcut("E", modifiers: .command)
-                        Divider()
-                        Button(action: {toggleWatched(lessons: [lesson])}, label: {
-                            !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
-                                : Label("Mark Unwatched", systemImage: "checkmark.circle")
-                        }).keyboardShortcut("Y", modifiers: .command)
-                        
-                        Button(action: {
-                            #if os(iOS)
-                            selection = [lesson]
-                            guard let lesson = selection.first else {return}
-                            #endif
-                            markAllOutcomes(written: true, lesson: lesson)
-                        }, label: {
-                            Label("Mark Outcomes as Written", systemImage: "checkmark.circle")
-                        }).keyboardShortcut("D", modifiers: .command)
-                        
-                        Button(action: {
-                            #if os(iOS)
-                            selection = [lesson]
-                            guard let lesson = selection.first else {return}
-                            #endif
-                            markAllOutcomes(written: false, lesson: lesson)
-                        }, label: {
-                            Label("Mark outcomes as Unwritten", systemImage: "xmark.circle")
-                        }).keyboardShortcut("U", modifiers: .command)
-                        
-                        Divider()
-                        #if os(iOS)
-                        Menu(content: {
-                            Button(action: {
-                                #if os(iOS)
-                                selection = [lesson]
-                                viewStates.shareSheetShown = true
-                                #else
-                                viewStates.shareSheetShown = true
-                                #endif
-                            }, label: {
-                                Label("Share", systemImage: "square.and.arrow.up")
-                            })
-                            
-                            Button(action: {
-                                #if os(iOS)
-                                selection = [lesson]
-                                exporterShown = true
-                                #else
-                                exporterShown = true
-                                #endif
-                            }, label: {
-                                Label("Save to Files", systemImage: "folder")
-                            })
-                        }, label: {
-                            Label("Export", systemImage: "square.and.arrow.up")
-                        })
-                        #else
-                        Button(action: {
-                            #if os(iOS)
-                            selection = [lesson]
-                            viewStates.shareSheetShown = true
-                            #else
-                            exporterShown = true
-                            #endif
-                        }, label: {
-                            Label("Export", systemImage: "square.and.arrow.up")
-                        })
-                        #endif
-                        Button(action: {
-                            selection = [lesson]
-                            deleteAlertShown = true
-                        }, label: {
-                            Label("Delete", systemImage: "trash")
-                                .foregroundColor(.red)
-                        })
-                    }/*@END_MENU_TOKEN@*/)
+                    .contextMenu(menuItems: {
+                        LessonContextMenu(lesson: lesson)
+                    })
             }
             .onDelete(perform: deleteItems)
         }
+        .alert(isPresented: $listHelper.deleteAlertShown) {
+            Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
+        }
+    }
+    
+    var noLessonsMessage: some View {
+        #if os(macOS)
+        return VStack {
+            Text("No Lessons.  Click the \(Image(systemName: "plus")) button in the toolbar to create one.")
+                .padding()
+                .navigationTitle(titleString)
+                .navigationSubtitle("\(filteredLessons.count) Lessons")
+        }
+        #else
+        return Text("No Lessons.  Press the \(Image(systemName: "plus")) button in the toolbar to create one.")
+            .padding()
+            .navigationTitle(titleString)
+        #endif
     }
     
     // MARK: - Body
@@ -275,15 +204,15 @@ struct LessonsListContent: View {
                 #if os(macOS)
                 ScrollViewReader { proxy in
                     lessonList
-                        .onDeleteCommand(perform: {deleteAlertShown = true})
+                        .onDeleteCommand(perform: {listHelper.deleteAlertShown = true})
                         .navigationTitle(titleString)
                         .navigationSubtitle("\(filteredLessons.count) Lessons")
                         .listStyle(InsetListStyle())
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
                         })
-                        .alert(isPresented: $deleteAlertShown) {
-                            Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; viewStates.lessonToChange = nil}))
+                        .alert(isPresented: $listHelper.deleteAlertShown) {
+                            Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
                         }
                 }
                 #else
@@ -293,45 +222,42 @@ struct LessonsListContent: View {
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
                         })
-                        .overlay(LessonsActionButtons(selection: $selection), alignment: .trailing)
+                        .overlay(LessonsActionButtons(selection: $listHelper.selection), alignment: .trailing)
                 }
-                .popover(isPresented: $viewStates.shareSheetShown) {
-                    ShareSheet(isPresented: $viewStates.shareSheetShown, activityItems: [Lesson.export(lessons: Array(selection))!])
+                .popover(isPresented: $listHelper.shareSheetShown) {
+                    ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection))!])
                 }
-                .alert(isPresented: $deleteAlertShown) {
-                    Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {deleteAlertShown = false; viewStates.lessonToChange = nil}))
+                .alert(isPresented: $listHelper.deleteAlertShown) {
+                    Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
                 }
+                .fullScreenCover(isPresented: $listHelper.ilosViewShown, content: {
+                    #if os(macOS)
+                    ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                    #else
+                    NavigationView {
+                        ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                    }
+                    #endif
+                })
                 #endif
             } else {
-                #if os(macOS)
-                VStack {
-                    Text("No Lessons.  Click the \(Image(systemName: "plus")) button in the toolbar to create one.")
-//                        .fixedSize(horizontal: false, vertical: true)
-                        .padding()
-                        .navigationTitle(titleString)
-                        .navigationSubtitle("\(filteredLessons.count) Lessons")
-                }
-                #else
-                Text("No Lessons.  Press the \(Image(systemName: "plus")) button in the toolbar to create one.")
-                    .padding()
-                    .navigationTitle(titleString)
-                #endif
+                noLessonsMessage
             }
         }
-        .sheet(item: $sheetToPresent, onDismiss: {viewStates.lessonToChange = nil}, content: { item in
+        .sheet(item: $listHelper.sheetToPresent, onDismiss: {listHelper.lessonToChange = nil}, content: { item in
             switch item {
             case .addLesson:
-                AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                AddLessonView(lesson: listHelper.lessonToChange, isPresented: $listHelper.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
             case .filter:
-                LessonsFilterView(viewShown: $filterViewActive, listType: listType, filter: listFilter)
+                LessonsFilterView(viewShown: $listHelper.filterViewActive, listType: listType, filter: listFilter)
                     .frame(idealWidth: 600)
             case .ilo:
                 #if os(macOS)
-                ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
                     .frame(idealWidth: 600)
                 #else
                 NavigationView {
-                    ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                    ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
                 }
                 #endif
             }
@@ -339,204 +265,61 @@ struct LessonsListContent: View {
         .onAppear(perform: {
             #if os(macOS)
             guard filteredLessons.first != nil else { return }
-            selection.insert(filteredLessons.first!)
+            listHelper.selection.insert(filteredLessons.first!)
             #endif
         })
-//        .sheet(isPresented: $addLessonShown,
-//               onDismiss: {
-//                viewStates.lessonToChange = nil
-//               }, content: {
-//                AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
-//               })
-//        .sheet(isPresented: $ilosViewShown, content: {
-//            #if os(macOS)
-//            ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-//            #else
-//            NavigationView {
-//                ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-//            }
-//            #endif
-//        })
-//        .sheet(isPresented: $filterViewActive, content: {
-//            LessonsFilterView(viewShown: $filterViewActive, listType: listType, filter: listFilter)
-//                .frame(idealWidth: 600)
-//        })
         .fileExporter(
-            isPresented: $exporterShown,
-            document: LessonJSON(lessons: Array(selection)),
+            isPresented: $listHelper.exporterShown,
+            document: LessonJSON(lessons: Array(listHelper.selection)),
             contentType: .classesFormat,
             onCompletion: {_ in })
-        .toolbar(id: "MainToolbar") {
-            #if !os(macOS)
-            // BOTTOM BAR BREAKS IN STACKNAVIGATIONVIEWSTYLE
-            /*ToolbarItemGroup(placement: .bottomBar) {
-                BottomToolbar(selection: $selection, lessonCount: filteredLessons.count)*/
-            ToolbarItem(id: "ScrollNowButton", placement: .bottomBar) {
-                Button(action: {
-                    nc.post(Notification(name: .scrollToNow))
-                }, label: {
-                    Label("Scroll To Now", systemImage: "calendar.badge.clock")
-                })
-                .help("Scroll to the next lesson in the list after now.")
-            }
-            
-            ToolbarItem(id: "Spacer", placement: .bottomBar) {
-                Spacer()
-            }
-            
-            ToolbarItem(id: "ILO", placement: .bottomBar) {
-                Button(action: {ilosViewShown = true}, label: {
-                    Label("Generate Learning Outcomes", systemImage: "list.number")
-                })
-                .help("View Statistics")
-                .fullScreenCover(isPresented: $ilosViewShown, content: {
-                    #if os(macOS)
-                    ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-                    #else
-                    NavigationView {
-                        ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-                    }
-                    #endif
-                })
-            }
-            
-//            ToolbarItem(id: "Stats", placement: .bottomBar) {
-//                Button(action: {statsShown = true}, label: {
-//                    Label("View Statistics", systemImage: "chart.pie")
-//                })
-//                .help("View Statistics")
-//                .sheet(isPresented: $statsShown) {
-//                    NavigationView {
-//                        SummaryView(lessons: filteredLessons)
-//                    }
-//                }
-//
-//            }
-            
-            ToolbarItem(id: "Spacer", placement: .bottomBar) {
-                Spacer()
-            }
-            
-            ToolbarItem(id: "Filter", placement: .bottomBar) {
-                Button(action: {filterViewActive = true}, label: {
-                    Label("Filter", systemImage: listFilter.anyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
-                })
-                .help("Filter Lessons in the View")
-                .sheet(isPresented: $filterViewActive) {
-                    NavigationView {
-                        LessonsFilterView(viewShown: $filterViewActive, listType: listType, filter: listFilter)
-                    }
-                }
-            }
-            
-            #else
-            
-            ToolbarItem(id: "ScrollNowButton", placement: .automatic) {
-                Button(action: {
-                    nc.post(Notification(name: .scrollToNow))
-                }, label: {
-                    Label("Scroll To Now", systemImage: "calendar.badge.clock")
-                })
-                .help("Scroll to the next lesson in the list after now.")
-            }
-            
-            ToolbarItem(id: "ILO", placement: .automatic) {
-                Button(action: {nc.post(.init(name: .showILORandomiser))}, label: {
-                    Label("Learning Outcome Randomiser", systemImage: "list.number")
-                })
-                .help("View the Learning Outcome Randomiser for the current selection of lessons")
-                .onReceive(nc.publisher(for: .showILORandomiser), perform: { _ in
-                    sheetToPresent = .ilo
-                })
-            }
-            
-            ToolbarItem(id: "Filter", placement: .automatic) {
-                Button(action: {nc.post(.init(name: .showFilterView))}, label: {
-                    Label("Filter", systemImage: listFilter.anyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
-                })
-                .help("Filter the lessons in the list")
-                .onReceive(nc.publisher(for: .showFilterView), perform: { _ in
-                    sheetToPresent = .filter
-                })
-            }
-            
-            #endif
-            
-                ToolbarItem(id: "AddLessonButton", placement: .primaryAction) {
-                    Button(action: {nc.post(.init(name: .newLesson))}, label: {
-                        Label("Add Lesson", systemImage: "plus")
-                    })
-                    .onReceive(nc.publisher(for: .newLesson), perform: { _ in
-                        sheetToPresent = .addLesson
-                    })
-                    .help("Add a New Lesson")
-                }
+        .toolbar {
+            LessonsListToolbar(listHelper: listHelper, listFilter: listFilter, listType: $listType)
         }
         .onReceive(nc.publisher(for: .deleteLessons), perform: { _ in
-            deleteAlertShown = true
+            listHelper.deleteAlertShown = true
         })
         .onReceive(nc.publisher(for: .exportLessons), perform: { _ in
             #if os(iOS)
-            viewStates.shareSheetShown = true
+            listHelper.shareSheetShown = true
             #endif
         })
         .onReceive(nc.publisher(for: .exportAll), perform: { _ in
-            selection = Set(lessons)
-            exporterShown = true
+            listHelper.selection = Set(lessons)
+            listHelper.exporterShown = true
         })
         .onReceive(nc.publisher(for: .exportCurrentView), perform: { _ in
-            selection = Set(filteredLessons)
-            exporterShown = true
+            listHelper.selection = Set(filteredLessons)
+            listHelper.exporterShown = true
         })
         .onReceive(nc.publisher(for: .markILOsWritten), perform: { _ in
-            guard let lesson = selection.first else {return}
-            markAllOutcomes(written: true, lesson: lesson)
+            guard let lesson = listHelper.selection.first else {return}
+            listHelper.markOutcomesWritten(lesson)
         })
         .onReceive(nc.publisher(for: .markILOsUnwritten), perform: { _ in
-            guard let lesson = selection.first else {return}
-            markAllOutcomes(written: false, lesson: lesson)
+            guard let lesson = listHelper.selection.first else {return}
+            listHelper.markOutcomesUnwritten(lesson)
         })
         
     }
     
-    private func addLesson() {
-        self.addLessonShown = true
-//        viewStates.addLessonIsPresented = true
-    }
-    
     private func deleteItems(offsets: IndexSet) {
         offsets.map { filteredLessons[$0] }.forEach { lesson in
-            viewStates.lessonToChange = lesson
-            selection = [lesson]
-            deleteAlertShown = true
+            listHelper.lessonToChange = lesson
+            listHelper.selection = [lesson]
+            listHelper.deleteAlertShown = true
         }
     }
     
     private func deleteLessons() {
         withAnimation {
-            viewStates.lessonToChange?.delete(context: viewContext)
-            for lesson in selection {
+            listHelper.lessonToChange?.delete(context: viewContext)
+            for lesson in listHelper.selection {
                 lesson.delete(context: viewContext)
             }
         }
-        viewStates.lessonToChange = nil
-        selection.removeAll()
-    }
-    
-    private func toggleWatched(lessons: [Lesson]) {
-        for lesson in lessons {
-            lesson.toggleWatched(context: viewContext)
-        }
-    }
-    
-    private func markAllOutcomes(written: Bool, lesson: Lesson) {
-        withAnimation {
-            if written {
-                lesson.markAllILOsWritten(context: viewContext)
-            } else {
-                lesson.markAllILOsUnwritten(context: viewContext)
-            }
-        }
+        listHelper.lessonToChange = nil
+        listHelper.selection.removeAll()
     }
     
     private func scrollToNow(proxy: ScrollViewProxy) {
@@ -545,11 +328,18 @@ struct LessonsListContent: View {
         
         if let nextLesson = sortedLessons.first(where: {$0.date ?? Date(timeIntervalSince1970: 0) > Date()}) {
             withAnimation {
+                #if os(macOS)
+                listHelper.selection = [nextLesson]
+                #endif
                 proxy.scrollTo(nextLesson)
             }
         } else {
             withAnimation {
-                proxy.scrollTo(sortedLessons.last!)
+                let lastLesson = sortedLessons.last!
+                #if os(macOS)
+                listHelper.selection = [lastLesson]
+                #endif
+                proxy.scrollTo(lastLesson)
             }
         }
     }

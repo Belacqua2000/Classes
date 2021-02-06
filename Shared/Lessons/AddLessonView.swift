@@ -96,11 +96,7 @@ struct AddLessonForm: View {
                 DatePicker(selection: $date) {
                     Label("Date", systemImage: "calendar")
                 }
-                Picker(selection: $type, label: Label("Lesson Type", systemImage: "book"), content: /*@START_MENU_TOKEN@*/{
-                    ForEach(Lesson.LessonType.allCases) { type in
-                        Text(type.rawValue).tag(type)
-                    }
-                }/*@END_MENU_TOKEN@*/)
+                LessonTypePicker(type: $type)
                 .pickerStyle(DefaultPickerStyle())
                 Toggle(isOn: $isCompleted, label: {
                     Text("Watched")
@@ -117,7 +113,7 @@ struct AddLessonForm: View {
                 #endif
             }
             #if os(macOS)
-            Button("Allocate Tags", action: {tagPopoverPresented = true})
+            Button("Choose Tags", action: {tagPopoverPresented = true})
                 .popover(isPresented: $tagPopoverPresented) {
                     AllocateTagView(selectedTags: $tags)
                 }

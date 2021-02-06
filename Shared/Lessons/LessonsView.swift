@@ -17,19 +17,13 @@ struct LessonsView: View {
     
     // MARK: - View States
     
-    @EnvironmentObject var viewStates: LessonsStateObject
+    @EnvironmentObject var lessonsListHelper: LessonsListHelper
     
     @State private var lessonTags = [Tag]()
     
     let nc = NotificationCenter.default
     
     var body: some View {
-            LessonsListContent(selection: $selection, listType: $listType)
-    }
-}
-
-struct AllLessonsView_Previews: PreviewProvider {
-    static var previews: some View {
-        LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil)).environmentObject(LessonsStateObject())
+            LessonsListContent(listType: $listType)
     }
 }
