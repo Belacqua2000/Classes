@@ -144,7 +144,7 @@ struct DetailView: View {
             viewStates.tagPopoverPresented = true
         })
         .toolbar {
-            DetailToolbar(lesson: lesson, viewStates: viewStates, detailStates: detailStates, tagShown: $tagShown)
+            DetailToolbar(horizontalSizeClass: $horizontalSizeClass, lesson: lesson, viewStates: viewStates, detailStates: detailStates, tagShown: $tagShown)
         }
         .background(DetailBackgroundGradient())
     }
