@@ -14,7 +14,6 @@ struct ILOGeneratorView: View {
     #else
     @State var horizontalSizeClass = false
     #endif
-    @EnvironmentObject var environmentHelpers: EnvironmentHelpers
     
     @Binding var isPresented: Bool
     

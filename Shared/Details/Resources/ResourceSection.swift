@@ -36,7 +36,7 @@ struct ResourceSection: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Label("Resources", systemImage: "link")
+            Label("Links", systemImage: "link")
                 .font(.headline)
             if filteredResources.count > 0 {
                 #if !os(macOS)
@@ -80,7 +80,7 @@ struct ResourceSection: View {
                 .frame(height: listHeight)
             } else {
                 HStack {
-                    Text("No Resources.")
+                    Text("No Links")
                     Spacer()
                 }
             }

@@ -183,7 +183,7 @@ struct ILOsProgressView: View {
     var completedILOs: Double
     var body: some View {
         HStack {
-            Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of learning outcomes written")
+            Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of learning outcomes achieved")
                 .fixedSize(horizontal: false, vertical: true)
             ProgressView(value: completedILOs)
                 .progressViewStyle(LinearProgressViewStyle())

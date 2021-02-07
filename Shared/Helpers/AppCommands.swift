@@ -52,12 +52,16 @@ struct AppCommands: Commands {
         }
     
         CommandGroup(replacing: .help) {
+            Button("Classes Help", action: {
+                openURL.callAsFunction(URL(string: "https://nickbaughanapps.wordpress.com/classes/help")!)
+            })
+            .keyboardShortcut("?", modifiers: [.command, .option])
+            Divider()
             Button("What's New", action: whatsNew)
             Button("Tutorial", action: {postNotification(.init(name: .onboarding))})
             Button("Launch Website", action: {
                 openURL.callAsFunction(URL(string: "https://nickbaughanapps.wordpress.com")!)
             })
-            .keyboardShortcut("?", modifiers: [.command, .option])
         }
         
         CommandGroup(after: .sidebar) {

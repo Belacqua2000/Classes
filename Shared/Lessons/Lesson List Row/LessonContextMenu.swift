@@ -24,8 +24,8 @@ struct LessonContextMenu: View {
         Divider()
         
         Button(action: {lessonsListHelper.toggleWatched(lessons: [lesson])}, label: {
-            !lesson.watched ? Label("Mark Watched", systemImage: "checkmark.circle")
-                : Label("Mark Unwatched", systemImage: "checkmark.circle")
+            !lesson.watched ? Label("Mark Complete", systemImage: "checkmark.circle")
+                : Label("Mark Incomplete", systemImage: "checkmark.circle")
         }).keyboardShortcut("Y", modifiers: .command)
         
         Button(action: {lessonsListHelper.markOutcomesWritten(lesson)}, label: {

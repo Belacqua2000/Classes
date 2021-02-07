@@ -10,6 +10,11 @@ import SwiftUI
 struct LessonDetails: View {
     @Environment(\.managedObjectContext) var viewContext
     @ObservedObject var lesson: Lesson
+    
+    var completedLabel: some View {
+        lesson.watched ? Label("Completed", systemImage: "checkmark.circle.fill") : Label("Not Completed", systemImage: "xmark.circle")
+    }
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -59,12 +64,10 @@ struct LessonDetails: View {
                 }
                 
                 #if os(iOS)
-                Button(action: {lesson.toggleWatched(context: viewContext)}, label: {
-                    lesson.watched ? Label("Watched", systemImage: "checkmark.circle.fill") : Label("Unwatched", systemImage: "checkmark.circle")
-                })
+                Button(action: {lesson.toggleWatched(context: viewContext)}, label: { completedLabel })
                 .font(.title2)
                 #else
-                lesson.watched ? Label("Watched", systemImage: "checkmark.circle.fill") : Label("Unwatched", systemImage: "checkmark.circle")
+                completedLabel
                 #endif
             }
             Spacer()

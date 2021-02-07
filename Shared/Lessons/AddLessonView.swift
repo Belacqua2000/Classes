@@ -99,7 +99,7 @@ struct AddLessonForm: View {
                 LessonTypePicker(type: $type)
                 .pickerStyle(DefaultPickerStyle())
                 Toggle(isOn: $isCompleted, label: {
-                    Text("Watched")
+                    Text("Completed")
                 })
             }
             Section(header: Text("Notes")) {

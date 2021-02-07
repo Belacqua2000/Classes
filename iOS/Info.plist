@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>NSUserActivityTypes</key>
+    <array>
+        <string>com.baughan.classes.open-whats-new</string>
+    </array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>

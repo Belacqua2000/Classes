@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AddResource: View {
     @Environment(\.managedObjectContext) var viewContext
-    @State var resourceText: String = ""
-    @State var resourceURL: String = ""
+    @State var resourceText = String()
+    @State var resourceURL = String()
     @Binding var isPresented: Bool
     @Binding var resource: Resource?
     var lesson: Lesson?
@@ -30,25 +30,24 @@ struct AddResource: View {
         .keyboardShortcut(.cancelAction)
     }
     
+    let footerText: Text = Text("Add useful links to save to this lesson to easily find later.\n\nExamples:\n• Links to lecture slides\n• Links to notes\n• Links to websites")
+    
     var form: some View {
         Form {
             #if os(macOS)
-            Section(header: Text("Add Resource").font(.headline)) {
-                TextField("Resource Name", text: $resourceText)
-                TextField("Resource URL", text: $resourceURL)
+            Section(header: Text("Add Link").font(.headline), footer: footerText) {
+                TextField("Link Name", text: $resourceText)
+                TextField("https://www.example.co.uk", text: $resourceURL)
             }
-//            HStack {
-//                Spacer()
-//                cancelButton
-//                saveButton
-//            }
             #else
-            TextField("Resource Name", text: $resourceText)
-                .navigationTitle("Add ILO")
-            TextField("Resource URL", text: $resourceURL)
-                .textContentType(.URL)
-                .keyboardType(.URL)
-                .textCase(.lowercase)
+            Section(footer: footerText) {
+                TextField("Link Name", text: $resourceText)
+                    .navigationTitle("Add ILO")
+                TextField("https://www.example.co.uk", text: $resourceURL)
+                    .textContentType(.URL)
+                    .keyboardType(.URL)
+                    .textCase(.lowercase)
+            }
             #endif
         }
         .onAppear(perform: {
@@ -59,14 +58,12 @@ struct AddResource: View {
         })
         .frame(idealWidth: 300, idealHeight: 100)
         .toolbar(id: "AddResourceToolbar") {
-//            #if !os(macOS)
             ToolbarItem(id: "AddResourceSave", placement: .confirmationAction) {
                 saveButton
             }
             ToolbarItem(id: "AddResourceCancel", placement: .cancellationAction) {
                 cancelButton
             }
-//            #endif
         }
     }
     

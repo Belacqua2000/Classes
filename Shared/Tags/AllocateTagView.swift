@@ -61,8 +61,9 @@ struct AllocateTagView: View {
                                 })
                             Spacer()
                     Button(action: { selectedTag(tag) }, label: {
-                        selectedTags.contains(tag) ?
-                            Image(systemName: "checkmark.circle.fill") : Image(systemName: "checkmark.circle")
+                        if selectedTags.contains(tag) {
+                            Image(systemName: "checkmark.circle.fill")
+                        }
                     })
                 }
             }

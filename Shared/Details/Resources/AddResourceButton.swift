@@ -13,9 +13,9 @@ struct AddResourceButton: View {
         Button(action: {
             NotificationCenter.default.post(.init(name: .addResource))
         }, label: {
-            Label("Add Resource", systemImage: "link.badge.plus")
+            Label("Add Link", systemImage: "link.badge.plus")
         })
-        .help("Add a resource to the lesson.")
+        .help("Add a link to a website to the lesson.")
     }
 }
 

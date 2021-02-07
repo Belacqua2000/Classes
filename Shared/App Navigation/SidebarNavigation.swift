@@ -245,6 +245,10 @@ struct SidebarNavigation: View {
         }
     }
     
+    private func openWhatsNew(_ userActivity: NSUserActivity) {
+        
+    }
+    
     private func addTag() {
         selectedTag = nil
         addTagShowing = true

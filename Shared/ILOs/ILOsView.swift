@@ -34,8 +34,6 @@ struct ILOsView: View {
     @State private var excludedTagsFilterActive = false
     @State private var currentExcludedTags = [Tag]()
     
-    @EnvironmentObject var randomiserShown: EnvironmentHelpers
-    
     @Environment(\.managedObjectContext) var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \ILO.lesson?.date, ascending: true), NSSortDescriptor(keyPath: \ILO.index, ascending: true)],

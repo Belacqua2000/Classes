@@ -21,7 +21,6 @@ struct ContentView: View {
     
     let nc = NotificationCenter.default
     
-    let environmentHelpers = EnvironmentHelpers()
     @AppStorage("firstLaunch") var firstLaunch = true
     //    @State var sheetPresented = false
     //    @State var importPresented = false
@@ -37,7 +36,7 @@ struct ContentView: View {
     
     var body: some View {
         #if os(iOS)
-        SidebarNavigation().environmentObject(environmentHelpers)
+        SidebarNavigation()
             .sheet(item: $currentModalView, onDismiss: {
                 currentModalView = nil
             }, content: { item in
@@ -74,6 +73,7 @@ struct ContentView: View {
                 modalViewShown = true
             }
             .onAppear(perform: checkWhatsNew)
+            .onContinueUserActivity("com.baughan.classes.open-whats-new", perform: openWhatsNew)
         #else
         SidebarNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
@@ -118,6 +118,7 @@ struct ContentView: View {
                     print(error.localizedDescription)
                 }
             })
+            .onContinueUserActivity("com.baughan.classes.open-whats-new", perform: openWhatsNew)
         /*LessonsView(filter: .init(filterType: .all, lessonType: nil, tag: nil))
          .environmentObject(LessonsStateObject())*/
         #endif
@@ -138,6 +139,11 @@ struct ContentView: View {
             currentModalView = .whatsnewView
             modalViewShown = true
         }
+    }
+    
+    private func openWhatsNew(_ userActivity: NSUserActivity) {
+        currentModalView = .onboardingView
+        modalViewShown = true
     }
 }
 

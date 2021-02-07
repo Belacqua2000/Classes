@@ -20,6 +20,7 @@ struct SettingsViewiOS: View {
     @State private var shareSheetIsShown = false
     @State private var exportSheetIsShown = false
     @State private var importSheetIsShown = false
+    @State private var safariViewPresented = false
     
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)])
     private var lessons: FetchedResults<Lesson>
@@ -66,6 +67,12 @@ struct SettingsViewiOS: View {
             }
             
             Section(header: Text("More")) {
+                Button(action: {safariViewPresented = true}, label: {
+                    Label("Help", systemImage: "questionmark")
+                })
+                .fullScreenCover(isPresented: $safariViewPresented) {
+                    SafariView(url: URL(string: "https://nickbaughanapps.wordpress.com/classes/help/")!)
+                }
                 Button(action: {welcomeScreenIsShown = true}, label: {
                     Label("Welcome Page", systemImage: "face.smiling")
                 })

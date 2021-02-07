@@ -77,7 +77,7 @@ class LessonsListHelper: ObservableObject {
     }
     
     func toggleWatched(lessons: [Lesson]) {
-        lessons.forEach({$0.toggleWatched(context: context)})
+            lessons.forEach({$0.toggleWatched(context: context)})
     }
     
     func duplicateLesson(_ lesson: Lesson) {

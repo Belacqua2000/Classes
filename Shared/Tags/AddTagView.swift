@@ -19,11 +19,7 @@ struct AddTagView: View {
     }
     
     var navTitle: String {
-        if tag == nil {
-            return "Add Tag"
-        } else {
-            return "Edit Tag"
-        }
+        tag == nil ? "Add Tag" : "Edit Tag"
     }
     
     var cancelButton: some View {
@@ -35,12 +31,29 @@ struct AddTagView: View {
             .disabled(tagName.isEmpty)
     }
     
+    #if os(iOS)
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    #endif
+    
+    var sidebar: Bool {
+        #if os(iOS)
+        return horizontalSizeClass == .regular ? true : false
+        #else
+        true
+        #endif
+    }
+    
+    var formFooter: Text {
+        Text("Add tags to organise your lessons.  Each lesson can have multiple tags.\n\nExamples of Tag Category:\n• Lesson Topic\n• Week Number\n• Notes Location\n\nTo view lessons by tag, choose a tag from the \(sidebar ? "sidebar" : "main screen"), or press \(Image(systemName: "line.horizontal.3.decrease.circle")) in the toolbar from the lesson list to filter further.")
+    }
+    
     var form: some View {
         Form {
             #if os(macOS)
             Text(navTitle)
                 .font(.headline)
             #endif
+            Section(header: Text("Tag Details"), footer: formFooter) {
             TextField("Tag Name", text: $tagName)
             #if os(macOS)
             HStack {
@@ -56,6 +69,7 @@ struct AddTagView: View {
                 Label("Tag Color", systemImage: "paintpalette")
             })
             #endif
+            }
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {

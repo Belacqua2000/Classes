@@ -183,18 +183,58 @@ struct LessonsListContent: View {
     }
     
     var noLessonsMessage: some View {
-        #if os(macOS)
-        return VStack {
-            Text("No Lessons.  Click the \(Image(systemName: "plus")) button in the toolbar to create one.")
-                .padding()
-                .navigationTitle(titleString)
-                .navigationSubtitle("\(filteredLessons.count) Lessons")
+        
+        let image: Image = Image(systemName: "face.smiling")
+        
+        var supplementaryText: Text? {
+            switch listType.filterType {
+            case .all:
+                return Text("There are no lessons yet.")
+            case .tag:
+                return Text("You have no lessons with this tag.")
+            case .lessonType:
+                return Text("You have no lessons with this lesson type.")
+            case .watched:
+                return Text("There are no watched lessons.")
+            case .today:
+                return Text("You have no lessons today.")
+            case .unwatched:
+                return Text("Well done, you have no unwatched lessons!")
+            case .unwritten:
+                return Text("Well done, you have no lessons with unwritten learning outcomes!")
+            }
         }
-        #else
-        return Text("No Lessons.  Press the \(Image(systemName: "plus")) button in the toolbar to create one.")
-            .padding()
-            .navigationTitle(titleString)
-        #endif
+        
+        let newLessonText = Text("Click the \(Image(systemName: "plus")) button in the toolbar to create a new lesson.")
+        
+        return VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.accentColor)
+                        .padding()
+                    Spacer()
+                }
+                
+                supplementaryText
+                
+                #if os(macOS)
+                newLessonText
+                    .padding()
+                    .navigationTitle(titleString)
+                    .navigationSubtitle("\(filteredLessons.count) Lessons")
+                
+                #else
+                newLessonText
+                    .padding()
+                    .navigationTitle(titleString)
+                #endif
+                Spacer()
+            }
     }
     
     // MARK: - Body
@@ -222,7 +262,6 @@ struct LessonsListContent: View {
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
                         })
-                        .overlay(LessonsActionButtons(selection: $listHelper.selection), alignment: .trailing)
                 }
                 .popover(isPresented: $listHelper.shareSheetShown) {
                     ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection))!])
@@ -262,6 +301,9 @@ struct LessonsListContent: View {
                 #endif
             }
         })
+//        .onChange(of: editMode!, perform: {new value in
+//            
+//        })
         .onAppear(perform: {
             #if os(macOS)
             guard filteredLessons.first != nil else { return }
@@ -274,7 +316,7 @@ struct LessonsListContent: View {
             contentType: .classesFormat,
             onCompletion: {_ in })
         .toolbar {
-            LessonsListToolbar(listHelper: listHelper, listFilter: listFilter, listType: $listType)
+            LessonsListToolbar(editMode: editMode!, listHelper: listHelper, listFilter: listFilter, listType: $listType)
         }
         .onReceive(nc.publisher(for: .deleteLessons), perform: { _ in
             listHelper.deleteAlertShown = true
