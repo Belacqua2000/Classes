@@ -32,9 +32,9 @@ struct PrimaryNavigation: View {
     // MARK: - Selection
     
     #if os(macOS)
-    @State var selection: SourceList.Item?// = SourceList.Item(sidebarType: .all)
+    @State var selection: SourceListItem?// = SourceList.Item(sidebarType: .all)
     #else
-    @State var selection: SourceList.Item?
+    @State var selection: SourceListItem?
     #endif
     
     var sourceList: some View {
@@ -59,13 +59,13 @@ struct PrimaryNavigation: View {
                 #endif
             }
                 .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
-                    selection = SourceList.Item(sidebarType: .summary)
+                    selection = SourceListItem(sidebarType: .summary)
                 })
                 .onReceive(NotificationCenter.default.publisher(for: .showAll), perform: { _ in
-                    selection = SourceList.Item(sidebarType: .all)
+                    selection = SourceListItem(sidebarType: .all)
                 })
                 .onReceive(NotificationCenter.default.publisher(for: .showILOs), perform: { _ in
-                    selection = SourceList.Item(sidebarType: .ilo)
+                    selection = SourceListItem(sidebarType: .ilo)
                 })
                 .navigationTitle("Classes")
                 .toolbar {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SourceList: View {
     @Environment(\.managedObjectContext) var viewContext
-    @Binding var selection: Item?
+    @Binding var selection: SourceListItem?
     @Binding var addTagShowing: Bool
     @Binding var selectedTag: Tag?
     @Binding var deleteAlertShown: Bool
@@ -18,38 +18,11 @@ struct SourceList: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))], animation: .default)
     private var tags: FetchedResults<Tag>
     
-    struct Item: Hashable {
-        enum SidebarTypes {
-            case summary
-            case all
-            case ilo
-            case lessonType
-            case tag
-            
-            case today
-            case unwatched
-            case unwritten
-        }
-        var sidebarType: SidebarTypes
-        var lessonTypes: Lesson.LessonType?
-        var tag: Tag?
-    }
-    
     var body: some View {
         
         List(selection: $selection) {
             
-            NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .all, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
-                tag: Item(sidebarType: .all),
-                selection: $selection,
-                label: {
-                    Label(
-                        title: {Text("All Lessons")},
-                        icon: {
-                            Image(systemName: "books.vertical")
-                        })
-                })
+            AllLessonsListItem(selection: $selection)
             
             SmartGroupsList(selection: $selection)
             
@@ -80,7 +53,7 @@ struct SourceList: View {
                             Label("Delete", systemImage: "trash")
                         })
                     }/*@END_MENU_TOKEN@*/)
-                    .tag(Item(sidebarType: .tag, lessonTypes: nil, tag: tag))
+                    .tag(SourceListItem(sidebarType: .tag, lessonTypes: nil, tag: tag))
                     .listItemTint(tag.swiftUIColor)
                 }
                 .onDelete(perform: delete)

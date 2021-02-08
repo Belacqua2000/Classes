@@ -9,12 +9,37 @@ import SwiftUI
 
 struct SmartGroupsList: View {
     @Environment(\.managedObjectContext) var viewContext
-    @Binding var selection: SourceList.Item?
+    @Binding var selection: SourceListItem?
+    
+    var todayDestination: some View {
+        #if !os(watchOS)
+        return LessonsView(listType: LessonsListType(filterType: .today, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext))
+        #else
+        return LessonsListWatch(listType: LessonsListType(filterType: .today, lessonType: nil))
+        #endif
+    }
+    
+    var unwatchedDestination: some View {
+        #if !os(watchOS)
+        return LessonsView(listType: LessonsListType(filterType: .unwatched, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext))
+        #else
+        return LessonsListWatch(listType: LessonsListType(filterType: .unwatched, lessonType: nil))
+        #endif
+    }
+    
+    var unwrittenDestination: some View {
+        #if !os(watchOS)
+        return LessonsView(listType: LessonsListType(filterType: .unwritten, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext))
+        #else
+        return LessonsListWatch(listType: LessonsListType(filterType: .unwritten, lessonType: nil))
+        #endif
+    }
+    
     var body: some View {
         Section(header: Text("Smart Groups")) {
             NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .today, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
-                tag: SourceList.Item(sidebarType: .today, lessonTypes: nil, tag: nil),
+                destination: todayDestination,
+                tag: SourceListItem(sidebarType: .today, lessonTypes: nil, tag: nil),
                 selection: $selection,
                 label: {
                     Label(
@@ -25,8 +50,8 @@ struct SmartGroupsList: View {
                 })
             
             NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .unwatched, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
-                tag: SourceList.Item(sidebarType: .unwatched, lessonTypes: nil, tag: nil),
+                destination: unwatchedDestination,
+                tag: SourceListItem(sidebarType: .unwatched, lessonTypes: nil, tag: nil),
                 selection: $selection,
                 label: {
                     Label(
@@ -37,8 +62,8 @@ struct SmartGroupsList: View {
                 })
             
             NavigationLink(
-                destination: LessonsView(listType: LessonsListType(filterType: .unwritten, lessonType: nil)).environmentObject(LessonsListHelper(context: viewContext)),
-                tag: SourceList.Item(sidebarType: .unwritten, lessonTypes: nil, tag: nil),
+                destination: unwrittenDestination,
+                tag: SourceListItem(sidebarType: .unwritten, lessonTypes: nil, tag: nil),
                 selection: $selection,
                 label: {
                     Label(

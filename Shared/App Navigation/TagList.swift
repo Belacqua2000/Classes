@@ -27,7 +27,7 @@ struct TagList: View {
                     )
                 }
             })
-            .tag(SourceList.Item(sidebarType: .tag, lessonTypes: nil, tag: tag))
+            .tag(SourceListItem(sidebarType: .tag, lessonTypes: nil, tag: tag))
             .listItemTint(tag.swiftUIColor)
         }
     }

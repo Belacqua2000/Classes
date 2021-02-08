@@ -214,7 +214,7 @@ extension Lesson {
     
 }
 
-
+#if !os(watchOS)
 // MARK: - Lesson File
 extension Lesson {
     static func parseJSON(url: URL, context: NSManagedObjectContext) {
@@ -296,3 +296,4 @@ extension Lesson {
         return url
     }
 }
+#endif
