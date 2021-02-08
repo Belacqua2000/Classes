@@ -13,22 +13,7 @@ struct DetailBackgroundGradient: View {
     }
 }
 
-struct DetailBlock: ViewModifier {
-    #if os(macOS)
-    private var backgroundView = BlurVisualEffectViewMac()
-    #else
-    private var backgroundView = BlurVisualEffectView()
-    #endif
-    
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(backgroundView)
-            .cornerRadius(8)
-            .shadow(radius: 10, x: 10, y: 10)
-    }
-}
-
+#if !os(watchOS)
 struct DetailBackgroundGradient_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -54,3 +39,4 @@ struct DetailBackgroundGradient_Previews: PreviewProvider {
         }
     }
 }
+#endif

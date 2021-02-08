@@ -179,24 +179,6 @@ struct DetailView_Previews: PreviewProvider {
     }
 }
 
-struct ILOsProgressView: View {
-    var completedILOs: Double
-    var body: some View {
-        HStack {
-            Text("\(numberFormatter.string(from: NSNumber(value: completedILOs))!) of learning outcomes achieved")
-                .fixedSize(horizontal: false, vertical: true)
-            ProgressView(value: completedILOs)
-                .progressViewStyle(LinearProgressViewStyle())
-        }
-    }
-    
-    private let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .percent
-        return formatter
-    }()
-}
-
 struct DetailViewTags: View {
     var tags: [Tag]?
     var body: some View {

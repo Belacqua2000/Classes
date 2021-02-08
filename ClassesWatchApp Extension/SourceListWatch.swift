@@ -16,7 +16,9 @@ struct SourceListWatch: View {
             AllLessonsListItem(selection: $selection)
             SmartGroupsList(selection: $selection)
             LessonTypeList()
+            TagList()
         }
+        .navigationTitle("Classes")
     }
 }
 

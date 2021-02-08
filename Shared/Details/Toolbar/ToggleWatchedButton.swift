@@ -14,7 +14,7 @@ struct ToggleWatchedButton: View {
     
     var lessonLabel: some View {
         !lesson.watched ?
-            Label("Mark as Watched", systemImage: "checkmark.circle") : Label("Mark as Unwatched", systemImage: "checkmark.circle.fill")
+            Label("Not Completed", systemImage: "xmark.circle") : Label("Completed", systemImage: "checkmark.circle.fill")
     }
     
     var body: some View {
