@@ -28,8 +28,31 @@ struct SettingsViewiOS: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Lessons Sort")) {
+            Section(header: Text("Customisation")) {
                 GeneralSettingsView()
+            }
+            
+            Section(header: Text("Help")) {
+                Button(action: {safariViewPresented = true}, label: {
+                    Label("Help", systemImage: "questionmark")
+                })
+                .fullScreenCover(isPresented: $safariViewPresented) {
+                    SafariView(url: URL(string: "https://nickbaughanapps.wordpress.com/classes/help/")!)
+                }
+                Button(action: {
+                    whatsNewShown = true
+                }, label: {
+                    Label("What's New", systemImage: "wand.and.stars")
+                })
+                .sheet(isPresented: $whatsNewShown) {
+                    WhatsNew()
+                }
+                Button(action: {welcomeScreenIsShown = true}, label: {
+                    Label("Tutorial", systemImage: "graduationcap")
+                })
+                .fullScreenCover(isPresented: $welcomeScreenIsShown) {
+                    OnboardingView()
+                }
             }
             
             Section(header: Text("Export"), footer: Text("Export all lessons to keep a backup, or to share with someone else. This will export all lessons, learning outcomes, resources, and their watched/written status. Tags are not exported.")) {
@@ -41,7 +64,7 @@ struct SettingsViewiOS: View {
 //                        }, label: {
 //                            Label("Share", systemImage: "square.and.arrow.up")
 //                        })
-//                        
+//
 //                        Button(action: {
 //                            exportSheetIsShown = true
 //                        }, label: {
@@ -66,33 +89,14 @@ struct SettingsViewiOS: View {
                 })*/
             }
             
-            Section(header: Text("More")) {
-                Button(action: {safariViewPresented = true}, label: {
-                    Label("Help", systemImage: "questionmark")
-                })
-                .fullScreenCover(isPresented: $safariViewPresented) {
-                    SafariView(url: URL(string: "https://nickbaughanapps.wordpress.com/classes/help/")!)
-                }
-                Button(action: {welcomeScreenIsShown = true}, label: {
-                    Label("Welcome Page", systemImage: "face.smiling")
-                })
-                .fullScreenCover(isPresented: $welcomeScreenIsShown) {
-                    OnboardingView()
-                }
-                Button(action: {
-                    whatsNewShown = true
-                }, label: {
-                    Label("What's New", systemImage: "wand.and.stars")
-                })
-                .sheet(isPresented: $whatsNewShown) {
-                    WhatsNew()
-                }
+            Section {
                 NavigationLink(
                     destination:
                         Form {
                             Section(footer: Text("Whether you love or hate this app, feedback would be greatly appreciated.  Please feel free to write a review or get in touch.")) {
                             ContactSettingsView()
                                 .navigationTitle("Contact")
+                                .navigationBarTitleDisplayMode(.inline)
                             }
                         }, label: {
                     Label("Contact", systemImage: "person.crop.square")

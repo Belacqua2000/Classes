@@ -16,7 +16,7 @@ class LessonsListHelper: ObservableObject {
     
     var context: NSManagedObjectContext
     @Published var lessonToChange: Lesson? = nil
-    @Published var selection = Set<Lesson>()
+    @Published var selection: Set<Lesson>? = Set<Lesson>()
     
     @Published var deleteAlertShown: Bool = false
     @Published var addLessonIsPresented: Bool = false
@@ -35,6 +35,14 @@ class LessonsListHelper: ObservableObject {
     @Published var ilosViewShown = false
     @Published var filterViewActive = false
     
+    func select(_ lessons: [Lesson]) {
+        selection = Set<Lesson>(lessons)
+    }
+    
+    func deselectAll() {
+        selection?.removeAll()
+    }
+    
     func editLesson(_ lesson: Lesson) {
         lessonToChange = lesson
         sheetToPresent = .addLesson
@@ -47,7 +55,7 @@ class LessonsListHelper: ObservableObject {
     func markOutcomesWritten(_ lesson: Lesson) {
         #if os(iOS)
         selection = [lesson]
-        guard let lesson = selection.first else {return}
+        guard let lesson = selection?.first else {return}
         #endif
         lesson.markAllILOsWritten(context: context)
     }
@@ -55,7 +63,7 @@ class LessonsListHelper: ObservableObject {
     func markOutcomesUnwritten(_ lesson: Lesson) {
         #if os(iOS)
         selection = [lesson]
-        guard let lesson = selection.first else {return}
+        guard let lesson = selection?.first else {return}
         #endif
         lesson.markAllILOsUnwritten(context: context)
     }
@@ -78,6 +86,14 @@ class LessonsListHelper: ObservableObject {
     
     func toggleWatched(lessons: [Lesson]) {
             lessons.forEach({$0.toggleWatched(context: context)})
+    }
+    
+    func markWatched(lessons: [Lesson]) {
+            lessons.forEach({$0.markWatched(context: context)})
+    }
+    
+    func markUnwatched(lessons: [Lesson]) {
+            lessons.forEach({$0.markUnwatched(context: context)})
     }
     
     func duplicateLesson(_ lesson: Lesson) {

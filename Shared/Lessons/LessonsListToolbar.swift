@@ -31,13 +31,19 @@ struct LessonsListToolbar: ToolbarContent {
         Button(action: {
             nc.post(Notification(name: .scrollToNow))
         }, label: {
-            Label("Scroll To Now", systemImage: "calendar.badge.clock")
+            Label("Scroll To Now", systemImage: "arrow.turn.right.down")
         })
         .help("Scroll to the next lesson in the list after now.")
     }
     
     var iloButton: some View {
-        Button(action: {listHelper.sheetToPresent = .ilo}, label: {
+        Button(action: {
+//            #if os(macOS)
+            listHelper.sheetToPresent = .ilo
+//            #else
+//            listHelper.ilosViewShown = true
+//            #endif
+        }, label: {
             Label("Generate Learning Outcomes", systemImage: "list.number")
         })
         .help("View ILOs")
@@ -66,42 +72,42 @@ struct LessonsListToolbar: ToolbarContent {
         Menu(content: {
             Button(action: {
                 withAnimation {
-                    listHelper.toggleWatched(lessons: Array(listHelper.selection))
+                    listHelper.toggleWatched(lessons: Array(listHelper.selection ?? []))
                 }
             }, label: {
                 Label("Toggle Completed", systemImage: "checkmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    listHelper.toggleWatched(lessons: Array(listHelper.selection))
+                    listHelper.markWatched(lessons: Array(listHelper.selection ?? []))
                 }
             }, label: {
                 Label("Mark Completed", systemImage: "checkmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    listHelper.toggleWatched(lessons: Array(listHelper.selection))
+                    listHelper.markUnwatched(lessons: Array(listHelper.selection ?? []))
                 }
             }, label: {
                 Label("Mark Uncompleted", systemImage: "xmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    Array(listHelper.selection).forEach({
+                    Array(listHelper.selection ?? []).forEach({
                         listHelper.markOutcomesWritten($0)
                     })
                 }
             }, label: {
-                Label("Mark All Learning Outcomes as Achieved", systemImage: "checkmark.circle")
+                Label("Mark All Outcomes Achieved", systemImage: "checkmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    Array(listHelper.selection).forEach({
+                    Array(listHelper.selection ?? []).forEach({
                         listHelper.markOutcomesUnwritten($0)
                     })
                 }
             }, label: {
-                Label("Mark Learning Outcomes as Not Achieved", systemImage: "xmark.circle")
+                Label("Mark All Outcomes Unachieved", systemImage: "xmark.circle")
             })
         }, label: {
             Label("Mark Completed", systemImage: "checkmark.circle")
@@ -109,12 +115,16 @@ struct LessonsListToolbar: ToolbarContent {
         .imageScale(.large)
     }
     
+    var selectMenu: some View {
+        Menu(content: {
+            Button("Select All", action: { nc.post(.init(name: .selectAll)) })
+            Button("Deselect All", action: { listHelper.deselectAll() })
+        }, label: {
+            Text("Select")
+        })
+    }
+    
     var body: some ToolbarContent {
-        
-        ToolbarItem(id: "AddLessonButton", placement: .primaryAction) {
-            addLessonButton
-        }
-        
         #if os(iOS)
         
         ToolbarItemGroup(placement: .bottomBar) {
@@ -126,6 +136,8 @@ struct LessonsListToolbar: ToolbarContent {
                 filterButton
             } else {
                 Group {
+                    selectMenu
+                    Spacer()
                     Button(action: {
                         nc.post(Notification(name: .exportLessons))
                     }, label: {
@@ -133,14 +145,14 @@ struct LessonsListToolbar: ToolbarContent {
                     })
                     Spacer()
                     Button(action: {
-                        nc.post(Notification(name: .deleteLessons))
+                        listHelper.deleteAlertShown = true
                     }, label: {
                         Label("Delete", systemImage: "trash")
                     })
                     Spacer()
                     markCompleteMenu
                 }
-//                .disabled(listHelper.selection.isEmpty)
+//                .disabled(listHelper.selection?.isEmpty ?? true)
 //                .onAppear(perform: {
 //                    listHelper.selection.removeAll()
 //                })
@@ -151,7 +163,7 @@ struct LessonsListToolbar: ToolbarContent {
             Spacer()
             EditButton().animation(.default)
                 .onChange(of: editMode, perform: {_ in
-                    listHelper.selection.removeAll()
+                    listHelper.selection?.removeAll()
                 })
         }
         
@@ -170,5 +182,8 @@ struct LessonsListToolbar: ToolbarContent {
         }
         
         #endif
+        ToolbarItem(id: "AddLessonButton", placement: .primaryAction) {
+            addLessonButton
+        }
     }
 }

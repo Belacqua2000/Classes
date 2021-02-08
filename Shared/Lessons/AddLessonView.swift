@@ -98,11 +98,13 @@ struct AddLessonForm: View {
                 }
                 LessonTypePicker(type: $type)
                 .pickerStyle(DefaultPickerStyle())
+            }
+            Section {
                 Toggle(isOn: $isCompleted, label: {
                     Text("Completed")
                 })
             }
-            Section(header: Text("Notes")) {
+            Section(header: Text("Notes"), footer: Text("Add any other information about the lesson here.\n\nLearning outcomes and links can be added after the lesson has been created.")) {
                 #if os(macOS)
                 TextEditor(text: $notes)
                     .border(Color(.labelColor), width: 1)

@@ -28,6 +28,14 @@
 		17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		1724C46A254250DE00F56C93 /* AppFeaturesiOS.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeaturesiOS.json */; };
+		172A56A325D162FD00EA936D /* SourceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56A225D162FD00EA936D /* SourceList.swift */; };
+		172A56A425D162FD00EA936D /* SourceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56A225D162FD00EA936D /* SourceList.swift */; };
+		172A56B025D1693500EA936D /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56AF25D1693500EA936D /* TagList.swift */; };
+		172A56B125D1693500EA936D /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56AF25D1693500EA936D /* TagList.swift */; };
+		172A56B825D16B7300EA936D /* LessonTypeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56B725D16B7300EA936D /* LessonTypeList.swift */; };
+		172A56B925D16B7300EA936D /* LessonTypeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56B725D16B7300EA936D /* LessonTypeList.swift */; };
+		172A56CA25D16BAF00EA936D /* SmartGroupsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56C925D16BAF00EA936D /* SmartGroupsList.swift */; };
+		172A56CB25D16BAF00EA936D /* SmartGroupsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56C925D16BAF00EA936D /* SmartGroupsList.swift */; };
 		172E28092556B81100676351 /* ImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177B2D0F2528A4F200412C55 /* ImportView.swift */; };
 		172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
 		172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172FFFF525420B3500CA15B5 /* WhatsNew.swift */; };
@@ -137,8 +145,8 @@
 		17D551D52514DDF900A502EA /* ILOGeneratorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D551D42514DDF900A502EA /* ILOGeneratorView.swift */; };
 		17DEA57D250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
 		17DEA57E250BEE0700ABD43A /* LessonTypeNavigationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */; };
-		17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */; };
-		17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */; };
+		17E50BBD250399DB00BA8618 /* PrimaryNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* PrimaryNavigation.swift */; };
+		17E50BBE250399DB00BA8618 /* PrimaryNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBC250399DB00BA8618 /* PrimaryNavigation.swift */; };
 		17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBF2504D81200BA8618 /* LessonsListContent.swift */; };
 		17E50BC12504D81200BA8618 /* LessonsListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BBF2504D81200BA8618 /* LessonsListContent.swift */; };
 		17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E50BC22504D81E00BA8618 /* AddLessonView.swift */; };
@@ -200,6 +208,10 @@
 		1717A6542557F50400F8DC3C /* SampleExport.classesdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleExport.classesdoc; sourceTree = "<group>"; };
 		17207ED425208B3E003889C2 /* AddILOMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddILOMenu.swift; sourceTree = "<group>"; };
 		1724C469254250DE00F56C93 /* AppFeaturesiOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeaturesiOS.json; sourceTree = "<group>"; };
+		172A56A225D162FD00EA936D /* SourceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceList.swift; sourceTree = "<group>"; };
+		172A56AF25D1693500EA936D /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
+		172A56B725D16B7300EA936D /* LessonTypeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeList.swift; sourceTree = "<group>"; };
+		172A56C925D16BAF00EA936D /* SmartGroupsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartGroupsList.swift; sourceTree = "<group>"; };
 		172FFFF525420B3500CA15B5 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		17333E6C2514142A002676C3 /* Shared 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 2.xcdatamodel"; sourceTree = "<group>"; };
 		173368E42528DA42005D0932 /* ClassesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassesWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -264,7 +276,7 @@
 		17D551D42514DDF900A502EA /* ILOGeneratorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILOGeneratorView.swift; sourceTree = "<group>"; };
 		17DDC16D2515627300C8AC59 /* Shared 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Shared 3.xcdatamodel"; sourceTree = "<group>"; };
 		17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeNavigationList.swift; sourceTree = "<group>"; };
-		17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarNavigation.swift; sourceTree = "<group>"; };
+		17E50BBC250399DB00BA8618 /* PrimaryNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryNavigation.swift; sourceTree = "<group>"; };
 		17E50BBF2504D81200BA8618 /* LessonsListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsListContent.swift; sourceTree = "<group>"; };
 		17E50BC22504D81E00BA8618 /* AddLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLessonView.swift; sourceTree = "<group>"; };
 		17E50BC52504D8F800BA8618 /* LessonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCell.swift; sourceTree = "<group>"; };
@@ -521,7 +533,11 @@
 			isa = PBXGroup;
 			children = (
 				17DEA57C250BEE0700ABD43A /* LessonTypeNavigationList.swift */,
-				17E50BBC250399DB00BA8618 /* SidebarNavigation.swift */,
+				17E50BBC250399DB00BA8618 /* PrimaryNavigation.swift */,
+				172A56A225D162FD00EA936D /* SourceList.swift */,
+				172A56C925D16BAF00EA936D /* SmartGroupsList.swift */,
+				172A56B725D16B7300EA936D /* LessonTypeList.swift */,
+				172A56AF25D1693500EA936D /* TagList.swift */,
 			);
 			path = "App Navigation";
 			sourceTree = "<group>";
@@ -794,6 +810,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				172A56B025D1693500EA936D /* TagList.swift in Sources */,
 				1750A3F82555733600A7A2E7 /* BlurVisualEffectView.swift in Sources */,
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				17D1A3A925798307001F885E /* ILOProgressShape.swift in Sources */,
@@ -822,9 +839,10 @@
 				17937D852531C03A001C2540 /* ToggleWatchedButton.swift in Sources */,
 				177570CC25CED51400EAD6E1 /* LessonsListToolbar.swift in Sources */,
 				179F27E42560BDDB00D65DD7 /* LessonsFilterView.swift in Sources */,
+				172A56B825D16B7300EA936D /* LessonTypeList.swift in Sources */,
 				17E50BC92504E22200BA8618 /* DetailView.swift in Sources */,
 				1768DED02514CB5B008CDCAC /* ILOSection.swift in Sources */,
-				17E50BBD250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
+				17E50BBD250399DB00BA8618 /* PrimaryNavigation.swift in Sources */,
 				1775705425CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */,
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
 				1775709225CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */,
@@ -841,6 +859,7 @@
 				1734040725614AE70074C8B0 /* LessonsListFilter.swift in Sources */,
 				1787362C25CD658100115BCD /* VersionDetails.swift in Sources */,
 				179F912C2554D1C700BAD25A /* DetailBackgroundGradient.swift in Sources */,
+				172A56CA25D16BAF00EA936D /* SmartGroupsList.swift in Sources */,
 				171212272503708000EE7423 /* ContentView.swift in Sources */,
 				17E50BC62504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17A6D50D250D7A3F00E7C6E8 /* TagIcon.swift in Sources */,
@@ -856,6 +875,7 @@
 				1775706E25CE189300EAD6E1 /* LessonNotes.swift in Sources */,
 				17E50BD025065CB300BA8618 /* Lesson.swift in Sources */,
 				17BBCB052535169800FDEDD4 /* AppViewState.swift in Sources */,
+				172A56A325D162FD00EA936D /* SourceList.swift in Sources */,
 				17D546782532587200046654 /* AddTagView.swift in Sources */,
 				177B2D102528A4F200412C55 /* ImportView.swift in Sources */,
 				17ABF3502507E789000D4048 /* ILOsView.swift in Sources */,
@@ -873,10 +893,12 @@
 				1775ECB42527DEF600957AE3 /* Notifications.swift in Sources */,
 				1775708625CE19AF00EAD6E1 /* BlurVisualEffectViewMac.swift in Sources */,
 				1734040825614AE70074C8B0 /* LessonsListFilter.swift in Sources */,
+				172A56B125D1693500EA936D /* TagList.swift in Sources */,
 				173C769D25162148003FFA6A /* OnboardingView.swift in Sources */,
 				1751BB2A2533514000AA78D6 /* LessonsListHelper.swift in Sources */,
 				1781EF25251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
 				1775706225CE143E00EAD6E1 /* DetailToolbar.swift in Sources */,
+				172A56CB25D16BAF00EA936D /* SmartGroupsList.swift in Sources */,
 				171212262503708000EE7423 /* ClassesApp.swift in Sources */,
 				1781EF1E251F76D200BA91BB /* AddResourceButton.swift in Sources */,
 				17ABF3512507E789000D4048 /* ILOsView.swift in Sources */,
@@ -891,7 +913,7 @@
 				17937D862531C03A001C2540 /* ToggleWatchedButton.swift in Sources */,
 				1787C8F725267FF1005486AC /* AppCommands.swift in Sources */,
 				17BD0E85251D3DC900BCC40D /* LessonsListType.swift in Sources */,
-				17E50BBE250399DB00BA8618 /* SidebarNavigation.swift in Sources */,
+				17E50BBE250399DB00BA8618 /* PrimaryNavigation.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
 				17391A5A2545DD78006A6CD9 /* ILOFilterView.swift in Sources */,
 				17BD0E9E251D433C00BCC40D /* LessonsRow.swift in Sources */,
@@ -929,6 +951,8 @@
 				1768DED12514CB5B008CDCAC /* ILOSection.swift in Sources */,
 				17E50BD125065CB300BA8618 /* Lesson.swift in Sources */,
 				17937D712531BE8B001C2540 /* EditLessonButton.swift in Sources */,
+				172A56A425D162FD00EA936D /* SourceList.swift in Sources */,
+				172A56B925D16B7300EA936D /* LessonTypeList.swift in Sources */,
 				1775705525CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */,
 				17D1A3AA25798307001F885E /* ILOProgressShape.swift in Sources */,
 			);

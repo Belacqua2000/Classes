@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ResourceSection: View {
     @Environment(\.managedObjectContext) var viewContext
+    @Environment(\.scenePhase) private var scenePhase
     var resources: FetchedResults<Resource>
     @State var isInValidURLAlertShown: Bool = false
     @State private var selectedResource: Resource?
@@ -91,6 +92,7 @@ struct ResourceSection: View {
                 #endif
             }
             .onReceive(nc.publisher(for: .addResource), perform: { _ in
+                guard scenePhase == .active else { return }
                 addResourcePresented = true
             })
             .sheet(isPresented: $addResourcePresented, onDismiss: {

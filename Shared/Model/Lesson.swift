@@ -90,6 +90,24 @@ extension Lesson {
         }
     }
     
+    func markWatched(context managedObjectContext: NSManagedObjectContext) {
+        watched = true
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
+    func markUnwatched(context managedObjectContext: NSManagedObjectContext) {
+        watched = false
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("Unable to save due to Error: \(error)")
+        }
+    }
+    
     func markAllILOsWritten(context managedObjectContext: NSManagedObjectContext) {
         (ilo?.allObjects as? [ILO])?.forEach({$0.written = true})
         objectWillChange.send()

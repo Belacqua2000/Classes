@@ -36,7 +36,7 @@ struct ContentView: View {
     
     var body: some View {
         #if os(iOS)
-        SidebarNavigation()
+        PrimaryNavigation()
             .sheet(item: $currentModalView, onDismiss: {
                 currentModalView = nil
             }, content: { item in
@@ -75,7 +75,7 @@ struct ContentView: View {
             .onAppear(perform: checkWhatsNew)
             .onContinueUserActivity("com.baughan.classes.open-whats-new", perform: openWhatsNew)
         #else
-        SidebarNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
+        PrimaryNavigation(selection: .init(sidebarType: .all, lessonTypes: nil, tag: nil))
             .frame(minWidth: 500, maxWidth: .infinity, minHeight: 200, maxHeight: .infinity)
             .onOpenURL { url in
                 self.url = url

@@ -48,7 +48,9 @@ struct LessonsFilterView: View {
         form
             .padding()
         #else
-        form
+        NavigationView {
+            form
+        }.navigationViewStyle(StackNavigationViewStyle())
         #endif
     }
 }

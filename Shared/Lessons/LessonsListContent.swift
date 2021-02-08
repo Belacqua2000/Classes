@@ -19,11 +19,14 @@ struct LessonsListContent: View {
     
     let nc = NotificationCenter.default
     
+    // Sort
     enum Sort: String, CaseIterable, Identifiable {
         var id: String { return rawValue }
         case dateAscending = "Oldest"
         case dateDescending = "Newest"
-        case name = "Name"
+        case name = "Title"
+        case location = "Location"
+        case teacher = "Teacher"
     }
     
     var titleString: String {
@@ -160,6 +163,10 @@ struct LessonsListContent: View {
             filterHelper.sort(by: {$0.date! > $1.date!})
         case .name:
             filterHelper.sort(by: {$0.title! < $1.title!})
+        case .location:
+            filterHelper.sort(by: {$0.location! < $1.location!})
+        case .teacher:
+            filterHelper.sort(by: {$0.teacher! < $1.teacher!})
         }
         
         return filterHelper
@@ -264,19 +271,15 @@ struct LessonsListContent: View {
                         })
                 }
                 .popover(isPresented: $listHelper.shareSheetShown) {
-                    ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection))!])
+                    ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection ?? []))!])
                 }
                 .alert(isPresented: $listHelper.deleteAlertShown) {
                     Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
                 }
                 .fullScreenCover(isPresented: $listHelper.ilosViewShown, content: {
-                    #if os(macOS)
-                    ILOGeneratorView(isPresented: $ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-                    #else
                     NavigationView {
                         ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
                     }
-                    #endif
                 })
                 #endif
             } else {
@@ -306,21 +309,22 @@ struct LessonsListContent: View {
 //        })
         .onAppear(perform: {
             #if os(macOS)
-            guard filteredLessons.first != nil else { return }
-            listHelper.selection.insert(filteredLessons.first!)
+            guard let firstLesson = filteredLessons.first else { return }
+            listHelper.selection = [firstLesson]
             #endif
         })
         .fileExporter(
             isPresented: $listHelper.exporterShown,
-            document: LessonJSON(lessons: Array(listHelper.selection)),
+            document: LessonJSON(lessons: Array(listHelper.selection ?? [])),
             contentType: .classesFormat,
             onCompletion: {_ in })
         .toolbar {
+            #if os(iOS)
             LessonsListToolbar(editMode: editMode!, listHelper: listHelper, listFilter: listFilter, listType: $listType)
+            #else
+            LessonsListToolbar(listHelper: listHelper, listFilter: listFilter, listType: $listType)
+            #endif
         }
-        .onReceive(nc.publisher(for: .deleteLessons), perform: { _ in
-            listHelper.deleteAlertShown = true
-        })
         .onReceive(nc.publisher(for: .exportLessons), perform: { _ in
             #if os(iOS)
             listHelper.shareSheetShown = true
@@ -335,14 +339,16 @@ struct LessonsListContent: View {
             listHelper.exporterShown = true
         })
         .onReceive(nc.publisher(for: .markILOsWritten), perform: { _ in
-            guard let lesson = listHelper.selection.first else {return}
+            guard let lesson = listHelper.selection?.first else {return}
             listHelper.markOutcomesWritten(lesson)
         })
         .onReceive(nc.publisher(for: .markILOsUnwritten), perform: { _ in
-            guard let lesson = listHelper.selection.first else {return}
+            guard let lesson = listHelper.selection?.first else {return}
             listHelper.markOutcomesUnwritten(lesson)
         })
-        
+        .onReceive(nc.publisher(for: .selectAll), perform: { _ in
+            filteredLessons.forEach({listHelper.selection?.insert($0)})
+        })
     }
     
     private func deleteItems(offsets: IndexSet) {
@@ -356,12 +362,13 @@ struct LessonsListContent: View {
     private func deleteLessons() {
         withAnimation {
             listHelper.lessonToChange?.delete(context: viewContext)
-            for lesson in listHelper.selection {
+            guard let selection = listHelper.selection else { return }
+            for lesson in selection {
                 lesson.delete(context: viewContext)
             }
         }
         listHelper.lessonToChange = nil
-        listHelper.selection.removeAll()
+        listHelper.selection?.removeAll()
     }
     
     private func scrollToNow(proxy: ScrollViewProxy) {
@@ -372,6 +379,10 @@ struct LessonsListContent: View {
             withAnimation {
                 #if os(macOS)
                 listHelper.selection = [nextLesson]
+                #else
+                if horizontalSizeClass == .regular {
+                    listHelper.selection = [nextLesson]
+                }
                 #endif
                 proxy.scrollTo(nextLesson)
             }

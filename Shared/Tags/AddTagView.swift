@@ -39,7 +39,7 @@ struct AddTagView: View {
         #if os(iOS)
         return horizontalSizeClass == .regular ? true : false
         #else
-        true
+        return true
         #endif
     }
     

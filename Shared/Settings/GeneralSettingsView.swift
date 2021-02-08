@@ -9,7 +9,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct GeneralSettingsView: View {
-    @AppStorage("currentLessonSort") private var sort: LessonsListContent.Sort = .dateDescending
+    @AppStorage("currentLessonSort") private var sort: LessonsListContent.Sort = .dateAscending
     @State var importSheetIsShown = false
     
     var picker: some View {
@@ -27,7 +27,7 @@ struct GeneralSettingsView: View {
         
         #if os(iOS)
         picker
-            .pickerStyle(SegmentedPickerStyle())
+            .pickerStyle(DefaultPickerStyle())
         #else
         Form {
             picker

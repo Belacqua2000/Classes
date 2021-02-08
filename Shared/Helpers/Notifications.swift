@@ -13,7 +13,6 @@ extension Notification.Name {
     static let showILOs = Notification.Name("showILOs")
     
     static let scrollToNow = Notification.Name("scrollToNow")
-    static let deleteLessons = Notification.Name("deleteLessons")
     static let exportLessons = Notification.Name("exportLessons")
     static let showFilterView = Notification.Name("showFilterView")
     static let showILORandomiser = Notification.Name("showILORandomiser")
@@ -36,4 +35,5 @@ extension Notification.Name {
     
     static let showWhatsNew = Notification.Name("showWhatsNew")
     static let onboarding = Notification.Name("onboarding")
+    static let selectAll = Notification.Name("selectAll")
 }
