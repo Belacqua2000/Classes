@@ -11,7 +11,7 @@ import SwiftUI
 struct ClassesApp: App {
     let persistenceController = PersistenceController.shared
     
-    @ObservedObject var appViewState = AppViewState()
+    @StateObject var appViewState = AppViewState()
 
     var body: some Scene {
         WindowGroup {

@@ -11,7 +11,7 @@ struct WatchNavigation: View {
     var body: some View {
         NavigationView {
             SourceListWatch()
-//            LessonsListWatch()
+//            LessonsListWatch(listType: .init(filterType: .today))
         }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

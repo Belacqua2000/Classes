@@ -14,7 +14,7 @@ struct TagList: View {
     private var tags: FetchedResults<Tag>
     
     var text: Text {
-        if tags.isEmpty {
+        if !tags.isEmpty {
             return Text("")
         } else {
             return Text("No tags.  Tags can be created on iPhone, iPad, and Mac.")
@@ -22,7 +22,7 @@ struct TagList: View {
     }
     
     var body: some View {
-        Section(header: Text("Tags"), footer: text) {
+        Section(header: Text("Tags")) {
             if !tags.isEmpty {
             ForEach(tags) { tag in
                 #if !os(watchOS)
@@ -58,7 +58,7 @@ struct TagList: View {
             }
             } else {
                 #if os(watchOS)
-                
+                text
                 #endif
             }
         }

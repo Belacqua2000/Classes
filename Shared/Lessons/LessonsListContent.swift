@@ -175,7 +175,7 @@ struct LessonsListContent: View {
     // MARK: - List
     var lessonList: some View {
         List(selection: $listHelper.selection) {
-            ForEach(filteredLessons, id: \.self) { lesson in
+            ForEach(filteredLessons) { lesson in
                 LessonsRow(selection: $listHelper.selection, lesson: lesson)
                     .tag(lesson)
                     .contextMenu(menuItems: {

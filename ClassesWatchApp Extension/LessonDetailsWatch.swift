@@ -14,7 +14,7 @@ struct LessonDetailsWatch: View {
     @ObservedObject var lesson: Lesson
     
     var ilos: [ILO] {
-        return lesson.ilo?.allObjects as! [ILO]
+        return (lesson.ilo?.allObjects as! [ILO]).sorted(by: { $0.index < $1.index })
     }
     var completedILOs: Double {
         let iloCount = Double(ilos.count)
@@ -33,10 +33,10 @@ struct LessonDetailsWatch: View {
                 Label(lesson.title ?? "Untitled", systemImage: "")
                     .font(.headline)
                 Label(title: {Text(lesson.date ?? Date(), style: .date)}, icon: {Image(systemName: "calendar")})
-                if let location = lesson.location {
-                    Label(location, systemImage: "pin")
+                if let location = lesson.location, !location.isEmpty {
+                    Label(location, systemImage: "mappin")
                 }
-                if let teacher = lesson.teacher {
+                if let teacher = lesson.teacher, !teacher.isEmpty {
                     Label(teacher, systemImage: "graduationcap")
                 }
                 ToggleWatchedButton(lesson: lesson)
@@ -60,7 +60,11 @@ struct LessonDetailsWatch: View {
                     .font(.headline)
                     .padding(.top)
                 
-                ILOsProgressView(completedILOs: completedILOs)
+                if !ilos.isEmpty {
+                    ILOsProgressView(completedILOs: completedILOs)
+                } else {
+                    Text("No learning outcomes")
+                }
                 
                 ForEach(ilos) { ilo in
                     Button(action: {toggleILOComplete(ilo: ilo)}, label: {

@@ -92,14 +92,34 @@ struct LessonsListWatch: View {
     
     var body: some View {
         if !filteredLessons.isEmpty {
-            List(filteredLessons) { lesson in
+            ScrollViewReader { proxy in
+                List(filteredLessons, id: \.self) { lesson in
                 NavigationLink(
                     destination: LessonDetailsWatch(lesson: lesson),
                     label: {
-                        Label(lesson.title ?? "Untitled", systemImage: Lesson.lessonIcon(type: lesson.type))
+                        Label(title: {
+                            VStack(alignment: .leading) {
+                                Text(lesson.title ?? "Untitled")
+                                
+                                Text(DateFormatter.localizedString(from: lesson.date!, dateStyle: .short, timeStyle: .short))
+                                    .font(.footnote)
+                            }
+                        },
+                        icon: {
+                            Image(systemName: Lesson.lessonIcon(type: lesson.type))})
                     })
+                    .tag(lesson)
             }
             .navigationTitle("All Lessons")
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    Button(action: {scrollToNow(proxy: proxy)}, label: {
+                        Label("Scroll To Now", systemImage: "arrow.turn.right.down")
+                    })
+                    .help("Scroll to the next lesson in the list after now.")
+                }
+            }
+            }
         } else {
             VStack {
                 Text("There are no lessons in this view.  Lessons can be added on iPhone, iPad and Mac.")
@@ -113,6 +133,22 @@ struct LessonsListWatch: View {
     
     private func showAlert() {
         alertPresented = true
+    }
+    
+    private func scrollToNow(proxy: ScrollViewProxy) {
+        guard !filteredLessons.isEmpty else { return }
+        let sortedLessons = filteredLessons.sorted(by: {$0.date! < $1.date!})
+        
+        if let nextLesson = sortedLessons.first(where: {$0.date ?? Date(timeIntervalSince1970: 0) > Date()}) {
+            withAnimation {
+                proxy.scrollTo(nextLesson)
+            }
+        } else {
+            withAnimation {
+                let lastLesson = sortedLessons.last!
+                proxy.scrollTo(lastLesson)
+            }
+        }
     }
     
 }
