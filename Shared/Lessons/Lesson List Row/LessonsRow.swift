@@ -9,23 +9,20 @@ import SwiftUI
 
 struct LessonsRow: View {
     @EnvironmentObject var viewStates: LessonsListHelper
-    @Binding var selection: Set<Lesson>?
+    @Binding var selection: Set<Lesson>
     
     @ObservedObject var lesson: Lesson
-    var lessonSet: Set<Lesson> {
-        var set = Set<Lesson>()
-        set.insert(lesson)
-        return set
-    }
     var body: some View {
+//        NavigationLink(
+//            destination: DetailView(lesson: lesson).environmentObject(viewStates),
+//            tag: Set<Lesson>([lesson]),
+//            selection: $selection,
+//            label: {LessonCell(lesson: lesson)})
         NavigationLink(
             destination: DetailView(lesson: lesson).environmentObject(viewStates),
-            tag: Set<Lesson>([lesson]),
-            selection: $selection,
-            label: {LessonCell(lesson: lesson)})
-        /*.onDrag({
-            return NSItemProvider(object: lesson.id!.uuidString as NSString)
-        })*/
+            label: {
+                LessonCell(lesson: lesson)
+            })
 //        #elseif os(macOS)
 //        LessonCell(lesson: lesson)
 //        #endif

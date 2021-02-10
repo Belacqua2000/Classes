@@ -271,7 +271,7 @@ struct LessonsListContent: View {
                         })
                 }
                 .popover(isPresented: $listHelper.shareSheetShown) {
-                    ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection ?? []))!])
+                    ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection))!])
                 }
                 .alert(isPresented: $listHelper.deleteAlertShown) {
                     Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
@@ -315,7 +315,7 @@ struct LessonsListContent: View {
         })
         .fileExporter(
             isPresented: $listHelper.exporterShown,
-            document: LessonJSON(lessons: Array(listHelper.selection ?? [])),
+            document: LessonJSON(lessons: Array(listHelper.selection)),
             contentType: .classesFormat,
             onCompletion: {_ in })
         .toolbar {
@@ -339,15 +339,15 @@ struct LessonsListContent: View {
             listHelper.exporterShown = true
         })
         .onReceive(nc.publisher(for: .markILOsWritten), perform: { _ in
-            guard let lesson = listHelper.selection?.first else {return}
+            guard let lesson = listHelper.selection.first else {return}
             listHelper.markOutcomesWritten(lesson)
         })
         .onReceive(nc.publisher(for: .markILOsUnwritten), perform: { _ in
-            guard let lesson = listHelper.selection?.first else {return}
+            guard let lesson = listHelper.selection.first else {return}
             listHelper.markOutcomesUnwritten(lesson)
         })
         .onReceive(nc.publisher(for: .selectAll), perform: { _ in
-            filteredLessons.forEach({listHelper.selection?.insert($0)})
+            filteredLessons.forEach({listHelper.selection.insert($0)})
         })
     }
     
@@ -362,13 +362,11 @@ struct LessonsListContent: View {
     private func deleteLessons() {
         withAnimation {
             listHelper.lessonToChange?.delete(context: viewContext)
-            guard let selection = listHelper.selection else { return }
-            for lesson in selection {
-                lesson.delete(context: viewContext)
-            }
+            let selection = listHelper.selection
+            selection.forEach({$0.delete(context: viewContext)})
         }
         listHelper.lessonToChange = nil
-        listHelper.selection?.removeAll()
+        listHelper.selection.removeAll()
     }
     
     private func scrollToNow(proxy: ScrollViewProxy) {

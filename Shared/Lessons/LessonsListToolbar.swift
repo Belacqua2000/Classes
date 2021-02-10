@@ -72,28 +72,28 @@ struct LessonsListToolbar: ToolbarContent {
         Menu(content: {
             Button(action: {
                 withAnimation {
-                    listHelper.toggleWatched(lessons: Array(listHelper.selection ?? []))
+                    listHelper.toggleWatched(lessons: Array(listHelper.selection))
                 }
             }, label: {
                 Label("Toggle Completed", systemImage: "checkmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    listHelper.markWatched(lessons: Array(listHelper.selection ?? []))
+                    listHelper.markWatched(lessons: Array(listHelper.selection))
                 }
             }, label: {
                 Label("Mark Completed", systemImage: "checkmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    listHelper.markUnwatched(lessons: Array(listHelper.selection ?? []))
+                    listHelper.markUnwatched(lessons: Array(listHelper.selection))
                 }
             }, label: {
                 Label("Mark Uncompleted", systemImage: "xmark.circle")
             })
             Button(action: {
                 withAnimation {
-                    Array(listHelper.selection ?? []).forEach({
+                    Array(listHelper.selection).forEach({
                         listHelper.markOutcomesWritten($0)
                     })
                 }
@@ -102,7 +102,7 @@ struct LessonsListToolbar: ToolbarContent {
             })
             Button(action: {
                 withAnimation {
-                    Array(listHelper.selection ?? []).forEach({
+                    Array(listHelper.selection).forEach({
                         listHelper.markOutcomesUnwritten($0)
                     })
                 }
@@ -163,7 +163,7 @@ struct LessonsListToolbar: ToolbarContent {
             Spacer()
             EditButton().animation(.default)
                 .onChange(of: editMode, perform: {_ in
-                    listHelper.selection?.removeAll()
+                    listHelper.selection.removeAll()
                 })
         }
         

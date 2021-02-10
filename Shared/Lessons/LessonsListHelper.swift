@@ -16,7 +16,7 @@ class LessonsListHelper: ObservableObject {
     
     var context: NSManagedObjectContext
     @Published var lessonToChange: Lesson? = nil
-    @Published var selection: Set<Lesson>? = Set<Lesson>()
+    @Published var selection: Set<Lesson> = Set<Lesson>()
     
     @Published var deleteAlertShown: Bool = false
     @Published var addLessonIsPresented: Bool = false
@@ -40,7 +40,7 @@ class LessonsListHelper: ObservableObject {
     }
     
     func deselectAll() {
-        selection?.removeAll()
+        selection.removeAll()
     }
     
     func editLesson(_ lesson: Lesson) {
@@ -55,7 +55,7 @@ class LessonsListHelper: ObservableObject {
     func markOutcomesWritten(_ lesson: Lesson) {
         #if os(iOS)
         selection = [lesson]
-        guard let lesson = selection?.first else {return}
+        guard let lesson = selection.first else {return}
         #endif
         lesson.markAllILOsWritten(context: context)
     }
@@ -63,7 +63,7 @@ class LessonsListHelper: ObservableObject {
     func markOutcomesUnwritten(_ lesson: Lesson) {
         #if os(iOS)
         selection = [lesson]
-        guard let lesson = selection?.first else {return}
+        guard let lesson = selection.first else {return}
         #endif
         lesson.markAllILOsUnwritten(context: context)
     }
