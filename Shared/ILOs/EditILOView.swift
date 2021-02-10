@@ -14,20 +14,15 @@ struct EditILOView: View {
     @State var iloText: String = ""
     @State var batchILOText: String = ""
     
-    enum AddOutcomeViewState: String {
-        case single, multiple
-    }
-    
-    @Binding var currentViewState: AddOutcomeViewState
-    
     private enum SplitType: String, CaseIterable, Identifiable {
         var id: String { return self.rawValue }
+        case none = "None"
         case newLine = "New Line"
         case comma = ","
         case semicolon = ";"
     }
     
-    @State private var currentSplitType: SplitType = .newLine
+    @State private var currentSplitType: SplitType = .none
     
     private struct SplitILO: Identifiable {
         var id = UUID()
@@ -46,6 +41,8 @@ struct EditILOView: View {
             separatedStrings = batchILOText.components(separatedBy: .newlines).filter({!$0.isEmpty})
         case .semicolon:
             separatedStrings = batchILOText.components(separatedBy: ";")
+        case .none:
+            separatedStrings = [batchILOText]
         }
         
         var index = 1
@@ -60,19 +57,19 @@ struct EditILOView: View {
     @Binding var ilo: ILO?
     var lesson: Lesson
     
-    var singleHeaderText: Text {
+    var addHeader: Text {
         #if os(macOS)
-        return Text("Add Single Learning Outcome").font(.headline)
+        return Text("Add Learning Outcomes").font(.headline)
         #else
-        return Text("Add Single Learning Outcome")
+        return Text("Add Learning Outcomes")
         #endif
     }
     
-    var multipleHeaderText: Text {
+    var editHeader: Text {
         #if os(macOS)
-        return Text("Add Multiple Learning Outcome").font(.headline)
+        return Text("Edit Learning Outcome").font(.headline)
         #else
-        return Text("Add Multiple Learning Outcome")
+        return Text("Edit Learning Outcome")
         #endif
     }
     
@@ -91,11 +88,11 @@ struct EditILOView: View {
         .keyboardShortcut(.cancelAction)
     }
     
-    var singleSelection: some View {
+    var editForm: some View {
         Form {
-            Section(header: singleHeaderText) {
+            Section(header: editHeader) {
                 TextField("Outcome Text", text: $iloText)
-                    .navigationTitle("Add Outcome")
+                    .navigationTitle("Edit Outcome")
             }
         }
         .onAppear(perform: {
@@ -105,18 +102,19 @@ struct EditILOView: View {
         })
     }
     
-    var multipleSelection: some View {
+    var addForm: some View {
         Form {
-            Section(header: multipleHeaderText,
+            Section(header: addHeader,
                     footer:
                         VStack(alignment: .leading) {
-                            Text("Learning outcomes are separated using:")
-                            Picker("Separate Items Using...", selection: $currentSplitType, content: {
+                            Text("To add multiple outcome at once, choose how each outcome is separated:")
+                            Picker("Outcomes Separated Using…", selection: $currentSplitType, content: {
                                 ForEach(SplitType.allCases) { type in
                                     switch type {
                                     case .comma: Text(",").tag(type)
                                     case .newLine: Image(systemName: "return").tag(type)
                                     case .semicolon: Text(";").tag(type)
+                                    case .none: Text("None").tag(type)
                                     }
                                 }
                             })
@@ -142,19 +140,19 @@ struct EditILOView: View {
     
     var body: some View {
         Group {
-            if currentViewState == .single {
+            if ilo == nil {
                 #if os(macOS)
-                singleSelection
+                addForm
                     .padding()
                 #else
-                singleSelection
+                addForm
                 #endif
             } else {
                 #if os(macOS)
-                multipleSelection
+                editForm
                     .padding()
                 #else
-                multipleSelection
+                editForm
                 #endif
             }
         }
@@ -169,12 +167,8 @@ struct EditILOView: View {
     }
     
     private func add() {
-        if currentViewState == .single {
-            if let ilo = ilo {
-                ilo.update(in: viewContext, text: iloText, index: ilo.index, lesson: lesson)
-            } else {
-                ILO.create(in: viewContext, title: iloText, index: lesson.ilo?.count ?? 0, lesson: lesson)
-            }
+        if let ilo = ilo {
+            ilo.update(in: viewContext, text: iloText, index: ilo.index, lesson: lesson)
         } else {
             for ilo in splitILOs {
                 ILO.create(in: viewContext, title: ilo.string, index: lesson.ilo?.count ?? 0, lesson: lesson)

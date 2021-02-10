@@ -77,13 +77,13 @@ struct LessonsListWatch: View {
         case .lessonType:
             return Lesson.lessonTypePlural(type: listType.lessonType?.rawValue)
         case .watched:
-            return("Watched Lessons")
+            return("Watched")
         case .today:
-            return "Today's Lessons"
+            return "Today"
         case .unwatched:
-            return "Unwatched Lessons"
+            return "Unwatched"
         case .unwritten:
-            return "Unwritten Lessons"
+            return "Unwritten"
         }
     }
     
@@ -94,31 +94,31 @@ struct LessonsListWatch: View {
         if !filteredLessons.isEmpty {
             ScrollViewReader { proxy in
                 List(filteredLessons, id: \.self) { lesson in
-                NavigationLink(
-                    destination: LessonDetailsWatch(lesson: lesson),
-                    label: {
-                        Label(title: {
-                            VStack(alignment: .leading) {
-                                Text(lesson.title ?? "Untitled")
-                                
-                                Text(DateFormatter.localizedString(from: lesson.date!, dateStyle: .short, timeStyle: .short))
-                                    .font(.footnote)
-                            }
-                        },
-                        icon: {
-                            Image(systemName: Lesson.lessonIcon(type: lesson.type))})
-                    })
-                    .tag(lesson)
-            }
-            .navigationTitle("All Lessons")
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
-                    Button(action: {scrollToNow(proxy: proxy)}, label: {
-                        Label("Scroll To Now", systemImage: "arrow.turn.right.down")
-                    })
-                    .help("Scroll to the next lesson in the list after now.")
+                    NavigationLink(
+                        destination: LessonDetailsWatch(lesson: lesson),
+                        label: {
+                            Label(title: {
+                                VStack(alignment: .leading) {
+                                    Text(lesson.title ?? "Untitled")
+                                    
+                                    Text(DateFormatter.localizedString(from: lesson.date!, dateStyle: .short, timeStyle: .short))
+                                        .font(.footnote)
+                                }
+                            },
+                            icon: {
+                                Image(systemName: Lesson.lessonIcon(type: lesson.type))})
+                        })
+                        .tag(lesson)
                 }
-            }
+                .navigationTitle(titleString)
+                .toolbar {
+                    ToolbarItem(placement: .automatic) {
+                        Button(action: {scrollToNow(proxy: proxy)}, label: {
+                            Label("Scroll To Now", systemImage: "arrow.turn.right.down")
+                        })
+                        .help("Scroll to the next lesson in the list after now.")
+                    }
+                }
             }
         } else {
             VStack {
@@ -127,7 +127,7 @@ struct LessonsListWatch: View {
                 Button("Learn More", action: showAlert)
                     .alert(isPresented: $alertPresented, content: alert)
             }
-                .navigationTitle(titleString)
+            .navigationTitle(titleString)
         }
     }
     

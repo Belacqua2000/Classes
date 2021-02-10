@@ -22,7 +22,6 @@ class LessonsListHelper: ObservableObject {
     @Published var addLessonIsPresented: Bool = false
     @Published var addResourcePresented: Bool = false
     @Published var addILOPresented: Bool = false
-    @Published var editILOViewState: EditILOView.AddOutcomeViewState = .single
     @Published var shareSheetShown = false
     @Published var exporterShown = false
     @Published var tagPopoverPresented = false

@@ -268,8 +268,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "378"
-            endingLineNumber = "378"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
             landmarkName = "scrollToNow(proxy:)"
             landmarkType = "7">
             <Locations>
@@ -316,8 +316,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
             landmarkName = "scrollToNow(proxy:)"
             landmarkType = "7">
             <Locations>
@@ -623,6 +623,53 @@
             endingLineNumber = "40"
             landmarkName = "body"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 1fccbb9c2c00af3a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; SwiftUI.Alert in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.sheet&lt;A where A1: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, onDismiss: Swift.Optional&lt;() -&gt; ()&gt;, content: () -&gt; A1) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/macOS/LessonsNavMac.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "197">
+               </Location>
+               <Location
+                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 2dce718470788d90"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #2 () -&gt; () in implicit closure #1 (Classes.LessonsNavMac) -&gt; () -&gt; () in closure #2 () -&gt; SwiftUI.Alert in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.sheet&lt;A where A1: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, onDismiss: Swift.Optional&lt;() -&gt; ()&gt;, content: () -&gt; A1) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/macOS/LessonsNavMac.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "50">
+               </Location>
+               <Location
+                  uuid = "6102DFAD-ED0E-4103-BFE2-D0351F3ABF2E - 8583cc68e2400d15"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #2 () -&gt; SwiftUI.Alert in closure #1 (SwiftUI.GeometryProxy) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.sheet&lt;A where A1: SwiftUI.View&gt;(isPresented: SwiftUI.Binding&lt;Swift.Bool&gt;, onDismiss: Swift.Optional&lt;() -&gt; ()&gt;, content: () -&gt; A1) -&gt; some&gt;&gt;.0 in Classes.LessonsNavMac.body.getter : some"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/macOS/LessonsNavMac.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "50">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -635,8 +682,8 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
+            startingLineNumber = "372"
+            endingLineNumber = "372"
             landmarkName = "deleteItems(offsets:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -651,10 +698,42 @@
             filePath = "Shared/Lessons/LessonsListContent.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "366"
-            endingLineNumber = "366"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
             landmarkName = "deleteLessons()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3D50FA05-D390-4A8E-83D2-C2733E24DAE6 - 82353d2c50646e08"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in Classes.LessonsListContent.(deleteLessons in _CE7827F35D0EE20AAF593E845C5B79FC)() -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "378"
+                  endingLineNumber = "378"
+                  offsetFromSymbolStart = "1027">
+               </Location>
+               <Location
+                  uuid = "3D50FA05-D390-4A8E-83D2-C2733E24DAE6 - f63ee2825d6664cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Classes.Lesson) -&gt; () in closure #1 () -&gt; () in Classes.LessonsListContent.(deleteLessons in _CE7827F35D0EE20AAF593E845C5B79FC)() -&gt; ()"
+                  moduleName = "Classes"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nickbaughan/Documents/Code/Classes/Shared/Lessons/LessonsListContent.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "378"
+                  endingLineNumber = "378"
+                  offsetFromSymbolStart = "196">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -733,8 +812,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "148"
             endingLineNumber = "148"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "scrollToNow(proxy:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -749,8 +828,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
             endingLineNumber = "144"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "scrollToNow(proxy:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

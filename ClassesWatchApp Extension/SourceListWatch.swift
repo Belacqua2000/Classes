@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SourceListWatch: View {
     
-    @State var selection: SourceListItem?
+    @State var selection: SourceListItem? = .init(sidebarType: .today)
     
     var body: some View {
         List {

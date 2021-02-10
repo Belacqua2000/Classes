@@ -88,9 +88,7 @@ struct LessonDetailsWatch: View {
     }
     
     private func toggleILOComplete(ilo: ILO) {
-        withAnimation {
             ilo.toggleWritten(context: viewContext)
-        }
     }
     
 }

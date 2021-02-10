@@ -27,13 +27,36 @@ struct LessonsListToolbar: ToolbarContent {
         .help("Add a New Lesson")
     }
     
+    
+    
     var scrollButton: some View {
-        Button(action: {
-            nc.post(Notification(name: .scrollToNow))
+        
+        Menu(content: {
+            Button(action: {
+                nc.post(Notification(name: .scrollToNow))
+            }, label: {
+                Label("Scroll To Now", systemImage: "clock")
+            })
+            .help("Scroll to the next lesson in the list after now.")
+            
+            Button(action: {
+                nc.post(Notification(name: .scrollToOldest))
+            }, label: {
+                Label("Scroll To Oldest", systemImage: "arrow.up.to.line")
+            })
+            .help("Scroll to the oldest lesson in the list.")
+            
+            Button(action: {
+                nc.post(Notification(name: .scrollToNewest))
+            }, label: {
+                Label("Scroll To Newest", systemImage: "arrow.down.to.line")
+            })
+            .help("Scroll to the latest lesson in the list.")
+            
         }, label: {
-            Label("Scroll To Now", systemImage: "arrow.turn.right.down")
+            Label("Scroll List", systemImage: "arrow.turn.right.down")
         })
-        .help("Scroll to the next lesson in the list after now.")
+        .help("Scroll to a place in the list.")
     }
     
     var iloButton: some View {

@@ -10,7 +10,6 @@ import SwiftUI
 struct ResourceSection: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.scenePhase) private var scenePhase
-    var resources: FetchedResults<Resource>
     @State var isInValidURLAlertShown: Bool = false
     @State private var selectedResource: Resource?
 //    @EnvironmentObject var viewStates: LessonsStateObject

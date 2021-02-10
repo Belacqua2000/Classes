@@ -14,6 +14,5 @@ class DetailViewStates: ObservableObject {
     @Published var deleteAlertShown: Bool = false
     @Published var addResourcePresented: Bool = false
     @Published var addILOPresented: Bool = false
-    @Published var editILOViewState: EditILOView.AddOutcomeViewState = .single
     @Published var tagShown: Bool = false
 }

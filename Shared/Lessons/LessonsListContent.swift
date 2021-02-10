@@ -175,7 +175,7 @@ struct LessonsListContent: View {
     // MARK: - List
     var lessonList: some View {
         List(selection: $listHelper.selection) {
-            ForEach(filteredLessons) { lesson in
+            ForEach(filteredLessons, id: \.self) { lesson in
                 LessonsRow(selection: $listHelper.selection, lesson: lesson)
                     .tag(lesson)
                     .contextMenu(menuItems: {
@@ -251,12 +251,19 @@ struct LessonsListContent: View {
                 #if os(macOS)
                 ScrollViewReader { proxy in
                     lessonList
+                        .animation(.none)
                         .onDeleteCommand(perform: {listHelper.deleteAlertShown = true})
                         .navigationTitle(titleString)
                         .navigationSubtitle("\(filteredLessons.count) Lessons")
                         .listStyle(InsetListStyle())
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
+                        })
+                        .onReceive(nc.publisher(for: .scrollToOldest), perform: { _ in
+                            scrollToOldest(proxy: proxy)
+                        })
+                        .onReceive(nc.publisher(for: .scrollToNewest), perform: { _ in
+                            scrollToNewest(proxy: proxy)
                         })
                         .alert(isPresented: $listHelper.deleteAlertShown) {
                             Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
@@ -268,6 +275,12 @@ struct LessonsListContent: View {
                         .navigationTitle(titleString)
                         .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
                             scrollToNow(proxy: proxy)
+                        })
+                        .onReceive(nc.publisher(for: .scrollToOldest), perform: { _ in
+                            scrollToOldest(proxy: proxy)
+                        })
+                        .onReceive(nc.publisher(for: .scrollToNewest), perform: { _ in
+                            scrollToNewest(proxy: proxy)
                         })
                 }
                 .popover(isPresented: $listHelper.shareSheetShown) {
@@ -392,6 +405,24 @@ struct LessonsListContent: View {
                 #endif
                 proxy.scrollTo(lastLesson)
             }
+        }
+    }
+    
+    private func scrollToOldest(proxy: ScrollViewProxy) {
+        guard filteredLessons.count > 0 else { return }
+        let sortedLessons = filteredLessons.sorted(by: {$0.date! < $1.date!})
+        let firstLesson = sortedLessons.first!
+        withAnimation {
+            proxy.scrollTo(firstLesson)
+        }
+    }
+    
+    private func scrollToNewest(proxy: ScrollViewProxy) {
+        guard filteredLessons.count > 0 else { return }
+        let sortedLessons = filteredLessons.sorted(by: {$0.date! < $1.date!})
+        let lastLesson = sortedLessons.last!
+        withAnimation {
+            proxy.scrollTo(lastLesson)
         }
     }
     

@@ -36,10 +36,6 @@ struct DetailView: View {
     //MARK: - Model
     @ObservedObject var lesson: Lesson
     @State var lessonToEdit: Lesson?
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Tag.name, ascending: true)],
-        animation: .default)
-    private var unfilteredTags: FetchedResults<Tag>
     private var tags: [Tag]? {
         let tags = lesson.tag?.allObjects as? [Tag]
         return tags?.sorted {
@@ -51,16 +47,11 @@ struct DetailView: View {
     
     //MARK: - ILOs
     @State var iloListSelection = Set<ILO>()
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
-        animation: .default)
-    private var ilos: FetchedResults<ILO>
     var filteredILOs: [ILO] {
-        return ilos.filter { $0.lesson == lesson }
+        return lesson.ilo?.allObjects as! [ILO]
     }
     
     @State var newILOText: String = ""
-    @State var newILOSaveButtonShown: Bool = false
     
     var completedILOs: Double {
         var completedILOs: Double = 0
@@ -75,13 +66,6 @@ struct DetailView: View {
     }
     
     //MARK: - Resources
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Resource.name, ascending: true)],
-        animation: .default)
-    private var resources: FetchedResults<Resource>
-    /*private var resources: [Resource] {
-     return lesson.resource?.allObjects as? [Resource] ?? []
-     }*/
     @State private var selectedResource: Resource? = nil
     
     
@@ -117,7 +101,7 @@ struct DetailView: View {
                 ILOSection(viewStates: detailStates, lesson: lesson)
                     .modifier(DetailBlock())
                 
-                ResourceSection(resources: resources, addResourcePresented: $detailStates.addResourcePresented, lesson: lesson)
+                ResourceSection(addResourcePresented: $detailStates.addResourcePresented, lesson: lesson)
                     .modifier(DetailBlock())
                 
                 EmptyView()

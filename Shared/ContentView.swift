@@ -37,7 +37,7 @@ struct ContentView: View {
     var body: some View {
         #if os(iOS)
         PrimaryNavigation()
-            .sheet(item: $currentModalView, onDismiss: {
+            .fullScreenCover(item: $currentModalView, onDismiss: {
                 currentModalView = nil
             }, content: { item in
                 switch item {

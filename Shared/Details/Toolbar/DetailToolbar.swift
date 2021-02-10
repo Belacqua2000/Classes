@@ -77,11 +77,12 @@ struct DetailToolbar: ToolbarContent {
             Spacer()
         }
         
-        ToolbarItem(id: "AddResourceButton", placement: .automatic) {
-            AddResourceButton(isAddingResource: $detailStates.addResourcePresented)
-        }
         ToolbarItem(id: "AddILOMenu", placement: .automatic) {
             AddILOMenu(detailStates: detailStates)
+        }
+        
+        ToolbarItem(id: "AddResourceButton", placement: .automatic) {
+            AddResourceButton(isAddingResource: $detailStates.addResourcePresented)
         }
         
         ToolbarItem(id: "DeleteButton") {

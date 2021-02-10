@@ -16,12 +16,9 @@ struct ILOSection: View {
     
     let nc = NotificationCenter.default
     
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ILO.index, ascending: true), NSSortDescriptor(keyPath: \ILO.title, ascending: true)],
-        animation: .default)
-    private var ilos: FetchedResults<ILO>
     var filteredILOs: [ILO] {
-        return ilos.filter { $0.lesson == lesson }
+        let ilos = lesson.ilo?.allObjects as! [ILO]
+        return ilos.sorted(by: {$0.index < $1.index})
     }
     
     var completedILOs: Double {
@@ -106,17 +103,16 @@ struct ILOSection: View {
             })
             .sheet(isPresented: $viewStates.addILOPresented, onDismiss: {
                 selectedILO = nil
-                viewStates.editILOViewState = .single
             }, content: {
                 #if !os(macOS)
                 NavigationView {
-                    EditILOView(currentViewState: $viewStates.editILOViewState, isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
+                    EditILOView(isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
                         .environment(\.managedObjectContext, viewContext)
                         .navigationTitle("Add Outcome")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else
-                EditILOView(currentViewState: $viewStates.editILOViewState, isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
+                EditILOView(isPresented: $viewStates.addILOPresented, ilo: $selectedILO, lesson: lesson)
                 #endif
             })
         }
@@ -136,6 +132,7 @@ struct ILOSection: View {
             revisedItems[reverseIndex].index =
                 Int16( reverseIndex )
         }
+        lesson.objectWillChange.send()
         do {
             try viewContext.save()
         } catch {

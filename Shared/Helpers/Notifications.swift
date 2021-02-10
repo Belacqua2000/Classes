@@ -13,6 +13,8 @@ extension Notification.Name {
     static let showILOs = Notification.Name("showILOs")
     
     static let scrollToNow = Notification.Name("scrollToNow")
+    static let scrollToOldest = Notification.Name("scrollToOldest")
+    static let scrollToNewest = Notification.Name("scrollToNewest")
     static let exportLessons = Notification.Name("exportLessons")
     static let showFilterView = Notification.Name("showFilterView")
     static let showILORandomiser = Notification.Name("showILORandomiser")

@@ -22,13 +22,6 @@ struct PrimaryNavigation: View {
     @State private var deleteAlertShown = false
     @State private var settingsShown = false
     
-    // MARK: - Model
-    
-    // Lessons Fetch Request
-    @FetchRequest(sortDescriptors: [])
-    private var fetchedLessons: FetchedResults<Lesson>
-   
-    
     // MARK: - Selection
     
     #if os(macOS)
