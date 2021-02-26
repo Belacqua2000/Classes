@@ -10,20 +10,22 @@ import SwiftUI
 struct LessonsView: View {
     // MARK: - Environment
     @Environment(\.managedObjectContext) var viewContext
+    @EnvironmentObject var appViewState: AppViewState
+    @EnvironmentObject var lessonsListHelper: LessonsListHelper
     
     @State var listType: LessonsListType
-    
-    @State private var selection = Set<Lesson>()
+    @State var exporterShown = false
     
     // MARK: - View States
     
-    @EnvironmentObject var lessonsListHelper: LessonsListHelper
-    
-    @State private var lessonTags = [Tag]()
-    
-    let nc = NotificationCenter.default
+    @EnvironmentObject var listHelper: LessonsListHelper
     
     var body: some View {
-            LessonsListContent(listType: $listType)
+        LessonsListContent(listHelper: lessonsListHelper, listType: $listType)
+            .fileExporter(
+                isPresented: $listHelper.exporterShown,
+                document: LessonJSON(lessons: Array(listHelper.selection)),
+                contentType: .classesFormat,
+                onCompletion: {_ in })
     }
 }

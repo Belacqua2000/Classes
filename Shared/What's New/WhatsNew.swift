@@ -66,6 +66,7 @@ struct WhatsNew: View {
                 #else
                 VersionPicker(currentSelection: $currentSelection)
                     .frame(width: 200)
+                    .padding(.horizontal)
                 #endif
                 Spacer()
             }
@@ -75,27 +76,43 @@ struct WhatsNew: View {
                     HStack {
                         VStack(alignment: .leading, spacing: 20) {*/
                 List {
-                            ForEach(currentSelection.featureGroups, id: \.self) { featureGroup in
-                                Section(header:
+                    ForEach(currentSelection.featureGroups, id: \.self) { featureGroup in
+                        Section(header:
                                     Text("Version \(featureGroup.versionString)")
-                                ) {
-                                ForEach(featureGroup.features, id: \.self) { feature in
-                                    Label(title: {
-                                        VStack(alignment: .leading) {
-                                            Text(feature.title)
-                                                .bold()
-                                            Text(feature.details)
-                                                .font(.body)
-                                        }
-                                    }, icon: {
-                                        Image(systemName: feature.imageName)
-                                            .foregroundColor(.accentColor)
-                                    })
-                                    .font(.title)
-                                }
-                                }
+                        ) {
+                            ForEach(featureGroup.features, id: \.self) { feature in
+                                #if os(macOS)
+                                Label(title: {
+                                    VStack(alignment: .leading) {
+                                        Text(feature.title)
+                                            .bold()
+                                        Text(feature.details)
+                                            .font(.body)
+                                    }
+                                }, icon: {
+                                    Image(systemName: feature.imageName)
+                                        .foregroundColor(.accentColor)
+                                })
+                                .font(.title)
+                                .padding(.horizontal)
+                                #else
+                                Label(title: {
+                                    VStack(alignment: .leading) {
+                                        Text(feature.title)
+                                            .bold()
+                                        Text(feature.details)
+                                            .font(.footnote)
+                                    }
+                                }, icon: {
+                                    Image(systemName: feature.imageName)
+                                        .foregroundColor(.accentColor)
+                                })
+                                .font(.title)
+                                #endif
                             }
                         }
+                    }
+                }
 //                .listStyle(InsetGroupedListStyle())
                         /*}
                         Spacer()
@@ -104,6 +121,7 @@ struct WhatsNew: View {
             } else {
                 Spacer()
                 Text("You are all up to speed with new app features!  Use the menu to review previous changes you may have missed.")
+                    .padding(.horizontal)
             }
             
             Spacer()
@@ -121,9 +139,6 @@ struct WhatsNew: View {
         }
         .padding(.vertical)
         .navigationTitle("What's New")
-        .userActivity("com.baughan.classes.open-whats-new", { activity in
-            print("What's new NSUserActivity donated.")
-        })
     }
     
     private func markSeen() {

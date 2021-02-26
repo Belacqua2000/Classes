@@ -40,6 +40,7 @@ struct LessonDetailsWatch: View {
                     Label(teacher, systemImage: "graduationcap")
                 }
                 ToggleWatchedButton(lesson: lesson)
+                    .animation(nil)
                 
                 if !tags.isEmpty {
                     Text("Tags")
@@ -88,7 +89,9 @@ struct LessonDetailsWatch: View {
     }
     
     private func toggleILOComplete(ilo: ILO) {
+        withAnimation {
             ilo.toggleWritten(context: viewContext)
+        }
     }
     
 }

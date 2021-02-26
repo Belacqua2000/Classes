@@ -17,6 +17,8 @@ struct LessonsListContent: View {
         
     }
     
+    @State var sheetToPresent: LessonsListContent.Sheets?
+    
     let nc = NotificationCenter.default
     
     // Sort
@@ -42,9 +44,9 @@ struct LessonsListContent: View {
         case .today:
             return "Today's Lessons"
         case .unwatched:
-            return "Unwatched Lessons"
+            return "Uncompleted Lessons"
         case .unwritten:
-            return "Unwritten Lessons"
+            return "Unachieved Outcomes"
         }
     }
     
@@ -61,13 +63,12 @@ struct LessonsListContent: View {
     
     // MARK: - Selections
     
-    @State var selectedLessons: [Lesson]? // for delete actions
-    @State var selectedLesson: Lesson? // for editing lesson
-    
-    @EnvironmentObject var listHelper: LessonsListHelper
+    @StateObject var listHelper: LessonsListHelper
     
     @Binding var listType: LessonsListType
     @StateObject var listFilter = LessonsListFilter()
+    @State var alertShowing = false // For some reason this must be local for alert to show on Mac
+    @State var lessonToDelete: Lesson? // For some reason this must be local for alert to show on Mac
     
     // MARK: - Model
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Lesson.date, ascending: true)],
@@ -172,170 +173,124 @@ struct LessonsListContent: View {
         return filterHelper
     }
     
+    var isEmpty: Bool {
+        return filteredLessons.isEmpty
+    }
+    
     // MARK: - List
     var lessonList: some View {
         List(selection: $listHelper.selection) {
             ForEach(filteredLessons, id: \.self) { lesson in
-                LessonsRow(selection: $listHelper.selection, lesson: lesson)
+                LessonsRow(lesson: lesson)
                     .tag(lesson)
                     .contextMenu(menuItems: {
-                        LessonContextMenu(lesson: lesson)
+                        #if os(macOS)
+                        LessonContextMenu(lesson: lesson, sheetToPresent: $sheetToPresent, deleteAlertShown: $alertShowing, lessonToDelete: $lessonToDelete)
+                        #else
+                        LessonContextMenu(lesson: lesson, sheetToPresent: $sheetToPresent, deleteAlert: $listHelper.deleteAlertShown)
+                        #endif
                     })
             }
             .onDelete(perform: deleteItems)
         }
-        .alert(isPresented: $listHelper.deleteAlertShown) {
-            Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
-        }
-    }
-    
-    var noLessonsMessage: some View {
-        
-        let image: Image = Image(systemName: "face.smiling")
-        
-        var supplementaryText: Text? {
-            switch listType.filterType {
-            case .all:
-                return Text("There are no lessons yet.")
-            case .tag:
-                return Text("You have no lessons with this tag.")
-            case .lessonType:
-                return Text("You have no lessons with this lesson type.")
-            case .watched:
-                return Text("There are no watched lessons.")
-            case .today:
-                return Text("You have no lessons today.")
-            case .unwatched:
-                return Text("Well done, you have no unwatched lessons!")
-            case .unwritten:
-                return Text("Well done, you have no lessons with unwritten learning outcomes!")
-            }
-        }
-        
-        let newLessonText = Text("Click the \(Image(systemName: "plus")) button in the toolbar to create a new lesson.")
-        
-        return VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.accentColor)
-                        .padding()
-                    Spacer()
-                }
-                
-                supplementaryText
-                
-                #if os(macOS)
-                newLessonText
-                    .padding()
-                    .navigationTitle(titleString)
-                    .navigationSubtitle("\(filteredLessons.count) Lessons")
-                
-                #else
-                newLessonText
-                    .padding()
-                    .navigationTitle(titleString)
-                #endif
-                Spacer()
-            }
     }
     
     // MARK: - Body
     var body: some View {
         VStack {
             if filteredLessons.count > 0 {
-                #if os(macOS)
                 ScrollViewReader { proxy in
-                    lessonList
-                        .animation(.none)
-                        .onDeleteCommand(perform: {listHelper.deleteAlertShown = true})
-                        .navigationTitle(titleString)
-                        .navigationSubtitle("\(filteredLessons.count) Lessons")
-                        .listStyle(InsetListStyle())
-                        .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
-                            scrollToNow(proxy: proxy)
-                        })
-                        .onReceive(nc.publisher(for: .scrollToOldest), perform: { _ in
-                            scrollToOldest(proxy: proxy)
-                        })
-                        .onReceive(nc.publisher(for: .scrollToNewest), perform: { _ in
-                            scrollToNewest(proxy: proxy)
-                        })
-                        .alert(isPresented: $listHelper.deleteAlertShown) {
-                            Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
-                        }
+                    Group {
+                        #if os(macOS)
+                        lessonList
+                            .animation(.none)
+                            .onDeleteCommand(perform: {
+                                lessonToDelete = listHelper.selection.first
+                                alertShowing = true
+                            })
+                            .navigationSubtitle("\(filteredLessons.count) Lessons")
+                            .listStyle(InsetListStyle())
+                            .alert(isPresented: $listHelper.deleteAlertShown) {
+                                Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action can't be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {alertShowing = false}))
+                            }
+                        #else
+                        lessonList
+                            .popover(isPresented: $listHelper.shareSheetShown) {
+                                ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection))!])
+                            }
+                            .alert(isPresented: $listHelper.deleteAlertShown) {
+                                Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action can't be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
+                            }
+                        #endif
+                    }
+                    .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
+                        scrollToNow(proxy: proxy)
+                    })
+                    .onReceive(nc.publisher(for: .scrollToOldest), perform: { _ in
+                        scrollToOldest(proxy: proxy)
+                    })
+                    .onReceive(nc.publisher(for: .scrollToNewest), perform: { _ in
+                        scrollToNewest(proxy: proxy)
+                    })
                 }
-                #else
-                ScrollViewReader { proxy in
-                    lessonList
-                        .navigationTitle(titleString)
-                        .onReceive(nc.publisher(for: .scrollToNow), perform: { _ in
-                            scrollToNow(proxy: proxy)
-                        })
-                        .onReceive(nc.publisher(for: .scrollToOldest), perform: { _ in
-                            scrollToOldest(proxy: proxy)
-                        })
-                        .onReceive(nc.publisher(for: .scrollToNewest), perform: { _ in
-                            scrollToNewest(proxy: proxy)
-                        })
-                }
-                .popover(isPresented: $listHelper.shareSheetShown) {
-                    ShareSheet(isPresented: $listHelper.shareSheetShown, activityItems: [Lesson.export(lessons: Array(listHelper.selection))!])
-                }
-                .alert(isPresented: $listHelper.deleteAlertShown) {
-                    Alert(title: Text("Delete Lesson(s)"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLessons), secondaryButton: .cancel(Text("Cancel"), action: {listHelper.deleteAlertShown = false; listHelper.lessonToChange = nil}))
-                }
-                .fullScreenCover(isPresented: $listHelper.ilosViewShown, content: {
-                    NavigationView {
+                .navigationTitle(titleString)
+                .sheet(item: $sheetToPresent,
+                       onDismiss: {
+                        listHelper.lessonToChange = nil},
+                       content: { item in
+                    switch item {
+                    case .addLesson:
+                        AddLessonView(lesson: $listHelper.lessonToChange, isPresented: $listHelper.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                    case .filter:
+                        LessonsFilterView(viewShown: $listHelper.filterViewActive, listType: listType, filter: listFilter)
+                            .frame(idealWidth: 600)
+                    case .ilo:
+                        #if os(macOS)
                         ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                            .frame(idealWidth: 600)
+                        #else
+                        NavigationView {
+                            ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                        }
+                        #endif
                     }
                 })
-                #endif
             } else {
-                noLessonsMessage
+                Group {
+                #if os(macOS)
+                NoLessonsMessage(listType: listType)
+                    .navigationTitle(titleString)
+                    .navigationSubtitle("\(filteredLessons.count) Lessons")
+                #else
+                NoLessonsMessage(listType: listType)
+                    .navigationTitle(titleString)
+                #endif
+                }
+                .sheet(item: $sheetToPresent, onDismiss: {listHelper.lessonToChange = nil}, content: { item in
+                    switch item {
+                    case .addLesson:
+                        AddLessonView(lesson: $listHelper.lessonToChange, isPresented: $listHelper.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                    case .filter:
+                        LessonsFilterView(viewShown: $listHelper.filterViewActive, listType: listType, filter: listFilter)
+                            .frame(idealWidth: 600)
+                    case .ilo:
+                        #if os(macOS)
+                        ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                            .frame(idealWidth: 600)
+                        #else
+                        NavigationView {
+                            ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
+                        }
+                        #endif
+                    }
+                })
             }
         }
-        .sheet(item: $listHelper.sheetToPresent, onDismiss: {listHelper.lessonToChange = nil}, content: { item in
-            switch item {
-            case .addLesson:
-                AddLessonView(lesson: listHelper.lessonToChange, isPresented: $listHelper.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
-            case .filter:
-                LessonsFilterView(viewShown: $listHelper.filterViewActive, listType: listType, filter: listFilter)
-                    .frame(idealWidth: 600)
-            case .ilo:
-                #if os(macOS)
-                ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-                    .frame(idealWidth: 600)
-                #else
-                NavigationView {
-                    ILOGeneratorView(isPresented: $listHelper.ilosViewShown, ilos: filteredLessons.flatMap({$0.ilo!.allObjects as! [ILO]}))
-                }
-                #endif
-            }
-        })
-//        .onChange(of: editMode!, perform: {new value in
-//            
-//        })
-        .onAppear(perform: {
-            #if os(macOS)
-            guard let firstLesson = filteredLessons.first else { return }
-            listHelper.selection = [firstLesson]
-            #endif
-        })
-        .fileExporter(
-            isPresented: $listHelper.exporterShown,
-            document: LessonJSON(lessons: Array(listHelper.selection)),
-            contentType: .classesFormat,
-            onCompletion: {_ in })
         .toolbar {
             #if os(iOS)
-            LessonsListToolbar(editMode: editMode!, listHelper: listHelper, listFilter: listFilter, listType: $listType)
+            LessonsListToolbar(editMode: editMode!, listHelper: listHelper, listFilter: listFilter, listType: $listType, selection: $listHelper.selection, sheetToPresent: $sheetToPresent, deleteAlertShown: $listHelper.deleteAlertShown, isEmpty: isEmpty)
             #else
-            LessonsListToolbar(listHelper: listHelper, listFilter: listFilter, listType: $listType)
+            LessonsListToolbar(listHelper: listHelper, listFilter: listFilter, listType: $listType, selection: $listHelper.selection, sheetToPresent: $sheetToPresent, deleteAlertShown: $alertShowing, isEmpty: isEmpty)
             #endif
         }
         .onReceive(nc.publisher(for: .exportLessons), perform: { _ in
@@ -365,20 +320,26 @@ struct LessonsListContent: View {
     }
     
     private func deleteItems(offsets: IndexSet) {
+        listHelper.lessonsToDelete.removeAll()
         offsets.map { filteredLessons[$0] }.forEach { lesson in
-            listHelper.lessonToChange = lesson
-            listHelper.selection = [lesson]
-            listHelper.deleteAlertShown = true
+            listHelper.lessonsToDelete.append(lesson)
+            lessonToDelete = lesson
         }
+        #if os(iOS)
+        listHelper.deleteAlertShown = true
+        #else
+        listHelper.deleteAlertShown = true
+        #endif
     }
     
     private func deleteLessons() {
+        print(listHelper.lessonsToDelete.count)
         withAnimation {
-            listHelper.lessonToChange?.delete(context: viewContext)
-            let selection = listHelper.selection
-            selection.forEach({$0.delete(context: viewContext)})
+            listHelper.lessonsToDelete.forEach({$0.delete(context: viewContext)})
+            lessonToDelete?.delete(context: viewContext)
         }
-        listHelper.lessonToChange = nil
+        listHelper.lessonsToDelete.removeAll()
+        lessonToDelete = nil
         listHelper.selection.removeAll()
     }
     

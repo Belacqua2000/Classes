@@ -216,5 +216,37 @@
         "imageName": "ladybug.fill"
       }
     ]
+  },
+  {
+    "majorNumber": 1,
+    "minorNumber": 5,
+    "patchNumber": 0,
+    "features": [
+      {
+        "title": "Apple Watch App",
+        "details": "Classes is now on Apple Watch.  Quickly view your lessons, mark them as completed and mark outcomes as achieved at a glance.",
+        "imageName": "applewatch"
+      },
+      {
+        "title": "Updated User Experience",
+        "details": "New text and images throughout the app to give help, tips, and a more friendly appearance.  There is a new tutorial for new users, which can be found in Settings.",
+        "imageName": "face.smiling.fill"
+      },
+      {
+        "title": "Improved Toolbar",
+        "details": "Toolbar for editing lessons uses the familiar iOS appearance and offers more functionality, e.g. scrolling to different parts of the list and editing learning outcomes for multiple lessons at once.",
+        "imageName": "ladybug.fill"
+      },
+      {
+        "title": "Help",
+        "details": "A new help link in the Settings page takes you to our website where you can find more information about how to use the app.",
+        "imageName": "questionmark"
+      },
+      {
+        "title": "Other Improvements",
+        "details": "Changed terminology from \"watched\" to \"completed\" and from \"written\" to \"achieved\" to be better accommodating to different courses and study styles.  Minor improvements to the layout of learning outcomes.",
+        "imageName": "wand.and.stars.inverse"
+      }
+    ]
   }
 ]

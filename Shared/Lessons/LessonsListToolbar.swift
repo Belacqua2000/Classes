@@ -16,17 +16,27 @@ struct LessonsListToolbar: ToolbarContent {
     @ObservedObject var listHelper: LessonsListHelper
     @ObservedObject var listFilter: LessonsListFilter
     @Binding var listType: LessonsListType
+    @Binding var selection: Set<Lesson>
+    @Binding var sheetToPresent: LessonsListContent.Sheets?
+    @Binding var deleteAlertShown: Bool
+    var isEmpty: Bool
     
     var addLessonButton: some View {
-        Button(action: {listHelper.sheetToPresent = .addLesson}, label: {
+        Button(action: {
+            #if os(iOS)
+            sheetToPresent = .addLesson
+            #else
+            sheetToPresent = .addLesson
+            #endif
+//            nc.post(.init(name: .newLesson))
+        }, label: {
             Label("Add Lesson", systemImage: "plus")
         })
         .onReceive(nc.publisher(for: .newLesson), perform: { _ in
-            listHelper.sheetToPresent = .addLesson
+            sheetToPresent = .addLesson
         })
         .help("Add a New Lesson")
     }
-    
     
     
     var scrollButton: some View {
@@ -57,63 +67,58 @@ struct LessonsListToolbar: ToolbarContent {
             Label("Scroll List", systemImage: "arrow.turn.right.down")
         })
         .help("Scroll to a place in the list.")
+        .disabled(isEmpty)
     }
     
     var iloButton: some View {
         Button(action: {
-//            #if os(macOS)
-            listHelper.sheetToPresent = .ilo
-//            #else
-//            listHelper.ilosViewShown = true
-//            #endif
+            sheetToPresent = .ilo
         }, label: {
             Label("Generate Learning Outcomes", systemImage: "list.number")
         })
         .help("View ILOs")
         .help("View the Learning Outcome Randomiser for the current selection of lessons")
         .onReceive(nc.publisher(for: .showILORandomiser), perform: { _ in
-            //            sheetToPresent = .ilo
+            sheetToPresent = .ilo
         })
+        .disabled(isEmpty)
     }
     
     var filterButton: some View {
-        Button(action: {listHelper.sheetToPresent = .filter}, label: {
+        Button(action: {sheetToPresent = .filter}, label: {
             Label("Filter", systemImage: listFilter.anyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
         })
         .help("Filter Lessons in the View")
-        .sheet(isPresented: $listHelper.filterViewActive) {
-            NavigationView {
-                LessonsFilterView(viewShown: $listHelper.filterViewActive, listType: listType, filter: listFilter)
-            }
-        }
         .onReceive(nc.publisher(for: .showFilterView), perform: { _ in
-            //            sheetToPresent = .filter
+            sheetToPresent = .filter
         })
     }
     
     var markCompleteMenu: some View {
         Menu(content: {
-            Button(action: {
-                withAnimation {
-                    listHelper.toggleWatched(lessons: Array(listHelper.selection))
-                }
-            }, label: {
-                Label("Toggle Completed", systemImage: "checkmark.circle")
-            })
-            Button(action: {
-                withAnimation {
-                    listHelper.markWatched(lessons: Array(listHelper.selection))
-                }
-            }, label: {
-                Label("Mark Completed", systemImage: "checkmark.circle")
-            })
-            Button(action: {
-                withAnimation {
-                    listHelper.markUnwatched(lessons: Array(listHelper.selection))
-                }
-            }, label: {
-                Label("Mark Uncompleted", systemImage: "xmark.circle")
-            })
+            
+            // Only show option if there are lessons which are unwatched
+            if selection.contains(where: {!$0.watched}) {
+                Button(action: {
+                    withAnimation {
+                        listHelper.markWatched(lessons: Array(listHelper.selection))
+                    }
+                }, label: {
+                    Label("Mark Completed", systemImage: "checkmark.circle")
+                })
+            }
+            
+            // Only show option if there are lessons which are watched
+            if selection.contains(where: {$0.watched}) {
+                Button(action: {
+                    withAnimation {
+                        listHelper.markUnwatched(lessons: Array(listHelper.selection))
+                    }
+                }, label: {
+                    Label("Mark Uncompleted", systemImage: "xmark.circle")
+                })
+            }
+            Divider()
             Button(action: {
                 withAnimation {
                     Array(listHelper.selection).forEach({
@@ -158,8 +163,8 @@ struct LessonsListToolbar: ToolbarContent {
                 Spacer()
                 filterButton
             } else {
+                selectMenu
                 Group {
-                    selectMenu
                     Spacer()
                     Button(action: {
                         nc.post(Notification(name: .exportLessons))
@@ -168,26 +173,23 @@ struct LessonsListToolbar: ToolbarContent {
                     })
                     Spacer()
                     Button(action: {
-                        listHelper.deleteAlertShown = true
+                        listHelper.lessonsToDelete = listHelper.selection
+                        deleteAlertShown = true
                     }, label: {
                         Label("Delete", systemImage: "trash")
                     })
                     Spacer()
                     markCompleteMenu
                 }
-//                .disabled(listHelper.selection?.isEmpty ?? true)
-//                .onAppear(perform: {
-//                    listHelper.selection.removeAll()
-//                })
-//                .onDisappear(perform: {
-//                    listHelper.selection.removeAll()
-//                })
+                .disabled(selection.isEmpty)
             }
             Spacer()
             EditButton().animation(.default)
                 .onChange(of: editMode, perform: {_ in
                     listHelper.selection.removeAll()
+                    print("Removing lessons from selection")
                 })
+                .disabled(isEmpty)
         }
         
         #else

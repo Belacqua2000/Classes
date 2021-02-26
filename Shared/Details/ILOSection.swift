@@ -17,8 +17,8 @@ struct ILOSection: View {
     let nc = NotificationCenter.default
     
     var filteredILOs: [ILO] {
-        let ilos = lesson.ilo?.allObjects as! [ILO]
-        return ilos.sorted(by: {$0.index < $1.index})
+        let ilos = lesson.ilo?.allObjects as? [ILO]
+        return ilos?.sorted(by: {$0.index < $1.index}) ?? []
     }
     
     var completedILOs: Double {
@@ -71,7 +71,14 @@ struct ILOSection: View {
                             Button(action: {
                                 copyILO(ilo)
                             }, label: {
-                                Label("Copy Learning Outcome", systemImage: "doc.on.doc")
+                                Label("Copy Outcome", systemImage: "doc.on.doc")
+                            })
+                            Button(action: {
+                                withAnimation {
+                                    ilo.delete(context: viewContext, save: true)
+                                }
+                            }, label: {
+                                Label("Delete", systemImage: "trash")
                             })
                         }))
                     }

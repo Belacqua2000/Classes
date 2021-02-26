@@ -55,9 +55,9 @@ struct SmartGroupsList: View {
                 selection: $selection,
                 label: {
                     Label(
-                        title: {Text("Unwatched")},
+                        title: {Text("Uncompleted")},
                         icon: {
-                            Image(systemName: "eye.slash")
+                            Image(systemName: "xmark.circle")
                         })
                 })
             
@@ -67,7 +67,7 @@ struct SmartGroupsList: View {
                 selection: $selection,
                 label: {
                     Label(
-                        title: {Text("Unwritten")},
+                        title: {Text("Unachieved Outcomes")},
                         icon: {
                             Image(systemName: "pencil.slash")
                         })

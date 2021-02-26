@@ -12,6 +12,12 @@ class AppViewState: ObservableObject {
         case summary, all, ilo
     }
     
+    #if os(macOS)
+    @Published var currentView: SourceListItem? = SourceListItem(sidebarType: .all)
+    #else
+    @Published var currentView: SourceListItem?
+    #endif
+    
     @Published var detailViewShowing = false
     @Published var currentTab: TabKind? = nil
 }

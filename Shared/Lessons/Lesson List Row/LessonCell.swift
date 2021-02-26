@@ -31,6 +31,7 @@ struct LessonCell: View {
                     title: { VStack(alignment: .leading, spacing: 0) {
                         Text(lesson.title ?? "Untitled")
                             .font(.headline)
+                            .lineLimit(2)
                         
                         if lesson.date ?? Date(timeIntervalSince1970: 0) > Date() {
                             

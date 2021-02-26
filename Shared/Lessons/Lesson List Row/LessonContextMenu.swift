@@ -11,9 +11,18 @@ struct LessonContextMenu: View {
     @ObservedObject var lesson: Lesson
     @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var lessonsListHelper: LessonsListHelper
+    @Binding var sheetToPresent: LessonsListContent.Sheets?
+    @Binding var deleteAlertShown: Bool
+    #if os(macOS)
+    @Binding var lessonToDelete: Lesson?
+    #endif
+    
     
     var body: some View {
-        Button(action: {lessonsListHelper.editLesson(lesson)}, label: {
+        Button(action: {
+            lessonsListHelper.lessonToChange = lesson
+            sheetToPresent = .addLesson
+        }, label: {
             Label("Edit", systemImage: "square.and.pencil")
         }).keyboardShortcut("E", modifiers: .command)
         
@@ -25,15 +34,15 @@ struct LessonContextMenu: View {
         
         Button(action: {lessonsListHelper.toggleWatched(lessons: [lesson])}, label: {
             !lesson.watched ? Label("Mark Complete", systemImage: "checkmark.circle")
-                : Label("Mark Incomplete", systemImage: "checkmark.circle")
+                : Label("Mark Incomplete", systemImage: "xmark.circle")
         }).keyboardShortcut("Y", modifiers: .command)
         
         Button(action: {lessonsListHelper.markOutcomesWritten(lesson)}, label: {
-            Label("Mark Outcomes as Written", systemImage: "checkmark.circle")
+            Label("Mark Outcomes as Achieved", systemImage: "checkmark.circle")
         })
         
         Button(action: {lessonsListHelper.markOutcomesUnwritten(lesson)}, label: {
-            Label("Mark outcomes as Unwritten", systemImage: "xmark.circle")
+            Label("Mark Outcomes as Unachieved", systemImage: "xmark.circle")
         })
         
         Divider()
@@ -62,7 +71,10 @@ struct LessonContextMenu: View {
         
         Button(action: {
             lessonsListHelper.selection = [lesson]
-            lessonsListHelper.deleteAlertShown = true
+            #if os(macOS)
+            lessonToDelete = lesson
+            #endif
+            deleteAlertShown = true
         }, label: {
             Label("Delete", systemImage: "trash")
                 .foregroundColor(.red)

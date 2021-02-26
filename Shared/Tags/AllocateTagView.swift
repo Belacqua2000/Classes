@@ -63,6 +63,10 @@ struct AllocateTagView: View {
                     Button(action: { selectedTag(tag) }, label: {
                         if selectedTags.contains(tag) {
                             Image(systemName: "checkmark.circle.fill")
+                        } else {
+                            #if os(macOS)
+                            Image(systemName: "circle")
+                            #endif
                         }
                     })
                 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailToolbar: ToolbarContent {
     #if os(iOS)
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    var horizontalSizeClass: UserInterfaceSizeClass
     #endif
     @ObservedObject var lesson: Lesson
     @ObservedObject var viewStates: LessonsListHelper
@@ -56,21 +56,6 @@ struct DetailToolbar: ToolbarContent {
                 Label("Edit Tags", systemImage: "tag")
             })
             .help("Edit the tags for this lesson")
-            .popover(isPresented: $viewStates.tagPopoverPresented) {
-                AllocateTagView(selectedTags:
-                                    Binding(
-                                        get: {lesson.tag!.allObjects as! [Tag]},
-                                        set: {
-                                            for tag in lesson.tag!.allObjects as! [Tag] {
-                                                lesson.removeFromTag(tag)
-                                            }
-                                            for tag in $0 {
-                                                lesson.addToTag(tag)
-                                            }
-                                        })
-                )
-                .frame(width: 200, height: 150)
-            }
         }
         
         ToolbarItem(id: "Spacer") {
@@ -96,10 +81,6 @@ struct DetailToolbar: ToolbarContent {
     }
     
     private func showTags() {
-        #if os(iOS)
         tagShown = true
-        #else
-        viewStates.tagPopoverPresented = true
-        #endif
     }
 }

@@ -28,7 +28,7 @@ struct AppCommands: Commands {
         }
         
         CommandMenu("Lesson") {
-            Button("Edit Lesson Details", action: {postNotification(.init(name: .editLesson))})
+            Button("Edit Lesson", action: {postNotification(.init(name: .editLesson))})
                 .keyboardShortcut("E", modifiers: .command)
                 .help("Edit the lessons")
 //                .disabled(!appViewState.detailViewShowing)
@@ -36,17 +36,17 @@ struct AppCommands: Commands {
                 .keyboardShortcut("T", modifiers: .command)
 //                .disabled(!appViewState.detailViewShowing)
             Divider()
-            Button("Toggle Watched", action: toggleWatched)
+            Button("Toggle Completed", action: toggleWatched)
                 .keyboardShortcut("Y", modifiers: .command)
-            Button("Mark Learning Outcomes as Written", action: {postNotification(.init(name: .markILOsWritten))})
+            Button("Mark Learning Outcomes as Achieved", action: {postNotification(.init(name: .markILOsWritten))})
                 .keyboardShortcut("D", modifiers: .command)
-            Button("Mark Learning Outcomes as Unwritten", action: {postNotification(.init(name: .markILOsUnwritten))})
+            Button("Mark Learning Outcomes as Unachieved", action: {postNotification(.init(name: .markILOsUnwritten))})
                 .keyboardShortcut("U", modifiers: .command)
             Divider()
             Button("Add Learning Outcome", action: addILO)
                 .keyboardShortcut("L", modifiers: .command)
 //                .disabled(!appViewState.detailViewShowing)
-            Button("Add Resource", action: addResource)
+            Button("Add Link", action: addResource)
                 .keyboardShortcut("R", modifiers: .command)
 //                .disabled(!appViewState.detailViewShowing)
         }
@@ -66,11 +66,15 @@ struct AppCommands: Commands {
         
         CommandGroup(after: .sidebar) {
             Divider()
-            Button("Scroll List to Now", action: scrollToNow)
-                .keyboardShortcut("s")
-            Button("Filter Lessons in View", action: {postNotification(.init(name: .showFilterView))})
+            Menu("Scroll to...") {
+                Button("Scroll to Oldest", action: {postNotification(.init(name: .scrollToOldest))})
+                Button("Scroll to Now", action: scrollToNow)
+                    .keyboardShortcut("s")
+                Button("Scroll to Newest", action: {postNotification(.init(name: .scrollToNewest))})
+            }
+            Button("Filter Lessons", action: {postNotification(.init(name: .showFilterView))})
                 .keyboardShortcut("f")
-            Button("Show Learning Outcome Randomiser", action: {postNotification(.init(name: .showILORandomiser))})
+            Button("Show Outcome Randomiser", action: {postNotification(.init(name: .showILORandomiser))})
                 .keyboardShortcut("l")
             Divider()
         }

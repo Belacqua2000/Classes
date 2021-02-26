@@ -24,7 +24,7 @@ struct LessonsFilterView: View {
                     .disabled(filter.unwatchedOnly)
                     
                     Toggle(isOn: $filter.unwatchedOnly, label: {
-                        Text("Unwatched Only")
+                        Text("Uncompleted Only")
                     })
                     .toggleStyle(SwitchToggleStyle())
                     .disabled(filter.watchedOnly)

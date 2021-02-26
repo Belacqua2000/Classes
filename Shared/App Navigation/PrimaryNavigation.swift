@@ -15,6 +15,7 @@ struct PrimaryNavigation: View {
     #if os(iOS)
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     #endif
+    @EnvironmentObject var appViewState: AppViewState
     
     // MARK: - State Properties
     @State var addTagShowing: Bool = false
@@ -23,15 +24,10 @@ struct PrimaryNavigation: View {
     @State private var settingsShown = false
     
     // MARK: - Selection
-    
-    #if os(macOS)
-    @State var selection: SourceListItem?// = SourceList.Item(sidebarType: .all)
-    #else
-    @State var selection: SourceListItem?
-    #endif
+//    @State var selection: SourceListItem?
     
     var sourceList: some View {
-        SourceList(selection: $selection, addTagShowing: $addTagShowing, selectedTag: $selectedTag, deleteAlertShown: $deleteAlertShown)
+        SourceList(selection: $appViewState.currentView, addTagShowing: $addTagShowing, selectedTag: $selectedTag, deleteAlertShown: $deleteAlertShown)
     }
     
     // MARK: - Body
@@ -52,13 +48,13 @@ struct PrimaryNavigation: View {
                 #endif
             }
                 .onReceive(NotificationCenter.default.publisher(for: .showSummary), perform: { _ in
-                    selection = SourceListItem(sidebarType: .summary)
+                    appViewState.currentView = SourceListItem(sidebarType: .summary)
                 })
                 .onReceive(NotificationCenter.default.publisher(for: .showAll), perform: { _ in
-                    selection = SourceListItem(sidebarType: .all)
+                    appViewState.currentView = SourceListItem(sidebarType: .all)
                 })
                 .onReceive(NotificationCenter.default.publisher(for: .showILOs), perform: { _ in
-                    selection = SourceListItem(sidebarType: .ilo)
+                    appViewState.currentView = SourceListItem(sidebarType: .ilo)
                 })
                 .navigationTitle("Classes")
                 .toolbar {

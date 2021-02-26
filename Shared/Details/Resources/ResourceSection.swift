@@ -100,7 +100,7 @@ struct ResourceSection: View {
                 #if !os(macOS)
                 NavigationView {
                     AddResource(resourceText: selectedResource?.name ?? "", resourceURL: selectedResource?.url?.absoluteString ?? "", isPresented: $addResourcePresented, resource: $selectedResource, lesson: lesson).environment(\.managedObjectContext, viewContext)
-                        .navigationTitle("Add Resource")
+                        .navigationTitle("Add Link")
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
                 #else

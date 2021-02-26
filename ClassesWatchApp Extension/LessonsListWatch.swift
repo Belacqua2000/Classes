@@ -87,6 +87,25 @@ struct LessonsListWatch: View {
         }
     }
     
+    var supplementaryText: Text {
+        switch listType.filterType {
+        case .all:
+            return Text("There are no lessons yet.")
+        case .tag:
+            return Text("You have no lessons with this tag.")
+        case .lessonType:
+            return Text("You have no lessons with this lesson type.")
+        case .watched:
+            return Text("There are no watched lessons.")
+        case .today:
+            return Text("You have no lessons today.")
+        case .unwatched:
+
+            return Text("Well done, you have no unwatched lessons!")
+        case .unwritten:            return Text("Well done, you have no lessons with unachieved learning outcomes!")
+        }
+    }
+    
     @State private var alertPresented: Bool = false
     let alert = {Alert(title: Text("No Lessons"), message: Text("Lessons can be created from other devices and will sync to your watch automatically via iCloud.  If your lessons are not appearing, please ensure iCloud is enabled on all of your devices.  If you still have trouble, please contact support."), dismissButton: .default(Text("Dismiss")))}
     
@@ -98,15 +117,21 @@ struct LessonsListWatch: View {
                         destination: LessonDetailsWatch(lesson: lesson),
                         label: {
                             Label(title: {
-                                VStack(alignment: .leading) {
-                                    Text(lesson.title ?? "Untitled")
-                                    
-                                    Text(DateFormatter.localizedString(from: lesson.date!, dateStyle: .short, timeStyle: .short))
-                                        .font(.footnote)
-                                }
+                                    VStack(alignment: .leading) {
+                                        Text(lesson.title ?? "Untitled")
+                                        
+                                        Text(DateFormatter.localizedString(from: lesson.date!, dateStyle: .short, timeStyle: .short))
+                                            .font(.footnote)
+                                    }
                             },
                             icon: {
-                                Image(systemName: Lesson.lessonIcon(type: lesson.type))})
+                                VStack {
+                                    Image(systemName: Lesson.lessonIcon(type: lesson.type))
+                                    if lesson.watched {
+                                        Spacer()
+                                        Image(systemName: "checkmark.circle.fill").foregroundColor(.accentColor)
+                                    }
+                                }})
                         })
                         .tag(lesson)
                 }
@@ -121,9 +146,9 @@ struct LessonsListWatch: View {
                 }
             }
         } else {
-            VStack {
-                Text("There are no lessons in this view.  Lessons can be added on iPhone, iPad and Mac.")
-                
+            VStack(alignment: .leading) {
+                supplementaryText + Text("  Lessons can be added on iPhone, iPad and Mac.")
+//                Spacer()
                 Button("Learn More", action: showAlert)
                     .alert(isPresented: $alertPresented, content: alert)
             }

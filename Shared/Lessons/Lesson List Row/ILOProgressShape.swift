@@ -61,7 +61,12 @@ struct ILOProgressShape: Shape {
         
         var path = Path()
         
-        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        // If no outcomes have been completed, want to see a small sliver filled in.
+        if startAngle == endAngle {
+            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2, startAngle: startAngle - Angle.degrees(5), endAngle: endAngle + Angle.degrees(5), clockwise: false)
+        } else {
+            path.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        }
         
         return path
     }

@@ -28,7 +28,6 @@ struct DetailView: View {
     
     let nc = NotificationCenter.default
     
-    static let userActivityType = "com.baughan.classes.detailview"
     //MARK: - Scene Storage
     @SceneStorage("iloSectionExpanded") var iloSectionExpanded = true
     @SceneStorage("resourceSectionExpanded") var resourceSectionExpanded = true
@@ -98,6 +97,9 @@ struct DetailView: View {
                     LessonNotes(text: lesson.notes ?? "")
                 }
                 
+//                RatingView()
+//                    .modifier(DetailBlock())
+                
                 ILOSection(viewStates: detailStates, lesson: lesson)
                     .modifier(DetailBlock())
                 
@@ -109,7 +111,7 @@ struct DetailView: View {
                            onDismiss: {
                             detailStates.lessonToChange = nil
                            }, content: {
-                            AddLessonView(lesson: detailStates.lessonToChange, isPresented: $detailStates.editLessonShown).environment(\.managedObjectContext, managedObjectContext)
+                            AddLessonView(lesson: $detailStates.lessonToChange, isPresented: $detailStates.editLessonShown).environment(\.managedObjectContext, managedObjectContext)
                            })
                     .alert(isPresented: $detailStates.deleteAlertShown) {
                         Alert(title: Text("Delete Lesson"), message: Text("Are you sure you want to delete?  This action cannt be undone."), primaryButton: .destructive(Text("Delete"), action: deleteLesson), secondaryButton: .cancel(Text("Cancel"), action: {viewStates.deleteAlertShown = false; viewStates.lessonToChange = nil}))
@@ -125,10 +127,14 @@ struct DetailView: View {
             nc.post(.init(name: .detailNotShowing))
         })
         .onReceive(nc.publisher(for: .tagAllocateViewShown), perform: { _ in
-            viewStates.tagPopoverPresented = true
+            tagShown = true
         })
         .toolbar {
+            #if os(iOS)
+            DetailToolbar(horizontalSizeClass: horizontalSizeClass ?? .compact, lesson: lesson, viewStates: viewStates, detailStates: detailStates, tagShown: $tagShown)
+            #else
             DetailToolbar(lesson: lesson, viewStates: viewStates, detailStates: detailStates, tagShown: $tagShown)
+            #endif
         }
         .background(DetailBackgroundGradient())
     }
@@ -154,10 +160,12 @@ struct DetailView_Previews: PreviewProvider {
             DetailView(lesson: Lesson.sampleData(context: context).first!)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .environmentObject(LessonsListHelper(context: context))
         #else
         NavigationView{
             Text("Lessons View")
             DetailView(lesson: Lesson.sampleData(context: context).first!)
+                .environmentObject(LessonsListHelper(context: context))
         }
         #endif
     }

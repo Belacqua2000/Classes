@@ -19,7 +19,7 @@ struct LessonsNavMac: View {
     var body: some View {
         GeometryReader { gr in
             HSplitView {
-                LessonsListContent(listType: $listType)
+                LessonsListContent(listHelper: viewStates, listType: $listType)
                     .frame(minWidth: gr.size.width * 0.3, idealWidth: gr.size.width * 0.3)
                     .onDeleteCommand(perform: {
                         viewStates.deleteAlertShown = true
@@ -42,13 +42,13 @@ struct LessonsNavMac: View {
             .sheet(item: $viewStates.lessonToChange, onDismiss: {
                 viewStates.lessonToChange = nil
             }) { value in
-                AddLessonView(lesson: value, isPresented: .constant(false))
+//                AddLessonView(lesson: value, isPresented: .constant(false))
             }
             .sheet(isPresented: $viewStates.addLessonIsPresented,
                    onDismiss: {
                     viewStates.lessonToChange = nil
                    }, content: {
-                    AddLessonView(lesson: viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
+                    AddLessonView(lesson: $viewStates.lessonToChange, isPresented: $viewStates.addLessonIsPresented, type: listType.lessonType ?? .lecture).environment(\.managedObjectContext, viewContext)
                    })
                 
             }

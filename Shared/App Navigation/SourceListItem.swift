@@ -8,7 +8,7 @@
 import Foundation
 
 struct SourceListItem: Hashable {
-    enum SidebarTypes {
+    enum SidebarTypes: String {
         case summary
         case all
         case ilo

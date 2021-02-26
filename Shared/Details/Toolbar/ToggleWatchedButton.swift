@@ -13,13 +13,18 @@ struct ToggleWatchedButton: View {
     @ObservedObject var lesson: Lesson
     
     var lessonLabel: some View {
-        !lesson.watched ?
+        #if os(macOS)
+        return !lesson.watched ?
+            Label("Mark Completed", systemImage: "checkmark.circle") : Label("Mark Uncompleted", systemImage: "checkmark.circle.fill")
+        #else
+        return !lesson.watched ?
             Label("Not Completed", systemImage: "xmark.circle") : Label("Completed", systemImage: "checkmark.circle.fill")
+        #endif
     }
     
     var body: some View {
         Button(action: toggleWatched, label: {lessonLabel})
-            .help("Toggle Watched")
+            .help(lesson.watched ? "Mark lesson as uncompleted" : "Mark lesson as completed")
             .onReceive(nc.publisher(for: .toggleWatched), perform: { _ in
                 toggleWatched()
             })
