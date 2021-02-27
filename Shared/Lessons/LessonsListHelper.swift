@@ -17,7 +17,7 @@ class LessonsListHelper: ObservableObject {
     var context: NSManagedObjectContext
     @Published var lessonToChange: Lesson? = nil
     @Published var selection: Set<Lesson> = Set<Lesson>()
-    @Published var lessonsToDelete = [Lesson]()
+    @Published var lessonsToDelete = Set<Lesson>()
     
     @Published var deleteAlertShown: Bool = false
     @Published var addLessonIsPresented: Bool = false

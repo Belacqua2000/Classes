@@ -17,23 +17,16 @@ struct LessonsListToolbar: ToolbarContent {
     @ObservedObject var listFilter: LessonsListFilter
     @Binding var listType: LessonsListType
     @Binding var selection: Set<Lesson>
-    @Binding var sheetToPresent: LessonsListContent.Sheets?
-    @Binding var deleteAlertShown: Bool
     var isEmpty: Bool
     
     var addLessonButton: some View {
         Button(action: {
-            #if os(iOS)
-            sheetToPresent = .addLesson
-            #else
-            sheetToPresent = .addLesson
-            #endif
-//            nc.post(.init(name: .newLesson))
+            listHelper.sheetToPresent = .addLesson
         }, label: {
             Label("Add Lesson", systemImage: "plus")
         })
         .onReceive(nc.publisher(for: .newLesson), perform: { _ in
-            sheetToPresent = .addLesson
+            listHelper.sheetToPresent = .addLesson
         })
         .help("Add a New Lesson")
     }
@@ -72,25 +65,25 @@ struct LessonsListToolbar: ToolbarContent {
     
     var iloButton: some View {
         Button(action: {
-            sheetToPresent = .ilo
+            listHelper.sheetToPresent = .ilo
         }, label: {
             Label("Generate Learning Outcomes", systemImage: "list.number")
         })
         .help("View ILOs")
         .help("View the Learning Outcome Randomiser for the current selection of lessons")
         .onReceive(nc.publisher(for: .showILORandomiser), perform: { _ in
-            sheetToPresent = .ilo
+            listHelper.sheetToPresent = .ilo
         })
         .disabled(isEmpty)
     }
     
     var filterButton: some View {
-        Button(action: {sheetToPresent = .filter}, label: {
+        Button(action: {listHelper.sheetToPresent = .filter}, label: {
             Label("Filter", systemImage: listFilter.anyFilterActive ? "line.horizontal.3.decrease.circle.fill" : "line.horizontal.3.decrease.circle")
         })
         .help("Filter Lessons in the View")
         .onReceive(nc.publisher(for: .showFilterView), perform: { _ in
-            sheetToPresent = .filter
+            listHelper.sheetToPresent = .filter
         })
     }
     
@@ -174,7 +167,7 @@ struct LessonsListToolbar: ToolbarContent {
                     Spacer()
                     Button(action: {
                         listHelper.lessonsToDelete = listHelper.selection
-                        deleteAlertShown = true
+                        listHelper.deleteAlertShown = true
                     }, label: {
                         Label("Delete", systemImage: "trash")
                     })

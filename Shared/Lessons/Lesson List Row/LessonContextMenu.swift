@@ -10,18 +10,13 @@ import SwiftUI
 struct LessonContextMenu: View {
     @ObservedObject var lesson: Lesson
     @Environment(\.managedObjectContext) var viewContext
-    @EnvironmentObject var lessonsListHelper: LessonsListHelper
-    @Binding var sheetToPresent: LessonsListContent.Sheets?
-    @Binding var deleteAlertShown: Bool
-    #if os(macOS)
-    @Binding var lessonToDelete: Lesson?
-    #endif
+    @ObservedObject var lessonsListHelper: LessonsListHelper
     
     
     var body: some View {
         Button(action: {
             lessonsListHelper.lessonToChange = lesson
-            sheetToPresent = .addLesson
+            lessonsListHelper.sheetToPresent = .addLesson
         }, label: {
             Label("Edit", systemImage: "square.and.pencil")
         }).keyboardShortcut("E", modifiers: .command)
@@ -71,10 +66,8 @@ struct LessonContextMenu: View {
         
         Button(action: {
             lessonsListHelper.selection = [lesson]
-            #if os(macOS)
-            lessonToDelete = lesson
-            #endif
-            deleteAlertShown = true
+            lessonsListHelper.lessonsToDelete = [lesson]
+            lessonsListHelper.deleteAlertShown = true
         }, label: {
             Label("Delete", systemImage: "trash")
                 .foregroundColor(.red)

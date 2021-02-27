@@ -11,7 +11,6 @@ struct LessonsView: View {
     // MARK: - Environment
     @Environment(\.managedObjectContext) var viewContext
     @EnvironmentObject var appViewState: AppViewState
-    @EnvironmentObject var lessonsListHelper: LessonsListHelper
     
     @State var listType: LessonsListType
     @State var exporterShown = false
@@ -21,11 +20,11 @@ struct LessonsView: View {
     @EnvironmentObject var listHelper: LessonsListHelper
     
     var body: some View {
-        LessonsListContent(listHelper: lessonsListHelper, listType: $listType)
-            .fileExporter(
-                isPresented: $listHelper.exporterShown,
-                document: LessonJSON(lessons: Array(listHelper.selection)),
-                contentType: .classesFormat,
-                onCompletion: {_ in })
+        LessonsListContent(listHelper: listHelper, listType: $listType)
+                .fileExporter(
+                    isPresented: $listHelper.exporterShown,
+                    document: LessonJSON(lessons: Array(listHelper.selection)),
+                    contentType: .classesFormat,
+                    onCompletion: {_ in })
     }
 }
