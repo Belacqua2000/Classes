@@ -28,6 +28,26 @@
 		17207ED525208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17207ED425208B3E003889C2 /* AddILOMenu.swift */; };
 		1724C46A254250DE00F56C93 /* AppFeaturesiOS.json in Resources */ = {isa = PBXBuildFile; fileRef = 1724C469254250DE00F56C93 /* AppFeaturesiOS.json */; };
+		17260E3525F587F000D472FD /* NewNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2B25F587EF00D472FD /* NewNavigation.swift */; };
+		17260E3625F587F000D472FD /* NewNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2B25F587EF00D472FD /* NewNavigation.swift */; };
+		17260E3725F587F000D472FD /* CollectionList4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2C25F587EF00D472FD /* CollectionList4.swift */; };
+		17260E3825F587F000D472FD /* CollectionList4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2C25F587EF00D472FD /* CollectionList4.swift */; };
+		17260E3925F587F000D472FD /* Version4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2D25F587EF00D472FD /* Version4.swift */; };
+		17260E3A25F587F000D472FD /* Version4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2D25F587EF00D472FD /* Version4.swift */; };
+		17260E3B25F587F000D472FD /* ExamView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2E25F587EF00D472FD /* ExamView2.swift */; };
+		17260E3C25F587F000D472FD /* ExamView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2E25F587EF00D472FD /* ExamView2.swift */; };
+		17260E3D25F587F000D472FD /* CollectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2F25F587EF00D472FD /* CollectionList.swift */; };
+		17260E3E25F587F000D472FD /* CollectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E2F25F587EF00D472FD /* CollectionList.swift */; };
+		17260E3F25F587F000D472FD /* TopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3025F587EF00D472FD /* TopicView.swift */; };
+		17260E4025F587F000D472FD /* TopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3025F587EF00D472FD /* TopicView.swift */; };
+		17260E4125F587F000D472FD /* ExamView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3125F587EF00D472FD /* ExamView3.swift */; };
+		17260E4225F587F000D472FD /* ExamView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3125F587EF00D472FD /* ExamView3.swift */; };
+		17260E4325F587F000D472FD /* CustomGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3225F587EF00D472FD /* CustomGradient.swift */; };
+		17260E4425F587F000D472FD /* CustomGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3225F587EF00D472FD /* CustomGradient.swift */; };
+		17260E4525F587F000D472FD /* Version2ListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3325F587EF00D472FD /* Version2ListStyle.swift */; };
+		17260E4625F587F000D472FD /* Version2ListStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3325F587EF00D472FD /* Version2ListStyle.swift */; };
+		17260E4725F587F000D472FD /* ExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3425F587EF00D472FD /* ExamView.swift */; };
+		17260E4825F587F000D472FD /* ExamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17260E3425F587EF00D472FD /* ExamView.swift */; };
 		172A56A325D162FD00EA936D /* SourceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56A225D162FD00EA936D /* SourceList.swift */; };
 		172A56A425D162FD00EA936D /* SourceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56A225D162FD00EA936D /* SourceList.swift */; };
 		172A56B025D1693500EA936D /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A56AF25D1693500EA936D /* TagList.swift */; };
@@ -295,6 +315,16 @@
 		1717A6542557F50400F8DC3C /* SampleExport.classesdoc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SampleExport.classesdoc; sourceTree = "<group>"; };
 		17207ED425208B3E003889C2 /* AddILOMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddILOMenu.swift; sourceTree = "<group>"; };
 		1724C469254250DE00F56C93 /* AppFeaturesiOS.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppFeaturesiOS.json; sourceTree = "<group>"; };
+		17260E2B25F587EF00D472FD /* NewNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNavigation.swift; sourceTree = "<group>"; };
+		17260E2C25F587EF00D472FD /* CollectionList4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionList4.swift; sourceTree = "<group>"; };
+		17260E2D25F587EF00D472FD /* Version4.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version4.swift; sourceTree = "<group>"; };
+		17260E2E25F587EF00D472FD /* ExamView2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamView2.swift; sourceTree = "<group>"; };
+		17260E2F25F587EF00D472FD /* CollectionList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionList.swift; sourceTree = "<group>"; };
+		17260E3025F587EF00D472FD /* TopicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicView.swift; sourceTree = "<group>"; };
+		17260E3125F587EF00D472FD /* ExamView3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamView3.swift; sourceTree = "<group>"; };
+		17260E3225F587EF00D472FD /* CustomGradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomGradient.swift; sourceTree = "<group>"; };
+		17260E3325F587EF00D472FD /* Version2ListStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version2ListStyle.swift; sourceTree = "<group>"; };
+		17260E3425F587EF00D472FD /* ExamView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamView.swift; sourceTree = "<group>"; };
 		172A56A225D162FD00EA936D /* SourceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceList.swift; sourceTree = "<group>"; };
 		172A56AF25D1693500EA936D /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
 		172A56B725D16B7300EA936D /* LessonTypeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTypeList.swift; sourceTree = "<group>"; };
@@ -489,6 +519,7 @@
 				171211F92503707E00EE7423 /* ClassesApp.swift */,
 				171211FA2503707E00EE7423 /* ContentView.swift */,
 				1717A6542557F50400F8DC3C /* SampleExport.classesdoc */,
+				17260E2A25F587EF00D472FD /* Version 2 */,
 				17EEFDCB25260DEA0069E89E /* Settings */,
 				1787362525CD64C300115BCD /* What's New */,
 				17DAC797251AA7D20013790A /* Helpers */,
@@ -561,6 +592,23 @@
 				171212222503708000EE7423 /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		17260E2A25F587EF00D472FD /* Version 2 */ = {
+			isa = PBXGroup;
+			children = (
+				17260E2B25F587EF00D472FD /* NewNavigation.swift */,
+				17260E2C25F587EF00D472FD /* CollectionList4.swift */,
+				17260E2D25F587EF00D472FD /* Version4.swift */,
+				17260E2E25F587EF00D472FD /* ExamView2.swift */,
+				17260E2F25F587EF00D472FD /* CollectionList.swift */,
+				17260E3025F587EF00D472FD /* TopicView.swift */,
+				17260E3125F587EF00D472FD /* ExamView3.swift */,
+				17260E3225F587EF00D472FD /* CustomGradient.swift */,
+				17260E3325F587EF00D472FD /* Version2ListStyle.swift */,
+				17260E3425F587EF00D472FD /* ExamView.swift */,
+			);
+			path = "Version 2";
 			sourceTree = "<group>";
 		};
 		172A56D425D1790A00EA936D /* ClassesWatchApp */ = {
@@ -1049,14 +1097,18 @@
 				171212252503708000EE7423 /* ClassesApp.swift in Sources */,
 				17D1A3A925798307001F885E /* ILOProgressShape.swift in Sources */,
 				176E09BD2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
+				17260E3B25F587F000D472FD /* ExamView2.swift in Sources */,
+				17260E4725F587F000D472FD /* ExamView.swift in Sources */,
 				1751BB292533514000AA78D6 /* LessonsListHelper.swift in Sources */,
 				176CC62B250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				173C769C25162148003FFA6A /* OnboardingView.swift in Sources */,
 				17BD0E84251D3DC900BCC40D /* LessonsListType.swift in Sources */,
 				172A57AE25D1834400EA936D /* AllLessonListItem.swift in Sources */,
 				170A59A725CFFBFF00282D70 /* AppFeaturesModel.swift in Sources */,
+				17260E3725F587F000D472FD /* CollectionList4.swift in Sources */,
 				177909C2250A6D9300C14F5E /* EditILOView.swift in Sources */,
 				17A61E9125D1DE6F00CA7A9C /* DetailBlock.swift in Sources */,
+				17260E4125F587F000D472FD /* ExamView3.swift in Sources */,
 				17937D672531B49E001C2540 /* CustomTypes.swift in Sources */,
 				178F0F2F25D008F60059FBF1 /* SafariView.swift in Sources */,
 				177B2D162528A51C00412C55 /* ModelJSON.swift in Sources */,
@@ -1068,6 +1120,7 @@
 				1781EF24251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
 				1775ECA62527D94200957AE3 /* ContentViewMac.swift in Sources */,
 				177570AF25CEB9D100EAD6E1 /* LessonContextMenu.swift in Sources */,
+				17260E4325F587F000D472FD /* CustomGradient.swift in Sources */,
 				1775706125CE143E00EAD6E1 /* DetailToolbar.swift in Sources */,
 				1787C8F625267FF1005486AC /* AppCommands.swift in Sources */,
 				172FFFF625420B3500CA15B5 /* WhatsNew.swift in Sources */,
@@ -1082,7 +1135,9 @@
 				1775705425CDFD5600EAD6E1 /* OnboardingContent.swift in Sources */,
 				171212292503708000EE7423 /* Persistence.swift in Sources */,
 				1775709225CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */,
+				17260E3925F587F000D472FD /* Version4.swift in Sources */,
 				179BF25B2506A86200574A35 /* ILO.swift in Sources */,
+				17260E3D25F587F000D472FD /* CollectionList.swift in Sources */,
 				17E50BC32504D81E00BA8618 /* AddLessonView.swift in Sources */,
 				17E50BCC250518A100BA8618 /* SettingsViewiOS.swift in Sources */,
 				1768DED72514CB68008CDCAC /* ResourceSection.swift in Sources */,
@@ -1090,6 +1145,7 @@
 				17E50BC02504D81200BA8618 /* LessonsListContent.swift in Sources */,
 				17937D702531BE8B001C2540 /* EditLessonButton.swift in Sources */,
 				17D8C09025E4807B004816AB /* TestLessonsView.swift in Sources */,
+				17260E4525F587F000D472FD /* Version2ListStyle.swift in Sources */,
 				176CC621250CB92E00FB28B6 /* Tag.swift in Sources */,
 				1781EF1D251F76D200BA91BB /* AddResourceButton.swift in Sources */,
 				178F0F4025D0506A0059FBF1 /* ShareSheet.swift in Sources */,
@@ -1107,6 +1163,8 @@
 				17D48C23251963F800CBF0A0 /* Helpers.swift in Sources */,
 				1768DEC52514CB41008CDCAC /* LessonDetails.swift in Sources */,
 				17A61E9B25D1E09200CA7A9C /* ILOsProgressView.swift in Sources */,
+				17260E3F25F587F000D472FD /* TopicView.swift in Sources */,
+				17260E3525F587F000D472FD /* NewNavigation.swift in Sources */,
 				1775ECB32527DEF600957AE3 /* Notifications.swift in Sources */,
 				17937D7D2531BFD9001C2540 /* DeleteLessonButton.swift in Sources */,
 				179F27F8256123AA00D65DD7 /* DetailViewStates.swift in Sources */,
@@ -1140,21 +1198,29 @@
 				1751BB2A2533514000AA78D6 /* LessonsListHelper.swift in Sources */,
 				1781EF25251F7F3A00BA91BB /* AllILOsList.swift in Sources */,
 				1775706225CE143E00EAD6E1 /* DetailToolbar.swift in Sources */,
+				17260E3825F587F000D472FD /* CollectionList4.swift in Sources */,
 				172A56CB25D16BAF00EA936D /* SmartGroupsList.swift in Sources */,
+				17260E4225F587F000D472FD /* ExamView3.swift in Sources */,
 				171212262503708000EE7423 /* ClassesApp.swift in Sources */,
 				1781EF1E251F76D200BA91BB /* AddResourceButton.swift in Sources */,
 				17ABF3512507E789000D4048 /* ILOsView.swift in Sources */,
+				17260E4625F587F000D472FD /* Version2ListStyle.swift in Sources */,
 				1787362D25CD658100115BCD /* VersionDetails.swift in Sources */,
+				17260E4025F587F000D472FD /* TopicView.swift in Sources */,
 				176CC62C250D18CC00FB28B6 /* AllocateTagView.swift in Sources */,
 				1781EF2A251F804E00BA91BB /* ILOGeneratorView.swift in Sources */,
+				17260E4825F587F000D472FD /* ExamView.swift in Sources */,
 				176E09B62528772100E1AA26 /* SettingsViewMac.swift in Sources */,
 				17E50BCA2504E22200BA8618 /* DetailView.swift in Sources */,
 				170A59A025CFFBD700282D70 /* VersionPicker.swift in Sources */,
 				1775ECA72527D94200957AE3 /* ContentViewMac.swift in Sources */,
 				17207ED625208B3E003889C2 /* AddILOMenu.swift in Sources */,
 				17937D862531C03A001C2540 /* ToggleWatchedButton.swift in Sources */,
+				17260E4425F587F000D472FD /* CustomGradient.swift in Sources */,
+				17260E3E25F587F000D472FD /* CollectionList.swift in Sources */,
 				1787C8F725267FF1005486AC /* AppCommands.swift in Sources */,
 				17BD0E85251D3DC900BCC40D /* LessonsListType.swift in Sources */,
+				17260E3625F587F000D472FD /* NewNavigation.swift in Sources */,
 				17E50BBE250399DB00BA8618 /* PrimaryNavigation.swift in Sources */,
 				176CC628250D13C100FB28B6 /* AddResource.swift in Sources */,
 				17391A5A2545DD78006A6CD9 /* ILOFilterView.swift in Sources */,
@@ -1165,6 +1231,7 @@
 				176CC629250D13CC00FB28B6 /* Resource.swift in Sources */,
 				173A9E5525D7DF8700970F9E /* RatingView.swift in Sources */,
 				1712122A2503708000EE7423 /* Persistence.swift in Sources */,
+				17260E3A25F587F000D472FD /* Version4.swift in Sources */,
 				1775709925CE232E00EAD6E1 /* DetailBackgroundGradient.swift in Sources */,
 				1745D58325E806470085CF8D /* NoLessonsMessage.swift in Sources */,
 				176E09BE2528781600E1AA26 /* ContactSettingsView.swift in Sources */,
@@ -1191,6 +1258,7 @@
 				177B2D172528A51C00412C55 /* ModelJSON.swift in Sources */,
 				171212282503708000EE7423 /* ContentView.swift in Sources */,
 				1775709325CE1E5800EAD6E1 /* LessonTypePicker.swift in Sources */,
+				17260E3C25F587F000D472FD /* ExamView2.swift in Sources */,
 				17E50BC72504D8F800BA8618 /* LessonCell.swift in Sources */,
 				17BBCB062535169800FDEDD4 /* AppViewState.swift in Sources */,
 				172FFFF725420B3500CA15B5 /* WhatsNew.swift in Sources */,

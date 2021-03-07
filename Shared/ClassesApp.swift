@@ -15,8 +15,10 @@ struct ClassesApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(appViewState)
+            
+//            ContentView()
+//                .environmentObject(appViewState)
+            NewNavigation()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         .commands {
